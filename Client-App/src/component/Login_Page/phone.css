@@ -11,12 +11,11 @@
   }
 
   .Phone :focus{
-    outline: 2px solid rgb(187, 177, 177) !important;
+    outline: 3px solid rgb(187, 177, 177) !important;
   }
 
   .flag-dropdown {
     border: 2px solid black !important;
     border-radius: 4px 0 0 4px!important;
   }
-
  
