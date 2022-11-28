@@ -18,4 +18,8 @@
     border: 2px solid black !important;
     border-radius: 4px 0 0 4px!important;
   }
+
+  .svg-icons {
+    transform: scale(2);
+  }
  
