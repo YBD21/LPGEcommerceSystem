@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
@@ -9,7 +9,7 @@ import "./login.css";
 
 export default function Login() {
   const [open, setOpen] = useState(false);
-
+  const [backendTest,setBackendTest] = useState();
   // handle toggle
   const toggle = () => {
     setOpen(!open);
@@ -17,8 +17,19 @@ export default function Login() {
 
  const setCookie = () => {
   console.log("I am clicked X_X !");
- }
+ };
 
+//  const setCookie = () => {
+//   fetch("/Test_login").then(
+//     respond => respond.json()
+//     ).then(
+//      data =>{
+//        setBackendTest(data)
+//      }
+//     )
+//     console.log(backendTest["Test"]);
+//  }
+ 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 mb-auto ml-auto mr-auto mt-2 bg-white rounded-md lg:max-w-lg">
