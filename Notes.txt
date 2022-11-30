@@ -1,0 +1,11 @@
+ Systems :
+  
+1.Login System  (Client and Backend)
+   
+   Login Page :
+                User can Login in using their phone number and password (min: at least 8 char long)
+                
+                Remember me (function) : Onclick remember the password and phonenumber (hashed)
+                
+                set up (npm i js-cookie)
+
