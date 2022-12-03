@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
@@ -6,6 +7,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Logo from "../../dist/image/Logo.png";
 import Cookies from "js-cookie";
+import axios from 'axios';
 import "./login.css";
 
 export default function Login() {
@@ -14,6 +16,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [number, setNumber] = useState("");
   const [isChecked, setIsChecked] = useState(0);
+  
+  const history = useNavigate();
 
   useEffect(() => {
     //  console.log("Use Is on Effect X_X");
@@ -97,6 +101,20 @@ export default function Login() {
 
   const signIn = (e) => {
     e.preventDefault(); // prevent page from refresh 
+    
+    axios.post('/login',{
+     PhoneNumber : number,
+     Password : password
+    }).then(function(respond){
+      // console.log(respond.data.Message);
+      if (respond.data.Message === true){
+        // redirect to Main_Page
+        return ( history("/Main", { replace: true }));
+      }
+    }).catch(function (error){
+      console.log(error);
+    })
+
     console.log("I am working X_X !");
   };
 
