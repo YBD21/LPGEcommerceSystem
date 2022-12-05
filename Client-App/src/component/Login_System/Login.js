@@ -8,6 +8,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Logo from "../../dist/image/Logo.png";
 import Cookies from "js-cookie";
 import axios from 'axios';
+import { hashKey } from "./hashKey";
 import "./login.css";
 
 export default function Login() {
@@ -16,7 +17,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [number, setNumber] = useState("");
   const [isChecked, setIsChecked] = useState(0);
-  
+
   const history = useNavigate();
 
   useEffect(() => {
@@ -52,18 +53,18 @@ export default function Login() {
       // Encrypt
       const cipherUserName = CryptoJS.AES.encrypt(
         number,
-        "hello_test"
+        hashKey.secretKey
       ).toString();
       //  console.log(cipherUserName);
       const cipherPassword = CryptoJS.AES.encrypt(
         password,
-        "hello_test"
+        hashKey.secretKey
       ).toString();
       //  console.log(cipherPassword);
 
       // set cookies expire date on 7th day.
-      Cookies.set("test_phone", cipherUserName, { expires: 7 });
-      Cookies.set("test_pass", cipherPassword, { expires: 7 });
+      Cookies.set(hashKey.userName, cipherUserName, { expires: 7 });
+      Cookies.set(hashKey.Password, cipherPassword, { expires: 7 });
     }
     // activate remember only if isChecked === even number
     setIsChecked(isChecked + 1);
@@ -74,12 +75,12 @@ export default function Login() {
   const getCookies = () => {
     // when load password and phonenumber  from cookies set them
 
-    const cipherUserName = Cookies.get("test_phone");
-    const cipherPassword = Cookies.get("test_pass");
+    const cipherUserName = Cookies.get(hashKey.userName);
+    const cipherPassword = Cookies.get(hashKey.Password);
 
     // Decrypt
 
-    const bytesOfUserName = CryptoJS.AES.decrypt(cipherUserName, "hello_test");
+    const bytesOfUserName = CryptoJS.AES.decrypt(cipherUserName,hashKey.secretKey);
 
     // parse into meaningful information
     const decryptedUserName = JSON.parse(
@@ -88,7 +89,7 @@ export default function Login() {
 
     // console.log("This is from getCookies",decryptedUserName);
 
-    const bytesOfPassword = CryptoJS.AES.decrypt(cipherPassword, "hello_test");
+    const bytesOfPassword = CryptoJS.AES.decrypt(cipherPassword,hashKey.secretKey);
 
     const decryptedPassword = JSON.parse(
       bytesOfPassword.toString(CryptoJS.enc.Utf8)
@@ -102,11 +103,12 @@ export default function Login() {
   const signIn = (e) => {
     e.preventDefault(); // prevent page from refresh 
     
-    axios.post('/login',{
+    axios.post('http://localhost:5000/login',{
      PhoneNumber : number,
      Password : password
     }).then(function(respond){
       // console.log(respond.data.Message);
+      //   "proxy": "http://localhost:5000"
       if (respond.data.Message === true){
         // redirect to Main_Page
         return ( history("/Main", { replace: true }));
@@ -114,7 +116,6 @@ export default function Login() {
     }).catch(function (error){
       console.log(error);
     })
-
     console.log("I am working X_X !");
   };
 
@@ -156,12 +157,12 @@ export default function Login() {
               Password
             </label>
 
-            <div className="flex flex-row">
+            <div className="flex flex-row cursor-pointer">
               <input
                 type={open === false ? "password" : "text"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
               />
               <div className="text-2xl ml-[-2.5rem] mt-2.5">
                 {open === false ? (
@@ -186,16 +187,16 @@ export default function Login() {
             </div>
 
             <div>
-              <a href="#" className="text-sm text-[#300] hover:underline">
+              <Link to ="/ForgetPassword" className="text-sm text-[#300] hover:underline">
                 Forget Password?
-              </a>
+              </Link>
             </div>
           </div>
 
           <div className="mt-6">
             <button
               onClick={signIn}
-              className="w-full px-5 py-2.5 tracking-wide transition
+              className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s text-center mr-2 mb-2
             "
             >
@@ -209,6 +210,7 @@ export default function Login() {
         </div>
 
         <div className="mt-4">
+          <Link to="/SignUp">
           <button
             className="w-full px-5 py-2.5 tracking-wide transition
             text-white bg-neutral-700 font-medium rounded-lg text-s text-center mr-2 mb-2
@@ -217,6 +219,7 @@ export default function Login() {
             Create account{" "}
             <ArrowRightAltIcon className="svg-icons ml-6 pb-0.5" />
           </button>
+          </Link>
         </div>
       </div>
     </div>
