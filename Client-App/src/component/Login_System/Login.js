@@ -126,7 +126,7 @@ export default function Login() {
 
         <div className="flex justify-center">
           <img
-            className="w-[7rem]"
+            className="w-[5rem]"
             src={Logo}
             alt="Melamchi Online Store Logo"
           />
