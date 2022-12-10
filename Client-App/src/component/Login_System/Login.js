@@ -5,11 +5,11 @@ import "react-phone-input-2/lib/style.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import Logo from "../../dist/image/Logo.png";
 import Cookies from "js-cookie";
 import axios from 'axios';
 import { hashKey } from "./hashKey";
 import "./login.css";
+import Logo from "../Logo";
 
 export default function Login() {
   const CryptoJS = require("crypto-js");
@@ -124,13 +124,7 @@ export default function Login() {
       <div className="w-full p-6 mb-auto ml-auto mr-auto mt-2 bg-white rounded-md lg:max-w-lg">
         {/* logo */}
 
-        <div className="flex justify-center">
-          <img
-            className="w-[5rem]"
-            src={Logo}
-            alt="Melamchi Online Store Logo"
-          />
-        </div>
+       <Logo/>
 
         <h1 className="text-3xl font-semibold text-center text-black">Login</h1>
         {/* <p className="text-lg font-semibold text-center text-black mt-3">
