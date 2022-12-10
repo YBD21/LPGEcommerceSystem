@@ -12,7 +12,7 @@ const SignUp = () => {
   const [open, setOpen] = useState(false);
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
-  const [password, setPassword] = useState("");
+  const [createpassword, setCreatePassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [number, setNumber] = useState("");
   
@@ -87,14 +87,14 @@ const SignUp = () => {
           {/* Password Input Box */}
           <div className="mb-2">
             <label className="block text-sm font-semibold text-gray-800">
-              Password
+              Create Password
             </label>
 
             <div className="flex flex-row cursor-pointer">
               <input
                 type={open === false ? "password" : "text"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={createpassword}
+                onChange={(e) => setCreatePassword(e.target.value)}
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
               />
               <div className="text-2xl ml-[-2.5rem] mt-2.5">
