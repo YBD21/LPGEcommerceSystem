@@ -6,10 +6,11 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Cookies from "js-cookie";
-import axios from 'axios';
+import axios from "axios";
 import { hashKey } from "./hashKey";
 import "./login.css";
 import Logo from "../Logo";
+import ErrorMessage from "./Error_Handeling_Message/ErrorMessage";
 
 export default function Login() {
   const CryptoJS = require("crypto-js");
@@ -17,7 +18,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [number, setNumber] = useState("");
   const [isChecked, setIsChecked] = useState(0);
-
+  const [error, setError] = useState(null); // capture error with this state
   const history = useNavigate();
 
   useEffect(() => {
@@ -38,13 +39,16 @@ export default function Login() {
     } catch (error) {
       // console.log(error.message)
     }
+
   }, []);
 
   // handle toggle to show or hide password
   const toggle = () => {
     setOpen(!open);
+    console.log(open);
   };
 
+  
   // Remember me function
   const setCookie = () => {
     // console.log("I am clicked X_X !");
@@ -80,7 +84,10 @@ export default function Login() {
 
     // Decrypt
 
-    const bytesOfUserName = CryptoJS.AES.decrypt(cipherUserName,hashKey.secretKey);
+    const bytesOfUserName = CryptoJS.AES.decrypt(
+      cipherUserName,
+      hashKey.secretKey
+    );
 
     // parse into meaningful information
     const decryptedUserName = JSON.parse(
@@ -89,7 +96,10 @@ export default function Login() {
 
     // console.log("This is from getCookies",decryptedUserName);
 
-    const bytesOfPassword = CryptoJS.AES.decrypt(cipherPassword,hashKey.secretKey);
+    const bytesOfPassword = CryptoJS.AES.decrypt(
+      cipherPassword,
+      hashKey.secretKey
+    );
 
     const decryptedPassword = JSON.parse(
       bytesOfPassword.toString(CryptoJS.enc.Utf8)
@@ -99,24 +109,38 @@ export default function Login() {
 
     return { decryptedPassword, decryptedUserName };
   };
-
-  const signIn = (e) => {
-    e.preventDefault(); // prevent page from refresh 
-    
-    axios.post('http://localhost:5000/login',{
-     PhoneNumber : number,
-     Password : password
-    }).then(function(respond){
+  
+  const Call_Backend = () => {
+    // console.log("I am working X_X !");
+    axios
+    .post("http://localhost:5000/login", {
+      PhoneNumber: number,
+      Password: password,
+    })
+    .then(function (respond) {
       // console.log(respond.data.Message);
       //   "proxy": "http://localhost:5000"
-      if (respond.data.Message === true){
+      if (respond.data.Message === true) {
         // redirect to Main_Page
-        return ( history("/Main", { replace: true }));
+        return history("/Main", { replace: true });
       }
-    }).catch(function (error){
-      console.log(error);
     })
-    console.log("I am working X_X !");
+    .catch(function (error) {
+      // throw error message
+      // console.log(error.message);
+      setError(error.message);
+    });
+
+  }
+
+  const signIn = (e) => {
+    e.preventDefault(); // prevent page from refresh
+    setError(null); // reset previous error_message
+    
+    // delay for few second
+    setTimeout(Call_Backend,500);
+
+    // console.log("I am working X_X !");
   };
 
   return (
@@ -124,7 +148,7 @@ export default function Login() {
       <div className="w-full p-6 mb-auto ml-auto mr-auto mt-2 bg-white rounded-md lg:max-w-lg">
         {/* logo */}
 
-       <Logo/>
+        <Logo />
 
         <h1 className="text-3xl font-semibold text-center text-black">Login</h1>
         {/* <p className="text-lg font-semibold text-center text-black mt-3">
@@ -168,7 +192,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mt-3">
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -181,13 +205,21 @@ export default function Login() {
             </div>
 
             <div>
-              <Link to ="/ForgetPassword" className="text-sm text-[#300] hover:underline">
+              <Link
+                to="/ForgetPassword"
+                className="text-sm text-[#300] hover:underline"
+              >
                 Forget Password?
               </Link>
             </div>
           </div>
 
-          <div className="mt-6">
+          {/* Error Message */}
+          {/* {error && <div className="error otp-err"> {error}</div>} */}
+          { error &&
+            <ErrorMessage Error_message={error} status = {true} />           
+                }
+          <div className="mt-5">
             <button
               onClick={signIn}
               className="w-full px-5 py-2.5 tracking-wide
@@ -199,20 +231,20 @@ export default function Login() {
           </div>
         </form>
 
-        <div className="flex justify-center my-4 before:flex-1 before:border-t before:border-black before:mt-4 after:flex-1 after:border-t after:border-black after:mt-4">
+        <div className="flex justify-center my-3 before:flex-1 before:border-t before:border-black before:mt-4 after:flex-1 after:border-t after:border-black after:mt-4">
           <strong className="text-2xl mx-3">Or</strong>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-5">
           <Link to="/SignUp">
-          <button
-            className="w-full px-5 py-2.5 tracking-wide transition
+            <button
+              className="w-full px-5 py-2.5 tracking-wide transition
             text-white bg-neutral-700 font-medium rounded-lg text-s text-center mr-2 mb-2
            "
-          >
-            Create account{" "}
-            <ArrowRightAltIcon className="svg-icons ml-6 pb-0.5" />
-          </button>
+            >
+              Create account{" "}
+              <ArrowRightAltIcon className="svg-icons ml-6 pb-0.5" />
+            </button>
           </Link>
         </div>
       </div>
