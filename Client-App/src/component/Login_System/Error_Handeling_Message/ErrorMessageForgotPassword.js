@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 
+const ErrorMessageForgotPassword = (value) => {
 
-const ErrorMessage = (message) => {
+    const [isClicked , setIsClicked] = useState(value.status);
 
-    const [isClicked , setIsClicked] = useState(message.status);
-
+   
     const checkClick = () => {
         setIsClicked(!isClicked);
-        // console.log("Someting is happening ?");
-      }
-      // console.log("From Error Message :",message.Error_message);
-      // console.log(message.status);
-      // Network Error
+        {/* {value.props} */}
+      {/* {console.log(value)} */}
+    }
+
   return (
     <>
    {isClicked && <div
-      className="flex flex-col bg-red-100 border border-red-900 text-red-800 px-4 py-3 rounded relative mt-4"
+      className="flex flex-col justify-center bg-red-100 border border-red-900 text-red-800 px-4 py-3 rounded relative mt-4"
       role="alert"
     >
         {/* Display Error Message */}
-      <div>
-      <strong className="font-bold mr-1">Holy smokes !</strong>
-      <span className="sm:inline">
-        Something seriously bad happened.
+      <div className="m-auto">
+      <strong className="font-bold mr-1">
+        Error :
+        </strong>
+      <span className="sm:inline text-center">
+        {value.props}
       </span>
       </div>
      
@@ -40,7 +41,7 @@ const ErrorMessage = (message) => {
       </span>
     </div>}
     </>
-  );
-};
+  )
+}
 
-export default ErrorMessage;
+export default ErrorMessageForgotPassword

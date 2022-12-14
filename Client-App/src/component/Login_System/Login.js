@@ -10,7 +10,7 @@ import axios from "axios";
 import { hashKey } from "./hashKey";
 import "./login.css";
 import Logo from "../Logo";
-import ErrorMessage from "./Error_Handeling_Message/ErrorMessage";
+import ErrorMessageLogin from "./Error_Handeling_Message/ErrorMessageLogin";
 
 export default function Login() {
   const CryptoJS = require("crypto-js");
@@ -138,7 +138,7 @@ export default function Login() {
     setError(null); // reset previous error_message
     
     // delay for few second
-    setTimeout(Call_Backend,500);
+    setTimeout(Call_Backend,300);
 
     // console.log("I am working X_X !");
   };
@@ -161,7 +161,7 @@ export default function Login() {
             </label>
 
             <PhoneInput
-              className="Phone"
+              className="Phone required"
               country={"np"}
               value={number}
               onChange={setNumber}
@@ -180,7 +180,7 @@ export default function Login() {
                 type={open === false ? "password" : "text"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
+                className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
               />
               <div className="text-2xl ml-[-2.5rem] mt-2.5">
                 {open === false ? (
@@ -215,9 +215,9 @@ export default function Login() {
           </div>
 
           {/* Error Message */}
-          {/* {error && <div className="error otp-err"> {error}</div>} */}
+
           { error &&
-            <ErrorMessage Error_message={error} status = {true} />           
+            <ErrorMessageLogin Error_message={error} status = {true} />           
                 }
           <div className="mt-5">
             <button
@@ -242,7 +242,7 @@ export default function Login() {
             text-white bg-neutral-700 font-medium rounded-lg text-s text-center mr-2 mb-2
            "
             >
-              Create account{" "}
+              Create Account{" "}
               <ArrowRightAltIcon className="svg-icons ml-6 pb-0.5" />
             </button>
           </Link>

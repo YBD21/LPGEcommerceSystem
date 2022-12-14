@@ -10,3 +10,9 @@ Systems :
                 
                 set up (npm i js-cookie)
 
+
+Password lenght must be 8 character long 
+
+Password lenght cannot excide more than 16 character long
+
+Name field lenght at least 2 char long
