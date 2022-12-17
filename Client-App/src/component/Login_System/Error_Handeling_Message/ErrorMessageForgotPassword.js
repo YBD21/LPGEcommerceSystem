@@ -7,8 +7,6 @@ const ErrorMessageForgotPassword = (value) => {
    
     const checkClick = () => {
         setIsClicked(!isClicked);
-        {/* {value.props} */}
-      {/* {console.log(value)} */}
     }
 
   return (
