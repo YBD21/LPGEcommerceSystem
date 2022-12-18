@@ -1,17 +1,13 @@
-const express = require('express');
-const cors = require('cors');
+import express, { json, urlencoded } from 'express';
+import cors from 'cors';
+import {login} from './login.js';
+
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const app = express()
 
 const port = 5000
-
-/*
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11)
-}
-*/
-
 //use cors to allow cross origin resource sharing
 app.use(
   cors({
@@ -20,9 +16,9 @@ app.use(
   })
 );
 
-app.use(express.json());
+app.use(json());
 
-app.use(express.urlencoded({ extended: false }));
+app.use(urlencoded({ extended: false }));
 
 
 
@@ -45,6 +41,8 @@ app.post('/login',(req, res) => {
   
 })
 
+
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
+  console.log(`Listening on port ${port}`);
+  login(9860694050,"hashed");
 })

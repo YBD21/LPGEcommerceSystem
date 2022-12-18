@@ -110,8 +110,9 @@ export default function Login() {
     return { decryptedPassword, decryptedUserName };
   };
   
-  const Call_Backend = () => {
+  const CallBackendForSignIn = () => {
     // console.log("I am working X_X !");
+    // here bcrypt
     axios
     .post("http://localhost:5000/login", {
       PhoneNumber: number,
@@ -138,7 +139,7 @@ export default function Login() {
     setError(null); // reset previous error_message
     
     // delay for few second
-    setTimeout(Call_Backend,300);
+    setTimeout(CallBackendForSignIn,300);
 
     // console.log("I am working X_X !");
   };
