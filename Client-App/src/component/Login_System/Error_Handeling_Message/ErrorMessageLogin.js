@@ -5,9 +5,8 @@ const ErrorMessageLogin = (message) => {
 
     const [isClicked , setIsClicked] = useState(message.status);
     const [text,setText] = useState({});
-    
     useEffect( () => {
-
+    //  Incorrect Phone Number Or Password !
       switch (message.Error_message){
        
         case 'Network Error':
@@ -24,6 +23,13 @@ const ErrorMessageLogin = (message) => {
             Second : "Phone Number Or Password !"
            })
           );
+        case "Disable Account":
+          return (
+            setText({
+             First : "Sorry ",
+             Second : "Your Account Has Been Disable !"
+            })
+           );
          default:
          return (
          setText({
@@ -41,10 +47,10 @@ const ErrorMessageLogin = (message) => {
         setIsClicked(!isClicked);
         // console.log("Someting is happening ?");
       }
-      // console.log("From Error Message :",message.Error_message);
-      // console.log(typeof(message.Error_message));
+      
+      console.log("From Error Message :",message.Error_message);
+      console.log(typeof(message.Error_message));
       // console.log(message.status);
-      // Network Error
       // console.log(text.First);
       // console.log(typeof(text));
 
