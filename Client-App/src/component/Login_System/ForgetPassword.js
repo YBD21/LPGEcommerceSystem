@@ -56,23 +56,12 @@ const ForgetPassword = () => {
            
           {errornumber.PhoneNumber && <ErrorMessageForgotPassword props={errornumber.Message} status = {true}/>}
 
-          <div className="flex justify-between mt-2">
-          {/* Go Back */}
-          <div className="mt-4">
-            <Link to="/">
-              <button
-                className="w-48 px-5 py-2.5 text-white bg-neutral-700 font-medium rounded-lg text-s mr-3 mb-2
-           "
-              >
-                <KeyboardBackspaceIcon className="svg-icons " />
-                {/* {""} Go Back ?  mr-4*/}
-              </button>
-            </Link>
-          </div>
+          <div className="w-full mt-6">
+         
           {/* Search */}
-          <div className="mt-4">
+          <div className="min-w-max mt-4">
             <button
-              className="w-48 px-5 py-2.5 tracking-wide
+              className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s text-center mr-3 mb-2
             "
             onClick={search}
@@ -80,6 +69,19 @@ const ForgetPassword = () => {
               <SearchIcon className="svg-icons mr-4" />
               Search
             </button>
+           
+          </div>
+            {/* Go Back */}
+            <div className="min-w-max mt-4">
+            <Link to="/">
+              <button
+                className="w-full px-5 py-2.5 text-white bg-neutral-700 font-medium rounded-lg text-s mr-3 mb-2
+           "
+              >
+                <KeyboardBackspaceIcon className="svg-icons " />
+                {/* {""} Go Back ?  mr-4*/}
+              </button>
+            </Link>
           </div>
         </div>
         
