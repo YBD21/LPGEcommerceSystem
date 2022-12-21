@@ -6,6 +6,7 @@ import "react-phone-input-2/lib/style.css";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import SearchIcon from "@mui/icons-material/Search";
 import ErrorMessageForgotPassword from "./Error_Handeling_Message/ErrorMessageForgotPassword";
+import {useUserAuth} from "../../ContextAPI/UserAuthContext"
 
 const ForgetPassword = () => {
   const [number, setNumber] = useState("");
@@ -13,9 +14,10 @@ const ForgetPassword = () => {
   const [errorotp, setErrorOtp] = useState({});
   const [otpcode, setOtpCode] = useState("");
   const [flag, setFlag] = useState(false);
+  const { setUpRecaptha } = useUserAuth();
 
   const isEmptyPhone = () => {
-    if (number.length === 0) {
+    if (number === "" || number === undefined || number.length < 3) {
       setErrorNumber({
         PhoneNumber: true,
         Message: "Phone Number Cannot Be Empty !",
@@ -31,6 +33,10 @@ const ForgetPassword = () => {
       });
      }
   };
+  
+  const findPhoneNumber = async () =>{
+   
+  }
 
   const search = (e) => {
     e.preventDefault(); // prevent page from refresh

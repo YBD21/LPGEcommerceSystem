@@ -3,7 +3,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import { auth_app} from "../Firebase";
+import { auth_app} from "../Firebase/FirebaseConfig";
 
 const userAuthContext = createContext();
 
