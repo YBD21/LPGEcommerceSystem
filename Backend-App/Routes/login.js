@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv'
 dotenv.config();
-import bcrypt from "bcryptjs";
 import admin from "firebase-admin";
 import serviceAccount from "../serviceAccountKey.json" assert { type: "json" };
 

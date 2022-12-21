@@ -10,9 +10,11 @@ import ErrorMessageForgotPassword from "./Error_Handeling_Message/ErrorMessageFo
 const ForgetPassword = () => {
   const [number, setNumber] = useState("");
   const [errornumber, setErrorNumber] = useState({});
+  const [errorotp, setErrorOtp] = useState({});
+  const [otpcode, setOtpCode] = useState("");
   const [flag, setFlag] = useState(false);
 
-  const isEmpty = () => {
+  const isEmptyPhone = () => {
     if (number.length === 0) {
       setErrorNumber({
         PhoneNumber: true,
@@ -21,12 +23,28 @@ const ForgetPassword = () => {
     }
   };
 
+  const isEmptyCode = () => {
+     if (otpcode.length === 0){
+      setErrorOtp({
+        OtpError: true,
+        Message: "This Field Cannot Be Empty !",
+      });
+     }
+  };
+
   const search = (e) => {
     e.preventDefault(); // prevent page from refresh
     setErrorNumber({});
      // delay for few second
-     setTimeout(isEmpty,300);
+     setTimeout(isEmptyPhone,200);
   };
+
+  const verify = (e) => {
+    e.preventDefault(); // prevent page from refresh
+     setErrorOtp({});
+     // delay for few second
+     setTimeout(isEmptyCode,200);
+  }
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 mb-auto ml-auto mr-auto mt-2 bg-white rounded-md lg:max-w-lg">
@@ -125,7 +143,7 @@ const ForgetPassword = () => {
 
           {/* Error Message */}
            
-          {errornumber.PhoneNumber && <ErrorMessageForgotPassword props={errornumber.Message} status = {true}/>}
+          {errorotp.OtpError && <ErrorMessageForgotPassword props={errorotp.Message} status = {true}/>}
 
           <div className="w-full mt-6">
          
@@ -135,6 +153,7 @@ const ForgetPassword = () => {
               className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s text-center mr-3 mb-2
             "
+            onClick={verify}
             >
             Submit PIN
             </button>
