@@ -6,85 +6,121 @@ import "react-phone-input-2/lib/style.css";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import SearchIcon from "@mui/icons-material/Search";
 import ErrorMessageForgotPassword from "./Error_Handeling_Message/ErrorMessageForgotPassword";
-import {useUserAuth} from "../../ContextAPI/UserAuthContext"
+import { useUserAuth } from "../../ContextAPI/UserAuthContext";
 
 const ForgetPassword = () => {
+  const { setUpRecaptha } = useUserAuth();
   const [number, setNumber] = useState("");
   const [errornumber, setErrorNumber] = useState({});
   const [errorotp, setErrorOtp] = useState({});
   const [otpcode, setOtpCode] = useState("");
   const [flag, setFlag] = useState(false);
-  const { setUpRecaptha } = useUserAuth();
+  const [result, setResult] = useState("");
+ 
 
   const isEmptyPhone = () => {
-    if (number === "" || number === undefined || number.length < 3) {
-      setErrorNumber({
-        PhoneNumber: true,
-        Message: "Phone Number Cannot Be Empty !",
-      });
+    if (number === "" || number === undefined) {
+      return (
+        setErrorNumber({
+          PhoneNumber: true,
+          Message: "Phone Number Cannot Be Empty !",
+        })
+      )
     }
   };
 
   const isEmptyCode = () => {
-     if (otpcode.length === 0){
-      setErrorOtp({
-        OtpError: true,
-        Message: "This Field Cannot Be Empty !",
-      });
-     }
+    if (otpcode.length === 0) {
+      return (
+        setErrorOtp({
+          OtpError: true,
+          Message: "This Field Cannot Be Empty !"
+        })
+      )
+    }
+  };
+
+  const switchTab = () => {
+    setFlag(true);
   };
   
-  const findPhoneNumber = async () =>{
-   
-  }
+  const cancel = () => {
+    window.location.reload("/");
+  };
+
+  const findPhoneNumber = async () => {
+    try {
+      const response = await setUpRecaptha("+" + number);
+      setResult(response);
+
+    } catch (error) {
+      setErrorOtp({
+        OtpError: true,
+        Message: "Something shit happend X_X !"
+      })
+        // wait timer of 3.5 sec and refresh page
+        setTimeout(cancel, 3500);
+    }
+    
+
+    console.log("Doing Something .....");
+    switchTab();
+  };
 
   const search = (e) => {
     e.preventDefault(); // prevent page from refresh
     setErrorNumber({});
-     // delay for few second
-     setTimeout(isEmptyPhone,200);
+    // delay for few second
+    setTimeout(isEmptyPhone, 200);
+
+    if (errornumber.PhoneNumber !== undefined) {  
+      findPhoneNumber();  
+    }
+   
+    
   };
 
   const verify = (e) => {
     e.preventDefault(); // prevent page from refresh
-     setErrorOtp({});
-     // delay for few second
-     setTimeout(isEmptyCode,200);
-  }
+    setErrorOtp({});
+    // delay for few second
+    setTimeout(isEmptyCode, 200);
+  };
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 mb-auto ml-auto mr-auto mt-2 bg-white rounded-md lg:max-w-lg">
         <Logo />
 
-        <h1 className="text-3xl font-semibold text-center text-black"
-        style={{ display: !flag ? "" : "none" }}
+        <h1
+          className="text-3xl font-semibold text-center text-black"
+          style={{ display: !flag ? "" : "none" }}
         >
           Find Your Account
         </h1>
 
-        <h1 className="text-3xl font-semibold text-center text-black"
-        style={{ display: flag ? null : "none" }}
+        <h1
+          className="text-3xl font-semibold text-center text-black"
+          style={{ display: flag ? null : "none" }}
         >
-         Validate OTP
+          Validate OTP
         </h1>
 
-        <p className="text-lg font-semibold text-center text-black mt-3"
-         style={{ display: !flag ? "" : "none" }}
+        <p
+          className="text-lg font-semibold text-center text-black mt-3"
+          style={{ display: !flag ? "" : "none" }}
         >
           Please enter mobile number to search for your account.
         </p>
 
-        <p className="text-lg font-semibold text-center text-black mt-3"
-         style={{ display: flag ? "" : "none" }}
+        <p
+          className="text-lg font-semibold text-center text-black mt-3"
+          style={{ display: flag ? "" : "none" }}
         >
-           A Code has been send to {number.slice(3)}
+         Code has been send to {number.slice(3)}
         </p>
 
         {/* Mobile Number Input Box */}
-        <form className="mt-6"
-        style={{ display: !flag ? "" : "none" }}
-        >
-          
+        <form className="mt-6" style={{ display: !flag ? "" : "none" }}>
           <div className="mb-2">
             <PhoneInput
               className="Phone"
@@ -94,95 +130,98 @@ const ForgetPassword = () => {
               countryCodeEditable={false}
             />
           </div>
-
+          
+          {/* recaptcha */}
+          <div className="w-full flex justify-center mt-6">
+          <div id="recaptcha-container"/> 
+          </div>
+          
           {/* Error Message */}
-           
-          {errornumber.PhoneNumber && <ErrorMessageForgotPassword props={errornumber.Message} status = {true}/>}
+
+          {errornumber.PhoneNumber && (
+            <ErrorMessageForgotPassword
+              props={errornumber.Message}
+              status={true}
+            />
+          )}
 
           <div className="w-full mt-6">
-         
-          {/* Search */}
-          <div className="min-w-max mt-4">
-            <button
-              className="w-full px-5 py-2.5 tracking-wide
+            {/* Search */}
+            <div className="min-w-max mt-4">
+              <button
+                className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s text-center mr-3 mb-2
             "
-            onClick={search}
-            >
-              <SearchIcon className="svg-icons mr-4" />
-              Search
-            </button>
-           
-          </div>
+                onClick={search}
+              >
+                <SearchIcon className="svg-icons mr-4" />
+                Search
+              </button>
+            </div>
             {/* Go Back */}
             <div className="min-w-max mt-4">
-            <Link to="/">
-              <button
-                className="w-full px-5 py-2.5 text-white bg-neutral-700 font-medium rounded-lg text-s mr-3 mb-2
+              <Link to="/">
+                <button
+                  className="w-full px-5 py-2.5 text-white bg-neutral-700 font-medium rounded-lg text-s mr-3 mb-2
            "
-              >
-                <KeyboardBackspaceIcon className="svg-icons " />
-                {/* {""} Go Back ?  mr-4*/}
-              </button>
-            </Link>
+                >
+                  <KeyboardBackspaceIcon className="svg-icons " />
+                  {/* {""} Go Back ?  mr-4*/}
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
-        
         </form>
 
         {/* Verify form box */}
 
-        <form className="mt-6"
-        style={{ display: flag ? "" : "none" }}
-        >
+        <form className="mt-6" style={{ display: flag ? "" : "none" }}>
           {/* Code Box */}
           <div className="mb-2">
-           
             <div className="flex flex-row cursor-pointer">
               <input
-                type="text"
+                type="number"
                 placeholder="Enter Code"
+                onChange={(e) => setOtpCode(e.target.value)}
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
               />
-               </div>
+            </div>
           </div>
 
           {/* Error Message */}
-           
-          {errorotp.OtpError && <ErrorMessageForgotPassword props={errorotp.Message} status = {true}/>}
+
+          {errorotp.OtpError && (
+            <ErrorMessageForgotPassword
+              props={errorotp.Message}
+              status={true}
+            />
+          )}
 
           <div className="w-full mt-6">
-         
-          {/* Verify */}
-          <div className="min-w-max mt-4">
-            <button
-              className="w-full px-5 py-2.5 tracking-wide
+            {/* Verify */}
+            <div className="min-w-max mt-4">
+              <button
+                className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s text-center mr-3 mb-2
             "
-            onClick={verify}
-            >
-            Submit PIN
-            </button>
-           
-          </div>
+                onClick={verify}
+              >
+                Submit PIN
+              </button>
+            </div>
             {/* cancel */}
             <div className="min-w-max mt-4">
-            <Link to="/">
-              <button
-                className="w-full px-5 py-2.5 text-white bg-neutral-700 font-medium rounded-lg text-s mr-3 mb-2
+              <Link to="/">
+                <button
+                  className="w-full px-5 py-2.5 text-white bg-neutral-700 font-medium rounded-lg text-s mr-3 mb-2
            "
-              >
-                <KeyboardBackspaceIcon className="svg-icons " />
-    
-              </button>
-            </Link>
+                >
+                  <KeyboardBackspaceIcon className="svg-icons " />
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
-        
         </form>
-
-
-     
       </div>
     </div>
   );

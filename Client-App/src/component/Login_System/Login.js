@@ -147,7 +147,7 @@ export default function Login() {
         return history("/Main", { replace: true });
       }
      
-      if (respond.data.Error != undefined){
+      if (respond.data.Error !== undefined){
           return (
             // console.log(respond.data.Error),
            setError(respond.data.Error)
