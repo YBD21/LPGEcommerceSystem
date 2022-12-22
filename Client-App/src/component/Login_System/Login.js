@@ -125,7 +125,6 @@ export default function Login() {
     
     const hashed_Password = bcrypt.hashSync(password, salt);
     // console.log("I am working X_X !");
-    // here bcrypt
     axios
     .post("http://localhost:5000/login", {
       PhoneNumber: number,

@@ -1,6 +1,8 @@
 import express, { json, urlencoded } from 'express';
 import cors from 'cors';
-import {login} from './login.js';
+import {login} from './LoginSystem/login.js';
+import { passwordforget } from './LoginSystem/passwordforget.js';
+
 
 const app = express();
 
@@ -25,6 +27,13 @@ app.post('/login', async (req, res) => {
   const respond = await login(Data.PhoneNumber,Data.Password);
 
   // console.log(respond);
+  res.json(respond);
+})
+
+app.post('/ForgetPassword', async (req,res) =>{
+  let Data = req.body;
+  const respond = await passwordforget(Data.PhoneNumber);
+   console.log(respond);
   res.json(respond);
 })
 

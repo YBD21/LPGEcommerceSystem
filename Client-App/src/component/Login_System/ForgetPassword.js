@@ -7,6 +7,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import SearchIcon from "@mui/icons-material/Search";
 import ErrorMessageForgotPassword from "./Error_Handeling_Message/ErrorMessageForgotPassword";
 import { useUserAuth } from "../../ContextAPI/UserAuthContext";
+import axios from "axios";
 
 const ForgetPassword = () => {
   const { setUpRecaptha } = useUserAuth();
@@ -19,9 +20,10 @@ const ForgetPassword = () => {
  
 
   const isEmptyPhone = () => {
-    if (number === "" || number === undefined) {
+    
+    if (number === "" || number === undefined || number.length < 3) {
       return (
-        setErrorNumber({
+       setErrorNumber({
           PhoneNumber: true,
           Message: "Phone Number Cannot Be Empty !",
         })
@@ -29,7 +31,7 @@ const ForgetPassword = () => {
     }
   };
 
-  const isEmptyCode = () => {
+  const isValidCode = () => {
     if (otpcode.length === 0) {
       return (
         setErrorOtp({
@@ -38,33 +40,77 @@ const ForgetPassword = () => {
         })
       )
     }
+    if (otpcode.length <= 5) {
+      return (
+        setErrorOtp({
+          OtpError: true,
+          Message: "Code Must Be More Than 5 Digits !"
+        })
+      )
+    }
+    if (otpcode.length >= 8){
+      return (
+        setErrorOtp({
+          OtpError: true,
+          Message: "Code Must Be Less Than 8 Digits !"
+        })
+      )
+    }
+
   };
 
-  const switchTab = () => {
+  const switchToVerify = () => {
     setFlag(true);
   };
   
   const cancel = () => {
+    // reload current page
     window.location.reload("/");
   };
 
+  const CallBackendToFindPhoneNumber = () => {
+   axios.post("http://localhost:5000/ForgetPassword", {
+   PhoneNumber : number
+   }).then(function (respond){
+      console.log(respond)
+   }).catch(function (error) {
+    // throw error message
+    // console.log(error.message);
+    return (
+      setErrorNumber({
+        PhoneNumber: true,
+        Message: "Cannot access to the internet !"
+      })
+    )
+   
+  });
+  }
+
   const findPhoneNumber = async () => {
     try {
+      // popup recaptha box
       const response = await setUpRecaptha("+" + number);
       setResult(response);
-
+      
     } catch (error) {
-      setErrorOtp({
-        OtpError: true,
-        Message: "Something shit happend X_X !"
+      setErrorNumber({
+        PhoneNumber: true,
+        Message: "Invalid PhoneNumber !"
       })
         // wait timer of 3.5 sec and refresh page
-        setTimeout(cancel, 3500);
+        return (
+          setTimeout(cancel, 4000)
+        )
     }
-    
+   
+    // send request to backend for phonenumber if no error shown  
+    CallBackendToFindPhoneNumber(); 
 
-    console.log("Doing Something .....");
-    switchTab();
+    // if found number Display Number found ! else not found ! --- then 
+    // refresh page
+    
+    // switchToVerify
+    switchToVerify();
   };
 
   const search = (e) => {
@@ -73,18 +119,32 @@ const ForgetPassword = () => {
     // delay for few second
     setTimeout(isEmptyPhone, 200);
 
-    if (errornumber.PhoneNumber !== undefined) {  
+    if (number.length > 3) {  
       findPhoneNumber();  
     }
-   
-    
+
   };
 
-  const verify = (e) => {
+  const verify = async (e) => {
     e.preventDefault(); // prevent page from refresh
     setErrorOtp({});
     // delay for few second
-    setTimeout(isEmptyCode, 200);
+    setTimeout(isValidCode, 200);
+    
+    if (otpcode.length > 5 && errorotp.OtpError === undefined){
+      try {
+        await result.confirm(otpcode);
+        
+        // redirect to resetPassword 
+         
+      } catch (error) {
+        setErrorOtp({
+          OtpError: true,
+          Message: "Invalid Verification Code !"
+        })
+      }
+    }
+
   };
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
@@ -116,7 +176,7 @@ const ForgetPassword = () => {
           className="text-lg font-semibold text-center text-black mt-3"
           style={{ display: flag ? "" : "none" }}
         >
-         Code has been send to {number.slice(3)}
+         Code has been send to {number?.slice(3)}
         </p>
 
         {/* Mobile Number Input Box */}
@@ -180,7 +240,7 @@ const ForgetPassword = () => {
           <div className="mb-2">
             <div className="flex flex-row cursor-pointer">
               <input
-                type="number"
+                type="text"
                 placeholder="Enter Code"
                 onChange={(e) => setOtpCode(e.target.value)}
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
