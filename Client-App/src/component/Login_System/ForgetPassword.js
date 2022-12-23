@@ -72,15 +72,23 @@ const ForgetPassword = () => {
    axios.post("http://localhost:5000/ForgetPassword", {
    PhoneNumber : number
    }).then(function (respond){
-      console.log(respond)
+      // console.log(respond);
+      // console.log(respond.data.Message);
+      // Number found send to verify OTP else throw message
+     if (respond.data.Message === true){
+      switchToVerify();
+     }else{
+
+     }
    }).catch(function (error) {
-    // throw error message
     // console.log(error.message);
+    // throw error message and refresh page in 3 sec
     return (
       setErrorNumber({
         PhoneNumber: true,
         Message: "Cannot access to the internet !"
-      })
+      }),
+      setTimeout(cancel,3000)
     )
    
   });
@@ -105,12 +113,6 @@ const ForgetPassword = () => {
    
     // send request to backend for phonenumber if no error shown  
     CallBackendToFindPhoneNumber(); 
-
-    // if found number Display Number found ! else not found ! --- then 
-    // refresh page
-    
-    // switchToVerify
-    switchToVerify();
   };
 
   const search = (e) => {
@@ -136,6 +138,7 @@ const ForgetPassword = () => {
         await result.confirm(otpcode);
         
         // redirect to resetPassword 
+        
          
       } catch (error) {
         setErrorOtp({
