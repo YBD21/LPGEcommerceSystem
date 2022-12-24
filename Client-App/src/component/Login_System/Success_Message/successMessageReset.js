@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-const ErrorMessageLogin = (message) => {
+const SuccessMessageReset = (message) => {
   const [isClicked, setIsClicked] = useState(message.status);
   const [text, setText] = useState({});
   useEffect(() => {
     //  Incorrect Phone Number Or Password !
-    switch (message.Error_message) {
-      case "Network Error":
+
+    switch (message.props) {
+      case "Success":
         return setText({
-          First: "Network Error !",
-          Second: "Cannot access to the internet",
-        });
-      case "Incorrect Data":
-        return setText({
-          First: "Incorrect ",
-          Second: "Phone Number Or Password !",
-        });
-      case "Disable Account":
-        return setText({
-          First: "Sorry ",
-          Second: "Your Account Has Been Disable !",
-        });
-      default:
-        return setText({
-          First: "Holy smokes !",
-          Second: "Something seriously bad happened.",
+          First: "Great !",
+          Second: "Your Password Has Been Reset Sucessfully.",
         });
     }
   }, [isClicked]);
@@ -34,8 +20,7 @@ const ErrorMessageLogin = (message) => {
     // console.log("Someting is happening ?");
   };
 
-  // console.log("From Error Message :", message.Error_message);
-  // console.log(typeof message.Error_message);
+ //   console.log("From Error Message :", message.props);
   // console.log(message.status);
   // console.log(text.First);
   // console.log(typeof(text));
@@ -44,7 +29,7 @@ const ErrorMessageLogin = (message) => {
     <>
       {isClicked && (
         <div
-          className="flex flex-col justify-center bg-red-100 border border-red-900 text-red-800 px-4 py-3 rounded relative mt-4"
+          className="flex flex-col justify-center bg-green-100 border border-green-900 text-green-800 px-4 py-3 rounded relative mt-4"
           role="alert"
         >
           {/* Display Error Message */}
@@ -55,7 +40,7 @@ const ErrorMessageLogin = (message) => {
 
           <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
             <svg
-              className="fill-current h-6 w-6 text-red-700"
+              className="fill-current h-6 w-6 text-green-700"
               role="button"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -71,4 +56,4 @@ const ErrorMessageLogin = (message) => {
   );
 };
 
-export default ErrorMessageLogin;
+export default SuccessMessageReset;

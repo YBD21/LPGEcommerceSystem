@@ -2,6 +2,7 @@ import dataBase from "../firebaseConfig.js";
 
 const login = async(phoneNumber,password) => {
     let sendData = {Message : "", Error : ""} ;
+    // console.log(typeof(phoneNumber));
     const startCountRef =
     `SignInWithPhoneNumber/+${phoneNumber.slice(0, 3)}/${phoneNumber.slice(
       3,

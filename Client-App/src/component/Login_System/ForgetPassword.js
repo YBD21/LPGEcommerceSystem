@@ -18,6 +18,7 @@ const ForgetPassword = () => {
   const [flag, setFlag] = useState(false);
   const [result, setResult] = useState("");
  
+  const history = useNavigate();
 
   const isEmptyPhone = () => {
     
@@ -77,8 +78,6 @@ const ForgetPassword = () => {
       // Number found send to verify OTP else throw message
      if (respond.data.Message === true){
       switchToVerify();
-     }else{
-
      }
    }).catch(function (error) {
     // console.log(error.message);
@@ -137,8 +136,9 @@ const ForgetPassword = () => {
       try {
         await result.confirm(otpcode);
         
-        // redirect to resetPassword 
-        
+        // redirect to resetPassword with phonenumber 
+        history(  "/ResetPassword" ,{state:{phonenumber : number
+        }, replace: true })
          
       } catch (error) {
         setErrorOtp({

@@ -238,7 +238,7 @@ export default function Login() {
                 to="/ForgetPassword"
                 className="text-sm text-[#300] hover:underline"
               >
-                Forget Password?
+                Forgot Password?
               </Link>
             </div>
           </div>

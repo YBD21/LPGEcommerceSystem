@@ -101,11 +101,11 @@ const SignUp = () => {
     // "/^[a-zA-Z]+$/" regular expression. This regular expression will match any string that contains only letters from the alphabet, without any other characters or whitespace.
 
     if (! (/^[a-zA-Z]+$/.test(firstname)) && firstname.length !== 0){
-      setErrorFirstName({FirstName : true , Message : "Please Enter Valid Name !"});
+      setErrorFirstName({FirstName : true , Message : "Please Enter Valid First Name !"});
     } 
 
     if (! (/^[a-zA-Z]+$/.test(lastname)) && lastname.length !== 0){
-      setErrorLastName({LastName : true , Message : "Please Enter Valid Name !"});
+      setErrorLastName({LastName : true , Message : "Please Enter Valid Last Name !"});
     }
 
     // console.log(/^[a-zA-Z]+$/.test(firstname));
