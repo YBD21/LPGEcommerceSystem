@@ -12,8 +12,8 @@ import SuccessMessageReset from "./Success_Message/successMessageReset";
 const ResetPassword = () => {
   const { state } = useLocation();
   const history = useNavigate();
-  // const [number, setNumber] = useState("");
-  const [number, setNumber] = useState("9779860694050"); // remove this --- just for a test
+  const [number, setNumber] = useState("");
+  // const [number, setNumber] = useState("9779860694050"); // remove this --- just for a test
 
   const [open, setOpen] = useState(false);
   const [createpassword, setCreatePassword] = useState("");
@@ -27,16 +27,16 @@ const ResetPassword = () => {
 
   const salt = bcrypt.genSaltSync(10);
 
-  // useEffect( () => {
-  //   if (state === null || state === undefined){
-  //     history("/ForgetPassword", { replace: true })
-  //   } else {
-  //     setNumber(state.phonenumber)
-  //     // console.log(state.phonenumber)
-  //   }
-  //     },
-  //     [state,history]
-  // )
+  useEffect( () => {
+    if (state === null || state === undefined){
+      history("/ForgetPassword", { replace: true })
+    } else {
+      setNumber(state.phonenumber)
+      // console.log(state.phonenumber)
+    }
+      },
+      [state,history]
+  )
 
   const emptyFieldValidation = () => {
     if (createpassword.length === 0) {
