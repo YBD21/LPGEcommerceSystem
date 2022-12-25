@@ -154,36 +154,32 @@ const ForgetPassword = () => {
       <div className="w-full p-6 mb-auto ml-auto mr-auto mt-2 bg-white rounded-md lg:max-w-lg">
         <Logo />
 
-        <h1
+        {!flag &&<h1
           className="text-3xl font-semibold text-center text-black"
-          style={{ display: !flag ? "" : "none" }}
         >
           Find Your Account
-        </h1>
+        </h1> }
 
-        <h1
+        {flag && <h1
           className="text-3xl font-semibold text-center text-black"
-          style={{ display: flag ? null : "none" }}
         >
           Validate OTP
-        </h1>
+        </h1>}
 
-        <p
+        {!flag && <p
           className="text-lg font-semibold text-center text-black mt-3"
-          style={{ display: !flag ? "" : "none" }}
         >
           Please enter mobile number to search for your account.
-        </p>
+        </p>}
 
-        <p
+       { flag && <p
           className="text-lg font-semibold text-center text-black mt-3"
-          style={{ display: flag ? "" : "none" }}
         >
          Code has been send to {number?.slice(3)}
-        </p>
+        </p> }
 
         {/* Mobile Number Input Box */}
-        <form className="mt-6" style={{ display: !flag ? "" : "none" }}>
+        { !flag && <form className="mt-6">
           <div className="mb-2">
             <PhoneInput
               className="Phone"
@@ -234,11 +230,11 @@ const ForgetPassword = () => {
               </Link>
             </div>
           </div>
-        </form>
+        </form> }
 
         {/* Verify form box */}
 
-        <form className="mt-6" style={{ display: flag ? "" : "none" }}>
+        {flag && <form className="mt-6">
           {/* Code Box */}
           <div className="mb-2">
             <div className="flex flex-row cursor-pointer">
@@ -284,7 +280,8 @@ const ForgetPassword = () => {
               </Link>
             </div>
           </div>
-        </form>
+        </form> }
+
       </div>
     </div>
   );

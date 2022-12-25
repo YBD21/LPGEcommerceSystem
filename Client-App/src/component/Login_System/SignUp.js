@@ -15,6 +15,7 @@ const SignUp = () => {
   const [createpassword, setCreatePassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [number, setNumber] = useState("");
+   const [flag, setFlag] = useState(true);
 
   const [errorfirstname,setErrorFirstName] = useState({});
   const [errorlastname,setErrorLastName] = useState({});
@@ -25,6 +26,10 @@ const SignUp = () => {
   // handle toggle to show or hide password
   const toggle = () => {
     setOpen(!open);
+  };
+
+  const switchToVerify = () => {
+    setFlag(true);
   };
 
   const Empty_Field_Validation = () => {
@@ -127,13 +132,18 @@ const SignUp = () => {
 
         <Logo />
 
-        <h1 className="text-3xl font-semibold text-center text-black">
+        {!flag && <h1 className="text-3xl font-semibold text-center text-black">
           SignUp
+        </h1>}
+
+        <h1 className="text-3xl font-semibold text-center text-black"
+        style={{ display: flag ? "" : "none" }}
+        >
+        Validate OTP
         </h1>
-        {/* <p className="text-lg font-semibold text-center text-black mt-3">
-          Login and place your order !
-        </p> */}
-        <form className="mt-3">
+        <form className="mt-3"
+        style={{ display: !flag ? "" : "none" }}
+        >
           {/* First Name Input Box */}
           <div className="mb-2">
             <label className="block text-sm font-semibold text-gray-800">
@@ -251,9 +261,7 @@ const SignUp = () => {
               Create Account
             </button>
           </div>
-        </form>
-
-        <div className="mt-4">
+          <div className="mt-4">
 
           <div className="mt-3">
             <Link to="/">
@@ -267,6 +275,9 @@ const SignUp = () => {
             </Link>
           </div>
         </div>
+        </form>
+
+        
       </div>
     </div>
   );
