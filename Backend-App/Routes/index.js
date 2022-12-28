@@ -3,7 +3,7 @@ import cors from 'cors';
 import {login} from './LoginSystem/login.js';
 import { passwordforget } from './LoginSystem/passwordforget.js';
 import { resetPassword } from './LoginSystem/resetpassword.js';
-
+import { createAccount } from './LoginSystem/signup.js';
 
 const app = express();
 
@@ -43,6 +43,11 @@ app.patch('/ResetPassword',async (req,res) => {
    res.json(respond);
 });
 
+app.post('/SignUp', async (req,res) => {
+  let Data = req.body;
+  const respond = await createAccount(Data.PhoneNumber,Data.encPass,Data.FirstName,Data.LastName,Data.Created);
+  res.json(respond);
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

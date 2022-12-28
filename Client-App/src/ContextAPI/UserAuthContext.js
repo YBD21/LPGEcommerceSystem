@@ -11,7 +11,12 @@ export function UserAuthContextProvider({ children }) {
   function setUpRecaptha(number) {
     const recaptchaVerifier = new RecaptchaVerifier(
       "recaptcha-container",
-      {},
+      {
+       'expired-callback' : () => {
+      // Response expired. Ask user to solve reCAPTCHA again.
+        recaptchaVerifier.render();
+       }
+      },
       auth_app
     );
     recaptchaVerifier.render();

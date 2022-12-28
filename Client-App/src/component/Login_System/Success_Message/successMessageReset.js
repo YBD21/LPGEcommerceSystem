@@ -10,8 +10,13 @@ const SuccessMessageReset = (message) => {
       case "Success":
         return setText({
           First: "Great !",
-          Second: "Your Password Has Been Reset Sucessfully.",
+          Second: "Your Password Has Been Reset Sucessfully."
         });
+      case "Account Created" :
+        return setText({
+          First: "Great !",
+          Second: "Your Account Has Been Created Sucessfully."
+        }); 
     }
   }, [isClicked]);
 

@@ -78,6 +78,11 @@ const ForgetPassword = () => {
       // Number found send to verify OTP else throw message
      if (respond.data.Message === true){
       switchToVerify();
+     }else {
+      setErrorNumber({
+        PhoneNumber: true,
+        Message: respond.data.Error
+      })
      }
    }).catch(function (error) {
     // console.log(error.message);
