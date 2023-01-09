@@ -5,7 +5,7 @@ import ForgetPassword from "./component/Login_System/ForgetPassword";
 import Login from "./component/Login_System/Login";
 import ResetPassword from "./component/Login_System/ResetPassword";
 import SignUp from "./component/Login_System/SignUp";
-import { Main } from "./component/Main_Page/Main";
+import { Main } from "./component/Main_Menu_Page/Main";
 
 
 

@@ -20,5 +20,14 @@ Password lenght cannot excide more than 16 character long
 
 Name field lenght at least 2 char long
 
-
 Attach Firebase Database for login in system :
+
+
+Admin Pannel : (Basic works)
+User Listing 
+
+Product CRUD
+
+Front End Product Listing and Product Details.
+
+
