@@ -5,7 +5,7 @@ import ForgetPassword from "./component/Login_System/ForgetPassword";
 import Login from "./component/Login_System/Login";
 import ResetPassword from "./component/Login_System/ResetPassword";
 import SignUp from "./component/Login_System/SignUp";
-import { Main } from "./component/Main_Menu_Page/Main";
+import Product from "./component/Main_Menu_Page/Product";
 
 
 
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         {/* protected route */}
-        <Route path="/Main" element={<Main />} />
+        <Route path="/Store" element={<Product />} />
         <Route path="/Signup" element={<SignUp />} />
         <Route path="/ForgetPassword" element = {<ForgetPassword/>}/>
         <Route path="/ResetPassword" element = {<ResetPassword/>}/>
