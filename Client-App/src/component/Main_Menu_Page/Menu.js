@@ -1,35 +1,15 @@
 import React from "react";
-import Logo_img from "../../dist/image/Logo.png";
 import EverstGas from "../../dist/image/Everest-Gas.png";
 import SagarGas from "../../dist/image/Sagar-Gas.png";
 import ShreeGas from "../../dist/image/Shree-Gas.png";
 
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export const Product = () => {
+export const Menu = () => {
   return (
     <div className="flex flex-col w-full place-items-center">
-      <header className="flex flex-row w-full">
-        {/* Logo */}
-        <div className="w-full m-auto">
-          <img
-            className="w-16"
-            src={Logo_img}
-            alt="Melamchi Online Store Logo"
-          />
-        </div>
-
-        <div className="w-1/2 max-lg:w-full flex justify-between flex-row m-auto">
-          <NotificationsIcon className="svg-icons m-auto" />
-          <AccountCircleIcon className="svg-icons m-auto" />
-          <ShoppingCartIcon className="svg-icons m-auto" />
-        </div>
-      </header>
       {/* Main max-lg: */}
       <main className="grid grid-cols-3 gap-4 my-5 max-lg:flex max-lg:flex-col">
        
@@ -424,4 +404,4 @@ export const Product = () => {
   );
 };
 
-export default Product;
+export default Menu;

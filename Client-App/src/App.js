@@ -5,9 +5,8 @@ import ForgetPassword from "./component/Login_System/ForgetPassword";
 import Login from "./component/Login_System/Login";
 import ResetPassword from "./component/Login_System/ResetPassword";
 import SignUp from "./component/Login_System/SignUp";
-import Product from "./component/Main_Menu_Page/Product";
-
-
+import Menu from "./component/Main_Menu_Page/Menu";
+import NavBar from "./component/Main_Menu_Page/NavBar";
 
 
 function App() {
@@ -15,10 +14,15 @@ function App() {
     <UserAuthContextProvider>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login/>} />
         {/* protected route */}
-        <Route path="/Store" element={<Product />} />
-        <Route path="/Signup" element={<SignUp />} />
+        <Route path="/Store" element={
+          <>
+        <NavBar/>
+        <Menu/>
+          </>
+        } />
+        <Route path="/Signup" element={<SignUp/>} />
         <Route path="/ForgetPassword" element = {<ForgetPassword/>}/>
         <Route path="/ResetPassword" element = {<ResetPassword/>}/>
       </Routes>
