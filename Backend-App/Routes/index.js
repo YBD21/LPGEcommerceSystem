@@ -1,9 +1,12 @@
 import express, { json, urlencoded } from 'express';
 import cors from 'cors';
+import Multer from "multer"
 import {login} from './LoginSystem/login.js';
 import { passwordforget } from './LoginSystem/passwordforget.js';
 import { resetPassword } from './LoginSystem/resetpassword.js';
 import { createAccount } from './LoginSystem/signup.js';
+import { product } from './ProductManagement/Product.js';
+import { FileUpload } from './ProductManagement/FileUpload.js';
 
 const app = express();
 
@@ -20,6 +23,14 @@ app.use(json());
 
 app.use(urlencoded({ extended: false }));
 
+// used for uploading files
+const multer = Multer({
+  storage: Multer.memoryStorage(),
+  limits: {
+      fileSize: 5 * 1024 * 1024 // no larger than 5mb
+  }
+});
+                             
 
 // req = request & res = respond
 app.post('/login', async (req, res) => {
@@ -49,7 +60,29 @@ app.post('/SignUp', async (req,res) => {
   res.json(respond);
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+// app.get('/Product'), (req,res) => {
+//   res.statusCode = 200;
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Cache-Control", "no-cache");
+//   res.setHeader("connection", "keep-alive");
+//   res.setHeader("Content-Type", "text/event-stream");
+ 
+//     res.write(`data: Hello, World!\n\n`);
+//     res.json({
+//       message: "Hello, World!"
+//   });
+// }
 
+app.post('/upload', multer.single('file'), async (req, res) => {
+
+      const respond = await FileUpload(req);
+      res.json(respond);
+      
+});
+
+
+
+app.listen(port,() => {
+  console.log(`Listening on port ${port}`);
+  // console.log(product());
 })

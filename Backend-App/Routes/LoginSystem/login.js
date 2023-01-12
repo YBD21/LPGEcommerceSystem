@@ -1,4 +1,4 @@
-import dataBase from "../firebaseConfig.js";
+import {dataBase} from "../firebaseConfig.js";
 
 const login = async(phoneNumber,password) => {
     let sendData = {Message : "", Error : ""} ;

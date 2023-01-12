@@ -1,4 +1,4 @@
-import dataBase from "../firebaseConfig.js";
+import {dataBase} from "../firebaseConfig.js";
 
 const resetPassword = async (phoneNumber,newPassword) => {
         let sendData = {Message : "", Error : ""};

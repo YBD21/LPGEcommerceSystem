@@ -1,4 +1,4 @@
-import dataBase from "../firebaseConfig.js";
+import {dataBase} from "../firebaseConfig.js";
 
 const passwordforget = async (phoneNumber) => {
     let sendData = {Message : "", Error : ""};

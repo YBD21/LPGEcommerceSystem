@@ -6,9 +6,10 @@ import serviceAccount from "../serviceAccountKey.json" assert { type: "json" };
 // Initialize Firebase
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.FIREBASE_DATABASE_URL
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET
 });
 
  const dataBase = admin.database();
-
- export default dataBase
+ const Bucket = admin.storage().bucket();
+ export {dataBase,Bucket};
