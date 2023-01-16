@@ -498,6 +498,8 @@ const SignUp = () => {
                   type={open === false ? "password" : "text"}
                   value={createpassword}
                   onChange={(e) => setCreatePassword(e.target.value)}
+                  autoComplete ="true"
+                  required = {true}
                   className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
                 />
                 <div className="text-2xl ml-[-2.5rem] mt-2.5">
@@ -526,6 +528,8 @@ const SignUp = () => {
                   type={open === false ? "password" : "text"}
                   value={confirmpassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  autoComplete ="true"
+                  required = {true}
                   className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
                 />
                 <div className="text-2xl ml-[-2.5rem] mt-2.5">

@@ -5,7 +5,7 @@ import ForgetPassword from "./component/Login_System/ForgetPassword";
 import Login from "./component/Login_System/Login";
 import ResetPassword from "./component/Login_System/ResetPassword";
 import SignUp from "./component/Login_System/SignUp";
-import DemoAdmin from "./component/Main_Menu_Page/DemoAdmin";
+import CreateProduct from "./component/Main_Menu_Page/Manage_Product/CreateProduct";
 import Menu from "./component/Main_Menu_Page/Menu";
 import NavBar from "./component/Main_Menu_Page/NavBar";
 
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login/>} />
         {/* protected route */}
-        <Route path="/Demo" element={<DemoAdmin/>} />
+        <Route path="/CreateProduct" element={<CreateProduct/>} />
         <Route path="/Store" element={
           <>
         <NavBar/>
