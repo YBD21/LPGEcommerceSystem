@@ -19,7 +19,7 @@ function DemoAdmin() {
   const handleUpload = () => {
     let formData = new FormData();
     formData.append('file', image.file);
-    axios.post('http://localhost:5000/upload', formData, {
+    axios.post('http://localhost:5000/uploadData', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

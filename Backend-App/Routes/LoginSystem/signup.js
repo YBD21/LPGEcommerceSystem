@@ -20,16 +20,11 @@ const createAccount = async (
     // console.log(snapshot.val());
     // if phone number is found
     if (snapshot.exists()) {
+      userExist = true;
       return (sendData = {
         ...sendData,
         Error: `${snapshot.val().PhoneNumber} is already registered !`,
       });
-      userExist = true;
-    }
-
-    // if number does not match
-    else {
-      userExist = false;
     }
   });
 

@@ -143,7 +143,7 @@ export default function Login() {
 
       if (checkPassword(respond.data.Message) === true) {
         // redirect to Main_Page
-        return history("/Main", { replace: true });
+        return history("/Store", { replace: true });
       }
      
       if (respond.data.Error !== undefined){

@@ -5,8 +5,9 @@ import {login} from './LoginSystem/login.js';
 import { passwordforget } from './LoginSystem/passwordforget.js';
 import { resetPassword } from './LoginSystem/resetpassword.js';
 import { createAccount } from './LoginSystem/signup.js';
-import { product } from './ProductManagement/Product.js';
-import { FileUpload } from './ProductManagement/FileUpload.js';
+import { CreateProduct } from './ProductManagement/CreateProductSystem/createProduct.js';
+import {ImageUpload} from './ProductManagement/CreateProductSystem/imageUpload.js';
+import {CheckExistenceOfImage,CheckExistenceOfProductData} from './ProductManagement/CreateProductSystem/checkExistence.js'
 
 const app = express();
 
@@ -73,12 +74,30 @@ app.post('/SignUp', async (req,res) => {
 //   });
 // }
 
-app.post('/upload', multer.single('file'), async (req, res) => {
+app.post('/uploadData', multer.single('file'), async (req, res) => {
+  let data = req.body;
+  const imageStatus = await CheckExistenceOfImage(req.file);
+  const productDataStatus = await CheckExistenceOfProductData(data);
+  
+  if (!imageStatus.imageError && !productDataStatus.productDataError) {
+    const getUrl = await ImageUpload(req.file);
+    const respond = await CreateProduct(data, getUrl);
+    return res.json(respond);
+  }
+   // imageExist but productData is not
+  if (imageStatus.imageError && !productDataStatus.productDataError){
+    // get the image name and url 
+    const getUrl = await ImageUpload(req.file);
+    // create product
+    const respond = await CreateProduct(data, getUrl);
+    return res.json(respond);
+  }
 
-      const respond = await FileUpload(req);
-      res.json(respond);
-      
+  let error = {...imageStatus, ...productDataStatus};
+  return res.json(error);
 });
+
+
 
 
 
