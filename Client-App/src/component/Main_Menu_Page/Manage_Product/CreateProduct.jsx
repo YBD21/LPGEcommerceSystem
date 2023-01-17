@@ -3,6 +3,24 @@ import axios from "axios";
 
 function CreateProduct() {
   const [image, setImage] = useState(null);
+  const [imageUrl,setImageUrl] = useState('');
+  
+  const [productName,setProductName] = useState('');
+  const [qty,setQty] = useState(0);
+  
+  const [errorProductName,setErrorProductName] = useState('');
+  const [errorOnQty,setErrorOnQty] = useState('');
+
+  const checkName = () => {
+    let count = 0;
+    
+    if (productName.length <=3 && productName.length !==0){
+        // send an error message
+    }
+
+  };
+
+
 
   const handleChange = (e) => {
     let img = e.target.files[0];
@@ -12,13 +30,16 @@ function CreateProduct() {
         img: img,
         data: reader.result,
       });
+     setImageUrl(reader.result);
     };
     reader.readAsDataURL(img);
   };
 
   const uploadImage = () => {
+    let data = {productName : productName, Qty : qty};
     let formData = new FormData();
     formData.append("img", image.img);
+    formData.append("data",JSON.stringify(data));
     axios
       .post("http://localhost:5000/uploadData", formData, {
         headers: {
@@ -32,13 +53,19 @@ function CreateProduct() {
         console.log(error);
       });
   };
+  
 
   return (
-    <div className="flex flex-col mx-1">
-      <div className="my-5">
+    <div className="flex flex-col mx-2">
+      <div className="flex flex-col my-5">
         <label className="block text-sm font-semibold text-gray-800">
           Product Image
         </label>
+        
+        {imageUrl && 
+        <img src={imageUrl} className="ml-2 my-3 w-48 h-48 rounded-lg outline cursor-pointer" alt="Uploaded Image" />
+        
+        }
         <div className="">
           {/* only accept image */}
           <input
@@ -48,6 +75,7 @@ function CreateProduct() {
             className="w-full px-5 py-2.5 tracking-wide 
       text-black font-medium text-s text-center"
           />
+   
         </div>
       </div>
 
@@ -61,6 +89,8 @@ function CreateProduct() {
             placeholder="Enter Product Name"
             className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md 
             focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
+            value = {productName}
+            onChange={(e) => setProductName(e.target.value)}
           />
         </div>
       </div>
@@ -75,6 +105,8 @@ function CreateProduct() {
             placeholder="Enter Quantity"
             className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black
              focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
+            value={qty}
+            onChange={(e) => setQty(e.target.value)} 
           />
         </div>
       </div>
@@ -83,6 +115,7 @@ function CreateProduct() {
         className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s 
             text-center mr-3 mb-2"
+        onClick={uploadImage}
       >
         Create Product
       </button>

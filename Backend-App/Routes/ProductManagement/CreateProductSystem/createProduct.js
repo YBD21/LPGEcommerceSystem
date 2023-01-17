@@ -1,45 +1,18 @@
 import { dataBase } from "../../firebaseConfig.js";
 
-const CreateProduct = async (Data, imageData) => {
+const CreateProduct = async (data, imageData) => {
   let createDate = new Date().toString();
-  let sendData = { Message: "", Error: "", Data : Data};
-  /*
-  let UploadData = {
-    ProductName: Data.productName,
-    ImageLink: imageUrl,
-    ProductType: {
-      New: {
-        Qty: 10,
-        Price: 4600,
-      },
-      Refill: {
-        Qty: 10,
-        Price: 1800,
-      }
-    }
-  };
-*/
-let productName ="Sagar Gas" 
-// str.split(" ").join("");
-//   const startCountRef = `ProductList/${Data.productName}`;
- const startCountRef = `ProductList/${productName.split(" ").join("")}`;
+  let sendData = { Message: "", Error: ""};
+
+ const startCountRef = `ProductList/${data.productName.split(" ").join("")}`;
  
  const refToCreateProduct = dataBase.ref(startCountRef);
 
   await refToCreateProduct.update(
     ({
-        ProductName:"Sagar Gas",
+        ProductName:data.productName,
         ImageInfo: imageData,
-        ProductType: {
-          New: {
-            Qty: 10,
-            Price: 4600,
-          },
-          Refill: {
-            Qty: 10,
-            Price: 1800,
-          }
-        },
+        Quantity: +data.Qty, // + convert string into number : the unary plus operator
         Created : createDate
     }),
     (error) => {

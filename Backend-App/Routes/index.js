@@ -74,8 +74,9 @@ app.post('/SignUp', async (req,res) => {
 //   });
 // }
 
-app.post('/uploadData', multer.single('file'), async (req, res) => {
-  let data = req.body;
+app.post('/uploadData', multer.single('img'), async (req, res) => {
+  let data = JSON.parse(req.body.data);
+  // console.log(data);
   const imageStatus = await CheckExistenceOfImage(req.file);
   const productDataStatus = await CheckExistenceOfProductData(data);
   
