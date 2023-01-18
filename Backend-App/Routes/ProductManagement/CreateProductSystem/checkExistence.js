@@ -15,19 +15,16 @@ const CheckExistenceOfImage = async (requestedDataFile) => {
     return sendData;
 };
 
-const CheckExistenceOfProductData = async (Data) => {
+const CheckExistenceOfProductData = async (data) => {
     let sendData = {};
-    let productName ="Sagar Gas";
-    const startCountRef = `ProductList/${productName.split(" ").join("")}`;
+    const startCountRef = `ProductList/LPGasList/${data.productName.split(" ").join("")}`;
     const refToCheckProductExist = dataBase.ref(startCountRef);
     await refToCheckProductExist.once("value", (snapshot) => {
-        // console.log(snapshot.val());
         // check if same product name is in database
         if(snapshot.exists()){
-         
           return (
             sendData = {
-              productDataError : `${productName} already exist !`
+              productDataError : `${data.productName} already exist !`
             }
           )
         } 

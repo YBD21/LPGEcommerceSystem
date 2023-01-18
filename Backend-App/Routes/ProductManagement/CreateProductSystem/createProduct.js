@@ -4,7 +4,7 @@ const CreateProduct = async (data, imageData) => {
   let createDate = new Date().toString();
   let sendData = { Message: "", Error: ""};
 
- const startCountRef = `ProductList/${data.productName.split(" ").join("")}`;
+ const startCountRef = `ProductList/LPGasList/${data.productName.split(" ").join("")}`;
  
  const refToCreateProduct = dataBase.ref(startCountRef);
 
@@ -12,7 +12,7 @@ const CreateProduct = async (data, imageData) => {
     ({
         ProductName:data.productName,
         ImageInfo: imageData,
-        Quantity: +data.Qty, // + convert string into number : the unary plus operator
+        InStock: +data.Qty, // + convert string into number : the unary plus operator
         Created : createDate
     }),
     (error) => {

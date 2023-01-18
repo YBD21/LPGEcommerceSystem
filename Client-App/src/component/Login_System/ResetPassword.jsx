@@ -13,7 +13,6 @@ const ResetPassword = () => {
   const { state } = useLocation();
   const history = useNavigate();
   const [number, setNumber] = useState("");
-  // const [number, setNumber] = useState("9779860694050"); // remove this --- just for a test
 
   const [open, setOpen] = useState(false);
   const [createpassword, setCreatePassword] = useState("");

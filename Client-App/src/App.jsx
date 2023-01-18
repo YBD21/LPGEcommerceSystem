@@ -5,7 +5,7 @@ import ForgetPassword from "./component/Login_System/ForgetPassword";
 import Login from "./component/Login_System/Login";
 import ResetPassword from "./component/Login_System/ResetPassword";
 import SignUp from "./component/Login_System/SignUp";
-import CreateProduct from "./component/Main_Menu_Page/Manage_Product/CreateProduct";
+import CreateLPGasProduct from "./component/Main_Menu_Page/Admin/Manage_Product/CreateLPGasProduct";
 import Menu from "./component/Main_Menu_Page/Menu";
 import NavBar from "./component/Main_Menu_Page/NavBar";
 
@@ -17,7 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login/>} />
         {/* protected route */}
-        <Route path="/CreateProduct" element={<CreateProduct/>} />
+        <Route path="/CreateLPGProduct" element={<CreateLPGasProduct/>} />
+        
         <Route path="/Store" element={
           <>
         <NavBar/>

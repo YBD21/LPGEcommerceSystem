@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const SuccessMessageReset = (message) => {
+const SuccessMessageAdmin = (message) => {
   const [isClicked, setIsClicked] = useState(message.status);
   const [text, setText] = useState({});
   useEffect(() => {
@@ -8,13 +8,8 @@ const SuccessMessageReset = (message) => {
       case "Success":
         return setText({
           First: "Great !",
-          Second: "Your Password Has Been Reset Sucessfully."
+          Second: "Your Product Has Been Created Sucessfully.",
         });
-      case "Account Created" :
-        return setText({
-          First: "Great !",
-          Second: "Your Account Has Been Created Sucessfully."
-        }); 
     }
   }, [isClicked]);
 
@@ -23,16 +18,11 @@ const SuccessMessageReset = (message) => {
     // console.log("Someting is happening ?");
   };
 
- //   console.log("From Error Message :", message.props);
-  // console.log(message.status);
-  // console.log(text.First);
-  // console.log(typeof(text));
-
   return (
     <>
       {isClicked && (
         <div
-          className="flex flex-col justify-center bg-green-100 border border-green-900 text-green-800 px-4 py-3 rounded relative mt-4"
+          className="flex flex-col justify-center bg-green-100 border border-green-900 text-green-800 px-4 py-3 rounded relative mb-5"
           role="alert"
         >
           {/* Display Error Message */}
@@ -59,4 +49,4 @@ const SuccessMessageReset = (message) => {
   );
 };
 
-export default SuccessMessageReset;
+export default SuccessMessageAdmin;

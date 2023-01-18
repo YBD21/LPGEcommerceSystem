@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
+import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import axios from "axios";
 
-function CreateProduct() {
+function CreateLPGProduct() {
   const [image, setImage] = useState(null);
   const [imageUrl,setImageUrl] = useState('');
   
   const [productName,setProductName] = useState('');
   const [qty,setQty] = useState(0);
   
-  const [errorProductName,setErrorProductName] = useState('');
-  const [errorOnQty,setErrorOnQty] = useState('');
+  const [errorProductName,setErrorProductName] = useState({});
+  const [errorOnQty,setErrorOnQty] = useState({});
+  const [errorOnImage,setErrorOnImage] = useState({});
+
+  const [success, setSuccess] = useState(null);
 
   const checkName = () => {
     let count = 0;
@@ -20,20 +25,20 @@ function CreateProduct() {
 
   };
 
-
-
   const handleChange = (e) => {
-    let img = e.target.files[0];
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      setImage({
-        img: img,
-        data: reader.result,
-      });
-     setImageUrl(reader.result);
-    };
-    reader.readAsDataURL(img);
-  };
+    if (e.target.files[0]) {
+        let reader = new FileReader();
+        reader.onloadend = () => {
+            setImage({
+                img: e.target.files[0],
+                data: reader.result,
+            });
+            setImageUrl(reader.result);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    }
+};
+
 
   const uploadImage = () => {
     let data = {productName : productName, Qty : qty};
@@ -47,16 +52,23 @@ function CreateProduct() {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
+        if (response.data.Message === true){
+          setSuccess("Success");
+        }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setError(error.message);
       });
+    
+     
   };
   
 
   return (
     <div className="flex flex-col mx-2">
+      <strong className="w-full text-center text-2xl p-3">Create LPG Product</strong>
       <div className="flex flex-col my-5">
         <label className="block text-sm font-semibold text-gray-800">
           Product Image
@@ -75,8 +87,9 @@ function CreateProduct() {
             className="w-full px-5 py-2.5 tracking-wide 
       text-black font-medium text-s text-center"
           />
-   
         </div>
+        {/* Error Message For Image */}
+        {errorOnImage.Image && <ErrorTextMessageAdmin props = {errorOnImage.Message}/>}
       </div>
 
       <div className="mb-5">
@@ -110,11 +123,13 @@ function CreateProduct() {
           />
         </div>
       </div>
-      
+      {/* Success Message */}
+      {success && <SuccessMessageAdmin props = {success} status = {true}/> }
+
       <button
         className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s 
-            text-center mr-3 mb-2"
+            text-center mr-3"
         onClick={uploadImage}
       >
         Create Product
@@ -123,4 +138,4 @@ function CreateProduct() {
   );
 }
 
-export default CreateProduct;
+export default CreateLPGProduct;
