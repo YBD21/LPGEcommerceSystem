@@ -29,8 +29,8 @@ User Listing
 
 Product CRUD : 
 
-Create Product 
-Edit Gas Price
+Create Product  --- Done
+Edit Gas Price  
 Edit Product :
 Remove Product : here just move the data from productList to RemovedProductList in Realtime Database.  
 
