@@ -25,12 +25,12 @@ Attach Firebase Database for login in system :
 
 Admin Pannel : (Basic works)
 
-User Listing 
+User Listing : second 
 
 Product CRUD : 
 
 Create Product  --- Done
-Edit Gas Price  
+Edit Gas Price  first 
 Edit Product :
 Remove Product : here just move the data from productList to RemovedProductList in Realtime Database.  
 
