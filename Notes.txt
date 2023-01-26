@@ -38,3 +38,16 @@ Remove Product : here just move the data from productList to RemovedProductList 
 Front End Product Listing and Product Details.
 
 
+
+let createDate = new Date(); 
+let timestamp = Date.parse(createDate);
+console.log(createDate.toString());
+console.log(timestamp);
+let dateNow = new Date(timestamp);
+console.log(dateNow.toString());
+
+things to look for :
+ need something to auto refresh old rate , current rate from server.
+ 
+ 
+

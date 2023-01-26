@@ -1,20 +1,41 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const EditGasPrice = () => {
   const [prices, setPrices] = useState({ current: 4600, old: 4000, refillCurrent: 1800, refillOld: 1600 });
+  
+  const [newGasRate,setNewGasRate] = useState(0);
+  const [refillGasRate,setRefillGasRate] = useState(0);
+
+  const setGasRate = () => {
+    axios
+    .post("http://localhost:5000/updateGasRate",{
+      RefillRate : refillGasRate,
+      NewGasRate : newGasRate
+    })
+    .then( respond => {
+      if (respond.data.Message === true){
+          // send a success message  
+      }
+    })
+    .catch (error => {
+        console.log(error.message);
+    })
+  };
+
   return (
     <div className="flex flex-col mx-2 overflow-hidden">
       <strong className="w-full text-center text-2xl p-3">
-        Update Gas Price
+        Update Gas Rate
       </strong>
-      {/* Display Old Price Here */}
+      {/* Display Old Rate Here */}
       <table className="w-3/4 max-lg:w-full text-left table-collapse border-2 border-black mx-auto">
         <thead>
           <tr className=''>
             <th className="px-4 py-2 text-lg font-medium text-center text-gray-800 bg-gray-300">Gas Prices</th>
-            <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-orange-300">Old Price</th>
-            <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-green-300">Current Price</th>
-            <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-yellow-200">Purposed Price</th>
+            <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-orange-300">Old Rate</th>
+            <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-green-300">Current Rate</th>
+            <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-yellow-200">Purposed Rate</th>
           </tr>
         </thead>
         <tbody>
@@ -34,38 +55,42 @@ const EditGasPrice = () => {
         </tbody>
       </table>
     
-      {/* New Refill Price Here */}
+      {/* New Refill Rate Here */}
       <div className="flex flex-col my-5">
         <strong className="w-full text-center text-lg p-3">
           Refill Gas
         </strong>
         <label className="block text-sm font-semibold text-gray-800">
-          Refill Price
+         Set New Refill Rate
         </label>
         <div className="relative flex flex-row cursor-pointer">
           <input
             type="number"
-            placeholder="Enter Refill Price"
+            placeholder="Enter Refill Rate"
             className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md 
             focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
+            value = {refillGasRate}
+            onChange = {(e) => setRefillGasRate(e.target.value)}
           />
         </div>
       </div>
-
-      {/* New Price  */}
+    
+      {/* New Rate  */}
       <div className="flex flex-col my-5">
         <strong className="w-full text-center text-lg p-3">
           New Gas
         </strong>
         <label className="block text-sm font-semibold text-gray-800">
-          New Price
+          Set New Rate
         </label>
         <div className="relative flex flex-row cursor-pointer">
           <input
             type="number"
-            placeholder="Enter Refill Price"
+            placeholder="Enter Refill Rate"
             className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md 
             focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
+            value={newGasRate}
+            onChange={(e) => setNewGasRate(e.target.value)}
           />
         </div>
       </div>
@@ -76,8 +101,9 @@ const EditGasPrice = () => {
           className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s 
             text-center mr-3"
+            onClick={setGasRate}
         >
-          Update Price
+          Update Rate
         </button>
       </div>
     </div>
