@@ -19,8 +19,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-phone-input-2": "^2.15.1",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "socket.io-client": "^4.5.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,4 +1,5 @@
 import { dataBase } from "../../firebaseConfig.js";
+import fs from 'fs';
 
 const updateGasRate = async (RefillRate,NewGasRate) => {
   let sendData = { Message: "", Error: "" };
@@ -17,6 +18,7 @@ const updateGasRate = async (RefillRate,NewGasRate) => {
     },
     (error) => {
       if (error === null) {
+        sendGasRate();
         return (sendData = { ...sendData, Message: true });
       } else {
         return (sendData = { ...sendData, Error: error.message });
@@ -33,7 +35,7 @@ const sendGasRate = async () => {
   const refToUpdateRate = dataBase.ref(pathToUpdate);
 
   try {
-      refToUpdateRate.limitToLast(2).on("value", (snapshot) => {
+       await refToUpdateRate.limitToLast(2).once("value", (snapshot) => {
       // console.log(snapshot.val());
       let data = snapshot.val();
 
@@ -44,7 +46,9 @@ const sendGasRate = async () => {
         currentData: data[keys[1]],
         Error: null
       };
+     updateGasRatefile(sendData);
     });
+    
   } catch (error) {
     sendData.Error = error.message;
   }
@@ -52,4 +56,30 @@ const sendGasRate = async () => {
   return sendData;
 };
 
-export { updateGasRate, sendGasRate };
+ const updateGasRatefile = (data) => {
+    const jsonData = JSON.stringify(data);
+    const filePath = 'gasRate.json';
+    if (!fs.existsSync(filePath)) {
+      fs.writeFileSync(filePath, jsonData);
+      // console.log('File created successfully');
+  } else {
+      // console.log('File already exists');
+      fs.writeFileSync(filePath, jsonData);
+  }
+ }
+
+ const readGasRateFile = async() => {
+   const filePath = 'gasRate.json';
+
+   // read the file 
+   const jsonData = fs.readFileSync(filePath);
+
+   //Parse the JSON data
+   const data = await JSON.parse(jsonData);
+
+   return data;
+ 
+ }
+
+
+export { updateGasRate, readGasRateFile };

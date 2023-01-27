@@ -49,5 +49,22 @@ console.log(dateNow.toString());
 things to look for :
  need something to auto refresh old rate , current rate from server.
  
- 
+ io.on('connection', (socket) => {
+  fs.watchFile(filePath,async (present,past) =>{
+   if (present.mtime !== past.mtime) {
+    socket.on('getGasRate', async () => {
+    const respond = await readGasRateFile();
+    socket.emit('gasRate',respond);
+  })
+   }
+  });
+
+  socket.on('disconnect', () => {
+    fs.unwatchFile(filePath);
+  });
+  // socket.on('getGasRate', async () => {
+  //   const respond = await readGasRateFile();
+  //   socket.emit('gasRate',respond);
+  // })
+})
 
