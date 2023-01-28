@@ -5,11 +5,16 @@ const SuccessMessageAdmin = (message) => {
   const [text, setText] = useState({});
   useEffect(() => {
     switch (message.props) {
-      case "Success":
+      case 'Success':
         return setText({
           First: "Great !",
           Second: "Your Product Has Been Created Sucessfully.",
         });
+      case 'getGasRate':
+        return setText({
+          First: "Great !",
+          Second: "Rate Has Been Updated Sucessfully.",
+        });  
     }
   }, [isClicked]);
 
