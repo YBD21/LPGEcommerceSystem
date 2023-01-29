@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { QueryClient, QueryClientProvider } from "react-query";
-const queryClient = new QueryClient();
+import { StateProvider } from "./ContextAPI/StateProvider";
+import reducer, { initialState } from "./ContextAPI/Reducer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+      <StateProvider initialState={initialState} reducer={reducer}>
+        <App />
+      </StateProvider>
   </React.StrictMode>
 );
