@@ -17,11 +17,13 @@ import {
 import {
   updateGasRate,
   readGasRateFile,
+  sendGasRate,
 } from "./ProductManagement/UpdateProduct/updateGasRate.js";
 
 const app = express();
-// connecting to same localhost as app for io
+// connecting to same localhost as app for socket.io
 const httpServer = createServer(app);
+// Enable CORS for the socket connection
 const io = new Server(httpServer, {
   cors: { origin: "http://localhost:3000" },
 });
@@ -34,9 +36,6 @@ app.use(
     credentials: true,
   })
 );
-
-// Enable CORS for the socket connection
-// io.origins('http://localhost:3000');
 
 app.use(json());
 
@@ -90,23 +89,28 @@ app.post("/updateGasRate", async (req, res) => {
   res.json(respond);
 });
 
-const filePath = "gasRate.json";
+const filePath = "BufferData/gasRate.json";
 
 io.on("connection", (socket) => {
-    // Send the current gas rate data when the client connects
-    socket.on('getGasRate', async () => {
+  // Send the current gas rate data when the client connects
+  socket.on("getGasRate", async () => {
     const respond = await readGasRateFile();
-    socket.emit('gasRate',respond);
-  })
-  
-  fs.watch(filePath,async (eventType,filename) =>
-  {
-    if (eventType === 'change' && filename === filePath){
-      const respond = await readGasRateFile();
-      socket.emit("gasRate", respond);
-    }
+    socket.emit("gasRate", respond);
   });
- 
+
+  try {
+    fs.watch(filePath, async (eventType, filename) => {
+      if (eventType === "change" && filename === filePath) {
+        const respond = await readGasRateFile();
+        socket.emit("gasRate", respond);
+      }
+    });
+  } catch (error) {
+    // if file not found to watch
+    sendGasRate();
+  }
+
+  // stop watch when all are disconnected
   socket.on("disconnect", () => {
     fs.unwatchFile(filePath);
   });

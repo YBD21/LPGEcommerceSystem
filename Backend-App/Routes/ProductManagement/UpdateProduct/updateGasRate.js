@@ -58,7 +58,7 @@ const sendGasRate = async () => {
 
  const updateGasRatefile = (data) => {
     const jsonData = JSON.stringify(data);
-    const filePath = 'gasRate.json';
+    const filePath = 'BufferData/gasRate.json';
     if (!fs.existsSync(filePath)) {
       fs.writeFileSync(filePath, jsonData);
       // console.log('File created successfully');
@@ -69,7 +69,7 @@ const sendGasRate = async () => {
  }
 
  const readGasRateFile = async() => {
-   const filePath = 'gasRate.json';
+   const filePath = 'BufferData/gasRate.json';
 
    // read the file 
    const jsonData = fs.readFileSync(filePath);
@@ -82,4 +82,4 @@ const sendGasRate = async () => {
  }
 
 
-export { updateGasRate, readGasRateFile };
+export { updateGasRate, readGasRateFile, sendGasRate };
