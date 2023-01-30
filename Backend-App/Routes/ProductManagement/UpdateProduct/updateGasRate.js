@@ -59,13 +59,11 @@ const sendGasRate = async () => {
  const updateGasRatefile = (data) => {
     const jsonData = JSON.stringify(data);
     const filePath = 'BufferData/gasRate.json';
-    if (!fs.existsSync(filePath)) {
+    try {
       fs.writeFileSync(filePath, jsonData);
-      // console.log('File created successfully');
-  } else {
-      // console.log('File already exists');
-      fs.writeFileSync(filePath, jsonData);
-  }
+    } catch (error) {
+      console.log(error.message);
+    }
  }
 
  const readGasRateFile = async() => {

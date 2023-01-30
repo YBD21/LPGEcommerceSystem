@@ -19,6 +19,9 @@ import {
   readGasRateFile,
   sendGasRate,
 } from "./ProductManagement/UpdateProduct/updateGasRate.js";
+import {
+  updateDeliveryRate, readDeliveryRatefile, sendDeliveryRate
+} from "./ProductManagement/UpdateProduct/updateDeliveryRate.js";
 
 const app = express();
 // connecting to same localhost as app for socket.io
@@ -83,14 +86,20 @@ app.post("/SignUp", async (req, res) => {
   res.json(respond);
 });
 
+app.post("/updateDeiveryRate", async (req, res) => {
+  let data = req.body;
+  const respond = await updateDeliveryRate(data.RefillRate,data.NewGasRate);
+  res.json(respond);
+});
+
 app.post("/updateGasRate", async (req, res) => {
   let data = req.body;
   const respond = await updateGasRate(data.RefillRate, data.NewGasRate);
   res.json(respond);
 });
 
-const filePath = "BufferData/gasRate.json";
-
+const filePathGasRate = "BufferData/gasRate.json";
+const filePathDeliveryRate = 'BufferData/deliveryRate.json';
 io.on("connection", (socket) => {
   // Send the current gas rate data when the client connects
   socket.on("getGasRate", async () => {
@@ -98,9 +107,15 @@ io.on("connection", (socket) => {
     socket.emit("gasRate", respond);
   });
 
+  socket.on("getDeliveryRate", async () => {
+    const respond = await readDeliveryRatefile();
+    socket.emit("deliveryRate", respond);
+  });
+
   try {
-    fs.watch(filePath, async (eventType, filename) => {
-      if (eventType === "change" && filename === filePath) {
+    // look for change in gasRateFile
+    fs.watch(filePathGasRate, async (eventType, filename) => {
+      if (eventType === "change" && filename === filePathGasRate) {
         const respond = await readGasRateFile();
         socket.emit("gasRate", respond);
       }
@@ -110,9 +125,23 @@ io.on("connection", (socket) => {
     sendGasRate();
   }
 
+  try {
+    // look for change in gasRateFile
+    fs.watch(filePathDeliveryRate, async (eventType, filename) => {
+      if (eventType === "change" && filename === filePathDeliveryRate) {
+        const respond = await readDeliveryRatefile();
+        socket.emit("deliveryRate", respond);
+      }
+    });
+  } catch (error) {
+    // if file not found to watch
+    sendDeliveryRate();
+  }
+
   // stop watch when all are disconnected
   socket.on("disconnect", () => {
-    fs.unwatchFile(filePath);
+    fs.unwatchFile(filePathGasRate);
+    fs.unwatchFile(filePathDeliveryRate);
   });
 });
 

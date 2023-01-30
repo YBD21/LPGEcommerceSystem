@@ -1,27 +1,50 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect, useRef } from "react";
 import axios from "axios";
+import openSocket from "socket.io-client";
 import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
 
 const EditDeiveryPrice = () => {
- 
+  const socketRef = useRef(null);
   const [refillRate,setRefillRate] = useState(0);
   const [newRate,setNewRate] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(null);
-  const [gasRateData, setGasRateData] = useState(null);
+  const [deliveryRateData,setDeliveryRateData] = useState(null);
 
   const [errorOnRefill, setErrorOnRefill] = useState({});
   const [errorOnNewRate, setErrorOnNewRate] = useState({});
   const [errorMessageBox, setErrorMessageBox] = useState(null);
 
-  const [prices, setPrices] = useState({
-    current: 0,
-    old: 0,
-    refillCurrent: 100,
-    refillOld: 75,
-  });
-  
+   const handleConnect = () => {
+    socketRef.current = openSocket("http://localhost:5000");
+
+    //  socketRef.current.on('connect', () => {
+    //   console.log('Connected to socket.io server');
+    // });
+
+    // socketRef.current.on('disconnect', () => {
+    //   console.log('Disconnected from socket.io server');
+    // });
+    socketRef.current.emit("getDeliveryRate");
+
+    socketRef.current.on("deliveryRate", (data) => {
+     setDeliveryRateData(data);
+    });
+  };
+
+  const handleDisconnect = () => {
+    socketRef.current.disconnect();
+  };
+ 
+    useEffect(() => {
+    //call to backend for connection
+    handleConnect();
+    return () => {
+      handleDisconnect();
+    };
+  }, []);
+
   // handel error here for refill and new
   const checkRates = () => {
     let count = 0;
@@ -62,6 +85,7 @@ const EditDeiveryPrice = () => {
   };
 
   const sendUpdateDeiveryRate = () =>{
+    setUpdateStatus(null);
     setErrorMessageBox(null); // reset box
     let status = checkRates();
     if (status === 0) {
@@ -108,13 +132,13 @@ const EditDeiveryPrice = () => {
               Refill
             </th>
             <td className="px-4 py-2 border-2 border-black text-center bg-orange-100">
-              Rs. {prices.refillOld}
+             Rs. {deliveryRateData?.oldData.Refill_Delivery_Rate}
             </td>
             <td className="px-4 py-2 border-2 border-black text-center bg-green-200">
-              Rs. {prices.refillCurrent}
+               Rs. {deliveryRateData?.currentData.Refill_Delivery_Rate}
             </td>
             <td className="px-4 py-2 border-2 border-black text-center bg-yellow-100">
-              Rs.{150}
+              Rs.{refillRate === null ? 0 : refillRate}
             </td>
           </tr>
           <tr>
@@ -122,13 +146,13 @@ const EditDeiveryPrice = () => {
               New
             </th>
             <td className="px-4 py-2 border-2 border-black text-center bg-orange-200">
-              Rs. {prices.old}
+              Rs. {deliveryRateData?.oldData.New_Delivery_Rate}
             </td>
             <td className="px-4 py-2 border-2 border-black text-center bg-green-100">
-              Rs. {prices.current}
+               Rs. {deliveryRateData?.currentData.New_Delivery_Rate}
             </td>
             <td className="px-4 py-2 border-2 border-black text-center bg-yellow-200">
-              Rs.{0}
+              Rs.{newRate === null ? 0 : newRate}
             </td>
           </tr>
         </tbody>

@@ -1,0 +1,13 @@
+{
+  "oldData": {
+    "Created": "Mon Jan 30 2023 14:13:06 GMT+0545 (Nepal Time)",
+    "New_Delivery_Rate": 0,
+    "Refill_Delivery_Rate": 75
+  },
+  "currentData": {
+    "Created": "Mon Jan 30 2023 14:13:12 GMT+0545 (Nepal Time)",
+    "New_Delivery_Rate": 0,
+    "Refill_Delivery_Rate": 100
+  },
+  "Error": null
+}

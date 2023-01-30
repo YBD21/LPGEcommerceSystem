@@ -86,6 +86,7 @@ const EditGasPrice = () => {
   };
 
   const sendUpdateGasRate = () => {
+    setUpdateStatus(null);
     setErrorMessageBox(null); // reset box
     let status = checkRates();
     if (status === 0) {
