@@ -38,6 +38,14 @@ const EditGasPrice = () => {
     socketRef.current.disconnect();
   };
 
+  useEffect(() => {
+    //call to backend for connection
+    handleConnect();
+    return () => {
+      handleDisconnect();
+    };
+  }, []);
+  
   // handel error here for refill and new
   const checkRates = () => {
     let count = 0;
@@ -84,15 +92,6 @@ const EditGasPrice = () => {
       updateGasRate();
     }
   };
-
-  useEffect(() => {
-    //call to backend for connection
-    handleConnect();
-    return () => {
-      handleDisconnect();
-    };
-  }, []);
-
 
   useEffect(() => {
     // erase error message at the begining

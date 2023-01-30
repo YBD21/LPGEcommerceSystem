@@ -1,12 +1,81 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
+import axios from "axios";
+import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
+import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
+import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
 
 const EditDeiveryPrice = () => {
+ 
+  const [refillRate,setRefillRate] = useState(0);
+  const [newRate,setNewRate] = useState(0);
+  const [updateStatus, setUpdateStatus] = useState(null);
+  const [gasRateData, setGasRateData] = useState(null);
+
+  const [errorOnRefill, setErrorOnRefill] = useState({});
+  const [errorOnNewRate, setErrorOnNewRate] = useState({});
+  const [errorMessageBox, setErrorMessageBox] = useState(null);
+
   const [prices, setPrices] = useState({
     current: 0,
     old: 0,
     refillCurrent: 100,
     refillOld: 75,
   });
+  
+  // handel error here for refill and new
+  const checkRates = () => {
+    let count = 0;
+    if (newRate < 0) {
+      setErrorOnNewRate({
+        status: true,
+        Message: "Please enter a valid Rate, it should be greater than zero.",
+      });
+      count++;
+    }
+
+    if (refillRate < 0) {
+      setErrorOnRefill({
+        status: true,
+        Message: "Please enter a valid Rate, it should be greater than zero.",
+      });
+      count++;
+    }
+    return count;
+  };
+  
+  const updateDeiveryRate = () => {
+    axios
+    .post("http://localhost:5000/updateDeiveryRate", {
+      RefillRate: refillRate,
+      NewGasRate: newRate,
+    })
+    .then((respond) => {
+      if (respond.data.Message === true) {
+        // send a success message
+        setUpdateStatus("getGasRate");
+      }
+    })
+    .catch((error) => {
+      // console.log(error.message);
+       setErrorMessageBox(error.message);
+    });
+  };
+
+  const sendUpdateDeiveryRate = () =>{
+    setErrorMessageBox(null); // reset box
+    let status = checkRates();
+    if (status === 0) {
+      updateDeiveryRate();
+    }
+  };
+
+  useEffect(() => {
+    // erase error message at the begining
+    setErrorOnRefill({});
+    setErrorOnNewRate({});
+
+  }, [newRate,refillRate]);
+
   return (
     <div className="flex flex-col mx-2 overflow-hidden">
       <strong className="w-full text-center text-2xl p-3">
@@ -64,6 +133,13 @@ const EditDeiveryPrice = () => {
           </tr>
         </tbody>
       </table>
+  
+      <div className="mt-10">      
+        {/* Success Message */}
+        {updateStatus && (
+          <SuccessMessageAdmin props={updateStatus} status={true} />
+        )}
+      </div>
 
       {/* New Refill Charge Here */}
       <div className="flex flex-col my-5">
@@ -76,19 +152,17 @@ const EditDeiveryPrice = () => {
             placeholder="Enter Charge"
             className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md 
             focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
+            value = {refillRate}
+            onChange={(e) => setRefillRate(e.target.value)}
           />
         </div>
+             {/* Error Message For New Refill Rate */}
+            {errorOnRefill.status && (
+          <ErrorTextMessageAdmin props={errorOnRefill.Message} />
+        )}
       </div>
-      {/* Update Button */}
-      <div className="my-5">
-        <button
-          className="w-full px-5 py-2.5 tracking-wide
-            text-white bg-black font-medium rounded-lg text-s 
-            text-center mr-3"
-        >
-          Update Refill Charge
-        </button>
-      </div>
+     
+    
       {/* New Charge  */}
       <div className="flex flex-col my-5">
         <strong className="w-full text-center text-lg p-3">
@@ -100,18 +174,27 @@ const EditDeiveryPrice = () => {
             placeholder="Enter Charge"
             className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md 
             focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
+            value = {newRate}
+            onChange={(e) => setNewRate(e.target.value)}
           />
         </div>
+                  {/* Error Message For New Refill Rate */}
+            {errorOnNewRate.status && (
+          <ErrorTextMessageAdmin props={errorOnNewRate.Message} />
+        )}
       </div>
-
+      {errorMessageBox && (
+        <ErrorMessageBoxAdmin Error_message={errorMessageBox} status={true} />
+      )}
       {/* Update Button */}
       <div className="my-5">
         <button
           className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s 
             text-center mr-3"
+            onClick={sendUpdateDeiveryRate}
         >
-          Update New Charge
+          Update Rates
         </button>
       </div>
     </div>
