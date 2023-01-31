@@ -134,10 +134,8 @@ function CreateLPGProduct() {
     statusName = checkProductName();
     statusQty = checkQuantity();
 
-    if (statusImage && statusName && statusQty) {
-        return;
-    } else {
-        uploadImage();
+    if (statusImage === false && statusName === false && statusQty === false) {
+      uploadImage();
     }
 };
 
