@@ -18,10 +18,10 @@ import {
   updateGasRate,
   readGasRateFile,
   sendGasRate,
-} from "./ProductManagement/UpdateProduct/updateGasRate.js";
+} from "./ProductManagement/UpdateRate/updateGasRate.js";
 import {
   updateDeliveryRate, readDeliveryRatefile, sendDeliveryRate
-} from "./ProductManagement/UpdateProduct/updateDeliveryRate.js";
+} from "./ProductManagement/UpdateRate/updateDeliveryRate.js";
 
 const app = express();
 // connecting to same localhost as app for socket.io
