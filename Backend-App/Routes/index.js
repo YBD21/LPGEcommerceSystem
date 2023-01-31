@@ -117,26 +117,30 @@ io.on("connection", (socket) => {
 
   try {
     // look for change in gasRateFile
-    fs.watch(filePathGasRate, async (eventType, filename) => {
-      if (eventType === "change" && filename === filePathGasRate) {
+   fs.watchFile(filePathGasRate, async (current, prev) => {
+     // Check time when the file was modified
+      if (current.mtime !== prev.mtime) {
         const respond = await readGasRateFile();
         socket.emit("gasRate", respond);
       }
     });
   } catch (error) {
+    console.log(error.message);
     // if file not found to watch
     sendGasRate();
   }
 
   try {
     // look for change in gasRateFile
-    fs.watch(filePathDeliveryRate, async (eventType, filename) => {
-      if (eventType === "change" && filename === filePathDeliveryRate) {
+   fs.watchFile(filePathDeliveryRate, async (current, prev) => {
+     // Check time when the file was modified
+      if (current.mtime !== prev.mtime) {
         const respond = await readDeliveryRatefile();
         socket.emit("deliveryRate", respond);
       }
     });
   } catch (error) {
+    console.log(error.message);
     // if file not found to watch
     sendDeliveryRate();
   }
