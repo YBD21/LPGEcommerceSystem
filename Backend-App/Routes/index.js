@@ -23,6 +23,9 @@ import {
   updateDeliveryRate, readDeliveryRatefile, sendDeliveryRate
 } from "./ProductManagement/UpdateRate/updateDeliveryRate.js";
 
+import {sendProductList,readProductListfile} from "./ProductManagement/UpdateProduct/updateProduct.js"
+
+
 const app = express();
 // connecting to same localhost as app for socket.io
 const httpServer = createServer(app);
@@ -169,6 +172,7 @@ app.post("/uploadData", multer.single("img"), async (req, res) => {
   return res.json(error);
 });
 
-httpServer.listen(port, () => {
+httpServer.listen (port, () => {
+  
   console.log(`Listening on port ${port}`);
 });

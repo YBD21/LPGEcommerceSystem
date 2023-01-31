@@ -59,11 +59,11 @@ const sendDeliveryRate = async () => {
 };
 
 
-const updateDeliveryRatefile = (data) => {
+const updateDeliveryRatefile = async (data) => {
      const jsonData = JSON.stringify(data);
        
      try {
-          fs.writeFileSync(filePath, jsonData);
+          await fs.promises.writeFile(filePath, jsonData);
      } catch (error) {
         console.log(error.message);
      }
@@ -71,13 +71,17 @@ const updateDeliveryRatefile = (data) => {
 };
 
 const readDeliveryRatefile = async() => {
-  // read the file 
-  const jsonData = fs.readFileSync(filePath);
-
-  //Parse the JSON data
-  const data = await JSON.parse(jsonData);
-
-  return data;
+  try {
+    // read the file
+    const jsonData = await fs.promises.readFile(filePath);
+    //Parse the JSON data
+    const data = await JSON.parse(jsonData);
+     
+    // console.log(data);
+     return data;
+} catch (error) {
+    console.log(error.message);
 }
+};
 
 export {updateDeliveryRate,readDeliveryRatefile,sendDeliveryRate};

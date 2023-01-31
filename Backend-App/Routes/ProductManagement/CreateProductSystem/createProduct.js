@@ -1,5 +1,5 @@
 import { dataBase } from "../../firebaseConfig.js";
-
+import {sendProductList} from "../UpdateProduct/updateProduct.js"
 const CreateProduct = async (data, imageData) => {
   let createDate = new Date().toString();
   let sendData = { Message: "", Error: ""};
@@ -17,6 +17,7 @@ const CreateProduct = async (data, imageData) => {
     }),
     (error) => {
       if (error === null) {
+         sendProductList();
         return (sendData = { ...sendData, Message: true });
       } else {
         return (sendData = { ...sendData, Error: error });

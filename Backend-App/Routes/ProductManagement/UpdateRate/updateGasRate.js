@@ -1,6 +1,8 @@
 import { dataBase } from "../../firebaseConfig.js";
 import fs from 'fs';
 
+const filePath = 'BufferData/gasRate.json';
+
 const updateGasRate = async (RefillRate,NewGasRate) => {
   let sendData = { Message: "", Error: "" };
   let createDate = new Date().toString();
@@ -56,28 +58,32 @@ const sendGasRate = async () => {
   return sendData;
 };
 
- const updateGasRatefile = (data) => {
+ const updateGasRatefile = async(data) => {
     const jsonData = JSON.stringify(data);
-    const filePath = 'BufferData/gasRate.json';
+  
     try {
-      fs.writeFileSync(filePath, jsonData);
+      await fs.promises.writeFile(filePath, jsonData);
     } catch (error) {
       console.log(error.message);
     }
- }
+ };
 
  const readGasRateFile = async() => {
-   const filePath = 'BufferData/gasRate.json';
-
-   // read the file 
-   const jsonData = fs.readFileSync(filePath);
+  
+  try {
+       // read the file 
+   const jsonData = await fs.promises.readFile(filePath);
 
    //Parse the JSON data
    const data = await JSON.parse(jsonData);
 
    return data;
  
- }
+  } catch (error) {
+    console.log(error.message);
+  }
+
+ };
 
 
 export { updateGasRate, readGasRateFile, sendGasRate };
