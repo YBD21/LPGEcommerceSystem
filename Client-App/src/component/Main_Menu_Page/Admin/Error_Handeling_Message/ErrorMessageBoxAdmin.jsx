@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 
 const ErrorMessageBoxAdmin = (message) => {
-   const [isClicked, setIsClicked] = useState(message.status);
-   const [text, setText] = useState({});
-     useEffect(() => {
-   
+  const [isClicked, setIsClicked] = useState(message.status);
+  const [text, setText] = useState({});
+  useEffect(() => {
     switch (message.Error_message) {
       case "Network Error":
         return setText({
           First: "Network Error !",
           Second: "Cannot access to the internet.",
         });
-
+      case "Create Product Error":
+        return setText({
+          First: "Error !",
+          Second: "Cannot create Product .",
+        });
       default:
         return setText({
           First: "Holy smokes !",
@@ -25,7 +28,7 @@ const ErrorMessageBoxAdmin = (message) => {
   };
 
   return (
-        <>
+    <>
       {isClicked && (
         <div
           className="flex flex-col justify-center bg-red-100 border border-red-900 text-red-800 px-4 py-3 rounded relative mb-4"
@@ -53,6 +56,6 @@ const ErrorMessageBoxAdmin = (message) => {
       )}
     </>
   );
-}
+};
 
-export default ErrorMessageBoxAdmin
+export default ErrorMessageBoxAdmin;

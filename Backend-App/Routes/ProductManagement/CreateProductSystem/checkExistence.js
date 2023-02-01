@@ -10,7 +10,7 @@ const CheckExistenceOfImage = async (requestedDataFile) => {
     
     if (imageExists[0]) {
         // console.log("exist");
-        sendData = {imageError : `File ${requestedDataFile.originalname} already exists`};
+        sendData = {imageError : `Image : ${requestedDataFile.originalname} already exists !`};
     }  
     return sendData;
 };
@@ -24,7 +24,7 @@ const CheckExistenceOfProductData = async (data) => {
         if(snapshot.exists()){
           return (
             sendData = {
-              productDataError : `${data.productName} already exist !`
+              productDataError : `ProductName : ${data.productName} already exist !`
             }
           )
         } 

@@ -25,6 +25,7 @@ function CreateLPGProduct() {
     setErrorOnQty({});
     setErrorOnImage({});
     setSuccess(null);
+    setErrorMessageBox(null);
     
   }, [image,qty,productName]);
 
@@ -117,6 +118,16 @@ function CreateLPGProduct() {
           setSuccess("Success");
         } else {
           // set respond message here
+          // console.log(response.data);
+          setErrorProductName({
+            ProductName: true,
+            Message:response.data.productDataError
+          });
+          setErrorOnImage({
+            Image : true,
+            Message : response.data.imageError
+          });
+          setErrorMessageBox("Create Product Error");
         }
       })
       .catch((error) => {
@@ -126,6 +137,7 @@ function CreateLPGProduct() {
   };
 
   const submitForm = () => {
+    setErrorMessageBox(null);
     let statusImage = false;
     let statusName = false;
     let statusQty = false;
@@ -154,7 +166,7 @@ function CreateLPGProduct() {
           <img
             src={imageUrl}
             className="ml-2 my-3 w-32 h-58 rounded-lg outline cursor-pointer"
-            alt="Uploaded Image"
+            alt="Uploaded"
           />
         )}
         <div
