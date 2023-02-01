@@ -2,37 +2,43 @@ import React, { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-
+import { useStateValue } from "../../ContextAPI/StateProvider";
 const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
+  const [{ basket, totalCount }, dispatch] = useStateValue();
+  // {gasRateData?.currentData.Refill_Rate}
+  const [productType, setProductType] = useState(["Refill", "New"]);
+  const [selectedType, setSelectedType] = useState(productType[0]);
 
-    // {gasRateData?.currentData.Refill_Rate}
-    const [productType, setProductType] = useState(["Refill", "New"]);
-    const [selectedType, setSelectedType] = useState(productType[0]);
+  const [displayRate, setDisplayRate] = useState(
+    gasRate?.currentData.Refill_Rate
+  );
 
-    const [displayRate, setDisplayRate] = useState(gasRate?.currentData.Refill_Rate);
+  const [itemCount, setItemCount] = useState(0);
 
-    const selectLog = (e) => {
-      setSelectedType(e.target.value);
+  const selectLog = (e) => {
+    setSelectedType(e.target.value);
+  };
+
+  useEffect(() => {
+    // Refill
+    if (selectedType === productType[0]) {
+      setDisplayRate(gasRate?.currentData.Refill_Rate);
     }
-
-    useEffect ( () => {
-      // Refill
-     if (selectedType === productType[0]){
-         setDisplayRate(gasRate?.currentData.Refill_Rate);
-     }
-     // New
-     if (selectedType === productType[1]){
+    // New
+    if (selectedType === productType[1]) {
       setDisplayRate(gasRate?.currentData.New_Cylinder_Rate);
-     }
-    },[gasRate,productType,selectedType]);
+    }
+  }, [gasRate, productType, selectedType]);
 
   return (
     <div className="flex flex-col mx-4 my-5 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[15%]">
       {/* Stock Status */}
 
       <div className="w-full text-end  max-lg:mr-5">
-        <strong className="border-4 border-green-500 p-2 rounded-lg text-green-700">
+        <strong
+          className="border-4 border-green-500 p-2 rounded-lg 
+        text-green-700"
+        >
           {" "}
           In stock :<strong className="px-2 text-green-900">{stock}</strong>
         </strong>
@@ -57,7 +63,7 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
 
         <input
           className=" w-1/4 h-16 bg-black text-white text-3xl text-center rounded-2xl"
-          value={0}
+          value={itemCount}
           disabled
         />
 
