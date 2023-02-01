@@ -29,16 +29,6 @@
       },
       "InStock": 20,
       "ProductName": "Shree Gas"
-    },
-    "Verify": {
-      "Created": "Wed Feb 01 2023 07:29:25 GMT+0545 (Nepal Time)",
-      "ImageInfo": {
-        "Created": "Wed Feb 01 2023 07:29:24 GMT+0545 (Nepal Time)",
-        "ImageName": "Verify.png",
-        "Link": "https://storage.googleapis.com/final-year-project-b1ff7.appspot.com/Product_Images/Verify.png?GoogleAccessId=firebase-adminsdk-8wzet%40final-year-project-b1ff7.iam.gserviceaccount.com&Expires=16730302500&Signature=kA6GoQx%2BK5DCRmrhO23k1Mdegs93e%2BV7Qo4jJ4hnjSrRVIxTrYiRB9U58Li09PMXJSzB9JPrO4pbq2D7CEDR0rvcTBRalSJv070TINO3egxsf7Jtf277Jqx3lJGO0ao8XFY3fY9GZ1blsypL%2B%2F%2FvyAuOQZ2Yn1OzA1A9RqXQHbLvNWv1ZJQ2b5Sh%2Ba8z61KTG8xTxQTICvHlT4Fo8J%2FFV7TU7koxBwKyBsMYIL5Gxr%2FTlZ%2BMwvI1GqCL3OkpUqFSO66PejE3QCfDuC1Gbdb%2FfBLG2LrCeX45JAI2Rt6oRSbkpo8ytgPH04XtVhYisYuXTfIWMOGdyHtP0H%2BZsd%2FUCQ%3D%3D"
-      },
-      "InStock": 20,
-      "ProductName": "Verify"
     }
   }
 }

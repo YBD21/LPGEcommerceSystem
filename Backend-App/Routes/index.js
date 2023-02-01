@@ -176,7 +176,11 @@ app.post("/uploadData", multer.single("img"), async (req, res) => {
   return res.json(error);
 });
 
-
+app.get("/getProductList", async (req, res) => {
+  let data = req.body;
+  const respond = await readProductListfile();
+  res.json(respond);
+});
 
 httpServer.listen (port, () => {
   

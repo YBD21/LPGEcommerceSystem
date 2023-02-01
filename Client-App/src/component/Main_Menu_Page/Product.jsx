@@ -1,10 +1,10 @@
 import React from 'react'
-import SagarGas from "../../dist/image/Sagar-Gas.png";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const Product = () => {
+const Product = ({id , productName , stock , imageUrl}) => {
+
   return (
     
         <div className="flex flex-col mx-4 my-5 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[15%]">
@@ -12,7 +12,7 @@ const Product = () => {
 
           <div className="w-full text-end  max-lg:mr-5">
           <strong className="outline-3 outline-green-500 outline p-2 rounded-lg text-green-700"> In stock : 
-          <strong className="px-2 text-green-900">10</strong>
+          <strong className="px-2 text-green-900">{stock}</strong>
           </strong> 
           </div>
 
@@ -22,7 +22,7 @@ const Product = () => {
           </strong> 
           </div> */}
          
-          <img className="w-32 max-lg:mt-7" src={SagarGas} alt="Sagar Gas" />
+          <img className="w-32 max-lg:mt-7" src={imageUrl} alt="Sagar Gas" />
           {/* add and subtract */}
           <div className="flex flex-row my-6 justify-between place-items-center">
             <button
