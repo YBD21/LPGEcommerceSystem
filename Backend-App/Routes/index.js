@@ -176,6 +176,8 @@ app.post("/uploadData", multer.single("img"), async (req, res) => {
   return res.json(error);
 });
 
+
+
 httpServer.listen (port, () => {
   
   console.log(`Listening on port ${port}`);

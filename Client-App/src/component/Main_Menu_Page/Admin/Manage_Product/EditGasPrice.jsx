@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import openSocket from "socket.io-client";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
@@ -6,7 +6,6 @@ import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAd
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
 
 const EditGasPrice = () => {
-  const socketRef = useRef(null);
   const [newGasRate, setNewGasRate] = useState(0);
   const [refillGasRate, setRefillGasRate] = useState(0);
   const [gasRateData, setGasRateData] = useState(null);
@@ -14,38 +13,30 @@ const EditGasPrice = () => {
 
   const [errorOnRefill, setErrorOnRefill] = useState({});
   const [errorOnNewRate, setErrorOnNewRate] = useState({});
-   const [errorMessageBox, setErrorMessageBox] = useState(null);
-
-  const handleConnect = () => {
-    socketRef.current = openSocket("http://localhost:5000");
-
-    //  socketRef.current.on('connect', () => {
-    //   console.log('Connected to socket.io server');
-    // });
-
-    // socketRef.current.on('disconnect', () => {
-    //   console.log('Disconnected from socket.io server');
-    // });
-
-    socketRef.current.on("gasRate", (data) => {
-      setGasRateData(data);
-    });
-
-    socketRef.current.emit("getGasRate");
-  };
-
-  const handleDisconnect = () => {
-    socketRef.current.disconnect();
-  };
+  const [errorMessageBox, setErrorMessageBox] = useState(null);
 
   useEffect(() => {
     //call to backend for connection
-    handleConnect();
+    const socket = openSocket("http://localhost:5000");
+
+    // socket.on('connect', () => {
+    //   console.log('Connected to socket.io server');
+    // });
+
+    //socket.on('disconnect', () => {
+    //   console.log('Disconnected from socket.io server');
+    // });
+
+    socket.on("gasRate", (data) => {
+      setGasRateData(data);
+    });
+
+    socket.emit("getGasRate");
     return () => {
-      handleDisconnect();
+      socket.disconnect();
     };
   }, []);
-  
+
   // handel error here for refill and new
   const checkRates = () => {
     let count = 0;
@@ -81,7 +72,7 @@ const EditGasPrice = () => {
       })
       .catch((error) => {
         // console.log(error.message);
-         setErrorMessageBox(error.message);
+        setErrorMessageBox(error.message);
       });
   };
 
@@ -98,8 +89,7 @@ const EditGasPrice = () => {
     // erase error message at the begining
     setErrorOnRefill({});
     setErrorOnNewRate({});
-
-  }, [newGasRate,refillGasRate]);
+  }, [newGasRate, refillGasRate]);
 
   return (
     <div className="flex flex-col mx-2 overflow-hidden">
@@ -179,8 +169,8 @@ const EditGasPrice = () => {
             onChange={(e) => setRefillGasRate(e.target.value)}
           />
         </div>
-             {/* Error Message For New Refill Rate */}
-            {errorOnRefill.status && (
+        {/* Error Message For New Refill Rate */}
+        {errorOnRefill.status && (
           <ErrorTextMessageAdmin props={errorOnRefill.Message} />
         )}
       </div>
@@ -201,12 +191,12 @@ const EditGasPrice = () => {
             onChange={(e) => setNewGasRate(e.target.value)}
           />
         </div>
-                  {/* Error Message For New Refill Rate */}
-            {errorOnNewRate.status && (
+        {/* Error Message For New Refill Rate */}
+        {errorOnNewRate.status && (
           <ErrorTextMessageAdmin props={errorOnNewRate.Message} />
         )}
       </div>
-         {errorMessageBox && (
+      {errorMessageBox && (
         <ErrorMessageBoxAdmin Error_message={errorMessageBox} status={true} />
       )}
       {/* Update Button */}

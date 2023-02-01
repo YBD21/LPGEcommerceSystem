@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
 import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import axios from "axios";
@@ -18,52 +18,48 @@ function CreateLPGProduct() {
 
   const [success, setSuccess] = useState(null);
 
-
-  useEffect( () => {
+  useEffect(() => {
     // erase error message whenever user is typing
     setErrorProductName({});
     setErrorOnQty({});
     setErrorOnImage({});
     setSuccess(null);
     setErrorMessageBox(null);
-    
-  }, [image,qty,productName]);
-
+  }, [image, qty, productName]);
 
   //check image
   const checkImage = () => {
-   let status = false;
-   let testFormData = new FormData();
+    let status = false;
+    let testFormData = new FormData();
 
-   try {
-    testFormData.append("img", image.img);
-   } catch (error) {
-    status = true;
-    setErrorOnImage({
-      Image : true,
-      Message : "Please Upload an Image."
-    });
-   }
-   
-   return status
-  }; 
+    try {
+      testFormData.append("img", image.img);
+    } catch (error) {
+      status = true;
+      setErrorOnImage({
+        Image: true,
+        Message: "Please Upload an Image.",
+      });
+    }
 
+    return status;
+  };
 
   //check Quantity
-   const checkQuantity = () => {
-     let status = false;
+  const checkQuantity = () => {
+    let status = false;
 
-     if (qty < 0){
+    if (qty < 0) {
       // number cannot be nagative
       setErrorOnQty({
-        Qty:true,
-        Message : 
-        "Please enter a valid quantity, it should be greater than zero."
+        Qty: true,
+        Message:
+          "Please enter a valid quantity, it should be greater than zero.",
       });
       status = true;
-     }
-     return status
-   };
+    }
+    return status;
+  };
 
   //check Product Name
   const checkProductName = () => {
@@ -75,14 +71,13 @@ function CreateLPGProduct() {
         setErrorProductName({
           ProductName: true,
           Message:
-          "Please enter a product name that is between 3-70 characters long."
+            "Please enter a product name that is between 3-70 characters long.",
         });
         status = true;
       }
     }
-    return status
+    return status;
   };
-
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -99,10 +94,9 @@ function CreateLPGProduct() {
   };
 
   const uploadImage = () => {
-
     let data = { productName: productName, Qty: qty };
     let formData = new FormData();
-     
+
     formData.append("img", image.img);
     formData.append("data", JSON.stringify(data));
 
@@ -121,11 +115,11 @@ function CreateLPGProduct() {
           // console.log(response.data);
           setErrorProductName({
             ProductName: true,
-            Message:response.data.productDataError
+            Message: response.data.productDataError,
           });
           setErrorOnImage({
-            Image : true,
-            Message : response.data.imageError
+            Image: true,
+            Message: response.data.imageError,
           });
           setErrorMessageBox("Create Product Error");
         }
@@ -141,7 +135,7 @@ function CreateLPGProduct() {
     let statusImage = false;
     let statusName = false;
     let statusQty = false;
-    
+
     statusImage = checkImage();
     statusName = checkProductName();
     statusQty = checkQuantity();
@@ -149,8 +143,7 @@ function CreateLPGProduct() {
     if (statusImage === false && statusName === false && statusQty === false) {
       uploadImage();
     }
-};
-
+  };
 
   return (
     <div className="flex flex-col mx-2">
@@ -222,9 +215,7 @@ function CreateLPGProduct() {
           />
         </div>
         {/* Error Message For Quantity */}
-        {errorOnQty.Qty && (
-          <ErrorTextMessageAdmin props={errorOnQty.Message} />
-        )}
+        {errorOnQty.Qty && <ErrorTextMessageAdmin props={errorOnQty.Message} />}
       </div>
       {/* Success Message */}
       {success && <SuccessMessageAdmin props={success} status={true} />}

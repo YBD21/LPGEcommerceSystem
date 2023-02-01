@@ -1,12 +1,12 @@
-import React, { useState , useEffect, useRef } from "react";
+import React, { useState , useEffect } from "react";
 import axios from "axios";
 import openSocket from "socket.io-client";
 import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
 
+
 const EditDeiveryPrice = () => {
-  const socketRef = useRef(null);
   const [refillRate,setRefillRate] = useState(0);
   const [newRate,setNewRate] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(null);
@@ -15,33 +15,27 @@ const EditDeiveryPrice = () => {
   const [errorOnRefill, setErrorOnRefill] = useState({});
   const [errorOnNewRate, setErrorOnNewRate] = useState({});
   const [errorMessageBox, setErrorMessageBox] = useState(null);
+  
 
-   const handleConnect = () => {
-    socketRef.current = openSocket("http://localhost:5000");
-
-    //  socketRef.current.on('connect', () => {
+  
+     useEffect(() => {
+    //call to backend for connection
+    const socket = openSocket("http://localhost:5000");
+     //  socket.on('connect', () => {
     //   console.log('Connected to socket.io server');
     // });
 
-    // socketRef.current.on('disconnect', () => {
+    // socket.on('disconnect', () => {
     //   console.log('Disconnected from socket.io server');
     // });
-    socketRef.current.emit("getDeliveryRate");
+  
+    socket.emit("getDeliveryRate");
 
-    socketRef.current.on("deliveryRate", (data) => {
+    socket.on("deliveryRate", (data) => {
      setDeliveryRateData(data);
     });
-  };
-
-  const handleDisconnect = () => {
-    socketRef.current.disconnect();
-  };
- 
-    useEffect(() => {
-    //call to backend for connection
-    handleConnect();
     return () => {
-      handleDisconnect();
+      socket.disconnect();
     };
   }, []);
 
