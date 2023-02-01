@@ -69,6 +69,22 @@ things to look for :
 })
 
 
+  const test = () => {
+    let data = productData;
+    let itemCount = Object.keys(productData);
+    // console.log("Count", itemCount);
+    console.log(data);
+    // console.log(typeof(data));
+    
+    Object.entries(data).map(([key ,value], index) => {
+      console.log("Key :",key);
+      console.log("ItemCount",index);
+      console.log("Product Name :", value.ProductName);
+      console.log("Product Qty :", value.InStock);
+      console.log("Product Image", value.ImageInfo.Link);
+    });
+  };
+
  Backend 
  body-parse
  jwt 

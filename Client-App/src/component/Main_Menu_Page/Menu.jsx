@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import openSocket from "socket.io-client";
 import Product from "./Product";
 
 // let keys = Object.keys(data);
@@ -7,8 +8,9 @@ import Product from "./Product";
 
 export const Menu = () => {
   const [productData, setProductData] = useState({});
+  const [gasRateData, setGasRateData] = useState(null);
   const [loader, setLoader] = useState(true);
- 
+
   const getProductList = async () => {
     axios
       .get("http://localhost:5000/getProductList")
@@ -23,40 +25,46 @@ export const Menu = () => {
   };
 
   useEffect(() => {
-    getProductList();
+    //call to backend for connection
+    const socket = openSocket("http://localhost:5000");
+
+    // socket.on('connect', () => {
+    //   console.log('Connected to socket.io server');
+    // });
+
+    //socket.on('disconnect', () => {
+    //   console.log('Disconnected from socket.io server');
+    // });
+
+    socket.on("gasRate", (data) => {
+      setGasRateData(data);
+    });
+
+    socket.emit("getGasRate");
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
-  const test = () => {
-    let data = productData;
-    let itemCount = Object.keys(productData);
-    // console.log("Count", itemCount);
-    console.log(data);
-    // console.log(typeof(data));
-    
-    Object.entries(data).map(([key ,value], index) => {
-      console.log("Key :",key);
-      console.log("ItemCount",index);
-      console.log("Product Name :", value.ProductName);
-      console.log("Product Qty :", value.InStock);
-      console.log("Product Image", value.ImageInfo.Link);
-    });
-  };
+  useEffect(() => {
+    getProductList();
+  }, []);
 
   return (
     <div className="flex flex-col w-full place-items-center">
       {/* Main max-lg: */}
       <main className="grid grid-cols-3 gap-4 my-5 max-lg:flex max-lg:flex-col">
-    
-        {loader === false && Object.entries(productData).map(([key,data], index) =>
-          <Product key={key} id = {index}
-          productName = {data.ProductName} 
-           stock = {data.InStock}
-           imageUrl = {data.ImageInfo.Link}
-          />
-        )
-        }
-
-        {/* {test()} */}
+        {loader === false &&
+          Object.entries(productData).map(([key, data], index) => (
+            <Product
+              key={key}
+              id={index}
+              productName={data.ProductName}
+              stock={data.InStock}
+              imageUrl={data.ImageInfo.Link}
+              gasRate={gasRateData}
+            />
+          ))}
       </main>
     </div>
   );
