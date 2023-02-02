@@ -18,6 +18,42 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
   const selectLog = (e) => {
     setSelectedType(e.target.value);
   };
+  //  Basket Operation
+  const countTotalItemsInBasket = () => {
+    let updateCount = 0;
+  };
+
+  const addToBasket = () => {
+    if (itemCount > 0) {
+      dispatch({
+        type: "ADD_TO_BASKET",
+        item: {
+          id: id,
+          Image : imageUrl,
+          ProductName: productName,
+          ProductType: selectedType,
+          Price: displayRate,
+          Qty: itemCount,
+        },
+      });
+    }
+  };
+
+  // Count Operation
+  const addItemCount = () => {
+    if (stock > itemCount) {
+      return setItemCount(itemCount + 1);
+    }
+  };
+
+  const subtractItemCount = () => {
+    if (itemCount < 0) {
+      return setItemCount(0);
+    }
+    if (stock > itemCount && itemCount > 0) {
+      return setItemCount(itemCount - 1);
+    }
+  };
 
   useEffect(() => {
     // Refill
@@ -39,7 +75,6 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
           className="border-4 border-green-500 p-2 rounded-lg 
         text-green-700"
         >
-          {" "}
           In stock :<strong className="px-2 text-green-900">{stock}</strong>
         </strong>
       </div>
@@ -57,6 +92,7 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
           className="px-4 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg mx-auto
             "
+          onClick={subtractItemCount}
         >
           <RemoveIcon className="svg-icons" />
         </button>
@@ -71,6 +107,7 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
           className="px-4 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg mx-auto
             "
+          onClick={addItemCount}
         >
           <AddIcon className="svg-icons" />
         </button>
@@ -78,7 +115,7 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
 
       {/* Show Per Price */}
       <div className="w-full px-5 py-3 mb-5 text-white bg-black rounded-lg text-lg font-semibold text-center">
-        Rs.{displayRate}
+        Rs.{itemCount === 0 ? displayRate : displayRate * itemCount}
       </div>
       {/* Select Dropdown */}
       <div className="relative w-full mb-5">
@@ -96,6 +133,7 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
         className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg 
             text-lg text-center"
+        onClick={addToBasket}
       >
         Add To Cart
       </button>
