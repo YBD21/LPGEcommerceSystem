@@ -4,7 +4,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
-  const [{ basket, totalCount }, dispatch] = useStateValue();
+  const [{ basket, totalC}, dispatch] = useStateValue();
   // {gasRateData?.currentData.Refill_Rate}
   const [productType, setProductType] = useState(["Refill", "New"]);
   const [selectedType, setSelectedType] = useState(productType[0]);
@@ -65,6 +65,11 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
       setDisplayRate(gasRate?.currentData.New_Cylinder_Rate);
     }
   }, [gasRate, productType, selectedType]);
+
+
+  // useEffect ( () => {
+  //  setItemCount(0);
+  // },[]);
 
   return (
     <div className="flex flex-col mx-4 my-5 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[15%]">
