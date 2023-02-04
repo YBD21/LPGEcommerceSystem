@@ -4,18 +4,40 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 
-const CheckOutProduct = ({ id, name, image, price, type, Qty }) => {
+const CheckOutProduct = ({ id, itemId, name, image, price, type, Qty }) => {
   const [{ basket }, dispatch] = useStateValue();
 
   const removeFromBasket = () => {
     dispatch({
       type: "REMOVE_FROM_BASKET",
-      id: id,
+      itemId: itemId,
     });
   };
 
+  const increaseQty = () => {
+    dispatch({
+      type: "Update_Basket_Qty",
+      item: {
+        itemId: itemId,
+        updateQty: Qty + 1,
+      },
+    });
+  };
+
+  const decreaseQty = () => {
+    if (Qty > 1) {
+      dispatch({
+        type: "Update_Basket_Qty",
+        item: {
+          itemId: itemId,
+          updateQty: Qty - 1,
+        },
+      });
+    }
+  };
+
   return (
-    <div className="flex max-lg:flex-col flex-row mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[15%]">
+    <div className="flex max-lg:flex-col flex-row mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%]">
       {/* Stock Status */}
 
       <img className="w-20 m-6 max-lg:mt-7" src={image} alt="Sagar Gas" />
@@ -28,6 +50,7 @@ const CheckOutProduct = ({ id, name, image, price, type, Qty }) => {
             className="px-4 py-2.5 tracking-wide
           text-white bg-black font-medium rounded-lg mx-auto
           "
+            onClick={decreaseQty}
           >
             <RemoveIcon className="svg-icons" />
           </button>
@@ -42,6 +65,7 @@ const CheckOutProduct = ({ id, name, image, price, type, Qty }) => {
             className="px-4 py-2.5 tracking-wide
           text-white bg-black font-medium rounded-lg mx-auto
           "
+            onClick={increaseQty}
           >
             <AddIcon className="svg-icons" />
           </button>

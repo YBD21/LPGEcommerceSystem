@@ -8,17 +8,30 @@ const reducer = (state, action) => {
   // console.log(action);
   switch (action.type) {
     case "ADD_TO_BASKET":
-      // ...state.basket,action.item
-      //  {quantity : action.item.quantity}
       return {
         ...state,
         basket: [...state.basket, action.item],
       };
-    case "Update_Basket":
+
+    case "Update_Basket_Qty":
+      // console.log(action.item);
+      const index = state.basket.findIndex(
+        (basketItem) => basketItem.itemId === action.item.itemId
+      );
+
+      let newBasketCopy = [...state.basket];
+
+      if (index >= 0) {
+        newBasketCopy[index].Qty = action.item.updateQty;
+      } else {
+        newBasketCopy.push(action.item);
+      }
+
       return {
         ...state,
-        basket: [{ ...state.item }, action.item],
+        basket: newBasketCopy,
       };
+
     case "EMPTY_BASKET":
       return {
         ...state,
@@ -26,19 +39,16 @@ const reducer = (state, action) => {
       };
 
     case "REMOVE_FROM_BASKET":
-      const index = state.basket.findIndex(
-        (basketItem) => basketItem.id === action.id
+      //filtered to exclude the product with the itemId that matches the action itemId.
+      const newBasket = state.basket.filter(
+        (basketItem) => basketItem.itemId !== action.itemId
       );
-      let newBasket = [...state.basket];
-
-      if (index >= 0) {
-        newBasket.splice(index, 1);
-      }
-
+      //update the basket to exclude the removed product.
       return {
         ...state,
         basket: newBasket,
       };
+
     case "SET_USER":
       return {
         ...state,

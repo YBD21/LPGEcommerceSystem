@@ -26,13 +26,14 @@ const Cart = () => {
         <DeleteIcon className="svg-icons" />
       </button>
       <div className="flex flex-row max-lg:flex-col">
-        <div className="w-1/2 max-lg:w-full">
+        <div className="w-1/2 max-lg:w-full overflow-auto h-[70vh] max-lg:h-auto">
           {basket
             ?.sort((a, b) => (a.itemId > b.itemId ? 1 : -1))
             .map((item) => (
               <CheckOutProduct
                 key={item.itemId}
                 id={item.id}
+                itemId = {item.itemId}
                 name={item.ProductName}
                 image={item.Image}
                 price={item.Price}
@@ -41,8 +42,8 @@ const Cart = () => {
               />
             ))}
         </div>
-        {/* Order Details here */}
-        <OrderSummary />
+        {/* Order Details */}
+        {basket?.length > 0 ? <OrderSummary /> : false}
       </div>
     </main>
   );
