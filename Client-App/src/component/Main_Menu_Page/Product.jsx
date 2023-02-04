@@ -4,7 +4,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
-  const [{ basket, totalC}, dispatch] = useStateValue();
+  const [{ basket, totalCount }, dispatch] = useStateValue();
   // {gasRateData?.currentData.Refill_Rate}
   const [productType, setProductType] = useState(["Refill", "New"]);
   const [selectedType, setSelectedType] = useState(productType[0]);
@@ -15,27 +15,96 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
 
   const [itemCount, setItemCount] = useState(0);
 
+  const [is_Item_Exist_With_Refill, SetIs_Item_Exist_With_Refill] =
+    useState(false);
+
+  const [is_Item_Exist_With_New, SetIs_Item_Exist_With_New] = useState(false);
+
+  let current_count = [];
+
   const selectLog = (e) => {
     setSelectedType(e.target.value);
   };
+
   //  Basket Operation
   const countTotalItemsInBasket = () => {
     let updateCount = 0;
+    basket?.map((items) => {
+      current_count.push(items.Qty);
+      console.log("Current_count", current_count);
+    });
+
+    current_count.map((element, index) => {
+      if (basket.length > index) {
+        updateCount += element;
+        console.log("Updated_Count", updateCount);
+      }
+    });
+    return updateCount;
+  };
+
+  const addBasket = (itemId) => {
+    dispatch({
+      type: "ADD_TO_BASKET",
+      item: {
+        id: id,
+        itemId: itemId,
+        Image: imageUrl,
+        ProductName: productName,
+        ProductType: selectedType,
+        Price: displayRate,
+        Qty: itemCount,
+      },
+    });
   };
 
   const addToBasket = () => {
-    if (itemCount > 0) {
-      dispatch({
-        type: "ADD_TO_BASKET",
-        item: {
-          id: id,
-          Image : imageUrl,
-          ProductName: productName,
-          ProductType: selectedType,
-          Price: displayRate,
-          Qty: itemCount,
-        },
-      });
+    if (itemCount === 0) {
+      return;
+    }
+
+    const itemId = selectedType === productType[0] ? id + 100 : id;
+
+    const itemExists =
+      selectedType === productType[0]
+        ? is_Item_Exist_With_Refill
+        : is_Item_Exist_With_New;
+
+    if (itemExists) {
+      removeItemsFromBasket(itemId);
+    } else {
+      if (selectedType === productType[0]) {
+        SetIs_Item_Exist_With_Refill(true);
+      } else {
+        SetIs_Item_Exist_With_New(true);
+      }
+    }
+    addBasket(itemId);
+    setItemCount(0);
+  };
+
+  const removeItemsFromBasket = () => {
+    dispatch({
+      type: "REMOVE_FROM_BASKET",
+      id: id,
+    });
+  };
+
+  const findItemInBasket = () => {
+    if (basket?.length > 0) {
+      const foundItem = basket?.find(
+        (item) =>
+          selectedType === item.ProductType && productName === item.ProductName
+      );
+
+      if (foundItem) {
+        if (selectedType === productType[0]) {
+          SetIs_Item_Exist_With_Refill(true);
+        }
+        if (selectedType === productType[1]) {
+          SetIs_Item_Exist_With_New(true);
+        }
+      }
     }
   };
 
@@ -50,7 +119,7 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
     if (itemCount < 0) {
       return setItemCount(0);
     }
-    if (stock > itemCount && itemCount > 0) {
+    if (stock >= itemCount && itemCount > 0) {
       return setItemCount(itemCount - 1);
     }
   };
@@ -66,10 +135,10 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
     }
   }, [gasRate, productType, selectedType]);
 
-
-  // useEffect ( () => {
-  //  setItemCount(0);
-  // },[]);
+  useEffect(() => {
+    findItemInBasket();
+    // countTotalItemsInBasket();
+  }, [basket]);
 
   return (
     <div className="flex flex-col mx-4 my-5 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[15%]">

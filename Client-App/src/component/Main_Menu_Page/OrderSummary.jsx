@@ -8,30 +8,20 @@ const OrderSummary = () => {
           Order Summary
         </p>
         <hr className="border border-black" />
-        <div className="w-full flex flex-row justify-between">
-          <p className="text-lg font-semibold ml-16">
-          SubTotal (4 Items) :
-          </p>
-          <p className="text-lg font-semibold mr-16">
-           Rs.7200
-          </p>
+        <div className="w-full flex flex-row justify-between my-2">
+          <p className="text-lg font-semibold ml-16">SubTotal (4 Items) :</p>
+          <p className="text-lg font-semibold mr-16">Rs.7200</p>
         </div>
-        <div className="w-full flex flex-row justify-between">
+        <div className="w-full flex flex-row justify-between my-2">
           <p className="text-lg font-semibold ml-16">
-          Delivery Charge (Rs.100 Per Items) :
+            Delivery Charge (Rs.100 Per Items) :
           </p>
-          <p className="text-lg font-semibold mr-16">
-           Rs.400
-          </p>
+          <p className="text-lg font-semibold mr-16">Rs.400</p>
         </div>
-        <hr className="border border-black" />
-        <div className="w-full flex flex-row justify-between">
-          <p className="text-lg font-semibold ml-16">
-           Total :
-          </p>
-          <p className="text-lg font-semibold mr-16">
-           Rs.7600
-          </p>
+        <hr className=" border border-black" />
+        <div className="w-full flex flex-row justify-between my-2">
+          <p className="text-lg font-semibold ml-16">Total :</p>
+          <p className="text-lg font-semibold mr-16">Rs.7600</p>
         </div>
       </div>
     </div>

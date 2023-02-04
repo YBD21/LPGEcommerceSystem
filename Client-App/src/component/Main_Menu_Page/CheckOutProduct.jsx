@@ -2,8 +2,18 @@ import React from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { useStateValue } from "../../ContextAPI/StateProvider";
 
 const CheckOutProduct = ({ id, name, image, price, type, Qty }) => {
+  const [{ basket }, dispatch] = useStateValue();
+
+  const removeFromBasket = () => {
+    dispatch({
+      type: "REMOVE_FROM_BASKET",
+      id: id,
+    });
+  };
+
   return (
     <div className="flex max-lg:flex-col flex-row mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[15%]">
       {/* Stock Status */}
@@ -57,7 +67,10 @@ const CheckOutProduct = ({ id, name, image, price, type, Qty }) => {
           left: 45%;
           position: relative; */}
       {/* cross Icon*/}
-      <button className="mx-5 mb-auto max-lg:relative max-lg:bottom-[35.5rem] max-lg:left-[40%]">
+      <button
+        className="mx-5 mb-auto max-lg:relative max-lg:bottom-[35.5rem] max-lg:left-[40%]"
+        onClick={removeFromBasket}
+      >
         <CancelIcon className="svg-icons text-red-800" />
       </button>
     </div>
