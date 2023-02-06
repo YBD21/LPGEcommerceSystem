@@ -1,6 +1,6 @@
 export const initialState = {
   basket: [],
-  user: "",
+  user: null,
   totalCount: 0,
 };
 
@@ -54,11 +54,13 @@ const reducer = (state, action) => {
         ...state,
         user: { ...state.user, ...action.user },
       };
+
     case "SET_TOTAL_COUNT":
       return {
         ...state,
         totalCount: action.totalCount,
       };
+
     default:
       return state;
   }

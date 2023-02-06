@@ -3,14 +3,25 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../../ContextAPI/StateProvider";
-const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
+const Product = ({
+  id,
+  productName,
+  stock,
+  imageUrl,
+  gasRate,
+  gasDeliveryRate,
+}) => {
   const [{ basket, totalCount }, dispatch] = useStateValue();
   // {gasRateData?.currentData.Refill_Rate}
-  const [productType, setProductType] = useState(["Refill", "New"]);
+  const productType = ["Refill", "New"];
   const [selectedType, setSelectedType] = useState(productType[0]);
 
   const [displayRate, setDisplayRate] = useState(
     gasRate?.currentData.Refill_Rate
+  );
+
+  const [deliveryRate, setDeliveryRate] = useState(
+    gasDeliveryRate?.currentData.Refill_Delivery_Rate
   );
 
   const [itemCount, setItemCount] = useState(0);
@@ -54,6 +65,7 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
         ProductType: selectedType,
         Price: displayRate,
         Qty: itemCount,
+        DeliveryRate: deliveryRate,
       },
     });
   };
@@ -128,12 +140,14 @@ const Product = ({ id, productName, stock, imageUrl, gasRate }) => {
     // Refill
     if (selectedType === productType[0]) {
       setDisplayRate(gasRate?.currentData.Refill_Rate);
+      setDeliveryRate(gasDeliveryRate?.currentData.Refill_Delivery_Rate);
     }
     // New
     if (selectedType === productType[1]) {
       setDisplayRate(gasRate?.currentData.New_Cylinder_Rate);
+      setDeliveryRate(gasDeliveryRate?.currentData.New_Delivery_Rate);
     }
-  }, [gasRate, productType, selectedType]);
+  }, [gasRate, gasDeliveryRate, productType, selectedType]);
 
   useEffect(() => {
     findItemInBasket();

@@ -87,10 +87,7 @@ const CheckOutProduct = ({ id, itemId, name, image, price, type, Qty }) => {
           Rs.{Qty === 0 ? price : price * Qty}
         </div>
       </div>
-      {/* bottom: 24.5rem
-          left: 45%;
-          position: relative; */}
-      {/* cross Icon*/}
+
       <button
         className="mx-5 mb-auto max-lg:relative max-lg:bottom-[35.5rem] max-lg:left-[40%]"
         onClick={removeFromBasket}

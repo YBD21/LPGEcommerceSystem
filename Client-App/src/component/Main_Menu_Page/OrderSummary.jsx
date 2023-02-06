@@ -14,20 +14,24 @@ const OrderSummary = () => {
       let newItemsCount = 0;
       let refillPrice = 0;
       let newPrice = 0;
+      let refillDeliveryPrice = 0;
+      let newDeliveryPrice = 0;
 
       basket?.forEach((element) => {
         updateCount += element.Qty;
         if (element.ProductType === "Refill") {
           refillItemsCount += element.Qty;
           refillPrice = element.Price;
+          refillDeliveryPrice = element.DeliveryRate
         }
         if (element.ProductType === "New") {
           newItemsCount += element.Qty;
           newPrice = element.Price;
+          newDeliveryPrice = element.DeliveryRate
         }
       });
       // Note : call delivery rate from backend here
-      const deliveryCharge = updateCount * 100;
+      const deliveryCharge = refillItemsCount * refillDeliveryPrice + newItemsCount * newDeliveryPrice;
 
       const itemPrice =
         refillItemsCount * refillPrice + newItemsCount * newPrice;

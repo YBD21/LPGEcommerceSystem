@@ -102,6 +102,26 @@ things to look for :
     }
   };
 
+app.get("/getProductList", async (req, res) => {
+  let data = req.body;
+  const respond = await readProductListfile();
+  res.json(respond);
+});
+
+  const getProductList = async () => {
+    axios
+      .get("http://localhost:5000/getProductList")
+      .then((respond) => {
+        // console.log(respond.data);
+        setProductData(respond.data.ProductList);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error.meassage);
+      });
+  };
+
+
  Backend 
  body-parse
  jwt 

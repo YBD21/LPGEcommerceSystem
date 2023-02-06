@@ -20,11 +20,15 @@ import {
   sendGasRate,
 } from "./ProductManagement/UpdateRate/updateGasRate.js";
 import {
-  updateDeliveryRate, readDeliveryRatefile, sendDeliveryRate
+  updateDeliveryRate,
+  readDeliveryRatefile,
+  sendDeliveryRate,
 } from "./ProductManagement/UpdateRate/updateDeliveryRate.js";
 
-import {sendProductList,readProductListfile} from "./ProductManagement/UpdateProduct/updateProduct.js"
-
+import {
+  sendProductList,
+  readProductListfile,
+} from "./ProductManagement/UpdateProduct/updateProduct.js";
 
 const app = express();
 // connecting to same localhost as app for socket.io
@@ -91,7 +95,7 @@ app.post("/SignUp", async (req, res) => {
 
 app.post("/updateDeiveryRate", async (req, res) => {
   let data = req.body;
-  const respond = await updateDeliveryRate(data.RefillRate,data.NewGasRate);
+  const respond = await updateDeliveryRate(data.RefillRate, data.NewGasRate);
   res.json(respond);
 });
 
@@ -102,7 +106,9 @@ app.post("/updateGasRate", async (req, res) => {
 });
 
 const filePathGasRate = "BufferData/gasRate.json";
-const filePathDeliveryRate = 'BufferData/deliveryRate.json';
+const filePathDeliveryRate = "BufferData/deliveryRate.json";
+const filePathProductList = "BufferData/productList.json";
+
 io.on("connection", (socket) => {
   // Send the current gas rate data when the client connects
   socket.on("getGasRate", async () => {
@@ -115,10 +121,16 @@ io.on("connection", (socket) => {
     socket.emit("deliveryRate", respond);
   });
 
+  socket.on("getProductList", async () => {
+    const respond = await readProductListfile();
+    socket.emit("productList", respond);
+  });
+
+  // For gasRate
   try {
     // look for change in gasRateFile
-   fs.watchFile(filePathGasRate, async (current, prev) => {
-     // Check time when the file was modified
+    fs.watchFile(filePathGasRate, async (current, prev) => {
+      // Check time when the file was modified
       if (current.mtime !== prev.mtime) {
         const respond = await readGasRateFile();
         socket.emit("gasRate", respond);
@@ -130,10 +142,11 @@ io.on("connection", (socket) => {
     sendGasRate();
   }
 
+  // For deliveryRate
   try {
-    // look for change in gasRateFile
-   fs.watchFile(filePathDeliveryRate, async (current, prev) => {
-     // Check time when the file was modified
+    // look for change in deliveryRateFile
+    fs.watchFile(filePathDeliveryRate, async (current, prev) => {
+      // Check time when the file was modified
       if (current.mtime !== prev.mtime) {
         const respond = await readDeliveryRatefile();
         socket.emit("deliveryRate", respond);
@@ -145,10 +158,27 @@ io.on("connection", (socket) => {
     sendDeliveryRate();
   }
 
+  // For productList
+  try {
+    // look for change in productList
+    fs.watchFile(filePathProductList, async (current, prev) => {
+      // check time when the file was modified
+      if (current.mtime !== prev.mtime) {
+        const respond = await readProductListfile();
+        socket.emit("productList", respond);
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+    // if file not found to watch
+    sendProductList();
+  }
+
   // stop watch when all are disconnected
   socket.on("disconnect", () => {
     fs.unwatchFile(filePathGasRate);
     fs.unwatchFile(filePathDeliveryRate);
+    fs.unwatchFile(filePathProductList);
   });
 });
 
@@ -176,13 +206,6 @@ app.post("/uploadData", multer.single("img"), async (req, res) => {
   return res.json(error);
 });
 
-app.get("/getProductList", async (req, res) => {
-  let data = req.body;
-  const respond = await readProductListfile();
-  res.json(respond);
-});
-
-httpServer.listen (port, () => {
-  
+httpServer.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });

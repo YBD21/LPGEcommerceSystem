@@ -1,28 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import openSocket from "socket.io-client";
 import Product from "./Product";
 
-// let keys = Object.keys(data);
-// date as key
-
 export const Menu = () => {
-  const [productData, setProductData] = useState({});
+  const [productData, setProductData] = useState(null);
   const [gasRateData, setGasRateData] = useState(null);
-  const [loader, setLoader] = useState(true);
-
-  const getProductList = async () => {
-    axios
-      .get("http://localhost:5000/getProductList")
-      .then((respond) => {
-        // console.log(respond.data);
-        setProductData(respond.data.ProductList);
-        setLoader(false);
-      })
-      .catch((error) => {
-        console.log(error.meassage);
-      });
-  };
+  const [gasDeliveryRateData, setDeliveryRateData] = useState(null);
 
   useEffect(() => {
     //call to backend for connection
@@ -35,26 +18,32 @@ export const Menu = () => {
     //socket.on('disconnect', () => {
     //   console.log('Disconnected from socket.io server');
     // });
-
     socket.on("gasRate", (data) => {
       setGasRateData(data);
     });
 
+    socket.on("deliveryRate", (data) => {
+      setDeliveryRateData(data);
+    });
+
+    socket.on("productList", (data) => {
+      setProductData(data.ProductList);
+    });
+
     socket.emit("getGasRate");
+    socket.emit("getDeliveryRate");
+    socket.emit("getProductList");
+
     return () => {
       socket.disconnect();
     };
-  }, []);
-
-  useEffect(() => {
-    getProductList();
   }, []);
 
   return (
     <div className="flex flex-col w-full place-items-center">
       {/* Main max-lg: */}
       <main className="grid grid-cols-3 gap-4 my-5 max-lg:flex max-lg:flex-col">
-        {loader === false &&
+        {productData !== null &&
           Object.entries(productData).map(([key, data], index) => (
             <Product
               key={key}
@@ -63,6 +52,7 @@ export const Menu = () => {
               stock={data.InStock}
               imageUrl={data.ImageInfo.Link}
               gasRate={gasRateData}
+              gasDeliveryRate={gasDeliveryRateData}
             />
           ))}
       </main>
