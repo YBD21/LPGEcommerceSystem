@@ -1,12 +1,16 @@
 export const initialState = {
   basket: [],
-  user: null,
+  userData: [],
+  productList: null,
+  gasRateData: null,
+  gasDeliveryRateData: null,
   totalCount: 0,
 };
 
 const reducer = (state, action) => {
   // console.log(action);
   switch (action.type) {
+    // Basket Operation
     case "ADD_TO_BASKET":
       return {
         ...state,
@@ -49,10 +53,34 @@ const reducer = (state, action) => {
         basket: newBasket,
       };
 
+    //gasRate operation
+    case "SET_GAS_RATE":
+      return {
+        ...state,
+        gasRateData: { ...state.gasRateData, ...action.gasRateData },
+      };
+
+    // gasDeliveryRate operation
+    case "SET_DELIVERY_RATE":
+      return {
+        ...state,
+        gasDeliveryRateData: {
+          ...state.gasDeliveryRateData,
+          ...action.gasDeliveryRateData,
+        },
+      };
+
+    //productList operation
+    case "SET_PRODUCT_LIST":
+      return {
+        ...state,
+        productList: { ...state.productList, ...action.productList },
+      };
+
     case "SET_USER":
       return {
         ...state,
-        user: { ...state.user, ...action.user },
+        userData: { ...state.userData, ...action.userData },
       };
 
     case "SET_TOTAL_COUNT":

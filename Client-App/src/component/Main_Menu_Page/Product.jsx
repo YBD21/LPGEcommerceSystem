@@ -3,25 +3,19 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../../ContextAPI/StateProvider";
-const Product = ({
-  id,
-  productName,
-  stock,
-  imageUrl,
-  gasRate,
-  gasDeliveryRate,
-}) => {
-  const [{ basket, totalCount }, dispatch] = useStateValue();
-  // {gasRateData?.currentData.Refill_Rate}
+const Product = ({ id, productName, stock, imageUrl }) => {
+  const [{ basket, gasRateData, gasDeliveryRateData, totalCount }, dispatch] =
+    useStateValue();
+
   const productType = ["Refill", "New"];
   const [selectedType, setSelectedType] = useState(productType[0]);
 
   const [displayRate, setDisplayRate] = useState(
-    gasRate?.currentData.Refill_Rate
+    gasRateData?.Refill_Rate
   );
 
   const [deliveryRate, setDeliveryRate] = useState(
-    gasDeliveryRate?.currentData.Refill_Delivery_Rate
+    gasDeliveryRateData?.Refill_Delivery_Rate
   );
 
   const [itemCount, setItemCount] = useState(0);
@@ -139,15 +133,15 @@ const Product = ({
   useEffect(() => {
     // Refill
     if (selectedType === productType[0]) {
-      setDisplayRate(gasRate?.currentData.Refill_Rate);
-      setDeliveryRate(gasDeliveryRate?.currentData.Refill_Delivery_Rate);
+      setDisplayRate(gasRateData?.Refill_Rate);
+      setDeliveryRate(gasDeliveryRateData?.Refill_Delivery_Rate);
     }
     // New
     if (selectedType === productType[1]) {
-      setDisplayRate(gasRate?.currentData.New_Cylinder_Rate);
-      setDeliveryRate(gasDeliveryRate?.currentData.New_Delivery_Rate);
+      setDisplayRate(gasRateData?.New_Cylinder_Rate);
+      setDeliveryRate(gasDeliveryRateData?.New_Delivery_Rate);
     }
-  }, [gasRate, gasDeliveryRate, productType, selectedType]);
+  }, [gasRateData, gasDeliveryRateData, productType, selectedType]);
 
   useEffect(() => {
     findItemInBasket();
@@ -173,7 +167,7 @@ const Product = ({
           </strong> 
           </div> */}
 
-      <img className="w-32 max-lg:mt-7" src={imageUrl} alt="Sagar Gas" />
+      <img className="w-32 max-lg:mt-7" src={imageUrl} alt={productName} />
       {/* add and subtract */}
       <div className="flex flex-row my-6 justify-between place-items-center">
         <button

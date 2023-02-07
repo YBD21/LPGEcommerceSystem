@@ -122,6 +122,19 @@ app.get("/getProductList", async (req, res) => {
   };
 
 
+ const test = () => {
+    if (!productList) {
+      return;
+    }
+      Object.entries(productList).map(([key, value], index) => {
+        console.log(key, value, index);
+      });
+    //  id={index}
+    // productName={data.ProductName}
+    // stock={data.InStock}
+    // imageUrl={data.ImageInfo.Link}
+  };
+
  Backend 
  body-parse
  jwt 
