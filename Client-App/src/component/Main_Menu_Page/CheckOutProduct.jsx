@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 
-const CheckOutProduct = ({ id, itemId, name, image, price, type, Qty }) => {
-  const [{ basket }, dispatch] = useStateValue();
+const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
+  const [{ gasRateData, productList }, dispatch] = useStateValue();
+  const [price, setPrice] = useState(0);
+  const [stock, setStock] = useState(0);
 
   const removeFromBasket = () => {
     dispatch({
@@ -15,13 +17,15 @@ const CheckOutProduct = ({ id, itemId, name, image, price, type, Qty }) => {
   };
 
   const increaseQty = () => {
-    dispatch({
-      type: "Update_Basket_Qty",
-      item: {
-        itemId: itemId,
-        updateQty: Qty + 1,
-      },
-    });
+    if (stock > Qty) {
+      dispatch({
+        type: "Update_Basket_Qty",
+        item: {
+          itemId: itemId,
+          updateQty: Qty + 1,
+        },
+      });
+    }
   };
 
   const decreaseQty = () => {
@@ -35,6 +39,31 @@ const CheckOutProduct = ({ id, itemId, name, image, price, type, Qty }) => {
       });
     }
   };
+
+  const getGasRate = () => {
+    if (type === "Refill") {
+      setPrice(gasRateData["Refill_Rate"]);
+    }
+
+    if (type === "New") {
+      setPrice(gasRateData["New_Cylinder_Rate"]);
+    }
+  };
+
+  const getStocklimit = () => {
+    // find object equal to id
+    const result = Object.values(productList).find((item) => item.Id === id);
+
+    setStock(result.Stock);
+  };
+
+  useEffect(() => {
+    getStocklimit();
+  }, [productList]);
+
+  useEffect(() => {
+    getGasRate();
+  }, [gasRateData]);
 
   return (
     <div className="flex max-lg:flex-col flex-row mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%]">
@@ -75,7 +104,10 @@ const CheckOutProduct = ({ id, itemId, name, image, price, type, Qty }) => {
       {/* Show Type */}
       <div className="w-full mb-5 mx-5 text-center">
         <p className="text-2xl font-bold mb-2.5"> Type </p>
-        <div className=" w-full px-5 py-3 text-white bg-black rounded-lg text-lg font-semibold">
+        <div
+          className=" w-full px-5 py-3 text-white bg-black rounded-lg 
+        text-lg font-semibold"
+        >
           {type}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 const OrderSummary = () => {
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, gasRateData, gasDeliveryRateData }] = useStateValue();
   const [itemscount, setItemsCount] = useState(0);
   const [itemsPrice, setItemsPrice] = useState(0);
   const [delivery_charge, setDelivery_charge] = useState(0);
@@ -21,17 +21,23 @@ const OrderSummary = () => {
         updateCount += element.Qty;
         if (element.ProductType === "Refill") {
           refillItemsCount += element.Qty;
-          refillPrice = element.Price;
-          refillDeliveryPrice = element.DeliveryRate
         }
+
         if (element.ProductType === "New") {
           newItemsCount += element.Qty;
-          newPrice = element.Price;
-          newDeliveryPrice = element.DeliveryRate
         }
       });
-      // Note : call delivery rate from backend here
-      const deliveryCharge = refillItemsCount * refillDeliveryPrice + newItemsCount * newDeliveryPrice;
+      refillPrice = gasRateData["Refill_Rate"];
+
+      refillDeliveryPrice = gasDeliveryRateData["Refill_Delivery_Rate"];
+
+      newPrice = gasRateData["New_Cylinder_Rate"];
+
+      newDeliveryPrice = gasDeliveryRateData["New_Delivery_Rate"];
+
+      const deliveryCharge =
+        refillItemsCount * refillDeliveryPrice +
+        newItemsCount * newDeliveryPrice;
 
       const itemPrice =
         refillItemsCount * refillPrice + newItemsCount * newPrice;
@@ -57,13 +63,13 @@ const OrderSummary = () => {
         </p>
         <hr className="border border-black" />
         <div className="w-full flex flex-row justify-between my-2">
-          <p className="text-lg font-semibold ml-16">SubTotal ({itemscount} Items) :</p>
+          <p className="text-lg font-semibold ml-16">
+            SubTotal ({itemscount} Items) :
+          </p>
           <p className="text-lg font-semibold mr-16">Rs.{itemsPrice}</p>
         </div>
         <div className="w-full flex flex-row justify-between my-2">
-          <p className="text-lg font-semibold ml-16">
-            Delivery Charge (Rs.100 Per Items) :
-          </p>
+          <p className="text-lg font-semibold ml-16">Delivery Charge :</p>
           <p className="text-lg font-semibold mr-16">Rs.{delivery_charge}</p>
         </div>
         <hr className=" border border-black" />

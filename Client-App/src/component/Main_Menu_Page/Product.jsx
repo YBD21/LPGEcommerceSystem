@@ -14,10 +14,6 @@ const Product = ({ id, productName, stock, imageUrl }) => {
     gasRateData?.Refill_Rate
   );
 
-  const [deliveryRate, setDeliveryRate] = useState(
-    gasDeliveryRateData?.Refill_Delivery_Rate
-  );
-
   const [itemCount, setItemCount] = useState(0);
 
   const [is_Item_Exist_With_Refill, SetIs_Item_Exist_With_Refill] =
@@ -57,9 +53,7 @@ const Product = ({ id, productName, stock, imageUrl }) => {
         Image: imageUrl,
         ProductName: productName,
         ProductType: selectedType,
-        Price: displayRate,
         Qty: itemCount,
-        DeliveryRate: deliveryRate,
       },
     });
   };
@@ -134,12 +128,10 @@ const Product = ({ id, productName, stock, imageUrl }) => {
     // Refill
     if (selectedType === productType[0]) {
       setDisplayRate(gasRateData?.Refill_Rate);
-      setDeliveryRate(gasDeliveryRateData?.Refill_Delivery_Rate);
     }
     // New
     if (selectedType === productType[1]) {
       setDisplayRate(gasRateData?.New_Cylinder_Rate);
-      setDeliveryRate(gasDeliveryRateData?.New_Delivery_Rate);
     }
   }, [gasRateData, gasDeliveryRateData, productType, selectedType]);
 

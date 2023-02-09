@@ -36,7 +36,6 @@ const Cart = () => {
                 itemId = {item.itemId}
                 name={item.ProductName}
                 image={item.Image}
-                price={item.Price}
                 type={item.ProductType}
                 Qty={item.Qty}
               />
