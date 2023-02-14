@@ -11,6 +11,7 @@ import NavBar from "./component/Main_Menu_Page/NavBar";
 import EditGasPrice from "./component/Main_Menu_Page/Admin/Manage_Product/EditGasPrice";
 import EditDeiveryPrice from "./component/Main_Menu_Page/Admin/Manage_Product/EditDeiveryPrice";
 import Cart from "./component/Main_Menu_Page/Cart";
+import Checkout from "./component/Main_Menu_Page/Checkout";
 
 function App() {
   return (
@@ -41,11 +42,21 @@ function App() {
             element={
               <>
                 <NavBar />
-                <Cart/>
+                <Cart />
               </>
             }
           />
-          
+
+          <Route
+            path="/Checkout"
+            element={
+              <>
+                <NavBar />
+                <Checkout />
+              </>
+            }
+          />
+
           <Route path="/Signup" element={<SignUp />} />
           <Route path="/ForgetPassword" element={<ForgetPassword />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />

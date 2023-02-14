@@ -42,7 +42,7 @@ const Cart = () => {
             ))}
         </div>
         {/* Order Details */}
-        {basket?.length > 0 ? <OrderSummary /> : false}
+        {basket?.length > 0 ? <OrderSummary status={true} /> : false}
       </div>
     </main>
   );

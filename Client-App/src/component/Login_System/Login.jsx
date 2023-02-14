@@ -21,7 +21,7 @@ export default function Login() {
   const [isChecked, setIsChecked] = useState(0);
   const [error, setError] = useState(null); // capture error with this state
   const history = useNavigate();
-  
+
   const salt = bcrypt.genSaltSync(7);
 
   useEffect(() => {
@@ -42,7 +42,6 @@ export default function Login() {
     } catch (error) {
       // console.log(error.message)
     }
-
   }, []);
 
   // handle toggle to show or hide password
@@ -51,7 +50,6 @@ export default function Login() {
     // console.log(open);
   };
 
-  
   // Remember me function
   const setCookie = () => {
     // console.log("I am clicked X_X !");
@@ -112,62 +110,54 @@ export default function Login() {
 
     return { decryptedPassword, decryptedUserName };
   };
-  
-  const checkPassword =(hashPassword) => {
-    const check = bcrypt.compareSync(
-      password,
-      hashPassword
-    );
-    return check
-  }
+
+  const checkPassword = (hashPassword) => {
+    const check = bcrypt.compareSync(password, hashPassword);
+    return check;
+  };
 
   const CallBackendForSignIn = () => {
-    
     const hashed_Password = bcrypt.hashSync(password, salt);
     // console.log("I am working X_X !");
     axios
-    .post("http://localhost:5000/login", {
-      PhoneNumber: number,
-      Password: hashed_Password,
-    })
-    .then(function (respond) {
-      // console.log(respond.data.Message);
-      if (checkPassword(respond.data.Message) === false)
-      {
-        return( 
-        // console.log(false),
-        setError("Incorrect Data")
-        );
-       
-      }
+      .post("http://localhost:5000/login", {
+        PhoneNumber: number,
+        Password: hashed_Password,
+      })
+      .then(function (respond) {
+        // console.log(respond.data.Message);
+        if (checkPassword(respond.data.Message) === false) {
+          return (
+            // console.log(false),
+            setError("Incorrect Data")
+          );
+        }
 
-      if (checkPassword(respond.data.Message) === true) {
-        // redirect to Main_Page
-        return history("/Store", { replace: true });
-      }
-     
-      if (respond.data.Error !== undefined){
+        if (checkPassword(respond.data.Message) === true) {
+          // redirect to Main_Page
+          return history("/Store", { replace: true });
+        }
+
+        if (respond.data.Error !== undefined) {
           return (
             // console.log(respond.data.Error),
-           setError(respond.data.Error)
-          )      
-          }
-
-    })
-    .catch(function (error) {
-      // throw error message
-      // console.log(error.message);
-      setError(error.message);
-    });
-
-  }
+            setError(respond.data.Error)
+          );
+        }
+      })
+      .catch(function (error) {
+        // throw error message
+        // console.log(error.message);
+        setError(error.message);
+      });
+  };
 
   const signIn = (e) => {
     e.preventDefault(); // prevent page from refresh
     setError(null); // reset previous error_message
-    
+
     // delay for few second
-    setTimeout(CallBackendForSignIn,300);
+    setTimeout(CallBackendForSignIn, 300);
 
     // console.log("I am working X_X !");
   };
@@ -245,9 +235,7 @@ export default function Login() {
 
           {/* Error Message */}
 
-          { error &&
-            <ErrorMessageLogin Error_message={error} status = {true} />           
-                }
+          {error && <ErrorMessageLogin Error_message={error} status={true} />}
           <div className="mt-5">
             <button
               onClick={signIn}

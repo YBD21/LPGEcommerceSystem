@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../ContextAPI/StateProvider";
-const OrderSummary = () => {
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+const OrderSummary = ({ status }) => {
   const [{ basket, gasRateData, gasDeliveryRateData }] = useStateValue();
   const [itemscount, setItemsCount] = useState(0);
   const [itemsPrice, setItemsPrice] = useState(0);
   const [delivery_charge, setDelivery_charge] = useState(0);
   const [totalprice, setTotalPrice] = useState(0);
+
+  const history = useNavigate();
+
+  const redirectToStore = () => {
+    history("/Store");
+  };
+
+  const redirectToCheckout = () => {
+    history("/Checkout");
+  };
+
+  const redirectToCart = () => {
+    history("/Cart");
+  };
 
   const countItemsInBasket = () => {
     if (basket.length > 0) {
@@ -78,6 +94,48 @@ const OrderSummary = () => {
           <p className="text-2xl font-bold mr-16">Rs.{totalprice}</p>
         </div>
       </div>
+      {status && (
+        <div className="flex flex-row max-lg:flex-col my-10">
+          {/* Go Back ? */}
+          <button
+            className="w-full px-5 py-2.5 text-white bg-neutral-700 
+        font-medium rounded-lg text-s mr-3 mb-2"
+            onClick={redirectToStore}
+          >
+            <KeyboardBackspaceIcon className="svg-icons " />
+          </button>
+
+          <button
+            className="w-full px-5 py-2.5 tracking-wide
+            text-white bg-black font-medium rounded-lg text-lg 
+            text-center mr-3 mb-2"
+            onClick={redirectToCheckout}
+          >
+            Checkout
+          </button>
+        </div>
+      )}
+
+      {!status && (
+        <div className="flex flex-row max-lg:flex-col my-10">
+          {/* Go Back ? */}
+          <button
+            className="w-full px-5 py-2.5 text-white bg-neutral-700 
+        font-medium rounded-lg text-s mr-3 mb-2"
+            onClick={redirectToCart}
+          >
+            <KeyboardBackspaceIcon className="svg-icons " />
+          </button>
+
+          <button
+            className="w-full px-5 py-2.5 tracking-wide
+            text-white bg-black font-medium rounded-lg text-lg 
+            text-center mr-3 mb-2"
+          >
+            Pay
+          </button>
+        </div>
+      )}
     </div>
   );
 };
