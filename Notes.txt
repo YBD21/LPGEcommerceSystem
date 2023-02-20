@@ -127,7 +127,7 @@ app.get("/getProductList", async (req, res) => {
       return;
     }
       Object.entries(productList).map(([key, value], index) => {
-        console.log(key, value, index);
+        console.log(key, value, index);<
       });
     //  id={index}
     // productName={data.ProductName}
@@ -139,3 +139,4 @@ app.get("/getProductList", async (req, res) => {
  body-parse
  jwt 
 
+Per Charge 100 for Delivery -- Client

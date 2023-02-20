@@ -16,11 +16,11 @@ const DeliveryInfo = () => {
   };
 
   return (
-    <div className="w-1/2 max-lg:w-full">
+    <div className="w-1/2 max-lg:w-full max-lg:mb-5">
       <p className="text-2xl font-semibold "> Delivery Information</p>
 
-      <div className="w-full flex flex-row">
-        <div className="w-1/2 my-4 ml-3 mr-10">
+      <div className="w-full flex flex-row max-lg:flex-col">
+        <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
             Full Name
           </label>
@@ -35,7 +35,7 @@ const DeliveryInfo = () => {
           </div>
         </div>
 
-        <div className="w-1/2 flex flex-col">
+        <div className="w-1/2 flex flex-col max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
             Province
           </label>
@@ -59,8 +59,8 @@ const DeliveryInfo = () => {
         </div>
       </div>
 
-      <div className="w-full flex flex-row">
-        <div className="w-1/2 my-4 ml-3 mr-10">
+      <div className="w-full flex flex-row  max-lg:flex-col">
+        <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
             Phone Number
           </label>
@@ -75,13 +75,13 @@ const DeliveryInfo = () => {
           </div>
         </div>
 
-        <div className="w-1/2 flex flex-col">
+        <div className="w-1/2 flex flex-col max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
             District
           </label>
 
           {/* Select Dropdown */}
-          <div className="relative w-full mt-3.5">
+          <div className="relative w-full mt-3.5 ">
             <select
               className=" w-full px-5 py-2.5 text-black  rounded-lg text-lg font-semibold text-center appearance-none cursor-pointer border-2 border-black  focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
               onChange={selectLogDistrictsByProvince}
@@ -99,8 +99,8 @@ const DeliveryInfo = () => {
         </div>
       </div>
 
-      <div className="w-full flex flex-row">
-        <div className="w-1/2 my-4 ml-3 mr-10">
+      <div className="w-full flex flex-row ">
+        <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
             City
           </label>
@@ -116,7 +116,7 @@ const DeliveryInfo = () => {
       </div>
 
       <div className="w-full flex flex-row">
-        <div className="w-1/2 my-4 ml-3 mr-10">
+        <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
             Address
           </label>

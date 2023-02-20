@@ -5,6 +5,7 @@ export const initialState = {
   gasRateData: null,
   gasDeliveryRateData: null,
   totalCount: 0,
+  payStatus: false,
 };
 
 const reducer = (state, action) => {
@@ -87,6 +88,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         totalCount: action.totalCount,
+      };
+
+    case "SET_PAY_STATUS":
+      return {
+        ...state,
+        payStatus: action.payStatus,
       };
 
     default:

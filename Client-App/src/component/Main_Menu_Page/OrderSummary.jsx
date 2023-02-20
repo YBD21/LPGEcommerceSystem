@@ -2,14 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import PopupPotal from "./PopUp/PopupPotal";
 const OrderSummary = ({ status }) => {
-  const [{ basket, gasRateData, gasDeliveryRateData }] = useStateValue();
+  const [{ basket, gasRateData, gasDeliveryRateData, payStatus }, dispatch] =
+    useStateValue();
   const [itemscount, setItemsCount] = useState(0);
   const [itemsPrice, setItemsPrice] = useState(0);
   const [delivery_charge, setDelivery_charge] = useState(0);
   const [totalprice, setTotalPrice] = useState(0);
 
   const history = useNavigate();
+
+  const getpaymentPotal = () => {
+    // setShowModel(true);
+    dispatch({
+      type: "SET_PAY_STATUS",
+      payStatus: true,
+    });
+  };
 
   const redirectToStore = () => {
     history("/Store");
@@ -72,7 +82,7 @@ const OrderSummary = ({ status }) => {
   }, [basket]);
 
   return (
-    <div className="flex flex-col w-[40%] ml-16 px-2 max-lg:w-full max-lg:m-0 max-lg:mb-5">
+    <div className="flex flex-col w-[40%] ml-16 px-2 max-lg:w-full max-lg:m-0 max-lg:mb-5 max-lg:p-auto">
       <div className=" border-4 border-black rounded-lg">
         <p className="w-full text-center font-semibold text-2xl">
           Order Summary
@@ -131,11 +141,13 @@ const OrderSummary = ({ status }) => {
             className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-lg 
             text-center mr-3 mb-2"
+            onClick={getpaymentPotal}
           >
             Pay
           </button>
         </div>
       )}
+      {payStatus && <PopupPotal />}
     </div>
   );
 };
