@@ -1,9 +1,15 @@
 import React from "react";
+import axios from "axios";
+import KhaltiCheckout from "khalti-checkout-web";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
+import khaltiIcon from "../../../dist/image/Khalti.png"
 import CancelIcon from "@mui/icons-material/Cancel";
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 const Payment = () => {
-  const [{ basket, gasRateData, gasDeliveryRateData, payStatus }, dispatch] =
-    useStateValue();
+  const [
+    { basket, gasRateData, gasDeliveryRateData, payStatus, totalCharge },
+    dispatch,
+  ] = useStateValue();
 
   const close = () => {
     dispatch({
@@ -11,6 +17,41 @@ const Payment = () => {
       payStatus: false,
     });
   };
+
+  let config = {
+    // replace this key with yours
+    publicKey: "test_public_key_f3cf76c919634775a1d039ebb19b2da7",
+    productIdentity: "1234567890",
+    productName: "Everest",
+    productUrl: "http://localhost:3000/Checkout",
+    eventHandler: {
+      onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        console.log(payload);
+      },
+      // onError handler is optional
+      onError(error) {
+        // handle errors
+        console.log(error);
+      },
+      onClose() {
+        console.log('widget is closing');
+      },
+    },
+    paymentPreference: [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+    ],
+  };
+
+  const payment = () => {
+    let checkout = new KhaltiCheckout(config);
+    checkout.show({ amount: totalCharge * 100 });
+  };
+
   return (
     <div className="fixed inset-0 overflow-y-auto z-10">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
@@ -22,9 +63,23 @@ const Payment = () => {
           aria-hidden="true"
         />
         <div className="inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg shadow-xl transform sm:max-w-md sm:w-full sm:p-8">
-          <h2 className="text-xl font-bold mb-5">Hello World!
-          </h2>
-          
+          <h2 className="text-xl font-bold mb-5">Payment Option </h2>
+          <button
+            className="flex flex-col w-full px-5 py-2.5 tracking-wide justify-center items-center
+             font-medium rounded-lg text-lg 
+            text-center mb-5 border-2 border-black "
+            onClick={payment}
+          >
+            <img className="w-1/2 h-15" src = {khaltiIcon} alt="Khalti logo" />
+          </button>
+          <button
+            className="w-full px-5 py-7 tracking-wide
+            text-black font-semibold rounded-lg text-lg 
+            text-center mb-2 border-2 border-black"
+          >
+             <DirectionsBikeIcon className="svg-icons mr-5"/>
+           Cash On Delivery
+          </button>
           <button className="absolute top-0 right-0 m-5" onClick={close}>
             <CancelIcon className="svg-icons text-red-800" />
           </button>

@@ -17,7 +17,7 @@ const DeliveryInfo = () => {
 
   return (
     <div className="w-1/2 max-lg:w-full max-lg:mb-5">
-      <p className="text-2xl font-semibold "> Delivery Information</p>
+      <p className="text-2xl font-semibold max-lg:m-5"> Delivery Information</p>
 
       <div className="w-full flex flex-row max-lg:flex-col">
         <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
@@ -35,7 +35,7 @@ const DeliveryInfo = () => {
           </div>
         </div>
 
-        <div className="w-1/2 flex flex-col max-lg:w-3/4">
+        <div className="w-1/2 flex flex-col ml-3 mr-10 max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
             Province
           </label>
@@ -75,7 +75,7 @@ const DeliveryInfo = () => {
           </div>
         </div>
 
-        <div className="w-1/2 flex flex-col max-lg:w-3/4">
+        <div className="w-1/2 flex flex-col ml-3 mr-10 max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
             District
           </label>

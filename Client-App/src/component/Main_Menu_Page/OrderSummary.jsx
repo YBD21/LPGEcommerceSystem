@@ -14,7 +14,6 @@ const OrderSummary = ({ status }) => {
   const history = useNavigate();
 
   const getpaymentPotal = () => {
-    // setShowModel(true);
     dispatch({
       type: "SET_PAY_STATUS",
       payStatus: true,
@@ -80,6 +79,13 @@ const OrderSummary = ({ status }) => {
   useEffect(() => {
     countItemsInBasket();
   }, [basket]);
+
+  useEffect(() => {
+    dispatch({
+      type: "SET_TOTAL_CHARGE",
+      totalCharge: totalprice,
+    });
+  }, [totalprice]);
 
   return (
     <div className="flex flex-col w-[40%] ml-16 px-2 max-lg:w-full max-lg:m-0 max-lg:mb-5 max-lg:p-auto">

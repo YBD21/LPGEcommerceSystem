@@ -135,6 +135,53 @@ app.get("/getProductList", async (req, res) => {
     // imageUrl={data.ImageInfo.Link}
   };
 
+{
+    "idx": "m9pSumjufWqvyuSHhpMQeZ",
+    "token": "PE6rqNVGnc3xcEMDjvy4ua",
+    "amount": 1000,
+    "mobile": "98XXXXX050",
+    "product_identity": "1234567890",
+    "product_name": "Drogon",
+    "product_url": "http://gameofthrones.com/buy/Dragons",
+    "widget_id": "khalti-widget-1676968764003"
+}
+
+
+let config = {
+    // replace this key with yours
+    publicKey: "test_public_key_0fefe32ff9084ffbb30e4e3277ed0bc4",
+    productIdentity: "1234567890",
+    productName: "Everest",
+    productUrl: "http://localhost:3000/Checkout",
+    eventHandler: {
+      onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        console.log(payload);
+      },
+      // onError handler is optional
+      onError(error) {
+        // handle errors
+        console.log(error);
+      },
+      onClose() {
+        // console.log('widget is closing');
+      },
+    },
+    paymentPreference: [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+    ],
+  };
+
+  let checkout = new KhaltiCheckout(config);
+
+  const payment = () => {
+    checkout.show({ amount: totalCharge * 100 });
+  };
+
  Backend 
  body-parse
  jwt 
