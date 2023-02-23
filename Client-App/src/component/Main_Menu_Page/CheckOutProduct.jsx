@@ -78,6 +78,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
           <button
             className="px-4 py-2.5 tracking-wide
           text-white bg-black font-medium rounded-lg mx-auto
+          focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
           "
             onClick={decreaseQty}
           >
@@ -93,6 +94,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
           <button
             className="px-4 py-2.5 tracking-wide
           text-white bg-black font-medium rounded-lg mx-auto
+          focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
           "
             onClick={increaseQty}
           >

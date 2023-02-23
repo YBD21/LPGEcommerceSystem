@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import KhaltiCheckout from "khalti-checkout-web";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
-import khaltiIcon from "../../../dist/image/Khalti.png"
+import khaltiIcon from "../../../dist/image/Khalti.png";
 import CancelIcon from "@mui/icons-material/Cancel";
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import DeliveryDropDown from "./DeliveryDropDown";
 const Payment = () => {
   const [
     { basket, gasRateData, gasDeliveryRateData, payStatus, totalCharge },
     dispatch,
   ] = useStateValue();
+
+  const [status , setStatus ] = useState(false);
 
   const close = () => {
     dispatch({
@@ -17,6 +20,10 @@ const Payment = () => {
       payStatus: false,
     });
   };
+
+  const cashOnDelivery = () => {
+    setStatus(!status);
+  }
 
   let config = {
     // replace this key with yours
@@ -35,7 +42,7 @@ const Payment = () => {
         console.log(error);
       },
       onClose() {
-        console.log('widget is closing');
+        console.log("widget is closing");
       },
     },
     paymentPreference: [
@@ -64,22 +71,37 @@ const Payment = () => {
         />
         <div className="inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg shadow-xl transform sm:max-w-md sm:w-full sm:p-8">
           <h2 className="text-xl font-bold mb-5">Payment Option </h2>
+
           <button
             className="flex flex-col w-full px-5 py-2.5 tracking-wide justify-center items-center
              font-medium rounded-lg text-lg 
-            text-center mb-5 border-2 border-black "
+            text-center mb-5 border-2 border-black 
+            
+            "
             onClick={payment}
           >
-            <img className="w-1/2 h-15" src = {khaltiIcon} alt="Khalti logo" />
+            <img className="w-1/2 h-15" src={khaltiIcon} alt="Khalti logo" />
           </button>
+          <div className="relative">
+
           <button
             className="w-full px-5 py-7 tracking-wide
             text-black font-semibold rounded-lg text-lg 
-            text-center mb-2 border-2 border-black"
+            text-center mb-2 border-2 border-black
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
+            "
+            onClick={cashOnDelivery}
           >
-             <DirectionsBikeIcon className="svg-icons mr-5"/>
-           Cash On Delivery
+            <DirectionsBikeIcon className="svg-icons mr-5" />
+            Cash On Delivery
           </button>
+         <DeliveryDropDown isOpen = {status}/>
+         {status &&  <button className="absolute bottom-[34%] right-5 mb-5"
+         onClick={cashOnDelivery}
+         >
+        <CancelIcon className="svg-icons text-red-800" />
+      </button>}
+          </div>
           <button className="absolute top-0 right-0 m-5" onClick={close}>
             <CancelIcon className="svg-icons text-red-800" />
           </button>
