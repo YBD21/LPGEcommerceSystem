@@ -61,9 +61,9 @@ const multer = Multer({
 
 // req = request & res = respond
 app.post("/login", async (req, res) => {
-  let Data = req.body;
+  let data = req.body;
 
-  const respond = await login(Data.PhoneNumber, Data.Password);
+  const respond = await login(data.phoneNumber, data.encPass);
   // console.log(respond);
   res.json(respond);
 });

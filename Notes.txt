@@ -182,8 +182,23 @@ let config = {
     checkout.show({ amount: totalCharge * 100 });
   };
 
+  const newToken = jwt.sign({
+    data: 'foobar'
+  }, 'secret', { expiresIn: '30' });
+
+  jwt.verify(newToken, 'secret', function(err, decoded) {
+    if (err){
+      console.log ("Error :",err.message)
+    }else {
+      console.log(decoded.data) 
+    }
+  });
+
+
  Backend 
  body-parse
  jwt 
+
+SKIP_PREFLIGHT_CHECK=true
 
 Per Charge 100 for Delivery -- Client

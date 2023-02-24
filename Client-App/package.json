@@ -21,13 +21,12 @@
     "react-dom": "^18.2.0",
     "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^6.4.3",
-    "react-scripts": "5.0.1",
-    "socket.io-client": "^4.5.4",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "^5.0.1",
+    "socket.io-client": "^4.5.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -58,7 +57,6 @@
     "os-browserify": "^0.3.0",
     "postcss": "^8.4.19",
     "process": "^0.11.10",
-    "react-app-rewired": "^2.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "tailwindcss": "^3.2.4",

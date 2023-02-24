@@ -12,7 +12,7 @@ const Payment = () => {
     dispatch,
   ] = useStateValue();
 
-  const [status , setStatus ] = useState(false);
+  const [status, setStatus] = useState(false);
 
   const close = () => {
     dispatch({
@@ -23,7 +23,7 @@ const Payment = () => {
 
   const cashOnDelivery = () => {
     setStatus(!status);
-  }
+  };
 
   let config = {
     // replace this key with yours
@@ -83,24 +83,26 @@ const Payment = () => {
             <img className="w-1/2 h-15" src={khaltiIcon} alt="Khalti logo" />
           </button>
           <div className="relative">
-
-          <button
-            className="w-full px-5 py-7 tracking-wide
+            <button
+              className="w-full px-5 py-7 tracking-wide
             text-black font-semibold rounded-lg text-lg 
             text-center mb-2 border-2 border-black
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
             "
-            onClick={cashOnDelivery}
-          >
-            <DirectionsBikeIcon className="svg-icons mr-5" />
-            Cash On Delivery
-          </button>
-         <DeliveryDropDown isOpen = {status}/>
-         {status &&  <button className="absolute bottom-[34%] right-5 mb-5"
-         onClick={cashOnDelivery}
-         >
-        <CancelIcon className="svg-icons text-red-800" />
-      </button>}
+              onClick={cashOnDelivery}
+            >
+              <DirectionsBikeIcon className="svg-icons mr-5" />
+              Cash On Delivery
+            </button>
+            <DeliveryDropDown isOpen={status} />
+            {status && (
+              <button
+                className="absolute bottom-[33%] right-5 mb-5"
+                onClick={cashOnDelivery}
+              >
+                <CancelIcon className="svg-icons text-red-800" />
+              </button>
+            )}
           </div>
           <button className="absolute top-0 right-0 m-5" onClick={close}>
             <CancelIcon className="svg-icons text-red-800" />

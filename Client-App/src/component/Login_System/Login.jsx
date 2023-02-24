@@ -121,8 +121,8 @@ export default function Login() {
     // console.log("I am working X_X !");
     axios
       .post("http://localhost:5000/login", {
-        PhoneNumber: number,
-        Password: hashed_Password,
+        phoneNumber: number,
+        encPass: hashed_Password,
       })
       .then(function (respond) {
         // console.log(respond.data.Message);
