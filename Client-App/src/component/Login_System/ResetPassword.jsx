@@ -17,7 +17,7 @@ const ResetPassword = () => {
   const [open, setOpen] = useState(false);
   const [createpassword, setCreatePassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
-  
+
   const [error, setError] = useState(null);
   const [errorcreatepassword, setErrorCreatePassword] = useState({});
   const [errorconfirmpassword, setErrorConfirmPassword] = useState({});
@@ -26,16 +26,14 @@ const ResetPassword = () => {
 
   const salt = bcrypt.genSaltSync(10);
 
-  useEffect( () => {
-    if (state === null || state === undefined){
-      history("/ForgetPassword", { replace: true })
+  useEffect(() => {
+    if (state === null || state === undefined) {
+      history("/ForgetPassword", { replace: true });
     } else {
-      setNumber(state.phonenumber)
+      setNumber(state.phonenumber);
       // console.log(state.phonenumber)
     }
-      },
-      [state,history]
-  )
+  }, [state, history]);
 
   const emptyFieldValidation = () => {
     if (createpassword.length === 0) {
@@ -66,9 +64,8 @@ const ResetPassword = () => {
         setErrorConfirmPassword({});
       }
     }
-    
-    
-    if (createpassword !== confirmpassword){
+
+    if (createpassword !== confirmpassword) {
       setErrorConfirmPassword({
         ConfirmPassword: true,
         Message: "Password Does Not Match !",
@@ -84,9 +81,7 @@ const ResetPassword = () => {
         CreatePassword: true,
         Message: "Password Must Be 8 Character Long !",
       });
-      return(
-        true
-      )
+      return true;
     }
 
     if (confirmpassword.length > 16 && createpassword.length > 16) {
@@ -98,13 +93,9 @@ const ResetPassword = () => {
         CreatePassword: true,
         Message: "Password Cannnot Be More Than 16 Character Long !",
       });
-      return(
-        true
-      )
+      return true;
     }
-    return(
-      false
-    )
+    return false;
   };
 
   const resetValidation = () => {
@@ -132,31 +123,36 @@ const ResetPassword = () => {
 
   const redirectToLogin = () => {
     return history("/", { replace: true });
-  }
+  };
 
   const CallBackendToResetPassword = () => {
     // console.log("Sever  is Called Upon !");
     // genetate a hash_password here
     const newHashedPassword = bcrypt.hashSync(createpassword, salt);
 
-    axios.patch("http://localhost:5000/ResetPassword",{
-      PhoneNumber : number,
-      EncPass : newHashedPassword 
-    })
-    .then (function (respond) {
-    //  console.log(respond.data);
-    // reset is successful redirect
-     if (respond.data.Message === true){
-       setSuccess("Success");
-      // wait timer of 3 sec and redirect
-       setTimeout(redirectToLogin,2000)
-     }
-    })
-    .catch ( function (error) {
-    //  console.log(error.message);
-    setError(error.message);
-    }
-    )
+    axios
+      .patch("http://localhost:5000/ResetPassword", {
+        PhoneNumber: number,
+        EncPass: newHashedPassword,
+      })
+      .then(function (respond) {
+        //  console.log(respond.data);
+        // reset is successful redirect
+        if (respond.data.Message === true) {
+          setSuccess("Success");
+          // wait timer of 2 sec and redirect
+          setTimeout(redirectToLogin, 2000);
+        }
+      })
+      .catch(function (error) {
+        // throw error message
+        if (error.response.statusText) {
+          // console.log(error.response.statusText);
+          setError(error.response.statusText);
+        } else {
+          setError(error.message);
+        }
+      });
   };
 
   const resetPassword = (e) => {
@@ -168,7 +164,11 @@ const ResetPassword = () => {
     // console.log(revalidateStatus);
     // console.log(checkPasswordStatus);
     // console.log(emptyStatus);
-    if (revalidateStatus === false && checkPasswordStatus === false && emptyStatus === false){
+    if (
+      revalidateStatus === false &&
+      checkPasswordStatus === false &&
+      emptyStatus === false
+    ) {
       CallBackendToResetPassword();
     }
   };
@@ -240,13 +240,10 @@ const ResetPassword = () => {
 
           {/* Error Message */}
 
-            { error &&
-            <ErrorMessageLogin Error_message={error} status = {true} />           
-                }
+          {error && <ErrorMessageLogin Error_message={error} status={true} />}
 
           {/* Success Message */}
-           {success && <SuccessMessageReset props = {success} status = {true}/>
-           }
+          {success && <SuccessMessageReset props={success} status={true} />}
           <div className="mt-5">
             <button
               className="w-full px-5 py-2.5 tracking-wide

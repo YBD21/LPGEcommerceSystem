@@ -2,8 +2,11 @@ import express, { json, urlencoded } from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import helmet from "helmet";
 import Multer from "multer";
 import fs from "fs";
+import rateLimit from "express-rate-limit";
+import slowDown from "express-slow-down";
 import { login } from "./LoginSystem/login.js";
 import { passwordforget } from "./LoginSystem/passwordforget.js";
 import { resetPassword } from "./LoginSystem/resetpassword.js";
@@ -31,6 +34,11 @@ import {
 } from "./ProductManagement/UpdateProduct/updateProduct.js";
 
 const app = express();
+
+app.use(helmet());
+//set proxy
+app.set("trust proxy",1);
+
 // connecting to same localhost as app for socket.io
 const httpServer = createServer(app);
 // Enable CORS for the socket connection
@@ -39,6 +47,20 @@ const io = new Server(httpServer, {
 });
 
 const port = 5000;
+
+const apiLimiter = rateLimit({
+  windowMs: 30 * 60 * 1000, // 30 minutes
+  max: 15, // limit each IP to 15 requests per windowMs
+  message: "Too many attempts, please try again later"
+});
+
+const speedLimiter = slowDown({
+  windowMs: 60 * 60 * 1000, // 60 minutes
+  delayAfter: 5, // allow 5 requests per 60 minutes, then...
+  delayMs: 1500 // begin adding 1.5s of delay per request above 5:
+});
+
+app.use(speedLimiter);
 //use cors to allow cross origin resource sharing
 app.use(
   cors({
@@ -59,8 +81,10 @@ const multer = Multer({
   },
 });
 
+// app.use("/login",apiLimiter);
+
 // req = request & res = respond
-app.post("/login", async (req, res) => {
+app.post("/login",apiLimiter,async (req, res) => {
   let data = req.body;
 
   const respond = await login(data.phoneNumber, data.encPass);
@@ -68,20 +92,20 @@ app.post("/login", async (req, res) => {
   res.json(respond);
 });
 
-app.post("/ForgetPassword", async (req, res) => {
+app.post("/ForgetPassword",apiLimiter,async (req, res) => {
   let Data = req.body;
   const respond = await passwordforget(Data.PhoneNumber);
   //  console.log(respond);
   res.json(respond);
 });
 
-app.patch("/ResetPassword", async (req, res) => {
+app.patch("/ResetPassword",apiLimiter,async (req, res) => {
   let Data = req.body;
   const respond = await resetPassword(Data.PhoneNumber, Data.EncPass);
   res.json(respond);
 });
 
-app.post("/SignUp", async (req, res) => {
+app.post("/SignUp", apiLimiter,async (req, res) => {
   let Data = req.body;
   const respond = await createAccount(
     Data.PhoneNumber,

@@ -140,15 +140,20 @@ export default function Login() {
 
         if (respond.data.Error !== undefined) {
           return (
-            // console.log(respond.data.Error),
+            // console.log(respond.data),
             setError(respond.data.Error)
           );
         }
       })
       .catch(function (error) {
         // throw error message
-        // console.log(error.message);
-        setError(error.message);
+        if (error.response.statusText){
+          // console.log(error.response.statusText);
+          setError(error.response.statusText);
+        }else {
+          setError(error.message);
+        }
+        
       });
   };
 

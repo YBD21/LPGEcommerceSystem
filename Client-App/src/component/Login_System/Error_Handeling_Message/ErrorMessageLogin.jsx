@@ -11,16 +11,25 @@ const ErrorMessageLogin = (message) => {
           First: "Network Error !",
           Second: "Cannot access to the internet",
         });
+
       case "Incorrect Data":
         return setText({
           First: "Incorrect ",
           Second: "Phone Number Or Password !",
         });
+
       case "Disable Account":
         return setText({
           First: "Sorry ",
           Second: "Your Account Has Been Disable !",
         });
+
+      case "Too Many Requests":
+        return setText({
+          First: "Too many login attempts",
+          Second: ",please try again later !",
+        });
+
       default:
         return setText({
           First: "Holy smokes !",

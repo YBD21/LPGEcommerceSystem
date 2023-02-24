@@ -339,7 +339,7 @@ const SignUp = () => {
       .then(function (respond) {
         if (respond.data.Message === true) {
           // redirect to Login Page
-           setSuccess();
+          setSuccess();
           //display account created Succefully!
           setTimeout(redirectToLogin, 4000);
         } else {
@@ -350,13 +350,25 @@ const SignUp = () => {
         }
       })
       .catch(function (error) {
-        // console.log(error.message);
-        // throw error message and refresh page in 3 sec
-        setErrorMain({
-          PhoneNumber: true,
-          Message: "Cannot access to the internet !",
-        });
-        setTimeout(cancel, 3000);
+        // throw error message and refresh page in 5 sec
+        if (error.response.data) {
+          // console.log(error.response.statusText);
+          return (
+            setErrorMain({
+              PhoneNumber: true,
+              Message: error.response.data,
+            }),
+            setTimeout(cancel, 5000)
+          );
+        } else {
+          return (
+            setErrorMain({
+              PhoneNumber: true,
+              Message: "Cannot access to the internet !",
+            }),
+            setTimeout(cancel, 5000)
+          );
+        }
       });
   };
 
@@ -498,8 +510,8 @@ const SignUp = () => {
                   type={open === false ? "password" : "text"}
                   value={createpassword}
                   onChange={(e) => setCreatePassword(e.target.value)}
-                  autoComplete ="true"
-                  required = {true}
+                  autoComplete="true"
+                  required={true}
                   className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
                 />
                 <div className="text-2xl ml-[-2.5rem] mt-2.5">
@@ -528,8 +540,8 @@ const SignUp = () => {
                   type={open === false ? "password" : "text"}
                   value={confirmpassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  autoComplete ="true"
-                  required = {true}
+                  autoComplete="true"
+                  required={true}
                   className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
                 />
                 <div className="text-2xl ml-[-2.5rem] mt-2.5">
