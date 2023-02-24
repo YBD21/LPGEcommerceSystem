@@ -11,7 +11,6 @@ import { hashKey } from "./hashKey";
 import "./login.css";
 import Logo from "../Logo";
 import ErrorMessageLogin from "./Error_Handeling_Message/ErrorMessageLogin";
-import bcrypt from "bcryptjs";
 
 export default function Login() {
   const CryptoJS = require("crypto-js");
@@ -22,7 +21,6 @@ export default function Login() {
   const [error, setError] = useState(null); // capture error with this state
   const history = useNavigate();
 
-  const salt = bcrypt.genSaltSync(7);
 
   useEffect(() => {
     //  console.log("Use Is on Effect X_X");
@@ -61,6 +59,7 @@ export default function Login() {
         hashKey.secretKey
       ).toString();
       //  console.log(cipherUserName);
+      //encrypt password
       const cipherPassword = CryptoJS.AES.encrypt(
         password,
         hashKey.secretKey
@@ -111,29 +110,30 @@ export default function Login() {
     return { decryptedPassword, decryptedUserName };
   };
 
-  const checkPassword = (hashPassword) => {
-    const check = bcrypt.compareSync(password, hashPassword);
-    return check;
-  };
 
   const CallBackendForSignIn = () => {
-    const hashed_Password = bcrypt.hashSync(password, salt);
+
     // console.log("I am working X_X !");
+    const encryptPassword = CryptoJS.AES.encrypt(
+      password,
+      number
+    ).toString();
+
     axios
       .post("http://localhost:5000/login", {
         phoneNumber: number,
-        encPass: hashed_Password,
+        encPass: encryptPassword,
       })
       .then(function (respond) {
         // console.log(respond.data.Message);
-        if (checkPassword(respond.data.Message) === false) {
+        if (respond.data.Message === false) {
           return (
             // console.log(false),
             setError("Incorrect Data")
           );
         }
 
-        if (checkPassword(respond.data.Message) === true) {
+        if (respond.data.Message === true) {
           // redirect to Main_Page
           return history("/Store", { replace: true });
         }
