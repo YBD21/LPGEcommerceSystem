@@ -1,4 +1,4 @@
-import {dataBase} from "../firebaseConfig.js";
+import { dataBase } from "../firebaseConfig.js";
 
 const createAccount = async (
   phoneNumber,
@@ -29,18 +29,23 @@ const createAccount = async (
   });
 
   if (!userExist) {
-    const createAccountRef = `SignInWithPhoneNumber/+${phoneNumber.slice(0, 3)}/${phoneNumber.slice(3)}`;
+    const createAccountRef = `SignInWithPhoneNumber/+${phoneNumber.slice(
+      0,
+      3
+    )}/${phoneNumber.slice(3)}`;
     const refToCreateAccount = dataBase.ref(createAccountRef);
-    
+
     await refToCreateAccount.update(
-      ({
+      {
         Created: dateCreated,
         FirstName: firstName,
         LastName: lastName,
         PhoneNumber: phoneNumber.slice(3),
         lastSeen: dateCreated,
         password: newPassword,
-      }),
+        IsDisable: false,
+        AccountType: "Client",
+      },
       (error) => {
         if (error === null) {
           return (sendData = { ...sendData, Message: true });

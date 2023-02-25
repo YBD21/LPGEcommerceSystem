@@ -7,6 +7,7 @@ import Multer from "multer";
 import fs from "fs";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
+import cookieParser from "cookie-parser";
 import { login } from "./LoginSystem/login.js";
 import { passwordforget } from "./LoginSystem/passwordforget.js";
 import { resetPassword } from "./LoginSystem/resetpassword.js";
@@ -36,8 +37,9 @@ import {
 const app = express();
 
 app.use(helmet());
+
 //set proxy
-app.set("trust proxy",1);
+app.set("trust proxy", 1);
 
 // connecting to same localhost as app for socket.io
 const httpServer = createServer(app);
@@ -49,18 +51,19 @@ const io = new Server(httpServer, {
 const port = 5000;
 
 const apiLimiter = rateLimit({
-  windowMs: 30 * 60 * 1000, // 30 minutes
-  max: 15, // limit each IP to 15 requests per windowMs
-  message: "Too many attempts, please try again later"
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 10, // limit each IP to 10 requests per windowMs
+  message: "Too many attempts, please try again later",
 });
 
 const speedLimiter = slowDown({
-  windowMs: 60 * 60 * 1000, // 60 minutes
-  delayAfter: 5, // allow 5 requests per 60 minutes, then...
-  delayMs: 1500 // begin adding 1.5s of delay per request above 5:
+  windowMs: 30 * 60 * 1000, // 30 minutes
+  delayAfter: 5, // allow 20 requests per 30 minutes, then...
+  delayMs: 500, // begin adding 5ms of delay per request above 10:
 });
 
 app.use(speedLimiter);
+
 //use cors to allow cross origin resource sharing
 app.use(
   cors({
@@ -69,9 +72,11 @@ app.use(
   })
 );
 
-app.use(json());
+app.use(json({ limit: "1mb" }));
 
 app.use(urlencoded({ extended: false }));
+
+app.use(cookieParser());
 
 // used for uploading files
 const multer = Multer({
@@ -81,31 +86,36 @@ const multer = Multer({
   },
 });
 
-// app.use("/login",apiLimiter);
-
 // req = request & res = respond
-app.post("/login",apiLimiter,async (req, res) => {
+app.post("/login", apiLimiter, async (req, res) => {
   let data = req.body;
 
   const respond = await login(data.phoneNumber, data.encPass);
   // console.log(respond);
+  // set cookie
+  res.cookie("userData", respond.accessToken, {
+    secure: true, // set to true to enable sending the cookie only over HTTPS
+    httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
+    sameSite: true,
+  });
+
   res.json(respond);
 });
 
-app.post("/ForgetPassword",apiLimiter,async (req, res) => {
+app.post("/ForgetPassword", apiLimiter, async (req, res) => {
   let Data = req.body;
   const respond = await passwordforget(Data.PhoneNumber);
   //  console.log(respond);
   res.json(respond);
 });
 
-app.patch("/ResetPassword",apiLimiter,async (req, res) => {
+app.patch("/ResetPassword", apiLimiter, async (req, res) => {
   let Data = req.body;
   const respond = await resetPassword(Data.PhoneNumber, Data.EncPass);
   res.json(respond);
 });
 
-app.post("/SignUp", apiLimiter,async (req, res) => {
+app.post("/SignUp", apiLimiter, async (req, res) => {
   let Data = req.body;
   const respond = await createAccount(
     Data.PhoneNumber,

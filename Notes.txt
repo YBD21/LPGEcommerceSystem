@@ -194,10 +194,8 @@ let config = {
     }
   });
 
-
- Backend 
- body-parse
- jwt 
+// const accessToken = req.cookies.userData;
+//  console.log(accessToken);
 
 SKIP_PREFLIGHT_CHECK=true
 

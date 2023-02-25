@@ -21,7 +21,6 @@ export default function Login() {
   const [error, setError] = useState(null); // capture error with this state
   const history = useNavigate();
 
-
   useEffect(() => {
     //  console.log("Use Is on Effect X_X");
 
@@ -110,20 +109,21 @@ export default function Login() {
     return { decryptedPassword, decryptedUserName };
   };
 
-
   const CallBackendForSignIn = () => {
-
     // console.log("I am working X_X !");
-    const encryptPassword = CryptoJS.AES.encrypt(
-      password,
-      number
-    ).toString();
-
+    const encryptPassword = CryptoJS.AES.encrypt(password, number).toString();
+    
     axios
-      .post("http://localhost:5000/login", {
-        phoneNumber: number,
-        encPass: encryptPassword,
-      })
+      .post(
+        "http://localhost:5000/login",
+        {
+          phoneNumber: number,
+          encPass: encryptPassword,
+        },
+        {
+          withCredentials: true, // enable sending and receiving cookies
+        }
+      )
       .then(function (respond) {
         // console.log(respond.data.Message);
         if (respond.data.Message === false) {
@@ -134,6 +134,8 @@ export default function Login() {
         }
 
         if (respond.data.Message === true) {
+          //set session cookies
+          Cookies.set(hashKey.userData,respond.data.accessToken);
           // redirect to Main_Page
           return history("/Store", { replace: true });
         }
@@ -147,13 +149,12 @@ export default function Login() {
       })
       .catch(function (error) {
         // throw error message
-        if (error.response.statusText){
+        if (error.response.statusText) {
           // console.log(error.response.statusText);
           setError(error.response.statusText);
-        }else {
+        } else {
           setError(error.message);
         }
-        
       });
   };
 
