@@ -193,6 +193,9 @@ let config = {
       console.log(decoded.data) 
     }
   });
+  
+mailtrap
+toaster in react
 
 // const accessToken = req.cookies.userData;
 //  console.log(accessToken);

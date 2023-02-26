@@ -15,6 +15,7 @@ import ErrorMessageLogin from "./Error_Handeling_Message/ErrorMessageLogin";
 export default function Login() {
   const CryptoJS = require("crypto-js");
   const [open, setOpen] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
   const [password, setPassword] = useState("");
   const [number, setNumber] = useState("");
   const [isChecked, setIsChecked] = useState(0);
@@ -112,7 +113,9 @@ export default function Login() {
   const CallBackendForSignIn = () => {
     // console.log("I am working X_X !");
     const encryptPassword = CryptoJS.AES.encrypt(password, number).toString();
-    
+
+    setLoggingIn(true); // disable button
+
     axios
       .post(
         "http://localhost:5000/login",
@@ -126,6 +129,10 @@ export default function Login() {
       )
       .then(function (respond) {
         // console.log(respond.data.Message);
+
+        // reset disable button
+        setLoggingIn(false);
+
         if (respond.data.Message === false) {
           return (
             // console.log(false),
@@ -135,7 +142,7 @@ export default function Login() {
 
         if (respond.data.Message === true) {
           //set session cookies
-          Cookies.set(hashKey.userData,respond.data.accessToken);
+          Cookies.set(hashKey.userData, respond.data.accessToken);
           // redirect to Main_Page
           return history("/Store", { replace: true });
         }
@@ -149,8 +156,11 @@ export default function Login() {
       })
       .catch(function (error) {
         // throw error message
-        if (error.response.statusText) {
-          // console.log(error.response.statusText);
+        
+          // reset disable button
+          setLoggingIn(false);
+        // console.log(error.response.statusText);
+        if (error.response && error.response.statusText) {
           setError(error.response.statusText);
         } else {
           setError(error.message);
@@ -164,8 +174,6 @@ export default function Login() {
 
     // delay for few second
     setTimeout(CallBackendForSignIn, 300);
-
-    // console.log("I am working X_X !");
   };
 
   return (
@@ -245,6 +253,7 @@ export default function Login() {
           <div className="mt-5">
             <button
               onClick={signIn}
+              disabled={loggingIn}
               className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
