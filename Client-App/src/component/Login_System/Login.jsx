@@ -6,11 +6,13 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Cookies from "js-cookie";
+import { decodeToken } from "react-jwt";
 import axios from "axios";
 import { hashKey } from "./hashKey";
 import "./login.css";
 import Logo from "../Logo";
 import ErrorMessageLogin from "./Error_Handeling_Message/ErrorMessageLogin";
+import { useStateValue } from "../../ContextAPI/StateProvider";
 
 export default function Login() {
   const CryptoJS = require("crypto-js");
@@ -21,6 +23,8 @@ export default function Login() {
   const [isChecked, setIsChecked] = useState(0);
   const [error, setError] = useState(null); // capture error with this state
   const history = useNavigate();
+
+  const [{ userData }, dispatch] = useStateValue();
 
   useEffect(() => {
     //  console.log("Use Is on Effect X_X");
@@ -42,6 +46,16 @@ export default function Login() {
     }
   }, []);
 
+  const setUser = () => {
+    const token = Cookies.get(hashKey.userData);
+    if (token) {
+      const data = decodeToken(token);
+      dispatch({
+        type: "SET_USER",
+        userData: data,
+      });
+    }
+  };
   // handle toggle to show or hide password
   const toggle = () => {
     setOpen(!open);
@@ -143,6 +157,8 @@ export default function Login() {
         if (respond.data.Message === true) {
           //set session cookies
           Cookies.set(hashKey.userData, respond.data.accessToken);
+          // setUser
+          setUser();
           // redirect to Main_Page
           return history("/Store", { replace: true });
         }
@@ -156,9 +172,9 @@ export default function Login() {
       })
       .catch(function (error) {
         // throw error message
-        
-          // reset disable button
-          setLoggingIn(false);
+
+        // reset disable button
+        setLoggingIn(false);
         // console.log(error.response.statusText);
         if (error.response && error.response.statusText) {
           setError(error.response.statusText);

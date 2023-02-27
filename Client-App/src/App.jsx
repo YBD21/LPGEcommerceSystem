@@ -1,68 +1,45 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { UserAuthContextProvider } from "./ContextAPI/UserAuthContext";
-import ForgetPassword from "./component/Login_System/ForgetPassword";
-import Login from "./component/Login_System/Login";
-import ResetPassword from "./component/Login_System/ResetPassword";
-import SignUp from "./component/Login_System/SignUp";
-import CreateLPGasProduct from "./component/Main_Menu_Page/Admin/Manage_Product/CreateLPGasProduct";
-import Menu from "./component/Main_Menu_Page/Menu";
-import NavBar from "./component/Main_Menu_Page/NavBar";
-import EditGasPrice from "./component/Main_Menu_Page/Admin/Manage_Product/EditGasPrice";
-import EditDeiveryPrice from "./component/Main_Menu_Page/Admin/Manage_Product/EditDeiveryPrice";
-import Cart from "./component/Main_Menu_Page/Cart";
-import Checkout from "./component/Main_Menu_Page/Checkout";
-
+import { useStateValue } from "./ContextAPI/StateProvider";
+import Cookies from "js-cookie";
+import { decodeToken } from "react-jwt";
+import { hashKey } from "./component/Login_System/hashKey";
+import AppRoutes from "./Routes/AppRoutes";
+import Loading from "./component/Loading";
 function App() {
+  const [{ userData }, dispatch] = useStateValue();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const setUser = () => {
+      const token = Cookies.get(hashKey.userData);
+      const data = decodeToken(token);
+
+      if (data?.id) {
+        dispatch({
+          type: "SET_USER",
+          userData: data,
+        });
+      }
+      setLoading(false);
+    };
+
+    setUser();
+  }, [userData]);
+
   return (
-    <UserAuthContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          {/* protected route */}
-          {/* Manage Product */}
-          <Route path="/CreateLPGProduct" element={<CreateLPGasProduct />} />
-
-          <Route path="/EditGasPrice" element={<EditGasPrice />} />
-
-          <Route path="/EditDelivery" element={<EditDeiveryPrice />} />
-
-          <Route
-            path="/Store"
-            element={
-              <>
-                <NavBar />
-                <Menu />
-              </>
-            }
-          />
-
-          <Route
-            path="/Cart"
-            element={
-              <>
-                <NavBar />
-                <Cart />
-              </>
-            }
-          />
-
-          <Route
-            path="/Checkout"
-            element={
-              <>
-                <NavBar />
-                <Checkout />
-              </>
-            }
-          />
-
-          <Route path="/Signup" element={<SignUp />} />
-          <Route path="/ForgetPassword" element={<ForgetPassword />} />
-          <Route path="/ResetPassword" element={<ResetPassword />} />
-        </Routes>
-      </BrowserRouter>
-    </UserAuthContextProvider>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <UserAuthContextProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </UserAuthContextProvider>
+      )}
+    </>
   );
 }
 
