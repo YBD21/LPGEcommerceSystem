@@ -28,7 +28,7 @@ const Cart = () => {
         <DeleteIcon className="svg-icons" />
       </button>
       <div className="flex flex-row max-lg:flex-col">
-        <div className="w-1/2 max-lg:w-full overflow-auto h-[70vh] max-lg:h-auto">
+        <div className="w-[60%] max-lg:w-full overflow-auto h-[70vh] max-lg:h-auto">
           {basket
             ?.sort((a, b) => (a.itemId > b.itemId ? 1 : -1))
             .map((item) => (

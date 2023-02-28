@@ -66,7 +66,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
   }, [gasRateData]);
 
   return (
-    <div className="flex max-lg:flex-col flex-row mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%]">
+    <div className="flex max-lg:flex-col flex-row mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%] relative">
       {/* Stock Status */}
 
       <img className="w-20 m-6 max-lg:mt-7" src={image} alt="Sagar Gas" />
@@ -123,7 +123,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
       </div>
 
       <button
-        className="mx-5 mb-auto max-lg:relative max-lg:bottom-[35.5rem] max-lg:left-[40%]"
+        className="absolute top-0 right-2"
         onClick={removeFromBasket}
       >
         <CancelIcon className="svg-icons text-red-800" />
