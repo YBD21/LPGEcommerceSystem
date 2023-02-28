@@ -22,7 +22,10 @@ function App() {
           userData: data,
         });
       }
-      setLoading(false);
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     };
 
     setUser();

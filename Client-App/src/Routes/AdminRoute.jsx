@@ -7,6 +7,8 @@ import EditGasPrice from "../component/Main_Menu_Page/Admin/Manage_Product/EditG
 import EditDeiveryPrice from "../component/Main_Menu_Page/Admin/Manage_Product/EditDeiveryPrice";
 import Cart from "../component/Main_Menu_Page/Cart";
 import Checkout from "../component/Main_Menu_Page/Checkout";
+import PageNotFound from "../component/PageNotFound";
+
 const AdminRoute = () => {
   return (
     <Routes>
@@ -17,8 +19,8 @@ const AdminRoute = () => {
 
       <Route path="/EditDelivery" element={<EditDeiveryPrice />} />
 
-       {/* Redirect from "/" to "/Store" */}
-       <Route path="/" element={<Navigate to="/Store" />} />
+      {/* Redirect from "/" to "/Store" */}
+      <Route path="/" element={<Navigate to="/Store" />} />
 
       {/* Client Access */}
       <Route
@@ -50,6 +52,8 @@ const AdminRoute = () => {
           </>
         }
       />
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

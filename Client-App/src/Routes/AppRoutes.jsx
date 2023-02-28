@@ -8,14 +8,15 @@ const AppRoutes = () => {
   const [{ userData }] = useStateValue();
   const role = userData?.role;
 
-  if (!role) {
-    return <AccessOnceRoute />;
-  }
-  if (role === "Admin") {
-    return <AdminRoute />;
-  }
-  if (role === "Client") {
-    return <ClientRoute />;
+  switch (role) {
+    case "Admin":
+      return <AdminRoute />;
+
+    case "Client":
+      return <ClientRoute />;
+
+    default:
+      return <AccessOnceRoute />;
   }
 };
 

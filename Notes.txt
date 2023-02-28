@@ -200,6 +200,9 @@ toaster in react
 // const accessToken = req.cookies.userData;
 //  console.log(accessToken);
 
+Add 404 Page Not Found and implemtation in AppRoutes 
+
+
 SKIP_PREFLIGHT_CHECK=true
 
 Per Charge 100 for Delivery -- Client
