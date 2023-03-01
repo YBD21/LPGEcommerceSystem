@@ -88,7 +88,7 @@ const OrderSummary = ({ status }) => {
   }, [totalprice]);
 
   return (
-    <div className="flex flex-col w-[40%] ml-16 px-2 max-lg:w-full max-lg:m-0 max-lg:mb-5 max-lg:p-auto">
+    <div className="flex flex-col w-[40%] ml-12 mr-4 px-2 max-lg:w-full max-lg:m-0 max-lg:mb-5 max-lg:p-auto">
       <div className=" border-4 border-black rounded-lg">
         <p className="w-full text-center font-semibold text-2xl">
           Order Summary
@@ -96,7 +96,7 @@ const OrderSummary = ({ status }) => {
         <hr className="border border-black" />
         <div className="w-full flex flex-row justify-between my-2">
           <p className="text-lg font-semibold ml-16">
-            SubTotal ({itemscount} Items) :
+            SubTotal ({itemscount} Qty) :
           </p>
           <p className="text-lg font-semibold mr-16">Rs.{itemsPrice}</p>
         </div>
@@ -152,7 +152,7 @@ const OrderSummary = ({ status }) => {
           <button
             className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-lg 
-            text-center mr-3 mb-2 
+            text-center mr-3 mb-2 max-lg:mt-5
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
             "
             onClick={getpaymentPotal}

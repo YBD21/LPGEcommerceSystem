@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { useStateValue } from "../../ContextAPI/StateProvider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { provincesOfNepal, districtsByProvince } from "./NepalLocationData";
 const DeliveryInfo = () => {
   const [currentstate, setCurrentState] = useState("");
   const [currentDistrict, setCurrentDistrict] = useState("");
+  // import userData from contexProvider or dataLayer
+  const [{ userData }] = useStateValue();
 
+  const phoneNumber = parseInt(userData?.id.slice(3));
+  
+  const name = userData?.firstName + " " + userData?.lastName;
   // console.log(districtsByProvince["Pradesh-1"]);
 
   const selectLogProvince = (e) => {
@@ -28,7 +34,7 @@ const DeliveryInfo = () => {
           <div className="flex flex-row cursor-pointer">
             <input
               type="text"
-              value={"Santosh Deuja"}
+              value={name}
               className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
               disabled
             />
@@ -68,7 +74,7 @@ const DeliveryInfo = () => {
           <div className="flex flex-row cursor-pointer">
             <input
               type="number"
-              value={9860694050}
+              value={phoneNumber}
               className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
               disabled
             />

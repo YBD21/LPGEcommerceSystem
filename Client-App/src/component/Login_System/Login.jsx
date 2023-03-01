@@ -46,15 +46,12 @@ export default function Login() {
     }
   }, []);
 
-  const setUser = () => {
-    const token = Cookies.get(hashKey.userData);
-    if (token) {
+  const setUser = (token) => {
       const data = decodeToken(token);
       dispatch({
         type: "SET_USER",
         userData: data,
       });
-    }
   };
   // handle toggle to show or hide password
   const toggle = () => {
@@ -155,10 +152,8 @@ export default function Login() {
         }
 
         if (respond.data.Message === true) {
-          //set session cookies
-          Cookies.set(hashKey.userData, respond.data.accessToken);
           // setUser
-          setUser();
+          setUser(respond.data.accessToken);
           // redirect to Main_Page
           return history("/Store", { replace: true });
         }
