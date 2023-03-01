@@ -5,6 +5,7 @@ import NavBar from "../component/Main_Menu_Page/NavBar";
 import Cart from "../component/Main_Menu_Page/Cart";
 import Checkout from "../component/Main_Menu_Page/Checkout";
 import PageNotFound from "../component/PageNotFound";
+
 const ClientRoute = () => {
   return (
     <Routes>

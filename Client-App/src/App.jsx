@@ -40,17 +40,9 @@ function App() {
   }, []);
 
   return (
-    <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <UserAuthContextProvider>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </UserAuthContextProvider>
-      )}
-    </>
+    <UserAuthContextProvider>
+      <BrowserRouter>{loading ? <Loading /> : <AppRoutes />}</BrowserRouter>
+    </UserAuthContextProvider>
   );
 }
 

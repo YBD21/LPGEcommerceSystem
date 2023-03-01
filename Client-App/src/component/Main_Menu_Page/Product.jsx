@@ -4,15 +4,15 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 const Product = ({ id, productName, stock, imageUrl }) => {
-  const [{ basket, gasRateData, gasDeliveryRateData, totalCount }, dispatch] =
-    useStateValue();
+  const [
+    { basket, gasRateData, gasDeliveryRateData, totalCount, itemAdded },
+    dispatch,
+  ] = useStateValue();
 
   const productType = ["Refill", "New"];
   const [selectedType, setSelectedType] = useState(productType[0]);
 
-  const [displayRate, setDisplayRate] = useState(
-    gasRateData?.Refill_Rate
-  );
+  const [displayRate, setDisplayRate] = useState(gasRateData?.Refill_Rate);
 
   const [itemCount, setItemCount] = useState(0);
 
@@ -21,28 +21,18 @@ const Product = ({ id, productName, stock, imageUrl }) => {
 
   const [is_Item_Exist_With_New, SetIs_Item_Exist_With_New] = useState(false);
 
-  let current_count = [];
-
   const selectLog = (e) => {
     setSelectedType(e.target.value);
   };
 
-  //  Basket Operation
-  const countTotalItemsInBasket = () => {
-    let updateCount = 0;
-    basket?.map((items) => {
-      current_count.push(items.Qty);
-      console.log("Current_count", current_count);
+  const updateItemAdded = () => {
+    dispatch({
+      type: "SET_ITEM_ADDED",
+      itemAdded: true,
     });
-
-    current_count.map((element, index) => {
-      if (basket.length > index) {
-        updateCount += element;
-        console.log("Updated_Count", updateCount);
-      }
-    });
-    return updateCount;
   };
+
+  //  Basket Operation
 
   const addBasket = (itemId) => {
     dispatch({
@@ -80,6 +70,7 @@ const Product = ({ id, productName, stock, imageUrl }) => {
       }
     }
     addBasket(itemId);
+    updateItemAdded();
     setItemCount(0);
   };
 
@@ -137,7 +128,6 @@ const Product = ({ id, productName, stock, imageUrl }) => {
 
   useEffect(() => {
     findItemInBasket();
-    // countTotalItemsInBasket();
   }, [basket]);
 
   return (

@@ -6,9 +6,8 @@ const PageNotFound = () => {
   const navigate = useNavigate();
 
   // handle click event on the back button
-  const handleBack = () => {
-    // go back to the previous page
-    navigate(-1);
+  const redirect = () => {
+    navigate("/", { replace: true });
   };
 
   return (
@@ -27,7 +26,7 @@ const PageNotFound = () => {
           </p>
           <div className="mt-5">
             <button
-              onClick={handleBack}
+              onClick={redirect}
               className="w-full px-5 py-2.5 tracking-wide transition
             text-white bg-black font-medium rounded-lg text-s text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden

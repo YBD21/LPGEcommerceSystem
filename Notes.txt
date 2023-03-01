@@ -200,6 +200,13 @@ toaster in react
 // const accessToken = req.cookies.userData;
 //  console.log(accessToken);
 
+  const [showPopOver, setShowPopOver] = useState(false);
+
+  const handleAddClick = () => {
+    setShowPopOver(true);
+    setTimeout(() => setShowPopOver(false), 2000);
+  };
+
 Add 404 Page Not Found and implemtation in AppRoutes 
 
 Use React.lazy on Admin Page 

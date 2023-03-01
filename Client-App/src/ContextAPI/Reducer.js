@@ -7,6 +7,7 @@ export const initialState = {
   totalCount: 0,
   payStatus: false,
   totalCharge: 0,
+  itemAdded: false,
 };
 
 const reducer = (state, action) => {
@@ -89,6 +90,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         totalCount: action.totalCount,
+      };
+
+    case "SET_ITEM_ADDED":
+      return {
+        ...state,
+        itemAdded: action.itemAdded,
       };
 
     case "SET_PAY_STATUS":

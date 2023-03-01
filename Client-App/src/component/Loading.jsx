@@ -16,7 +16,9 @@ const Loading = () => {
             fillRule="evenodd"
           />
         </svg>
-        <p className=" text-2xl font-bold text-black mt-4 animate-pulse">Loading...</p>
+        <p className=" text-2xl font-bold text-black mt-4 animate-pulse">
+          Loading...
+        </p>
       </div>
     </div>
   );
