@@ -118,14 +118,16 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
       <div className="w-full mb-5 mx-5 text-center">
         <p className="text-2xl font-bold mb-2.5">Price</p>
         <div className="px-5 py-3  text-white bg-black rounded-lg text-lg font-semibold">
-          Rs.{Qty === 0 ? price : price * Qty}
+          Rs.
+          {Qty === 0
+            ? price
+            : (price * Qty).toLocaleString("en-IN", {
+                maximumFractionDigits: 2,
+              })}
         </div>
       </div>
 
-      <button
-        className="absolute top-0 right-2"
-        onClick={removeFromBasket}
-      >
+      <button className="absolute top-0 right-2" onClick={removeFromBasket}>
         <CancelIcon className="svg-icons text-red-800" />
       </button>
     </div>

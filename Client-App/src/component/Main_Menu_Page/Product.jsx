@@ -182,7 +182,12 @@ const Product = ({ id, productName, stock, imageUrl }) => {
 
       {/* Show Per Price */}
       <div className="w-full px-5 py-3 mb-5 text-white bg-black rounded-lg text-lg font-semibold text-center">
-        Rs.{itemCount === 0 ? displayRate : displayRate * itemCount}
+        Rs.
+        {itemCount === 0
+          ? displayRate
+          : (displayRate * itemCount).toLocaleString("en-IN", {
+              maximumFractionDigits: 2,
+            })}
       </div>
       {/* Select Dropdown */}
       <div className="relative w-full mb-5">

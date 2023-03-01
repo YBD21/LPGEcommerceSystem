@@ -98,16 +98,29 @@ const OrderSummary = ({ status }) => {
           <p className="text-lg font-semibold ml-16">
             SubTotal ({itemscount} Qty) :
           </p>
-          <p className="text-lg font-semibold mr-16">Rs.{itemsPrice}</p>
+          <p className="text-lg font-semibold mr-16">
+            Rs.
+            {itemsPrice.toLocaleString("en-IN", {
+              maximumFractionDigits: 2,
+            })}
+          </p>
         </div>
         <div className="w-full flex flex-row justify-between my-2">
-          <p className="text-lg font-semibold ml-16">Delivery Charge :</p>
+          <p className="text-lg font-semibold ml-16">
+            Delivery Charge ({gasDeliveryRateData?.Refill_Delivery_Rate} Per
+            Qty) :
+          </p>
           <p className="text-lg font-semibold mr-16">Rs.{delivery_charge}</p>
         </div>
         <hr className=" border border-black" />
         <div className="w-full flex flex-row justify-between my-2">
           <p className="text-2xl font-bold ml-16">Total :</p>
-          <p className="text-2xl font-bold mr-16">Rs.{totalprice}</p>
+          <p className="text-2xl font-bold mr-16">
+            Rs.
+            {totalprice.toLocaleString("en-IN", {
+              maximumFractionDigits: 2,
+            })}
+          </p>
         </div>
       </div>
       {status && (

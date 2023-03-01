@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import KhaltiCheckout from "khalti-checkout-web";
-import { useStateValue } from "../../../ContextAPI/StateProvider";
-import khaltiIcon from "../../../dist/image/Khalti.png";
+import { useStateValue } from "../../ContextAPI/StateProvider";
+import khaltiIcon from "../../dist/image/Khalti.png";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
-import DeliveryDropDown from "./DeliveryDropDown";
+import DeliveryDropDown from "./PopUp/DeliveryDropDown";
 const Payment = () => {
   const [
     { basket, gasRateData, gasDeliveryRateData, payStatus, totalCharge },
