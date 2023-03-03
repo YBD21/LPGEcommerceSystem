@@ -8,7 +8,7 @@ import fs from "fs";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import cookieParser from "cookie-parser";
-import { login } from "./LoginSystem/login.js";
+import { login, verifyToken } from "./LoginSystem/login.js";
 import { passwordforget } from "./LoginSystem/passwordforget.js";
 import { resetPassword } from "./LoginSystem/resetpassword.js";
 import { createAccount } from "./LoginSystem/signup.js";
@@ -58,8 +58,8 @@ const apiLimiter = rateLimit({
 
 const speedLimiter = slowDown({
   windowMs: 30 * 60 * 1000, // 30 minutes
-  delayAfter: 5, // allow 20 requests per 30 minutes, then...
-  delayMs: 500, // begin adding 5ms of delay per request above 10:
+  delayAfter: 50, // allow 50 requests per 30 minutes, then...
+  delayMs: 500, // begin adding 5ms of delay per request above 50:
 });
 
 app.use(speedLimiter);
@@ -96,19 +96,21 @@ app.post("/login", apiLimiter, async (req, res) => {
   res.cookie("userData", respond.accessToken, {
     secure: true, // set to true to enable sending the cookie only over HTTPS
     httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-    sameSite: "strict", // set to 'strict' to prevent CSRF attacks
+    sameSite: "none", // set to 'strict' to prevent CSRF attacks
   });
 
   res.json(respond);
 });
 
-app.get("/user-data",async (req,res) => {
- const accessToken = req.cookies.userData;
-  if(accessToken){
+app.get("/user-data", (req, res) => {
+  const accessToken = req.cookies.userData;
+
+  if (!accessToken || !verifyToken(accessToken)) {
+    res.status(401).send("Unauthorized");
+  } else {
     res.json(accessToken);
-  }else {
-    res.send("Unauthorized")
   }
+  
 });
 
 app.post("/ForgetPassword", apiLimiter, async (req, res) => {

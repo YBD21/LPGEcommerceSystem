@@ -2,6 +2,10 @@ import { dataBase } from "../firebaseConfig.js";
 import bcrypt from "bcryptjs";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+const secretKey = process.env.JWT_SECRET_KEY;
 
 const login = async (phoneNumber, encPassword) => {
   let sendData = { Message: "", Error: "" };
@@ -46,8 +50,8 @@ const login = async (phoneNumber, encPassword) => {
         });
 
         // createJWToken
-  
-        const token = generateToken(snapshot,phoneNumber);
+
+        const token = generateToken(snapshot, phoneNumber);
         // checkPassword and send to client
         return (sendData = {
           ...sendData,
@@ -71,13 +75,27 @@ const generateToken = (data, number) => {
   const filterData = {
     firstName: data.val().FirstName,
     lastName: data.val().LastName,
-    role : data.val().AccountType,
-    id : number
+    role: data.val().AccountType,
+    id: number,
   };
 
-  const token = jwt.sign(filterData, number, { expiresIn: "1h" });
+  const token = jwt.sign(filterData, secretKey, { expiresIn: "1h" });
 
   return token;
 };
 
-export { login };
+const verifyToken = (token) => {
+  let sendData = null;
+  jwt.verify(token, secretKey, function (err) {
+    if (err) {
+      // console.log(err.message);
+      sendData = false;
+    } else {
+      // console.log(decoded);
+      sendData = true;
+    }
+  });
+  return sendData;
+};
+
+export { login, verifyToken };

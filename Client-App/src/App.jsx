@@ -18,6 +18,8 @@ function App() {
       })
       .then(function (respond) {
         const data = decodeToken(respond.data);
+        // const data = respond.data;
+        console.log(data);
         if (data?.id) {
           dispatch({
             type: "SET_USER",
@@ -29,7 +31,11 @@ function App() {
           setLoading(false);
         }, 500);
       })
-      .catch(function (error) {});
+      .catch(function (error) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      });
   };
 
   useEffect(() => {
