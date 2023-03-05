@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useRoutes,
+} from "react-router-dom";
 import axios from "axios";
 import { UserAuthContextProvider } from "./ContextAPI/UserAuthContext";
 import { useStateValue } from "./ContextAPI/StateProvider";
@@ -45,9 +49,20 @@ function App() {
     }
   }, []);
 
+  const route = createBrowserRouter([
+    {
+      path : "*",
+      element: <AppRoutes />,
+    },
+  ]);
+
   return (
     <UserAuthContextProvider>
-      <BrowserRouter>{loading ? <Loading /> : <AppRoutes />}</BrowserRouter>
+      {loading ? (
+        <Loading />
+      ) : (
+        <RouterProvider router={route}/>
+      )}
     </UserAuthContextProvider>
   );
 }

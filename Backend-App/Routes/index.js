@@ -96,7 +96,7 @@ app.post("/login", apiLimiter, async (req, res) => {
   res.cookie("userData", respond.accessToken, {
     secure: true, // set to true to enable sending the cookie only over HTTPS
     httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-    sameSite: "none", // set to 'strict' to prevent CSRF attacks
+    sameSite: "strict", // set to 'strict' to prevent CSRF attacks
   });
 
   res.json(respond);
@@ -110,7 +110,6 @@ app.get("/user-data", (req, res) => {
   } else {
     res.json(accessToken);
   }
-  
 });
 
 app.post("/ForgetPassword", apiLimiter, async (req, res) => {
