@@ -83,7 +83,7 @@ const reducer = (state, action) => {
     case "SET_USER":
       return {
         ...state,
-        userData: { ...state.userData, ...action.userData },
+        userData: {...action.userData },
       };
 
     case "SET_TOTAL_COUNT":

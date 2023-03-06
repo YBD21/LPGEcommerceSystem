@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useRoutes,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
 import { UserAuthContextProvider } from "./ContextAPI/UserAuthContext";
 import { useStateValue } from "./ContextAPI/StateProvider";
@@ -23,7 +19,7 @@ function App() {
       .then(function (respond) {
         const data = decodeToken(respond.data);
         // const data = respond.data;
-        console.log(data);
+        // console.log(data);
         if (data?.id) {
           dispatch({
             type: "SET_USER",
@@ -51,18 +47,14 @@ function App() {
 
   const route = createBrowserRouter([
     {
-      path : "*",
+      path: "*",
       element: <AppRoutes />,
     },
   ]);
 
   return (
     <UserAuthContextProvider>
-      {loading ? (
-        <Loading />
-      ) : (
-        <RouterProvider router={route}/>
-      )}
+      {loading ? <Loading /> : <RouterProvider router={route} />}
     </UserAuthContextProvider>
   );
 }

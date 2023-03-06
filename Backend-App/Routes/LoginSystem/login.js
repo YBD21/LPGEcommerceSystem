@@ -88,7 +88,7 @@ const verifyToken = (token) => {
   let sendData = null;
   jwt.verify(token, secretKey, function (err) {
     if (err) {
-      // console.log(err.message);
+      console.log(err.message);
       sendData = false;
     } else {
       // console.log(decoded);
