@@ -24,7 +24,9 @@ const UserDropDown = ({ status }) => {
   // request Backend to delete httpOnly Cookies
   const callBackendToLogOut = () => {
     axios
-      .delete("http://localhost:5000/user-data")
+      .delete("http://localhost:5000/user-data" ,{
+        withCredentials: true, // enable sending and receiving cookies
+      })
       .then(function (respond) {
         console.log(respond);
       })
@@ -54,6 +56,7 @@ const UserDropDown = ({ status }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+
   return (
     <div
       className="relative inline-block text-left z-20 cursor-pointer"

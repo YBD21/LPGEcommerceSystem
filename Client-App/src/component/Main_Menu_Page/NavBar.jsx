@@ -172,7 +172,7 @@ const NavBar = () => {
         >
           <Link to="/Cart">
             <ShoppingCartIcon className="relative svg-icons transition duration-300 transform active:scale-105" />
-            <strong className="absolute top-2 right-[3.75%] text-lg">
+            <strong className="absolute top-2 right-[2.5%] text-lg">
               {basket?.length}
             </strong>
           </Link>

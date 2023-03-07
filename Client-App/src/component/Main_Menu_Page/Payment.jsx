@@ -96,7 +96,7 @@ const Payment = () => {
             <DeliveryDropDown isOpen={status} />
             {status && (
               <button
-                className="absolute bottom-[33%] right-5 mb-5"
+                className="absolute bottom-[-80%] right-5 mb-5 z-20"
                 onClick={cashOnDelivery}
               >
                 <CancelIcon className="svg-icons text-red-800" />

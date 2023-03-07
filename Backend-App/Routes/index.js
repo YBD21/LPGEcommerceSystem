@@ -112,6 +112,15 @@ app.get("/user-data", (req, res) => {
   }
 });
 
+app.delete("/user-data", (req, res) => {
+  res.clearCookie("userData", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+  res.send("Cookie cleared!");
+});
+
 app.post("/ForgetPassword", apiLimiter, async (req, res) => {
   let Data = req.body;
   const respond = await passwordforget(Data.PhoneNumber);
