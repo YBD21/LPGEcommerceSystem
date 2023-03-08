@@ -26,14 +26,17 @@ const Payment = () => {
 
   let config = {
     // replace this key with yours
-    publicKey: "test_public_key_f3cf76c919634775a1d039ebb19b2da7",
-    productIdentity: "1234567890",
-    productName: "Everest",
+    publicKey: "test_public_key_84077dd9e2444a2782f2f8cbe62861f7",
+    productIdentity: basket[0].itemId.toString(),
+    productName: basket[0].ProductName,
     productUrl: "http://localhost:3000/Checkout",
     eventHandler: {
       onSuccess(payload) {
         // hit merchant api for initiating verfication
         console.log(payload);
+        // call backend to verify the payload then
+
+        // redirect to order page
       },
       // onError handler is optional
       onError(error) {
@@ -55,7 +58,7 @@ const Payment = () => {
 
   const payment = () => {
     let checkout = new KhaltiCheckout(config);
-    checkout.show({ amount: totalCharge * 100 });
+    checkout.show({ amount: 200 * 100 });
   };
 
   return (
@@ -96,7 +99,7 @@ const Payment = () => {
             <DeliveryDropDown isOpen={status} />
             {status && (
               <button
-                className="absolute bottom-[-80%] right-5 mb-5 z-20"
+                className="absolute bottom-[-85%] right-5 mb-5 z-20"
                 onClick={cashOnDelivery}
               >
                 <CancelIcon className="svg-icons text-red-800" />
