@@ -74,10 +74,11 @@ const Product = ({ id, productName, stock, imageUrl }) => {
     setItemCount(0);
   };
 
-  const removeItemsFromBasket = () => {
+  const removeItemsFromBasket = (itemId) => {
     dispatch({
       type: "REMOVE_FROM_BASKET",
       id: id,
+      itemId: itemId,
     });
   };
 
