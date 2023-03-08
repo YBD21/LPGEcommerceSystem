@@ -7,13 +7,25 @@ import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import DeliveryDropDown from "./PopUp/DeliveryDropDown";
 const Payment = () => {
   const [
-    { basket, gasRateData, gasDeliveryRateData, payStatus, totalCharge },
+    {
+      basket,
+      gasRateData,
+      gasDeliveryRateData,
+      payStatus,
+      totalCharge,
+      showPopup,
+    },
     dispatch,
   ] = useStateValue();
 
   const [status, setStatus] = useState(false);
 
   const close = () => {
+    dispatch({
+      type: "SET_SHOW_POPUP",
+      showPopup: false,
+    });
+    
     dispatch({
       type: "SET_PAY_STATUS",
       payStatus: false,
@@ -27,8 +39,8 @@ const Payment = () => {
   let config = {
     // replace this key with yours
     publicKey: "test_public_key_84077dd9e2444a2782f2f8cbe62861f7",
-    productIdentity: basket[0].itemId.toString(),
-    productName: basket[0].ProductName,
+    productIdentity: basket[0]?.itemId.toString(),
+    productName: basket[0]?.ProductName,
     productUrl: "http://localhost:3000/Checkout",
     eventHandler: {
       onSuccess(payload) {
@@ -55,7 +67,7 @@ const Payment = () => {
       "SCT",
     ],
   };
-
+  // change 200 into totalcharge -- in real payment
   const payment = () => {
     let checkout = new KhaltiCheckout(config);
     checkout.show({ amount: 200 * 100 });

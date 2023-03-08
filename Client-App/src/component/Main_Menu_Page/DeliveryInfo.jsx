@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { provincesOfNepal, districtsByProvince } from "./NepalLocationData";
@@ -6,10 +6,12 @@ const DeliveryInfo = () => {
   const [currentstate, setCurrentState] = useState("");
   const [currentDistrict, setCurrentDistrict] = useState("");
   // import userData from contexProvider or dataLayer
-  const [{ userData }] = useStateValue();
+  const [{ userData, payStatus, showPopup }, dispatch] = useStateValue();
+
+  const [checkStatus, setCheckStatus] = useState(showPopup);
 
   const phoneNumber = parseInt(userData?.id.slice(3));
-  
+
   const name = userData?.firstName + " " + userData?.lastName;
   // console.log(districtsByProvince["Pradesh-1"]);
 
@@ -20,6 +22,21 @@ const DeliveryInfo = () => {
   const selectLogDistrictsByProvince = (e) => {
     setCurrentDistrict(e.target.value);
   };
+
+  const openPotal = () => {
+    dispatch({
+      type: "SET_SHOW_POPUP",
+      showPopup: true,
+    });
+  };
+
+  useEffect(() => {
+    if (payStatus) {
+      console.log("changed !")
+      // check and validate fields then
+      openPotal();
+    }
+  }, [payStatus]);
 
   return (
     <div className="w-1/2 max-lg:w-full max-lg:mb-5">

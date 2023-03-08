@@ -8,6 +8,7 @@ export const initialState = {
   payStatus: false,
   totalCharge: 0,
   itemAdded: false,
+  showPopup: false,
 };
 
 const reducer = (state, action) => {
@@ -83,7 +84,7 @@ const reducer = (state, action) => {
     case "SET_USER":
       return {
         ...state,
-        userData: {...action.userData },
+        userData: { ...action.userData },
       };
 
     case "SET_TOTAL_COUNT":
@@ -102,6 +103,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         payStatus: action.payStatus,
+      };
+
+    case "SET_SHOW_POPUP":
+      return {
+        ...state,
+        showPopup: action.showPopup,
       };
 
     case "SET_TOTAL_CHARGE":

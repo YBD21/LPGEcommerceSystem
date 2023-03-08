@@ -4,7 +4,7 @@ import { useStateValue } from "../../ContextAPI/StateProvider";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import PopupPotal from "./PopUp/PopupPotal";
 const OrderSummary = ({ status }) => {
-  const [{ basket, gasRateData, gasDeliveryRateData, payStatus }, dispatch] =
+  const [{ basket, gasRateData, gasDeliveryRateData, payStatus,showPopup }, dispatch] =
     useStateValue();
   const [itemscount, setItemsCount] = useState(0);
   const [itemsPrice, setItemsPrice] = useState(0);
@@ -174,7 +174,9 @@ const OrderSummary = ({ status }) => {
           </button>
         </div>
       )}
-      {payStatus && <PopupPotal />}
+
+      {/* activate payment potal */}
+      {showPopup && <PopupPotal />}
     </div>
   );
 };
