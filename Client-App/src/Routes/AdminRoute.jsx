@@ -8,10 +8,17 @@ import EditDeiveryPrice from "../component/Main_Menu_Page/Admin/Manage_Product/E
 import Cart from "../component/Main_Menu_Page/Cart";
 import Checkout from "../component/Main_Menu_Page/Checkout";
 import PageNotFound from "../component/PageNotFound";
+import AdminDashboard from "../component/Main_Menu_Page/Admin/AdminDashboard";
 
 const AdminRoute = () => {
   return (
     <Routes>
+      <Route path="/Dashboard" element={
+      <>
+      <NavBar/> 
+      <AdminDashboard />
+      </>
+      }/>
       {/* Manage Product */}
       <Route path="/CreateLPGProduct" element={<CreateLPGasProduct />} />
 

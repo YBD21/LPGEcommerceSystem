@@ -137,7 +137,7 @@ const NavBar = () => {
     <header className="sticky top-0 z-30 bg-white opacity-95 flex flex-row w-full drop-shadow-lg">
       {/* Logo */}
 
-      <div className="w-full m-auto max-lg:w-1/2">
+      <div className="flex flex-row w-full mx-5 max-lg:hidden">
         <Link to={"/Dashboard"}>
           <img
             className="w-16"
@@ -147,32 +147,34 @@ const NavBar = () => {
         </Link>
       </div>
 
-      <ul className="flex justify-between w-1/2 max-lg:w-full">
+      <ul className="flex justify-between w-full max-w-screen-lg mx-auto lg:max-w-full">
         <li
           className={`m-auto px-2 py-5 ${
             isHome ? `border-b-4 border-black` : false
           }`}
         >
           <Link to="/Store">
-            <HomeIcon className="svg-icons transition duration-300 transform active:scale-95" />
+            <HomeIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </Link>
         </li>
         <li className="svg-icons m-auto transition duration-300 transform active:scale-105 cursor-pointer">
           <NotificationsIcon />
         </li>
+
         <li className="m-auto">
           <button onClick={showUserMenu}>
-            <AccountCircleIcon className="svg-icons transition duration-300 transform active:scale-105" />
+            <AccountCircleIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </button>
         </li>
+
         <li
           className={`m-auto px-2 py-5 ${
             isCart ? `border-b-4 border-black` : false
           }`}
         >
           <Link to="/Cart">
-            <ShoppingCartIcon className="relative svg-icons transition duration-300 transform active:scale-105" />
-            <strong className="absolute top-2 right-[2.5%] text-lg">
+            <ShoppingCartIcon className="relative svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
+            <strong className="absolute top-2 right-[2.5%] text-lg rounded-full h-7 w-7 flex items-center justify-center">
               {basket?.length}
             </strong>
           </Link>
