@@ -1,13 +1,30 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const ManageGasPriceTab = () => {
+  const location = useLocation();
   const [isManageGasPriceOpen, setIsManageGasPriceOpen] = useState(false);
+  const [isGasPrice, setIsGasPrice] = useState(false);
+  const [isDeliveryPrice, setIsDeliveryPrice] = useState(false);
 
   const toggleManageProduct = () => {
     setIsManageGasPriceOpen(!isManageGasPriceOpen);
   };
 
+  useEffect(() => {
+    const manageGasPricePath = "/Admin/Manage-Gas-Price";
+
+    setIsManageGasPriceOpen(location.pathname.startsWith(manageGasPricePath));
+
+    setIsGasPrice(
+      location.pathname === "/Admin/Manage-Gas-Price/Edit-Gas-Price"
+    );
+
+    setIsDeliveryPrice(
+      location.pathname === "/Admin/Manage-Gas-Price/Edit-Deivery-Price"
+    );
+  }, [location]);
   return (
     <li className="relative">
       <button
@@ -35,16 +52,23 @@ const ManageGasPriceTab = () => {
       {isManageGasPriceOpen && (
         <div className="flex flex-col w-full py-2 mt-2 bg-white rounded-lg">
           <Link
-            href="#"
-            className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
+            to={"/Admin/Manage-Gas-Price/Edit-Gas-Price"}
+            className={`block px-4 py-3 
+            text-gray-800 hover:bg-gray-100
+            ${isGasPrice ? "bg-gray-200" : ""}`}
           >
-            Gas Price
+            {isGasPrice && <ArrowRightIcon className="svg-icons mr-6" />}
+            <span className="mr-auto">Gas Price</span>
           </Link>
           <Link
-            href="#"
-            className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
+            to="/Admin/Manage-Gas-Price/Edit-Deivery-Price"
+            className={`block px-4 py-3 
+            text-gray-800 hover:bg-gray-100
+            ${isDeliveryPrice ? "bg-gray-200" : ""}`}
           >
-            Delivery Price
+            {isDeliveryPrice && <ArrowRightIcon className="svg-icons mr-6" />}
+
+            <span className="mr-auto"> Delivery Price</span>
           </Link>
           <div className="shadow-lg relative">
             <div className="absolute inset-0 bottom-auto w-full h-1 bg-gradient-to-t from-gray-300 via-gray-200 to-transparent" />

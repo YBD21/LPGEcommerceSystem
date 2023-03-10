@@ -1,39 +1,37 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import openSocket from "socket.io-client";
-import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
+import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
 
-
-const EditDeiveryPrice = () => {
-  const [refillRate,setRefillRate] = useState(0);
-  const [newRate,setNewRate] = useState(0);
+const EditGasPrice = () => {
+  const [newGasRate, setNewGasRate] = useState(0);
+  const [refillGasRate, setRefillGasRate] = useState(0);
+  const [gasRateData, setGasRateData] = useState(null);
   const [updateStatus, setUpdateStatus] = useState(null);
-  const [deliveryRateData,setDeliveryRateData] = useState(null);
 
   const [errorOnRefill, setErrorOnRefill] = useState({});
   const [errorOnNewRate, setErrorOnNewRate] = useState({});
   const [errorMessageBox, setErrorMessageBox] = useState(null);
-  
 
-  
-     useEffect(() => {
+  useEffect(() => {
     //call to backend for connection
     const socket = openSocket("http://localhost:5000");
-     //  socket.on('connect', () => {
+
+    // socket.on('connect', () => {
     //   console.log('Connected to socket.io server');
     // });
 
-    // socket.on('disconnect', () => {
+    //socket.on('disconnect', () => {
     //   console.log('Disconnected from socket.io server');
     // });
-  
-    socket.emit("getDeliveryRate");
 
-    socket.on("deliveryRate", (data) => {
-     setDeliveryRateData(data);
+    socket.on("gasRate", (data) => {
+      setGasRateData(data);
     });
+
+    socket.emit("getGasRate");
     return () => {
       socket.disconnect();
     };
@@ -42,7 +40,7 @@ const EditDeiveryPrice = () => {
   // handel error here for refill and new
   const checkRates = () => {
     let count = 0;
-    if (newRate < 0) {
+    if (newGasRate < 0) {
       setErrorOnNewRate({
         status: true,
         Message: "Please enter a valid Rate, it should be greater than zero.",
@@ -50,7 +48,7 @@ const EditDeiveryPrice = () => {
       count++;
     }
 
-    if (refillRate < 0) {
+    if (refillGasRate < 0) {
       setErrorOnRefill({
         status: true,
         Message: "Please enter a valid Rate, it should be greater than zero.",
@@ -59,31 +57,31 @@ const EditDeiveryPrice = () => {
     }
     return count;
   };
-  
-  const updateDeiveryRate = () => {
+
+  const updateGasRate = () => {
     axios
-    .post("http://localhost:5000/updateDeiveryRate", {
-      RefillRate: refillRate,
-      NewGasRate: newRate,
-    })
-    .then((respond) => {
-      if (respond.data.Message === true) {
-        // send a success message
-        setUpdateStatus("getGasRate");
-      }
-    })
-    .catch((error) => {
-      // console.log(error.message);
-       setErrorMessageBox(error.message);
-    });
+      .post("http://localhost:5000/updateGasRate", {
+        RefillRate: refillGasRate,
+        NewGasRate: newGasRate,
+      })
+      .then((respond) => {
+        if (respond.data.Message === true) {
+          // send a success message
+          setUpdateStatus("getGasRate");
+        }
+      })
+      .catch((error) => {
+        // console.log(error.message);
+        setErrorMessageBox(error.message);
+      });
   };
 
-  const sendUpdateDeiveryRate = () =>{
+  const sendUpdateGasRate = () => {
     setUpdateStatus(null);
     setErrorMessageBox(null); // reset box
     let status = checkRates();
     if (status === 0) {
-      updateDeiveryRate();
+      updateGasRate();
     }
   };
 
@@ -91,32 +89,28 @@ const EditDeiveryPrice = () => {
     // erase error message at the begining
     setErrorOnRefill({});
     setErrorOnNewRate({});
-
-  }, [newRate,refillRate]);
+  }, [newGasRate, refillGasRate]);
 
   return (
-    <div className="flex flex-col mx-2 overflow-hidden">
-      <strong className="w-full text-center text-2xl p-3">
-        Update Delivery Charge
-      </strong>
-      {/* Display Old Charge Here */}
-      <table className="w-3/4 max-lg:w-full text-left table-collapse mx-auto">
+    <div className="flex-1 flex-col mx-2 overflow-hidden">
+      <h2 class="text-3xl font-bold mt-4 ml-2 mb-8">
+        Update Gas Rate
+      </h2>
+      {/* Display Old Rate Here */}
+      <table className="w-3/4 max-lg:w-full text-left table-collapse border-2 border-black mx-auto">
         <thead>
           <tr className="">
-            <th
-              className="px-4 py-2 border-2 border-black text-center text-gray-800 
-          bg-gray-200"
-            >
-              Delivery Type
+            <th className="px-4 py-2 text-lg text-center text-gray-800 bg-gray-300">
+              Gas Prices
             </th>
             <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-orange-300">
-              Old Delivery Charge
+              Old Rate
             </th>
             <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-green-300">
-              Current Delivery Charge
+              Current Rate
             </th>
             <th className="px-4 py-2 border-2 border-black text-center text-gray-800 bg-yellow-200">
-              Purposed Delivery Charge
+              Purposed Rate
             </th>
           </tr>
         </thead>
@@ -126,13 +120,13 @@ const EditDeiveryPrice = () => {
               Refill
             </th>
             <td className="px-4 py-2 border-2 border-black text-center bg-orange-100">
-             Rs. {deliveryRateData?.oldData.Refill_Delivery_Rate}
+              Rs. {gasRateData?.oldData.Refill_Rate}
             </td>
             <td className="px-4 py-2 border-2 border-black text-center bg-green-200">
-               Rs. {deliveryRateData?.currentData.Refill_Delivery_Rate}
+              Rs. {gasRateData?.currentData.Refill_Rate}
             </td>
             <td className="px-4 py-2 border-2 border-black text-center bg-yellow-100">
-              Rs.{refillRate === null ? 0 : refillRate}
+              Rs.{refillGasRate === null ? 0 : refillGasRate}
             </td>
           </tr>
           <tr>
@@ -140,64 +134,65 @@ const EditDeiveryPrice = () => {
               New
             </th>
             <td className="px-4 py-2 border-2 border-black text-center bg-orange-200">
-              Rs. {deliveryRateData?.oldData.New_Delivery_Rate}
+              Rs. {gasRateData?.oldData.New_Cylinder_Rate}
             </td>
             <td className="px-4 py-2 border-2 border-black text-center bg-green-100">
-               Rs. {deliveryRateData?.currentData.New_Delivery_Rate}
+              Rs. {gasRateData?.currentData.New_Cylinder_Rate}
             </td>
             <td className="px-4 py-2 border-2 border-black text-center bg-yellow-200">
-              Rs.{newRate === null ? 0 : newRate}
+              Rs.{newGasRate === null ? 0 : newGasRate}
             </td>
           </tr>
         </tbody>
       </table>
-  
-      <div className="mt-10">      
+
+      <div className="mt-10">
         {/* Success Message */}
         {updateStatus && (
           <SuccessMessageAdmin props={updateStatus} status={true} />
         )}
       </div>
 
-      {/* New Refill Charge Here */}
+      {/* New Refill Rate Here */}
       <div className="flex flex-col my-5">
-        <strong className="w-full text-center text-lg p-3">
-          For Refill Gas Delivery
-        </strong>
+        <strong className="w-full text-center text-lg p-3">Refill Gas</strong>
+        <label className="block text-sm font-semibold text-gray-800">
+          Set New Refill Rate
+        </label>
         <div className="relative flex flex-row cursor-pointer">
           <input
             type="number"
-            placeholder="Enter Charge"
+            placeholder="Enter Refill Rate"
             className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md 
             focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
-            value = {refillRate}
-            onChange={(e) => setRefillRate(e.target.value)}
+            value={refillGasRate}
+            onChange={(e) => setRefillGasRate(e.target.value)}
           />
         </div>
-             {/* Error Message For New Refill Rate */}
-            {errorOnRefill.status && (
+        {/* Error Message For New Refill Rate */}
+        {errorOnRefill.status && (
           <ErrorTextMessageAdmin props={errorOnRefill.Message} />
         )}
       </div>
-     
-    
-      {/* New Charge  */}
+
+      {/* New Rate  */}
       <div className="flex flex-col my-5">
-        <strong className="w-full text-center text-lg p-3">
-          For New Gas Delivery
-        </strong>
+        <strong className="w-full text-center text-lg p-3">New Gas</strong>
+        <label className="block text-sm font-semibold text-gray-800">
+          Set New Rate
+        </label>
         <div className="relative flex flex-row cursor-pointer">
           <input
             type="number"
-            placeholder="Enter Charge"
+            placeholder="Enter New Gas Rate"
             className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md 
             focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
-            value = {newRate}
-            onChange={(e) => setNewRate(e.target.value)}
+            value={newGasRate}
+            onChange={(e) => setNewGasRate(e.target.value)}
           />
         </div>
-                  {/* Error Message For New Refill Rate */}
-            {errorOnNewRate.status && (
+        {/* Error Message For New Refill Rate */}
+        {errorOnNewRate.status && (
           <ErrorTextMessageAdmin props={errorOnNewRate.Message} />
         )}
       </div>
@@ -210,13 +205,13 @@ const EditDeiveryPrice = () => {
           className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s 
             text-center mr-3"
-            onClick={sendUpdateDeiveryRate}
+          onClick={sendUpdateGasRate}
         >
-          Update Rates
+          Update Rate
         </button>
       </div>
     </div>
   );
 };
 
-export default EditDeiveryPrice;
+export default EditGasPrice;

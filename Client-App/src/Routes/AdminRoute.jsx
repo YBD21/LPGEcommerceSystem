@@ -3,8 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import CreateLPGasProduct from "../component/Main_Menu_Page/Admin/Manage_Products/CreateLPGasProduct";
 import Menu from "../component/Main_Menu_Page/Menu";
 import NavBar from "../component/Main_Menu_Page/NavBar";
-import EditGasPrice from "../component/Main_Menu_Page/Admin/Manage_Products/EditGasPrice";
-import EditDeiveryPrice from "../component/Main_Menu_Page/Admin/Manage_Products/EditDeiveryPrice";
+import EditGasPrice from "../component/Main_Menu_Page/Admin/Manage_Prices/EditGasPrice";
+import EditDeiveryPrice from "../component/Main_Menu_Page/Admin/Manage_Prices/EditDeiveryPrice";
 import Cart from "../component/Main_Menu_Page/Cart";
 import Checkout from "../component/Main_Menu_Page/Checkout";
 import PageNotFound from "../component/PageNotFound";
@@ -15,6 +15,9 @@ import Dashbord from "../component/Main_Menu_Page/Admin/Dashbord";
 const AdminRoute = () => {
   return (
     <Routes>
+      {/* Redirect from "/" to "/Admin/Dashboard" */}
+      <Route path="/" element={<Navigate to="/Admin/Dashboard" />} />
+
       <Route
         path="/Admin/Dashboard"
         element={
@@ -41,12 +44,30 @@ const AdminRoute = () => {
       {/* Manage Product */}
       <Route path="/CreateLPGProduct" element={<CreateLPGasProduct />} />
 
-      <Route path="/EditGasPrice" element={<EditGasPrice />} />
+      {/* Manage Gas Price */}
+      <Route
+        path="/Admin/Manage-Gas-Price/Edit-Gas-Price"
+        element={
+          <>
+            <NavBar />
+            <AdminMenu>
+              <EditGasPrice />
+            </AdminMenu>
+          </>
+        }
+      />
 
-      <Route path="/EditDelivery" element={<EditDeiveryPrice />} />
-
-      {/* Redirect from "/" to "/Admin/Dashboard" */}
-      <Route path="/" element={<Navigate to="/Admin/Dashboard" />} />
+      <Route
+        path="/Admin/Manage-Gas-Price/Edit-Deivery-Price"
+        element={
+          <>
+            <NavBar />
+            <AdminMenu>
+              <EditDeiveryPrice />
+            </AdminMenu>
+          </>
+        }
+      />
 
       {/* Client Access */}
       <Route
