@@ -26,6 +26,18 @@ const AdminRoute = () => {
           </>
         }
       />
+      {/* Manage Orders */}
+      <Route
+        path="/Admin/Manage-Orders/ViewOrders"
+        element={
+          <>
+            <NavBar />
+            <AdminMenu>
+              <ViewOrders />
+            </AdminMenu>
+          </>
+        }
+      />
       {/* Manage Product */}
       <Route path="/CreateLPGProduct" element={<CreateLPGasProduct />} />
 

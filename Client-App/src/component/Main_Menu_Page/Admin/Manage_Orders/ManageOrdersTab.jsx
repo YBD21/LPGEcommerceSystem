@@ -1,12 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const ManageOrdersTab = () => {
+  const location = useLocation();
   const [isManageOrderOpen, setIsManageOrderOpen] = useState(false);
+  const [isViewOrder, setIsViewOrder] = useState(false);
 
   const toggleManageProduct = () => {
     setIsManageOrderOpen(!isManageOrderOpen);
   };
+
+  useEffect(() => {
+    const manageOrdersPath = "/Admin/Manage-Orders/";
+    setIsManageOrderOpen(location.pathname.startsWith(manageOrdersPath));
+    setIsViewOrder(location.pathname === "/Admin/Manage-Orders/ViewOrders");
+  }, [location]);
 
   return (
     <li className="relative">
@@ -35,10 +44,13 @@ const ManageOrdersTab = () => {
       {isManageOrderOpen && (
         <div className="flex flex-col w-full py-2 mt-2 bg-white rounded-lg">
           <Link
-            href="#"
-            className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
+            to={"/Admin/Manage-Orders/ViewOrders"}
+            className={`block px-4 py-3
+             text-gray-800 hover:bg-gray-100
+             ${isViewOrder ? "bg-gray-200" : ""}`}
           >
-            View Orders
+            {isViewOrder && <ArrowRightIcon className="svg-icons mr-6" />}
+            <span className="mr-auto">View Orders</span>
           </Link>
           <Link
             href="#"
