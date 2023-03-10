@@ -138,7 +138,7 @@ const NavBar = () => {
       {/* Logo */}
 
       <div className="flex flex-row w-full mx-5 max-lg:hidden">
-        <Link to={"/Dashboard"}>
+        <Link to="/Admin/Dashboard">
           <img
             className="w-16"
             src={Logo_img}

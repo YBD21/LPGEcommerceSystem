@@ -8,17 +8,21 @@ import EditDeiveryPrice from "../component/Main_Menu_Page/Admin/Manage_Products/
 import Cart from "../component/Main_Menu_Page/Cart";
 import Checkout from "../component/Main_Menu_Page/Checkout";
 import PageNotFound from "../component/PageNotFound";
-import AdminDashboard from "../component/Main_Menu_Page/Admin/AdminDashboard";
+import AdminMenu from "../component/Main_Menu_Page/Admin/AdminMenu";
+import ViewOrders from "../component/Main_Menu_Page/Admin/Manage_Orders/ViewOrders";
+import Dashbord from "../component/Main_Menu_Page/Admin/Dashbord";
 
 const AdminRoute = () => {
   return (
     <Routes>
       <Route
-        path="/Dashboard"
+        path="/Admin/Dashboard"
         element={
           <>
             <NavBar />
-            <AdminDashboard />
+            <AdminMenu>
+              <Dashbord />
+            </AdminMenu>
           </>
         }
       />
@@ -29,8 +33,8 @@ const AdminRoute = () => {
 
       <Route path="/EditDelivery" element={<EditDeiveryPrice />} />
 
-      {/* Redirect from "/" to "/Store" */}
-      <Route path="/" element={<Navigate to="/Dashboard" />} />
+      {/* Redirect from "/" to "/Admin/Dashboard" */}
+      <Route path="/" element={<Navigate to="/Admin/Dashboard" />} />
 
       {/* Client Access */}
       <Route
