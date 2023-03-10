@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ManageOrders from "./Manage_Orders/ManageOrders";
-import ManageGasPrice from "./Manage_Prices/ManageGasPrice";
-import ManageGasProducts from "./Manage_Products/ManageGasProducts";
+import ManageOrders from "./Manage_Orders/ManageOrdersTab";
+import ManageGasPrice from "./Manage_Prices/ManageGasPriceTab";
+import ManageGasProducts from "./Manage_Products/ManageGasProductsTab";
 
 function AdminDashboard() {
   const [isManageProductOpen, setIsManageProductOpen] = useState(false);
