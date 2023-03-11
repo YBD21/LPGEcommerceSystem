@@ -11,7 +11,7 @@ import UserDropDown from "./UserSystem/UserDropDown";
 
 const NavBar = () => {
   const location = useLocation();
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, userData }, dispatch] = useStateValue();
   const [productData, setProductData] = useState(null);
   const [gasRateData, setGasRateData] = useState(null);
   const [deliveryRateData, setDeliveryRateData] = useState(null);
@@ -20,6 +20,8 @@ const NavBar = () => {
 
   const [isHome, setIsHome] = useState(true);
   const [isCart, setIsCart] = useState(false);
+
+  const role = userData?.role;
 
   useEffect(() => {
     setIsCart(location.pathname === "/Cart");
@@ -138,7 +140,7 @@ const NavBar = () => {
       {/* Logo */}
 
       <div className="flex flex-row w-full mx-5 max-lg:hidden">
-        <Link to="/Admin/Dashboard">
+        <Link to={role === "Admin" ? "/Admin/Dashboard" : "/Store"}>
           <img
             className="w-16"
             src={Logo_img}

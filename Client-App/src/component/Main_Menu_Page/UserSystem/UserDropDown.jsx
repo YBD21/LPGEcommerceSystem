@@ -24,14 +24,14 @@ const UserDropDown = ({ status }) => {
   // request Backend to delete httpOnly Cookies
   const callBackendToLogOut = () => {
     axios
-      .delete("http://localhost:5000/user-data" ,{
+      .delete("http://localhost:5000/user-data", {
         withCredentials: true, // enable sending and receiving cookies
       })
       .then(function (respond) {
-        console.log(respond);
+        // console.log(respond);
       })
       .catch(function (error) {
-        console.log(error.message);
+        // console.log(error.message);
       });
   };
 
@@ -80,7 +80,7 @@ const UserDropDown = ({ status }) => {
               Order
             </Link>
           </li>
-          <li className="flex items-center px-4 py-5 text-gray-700 hover:bg-gray-100 hover:text-black">
+          <li className="flex items-center px-4 py-5  text-gray-700  hover:bg-gray-100 hover:text-black">
             <SettingsIcon className="svg-icons ml-3 mr-10" />
             <Link
               to="/"
@@ -89,12 +89,13 @@ const UserDropDown = ({ status }) => {
               Setting
             </Link>
           </li>
-          <li className="flex items-center px-4 py-5 text-gray-700 hover:bg-gray-100 hover:text-black">
+          <li
+            className="flex items-center px-4 py-5 text-gray-700  hover:bg-gray-100 hover:text-black
+           "
+            onClick={logOut}
+          >
             <ExitToAppIcon className="svg-icons ml-3 mr-10" />
-            <span
-              className="w-full font-medium text-lg hover:text-[#d42109]"
-              onClick={logOut}
-            >
+            <span className="w-full font-medium text-lg  hover:text-[#d42109]">
               Logout
             </span>
           </li>
