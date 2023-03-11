@@ -147,7 +147,7 @@ function CreateLPGProduct() {
 
   return (
     <div className="flex-1 flex-col mx-2">
-      <h2 class="text-3xl font-bold mt-4 ml-2 mb-8">Create LPG Product</h2>
+      <h2 className="text-3xl font-bold mt-4 ml-2 mb-8">Create LPG Product</h2>
       <div className="flex flex-col my-5">
         <label className="block text-sm font-semibold text-gray-800">
           Product Image

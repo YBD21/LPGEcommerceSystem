@@ -93,7 +93,7 @@ const EditGasPrice = () => {
 
   return (
     <div className="flex-1 flex-col mx-2 overflow-hidden">
-      <h2 class="text-3xl font-bold mt-4 ml-2 mb-8">
+      <h2 className="text-3xl font-bold mt-4 ml-2 mb-8">
         Update Gas Rate
       </h2>
       {/* Display Old Rate Here */}

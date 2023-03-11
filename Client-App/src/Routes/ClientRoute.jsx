@@ -12,7 +12,7 @@ const ClientRoute = () => {
       {/* Client Access */}
       {/* Redirect from "/" to "/Store" */}
       <Route path="/" element={<Navigate to="/Store" />} />
-      <Route path="/Dashboard" element={<Navigate to="/Store" />} />
+      <Route path="/Admin/Dashboard" element={<Navigate to="/Store" />} />
       <Route
         path="/Store"
         element={
