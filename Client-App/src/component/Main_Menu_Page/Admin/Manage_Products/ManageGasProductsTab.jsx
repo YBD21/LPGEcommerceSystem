@@ -1,12 +1,28 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const ManageGasProductsTab = () => {
+  const location = useLocation();
   const [isManageGasProductOpen, setIsManageGasProductOpen] = useState(false);
+
+  const [isCreateGasProduct, setIsCreateGasProduct] = useState(false);
 
   const toggleManageProduct = () => {
     setIsManageGasProductOpen(!isManageGasProductOpen);
   };
+
+  useEffect(() => {
+    const manageGasProductPath = "/Admin/Manage-Product";
+    setIsManageGasProductOpen(
+      location.pathname.startsWith(manageGasProductPath)
+    );
+
+    setIsCreateGasProduct(
+      location.pathname === "/Admin/Manage-Product/Create-Gas-Product"
+    );
+  }, [location]);
+
   return (
     <li className="relative">
       <button
@@ -39,10 +55,15 @@ const ManageGasProductsTab = () => {
             View Gas Product
           </Link>
           <Link
-            href="#"
-            className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
+            to="/Admin/Manage-Product/Create-Gas-Product"
+            className={`block px-4 py-3
+            text-gray-800 hover:bg-gray-100
+            ${isCreateGasProduct ? "bg-gray-200" : ""}`}
           >
-            Create Gas Product
+            {isCreateGasProduct && (
+              <ArrowRightIcon className="svg-icons mr-6" />
+            )}
+            <span className="mr-auto">Create Gas Product</span>
           </Link>
 
           <div className="shadow-lg relative">

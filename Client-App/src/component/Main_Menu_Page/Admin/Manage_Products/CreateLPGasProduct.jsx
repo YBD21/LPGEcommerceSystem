@@ -146,10 +146,8 @@ function CreateLPGProduct() {
   };
 
   return (
-    <div className="flex flex-col mx-2">
-      <strong className="w-full text-center text-2xl p-3">
-        Create LPG Product
-      </strong>
+    <div className="flex-1 flex-col mx-2">
+      <h2 class="text-3xl font-bold mt-4 ml-2 mb-8">Create LPG Product</h2>
       <div className="flex flex-col my-5">
         <label className="block text-sm font-semibold text-gray-800">
           Product Image
@@ -229,7 +227,7 @@ function CreateLPGProduct() {
             text-center mr-3"
         onClick={submitForm}
       >
-        Create Product
+        Create
       </button>
     </div>
   );

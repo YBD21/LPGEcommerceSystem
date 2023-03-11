@@ -42,7 +42,19 @@ const AdminRoute = () => {
         }
       />
       {/* Manage Product */}
-      <Route path="/CreateLPGProduct" element={<CreateLPGasProduct />} />
+
+      <Route
+        path="/Admin/Manage-Product/Create-Gas-Product"
+        element={
+          <>
+            <NavBar />
+            <AdminMenu>
+              <CreateLPGasProduct />
+            </AdminMenu>
+          </>
+        }
+      />
+
 
       {/* Manage Gas Price */}
       <Route
