@@ -24,7 +24,7 @@ const UserDropDown = ({ status }) => {
   // request Backend to delete httpOnly Cookies
   const callBackendToLogOut = () => {
     axios
-      .delete("http://localhost:5000/user-data", {
+      .delete("http://localhost:5000/login-system/user-data", {
         withCredentials: true, // enable sending and receiving cookies
       })
       .then(function (respond) {

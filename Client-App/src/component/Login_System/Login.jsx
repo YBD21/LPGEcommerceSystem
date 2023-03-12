@@ -47,11 +47,11 @@ export default function Login() {
   }, []);
 
   const setUser = (token) => {
-      const data = decodeToken(token);
-      dispatch({
-        type: "SET_USER",
-        userData: data,
-      });
+    const data = decodeToken(token);
+    dispatch({
+      type: "SET_USER",
+      userData: data,
+    });
   };
   // handle toggle to show or hide password
   const toggle = () => {
@@ -129,7 +129,7 @@ export default function Login() {
 
     axios
       .post(
-        "http://localhost:5000/login",
+        "http://localhost:5000/login-system/login",
         {
           phoneNumber: number,
           encPass: encryptPassword,

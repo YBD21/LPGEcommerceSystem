@@ -61,7 +61,7 @@ const ForgetPassword = () => {
 
   const CallBackendToFindPhoneNumber = () => {
     axios
-      .post("http://localhost:5000/ForgetPassword", {
+      .post("http://localhost:5000/login-system/forget-password", {
         PhoneNumber: number,
       })
       .then(function (respond) {
@@ -82,7 +82,7 @@ const ForgetPassword = () => {
         // throw error message and refresh page in 5 sec
         if (error.response.data) {
           // console.log(error.response.statusText);
-           return (
+          return (
             setErrorNumber({
               PhoneNumber: true,
               Message: error.response.data,

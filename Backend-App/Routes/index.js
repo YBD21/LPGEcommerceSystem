@@ -8,10 +8,7 @@ import fs from "fs";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import cookieParser from "cookie-parser";
-import { login, verifyToken } from "./LoginSystem/login.js";
-import { passwordforget } from "./LoginSystem/passwordforget.js";
-import { resetPassword } from "./LoginSystem/resetpassword.js";
-import { createAccount } from "./LoginSystem/signup.js";
+import loginSystemRouter from "./LoginSystem/loginSystemRouter.js";
 import { CreateProduct } from "./ProductManagement/CreateProductSystem/createProduct.js";
 import { ImageUpload } from "./ProductManagement/CreateProductSystem/imageUpload.js";
 import {
@@ -86,65 +83,8 @@ const multer = Multer({
   },
 });
 
-// req = request & res = respond
-app.post("/login", apiLimiter, async (req, res) => {
-  let data = req.body;
-
-  const respond = await login(data.phoneNumber, data.encPass);
-  // console.log(respond);
-  // set cookie
-  res.cookie("userData", respond.accessToken, {
-    secure: true, // set to true to enable sending the cookie only over HTTPS
-    httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-    sameSite: "strict", // set to 'strict' to prevent CSRF attacks
-  });
-
-  res.json(respond);
-});
-
-app.get("/user-data", (req, res) => {
-  const accessToken = req.cookies.userData;
-
-  if (!accessToken || !verifyToken(accessToken)) {
-    res.status(401).send("Unauthorized");
-  } else {
-    res.json(accessToken);
-  }
-});
-
-app.delete("/user-data", (req, res) => {
-  res.clearCookie("userData", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-  });
-  res.send("Cookie cleared!");
-});
-
-app.post("/ForgetPassword", apiLimiter, async (req, res) => {
-  let Data = req.body;
-  const respond = await passwordforget(Data.PhoneNumber);
-  //  console.log(respond);
-  res.json(respond);
-});
-
-app.patch("/ResetPassword", apiLimiter, async (req, res) => {
-  let Data = req.body;
-  const respond = await resetPassword(Data.PhoneNumber, Data.EncPass);
-  res.json(respond);
-});
-
-app.post("/SignUp", apiLimiter, async (req, res) => {
-  let Data = req.body;
-  const respond = await createAccount(
-    Data.PhoneNumber,
-    Data.encPass,
-    Data.FirstName,
-    Data.LastName,
-    Data.Created
-  );
-  res.json(respond);
-});
+// Mount userRouter middleware at "/login-System" path
+app.use("/login-system", apiLimiter, loginSystemRouter);
 
 app.post("/updateDeiveryRate", async (req, res) => {
   let data = req.body;
