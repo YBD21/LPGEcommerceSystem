@@ -8,15 +8,17 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import UserDropDown from "./UserSystem/UserDropDown";
+import ItemAddedPopOver from "./PopUp/ItemAddedPopOver";
 
 const NavBar = () => {
   const location = useLocation();
-  const [{ basket, userData }, dispatch] = useStateValue();
+  const [{ basket, userData, itemAdded }, dispatch] = useStateValue();
   const [productData, setProductData] = useState(null);
   const [gasRateData, setGasRateData] = useState(null);
   const [deliveryRateData, setDeliveryRateData] = useState(null);
 
   const [isUserclicked, setIsUserClicked] = useState(false);
+  const [showItemPopOver, setShowItemPopOver] = useState(false);
 
   const [isHome, setIsHome] = useState(true);
   const [isCart, setIsCart] = useState(false);
@@ -27,6 +29,24 @@ const NavBar = () => {
     setIsCart(location.pathname === "/Cart");
     setIsHome(location.pathname === "/Store");
   }, [location]);
+
+  const setPopOver = () => {
+    if (itemAdded) {
+      setShowItemPopOver(true);
+      // set itemAdded to false here
+      setTimeout(() => {
+        setShowItemPopOver(false);
+        dispatch({
+          type: "SET_ITEM_ADDED",
+          itemAdded: false,
+        });
+      }, 2000);
+    }
+  };
+
+  useEffect(() => {
+    setPopOver();
+  }, [itemAdded]);
 
   const showUserMenu = () => {
     setIsUserClicked(!isUserclicked);
@@ -181,6 +201,9 @@ const NavBar = () => {
             </strong>
           </Link>
         </li>
+        <div className="relative inline-block z-20">
+            <ItemAddedPopOver show={showItemPopOver} />
+          </div>
       </ul>
 
       {/* UserDropDown */}
