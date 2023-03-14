@@ -89,7 +89,6 @@ const AdminRoute = () => {
           <>
             <NavBar />
             <Menu />
-            <Footer />
           </>
         }
       />
@@ -100,7 +99,6 @@ const AdminRoute = () => {
           <>
             <NavBar />
             <Cart />
-            <Footer />
           </>
         }
       />
@@ -111,7 +109,6 @@ const AdminRoute = () => {
           <>
             <NavBar />
             <Checkout />
-            <Footer />
           </>
         }
       />

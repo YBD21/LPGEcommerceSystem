@@ -1,1 +1,13 @@
-{"oldData":{"Created":"Mon Jan 30 2023 14:10:03 GMT+0545 (Nepal Time)","New_Delivery_Rate":0,"Refill_Delivery_Rate":75},"currentData":{"Created":"Tue Jan 31 2023 19:17:35 GMT+0545 (Nepal Time)","New_Delivery_Rate":0,"Refill_Delivery_Rate":100},"Error":null}
+{
+  "oldData": {
+    "Created": "Mon Jan 30 2023 14:10:03 GMT+0545 (Nepal Time)",
+    "New_Delivery_Rate": 0,
+    "Refill_Delivery_Rate": 75
+  },
+  "currentData": {
+    "Created": "Tue Jan 31 2023 19:17:35 GMT+0545 (Nepal Time)",
+    "New_Delivery_Rate": 0,
+    "Refill_Delivery_Rate": 100
+  },
+  "Error": null
+}

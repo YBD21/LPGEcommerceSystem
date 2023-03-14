@@ -26,6 +26,7 @@ loginSystemRouter.delete("/user-data", (req, res) => {
     sameSite: "strict",
   });
   res.send("Cookie cleared!");
+  console.log("User Disconnected");
 });
 
 loginSystemRouter.post("/login", async (req, res) => {
@@ -41,6 +42,8 @@ loginSystemRouter.post("/login", async (req, res) => {
   });
 
   res.json(respond);
+
+  console.log(`User : ${data.phoneNumber} Trying To Logged In ! `);
 });
 
 loginSystemRouter.post("/forget-password", async (req, res) => {

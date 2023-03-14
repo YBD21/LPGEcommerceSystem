@@ -125,6 +125,7 @@ io.on("connection", (socket) => {
     fs.watchFile(filePathGasRate, async (current, prev) => {
       // Check time when the file was modified
       if (current.mtime !== prev.mtime) {
+        console.log("GasRate has been Changed !");
         const respond = await readGasRateFile();
         socket.emit("gasRate", respond);
       }
@@ -141,6 +142,7 @@ io.on("connection", (socket) => {
     fs.watchFile(filePathDeliveryRate, async (current, prev) => {
       // Check time when the file was modified
       if (current.mtime !== prev.mtime) {
+        console.log("DeliveryRate has been Changed !");
         const respond = await readDeliveryRatefile();
         socket.emit("deliveryRate", respond);
       }
@@ -157,6 +159,7 @@ io.on("connection", (socket) => {
     fs.watchFile(filePathProductList, async (current, prev) => {
       // check time when the file was modified
       if (current.mtime !== prev.mtime) {
+        console.log("Product List has been Changed !");
         const respond = await readProductListfile();
         socket.emit("productList", respond);
       }

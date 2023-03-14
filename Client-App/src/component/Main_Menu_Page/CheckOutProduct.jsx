@@ -69,7 +69,12 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
     <div className="flex max-lg:flex-col flex-row mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%] relative">
       {/* Stock Status */}
 
-      <img className="w-20 m-6 max-lg:mt-7" src={image} alt="Sagar Gas" />
+      <img
+        className="w-20 m-6 max-lg:mt-7"
+        src={image}
+        alt={name}
+        loading="lazy"
+      />
       {/* add and subtract */}
       <div className="w-full flex flex-col place-items-center">
         <p className="text-2xl font-bold mt-2.5"> Qty </p>
