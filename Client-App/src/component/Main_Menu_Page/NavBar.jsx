@@ -202,8 +202,8 @@ const NavBar = () => {
           </Link>
         </li>
         <div className="relative inline-block z-20">
-            <ItemAddedPopOver show={showItemPopOver} />
-          </div>
+          <ItemAddedPopOver show={showItemPopOver} />
+        </div>
       </ul>
 
       {/* UserDropDown */}

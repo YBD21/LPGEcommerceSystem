@@ -12,6 +12,7 @@ import AdminMenu from "../component/Main_Menu_Page/Admin/AdminMenu";
 import ViewOrders from "../component/Main_Menu_Page/Admin/Manage_Orders/ViewOrders";
 import Dashbord from "../component/Main_Menu_Page/Admin/Dashbord";
 import ThankYouPage from "../component/ThankYouPage";
+import Footer from "../component/Footer";
 
 const AdminRoute = () => {
   return (
@@ -88,6 +89,7 @@ const AdminRoute = () => {
           <>
             <NavBar />
             <Menu />
+            <Footer />
           </>
         }
       />
@@ -98,6 +100,7 @@ const AdminRoute = () => {
           <>
             <NavBar />
             <Cart />
+            <Footer />
           </>
         }
       />
@@ -108,6 +111,7 @@ const AdminRoute = () => {
           <>
             <NavBar />
             <Checkout />
+            <Footer />
           </>
         }
       />
