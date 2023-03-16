@@ -4,7 +4,7 @@ import { useStateValue } from "../../ContextAPI/StateProvider";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import PopupPortal from "./PopUp/PopupPortal";
 import Payment from "./Payment";
-import ThankYouPage from "../ThankYouPage"
+import ThankYouPage from "../ThankYouPage";
 const OrderSummary = ({ status }) => {
   const [{ basket, gasRateData, gasDeliveryRateData, showPopup }, dispatch] =
     useStateValue();
@@ -188,7 +188,10 @@ const OrderSummary = ({ status }) => {
       {/* activate ThankYouPage portal */}
       {showPopup?.show === "ThankYouPage" ? (
         <PopupPortal>
-          <ThankYouPage status={showPopup?.isCashOnDelivery} />
+          <ThankYouPage
+            status={showPopup?.isCashOnDelivery}
+            message={showPopup?.respondData}
+          />
         </PopupPortal>
       ) : (
         false

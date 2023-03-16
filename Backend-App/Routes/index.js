@@ -9,6 +9,7 @@ import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import cookieParser from "cookie-parser";
 import loginSystemRouter from "./LoginSystem/loginSystemRouter.js";
+import paymentSystemRouter from "./PaymentSystem/paymentSystemRouter.js";
 import { CreateProduct } from "./ProductManagement/CreateProductSystem/createProduct.js";
 import { ImageUpload } from "./ProductManagement/CreateProductSystem/imageUpload.js";
 import {
@@ -85,6 +86,9 @@ const multer = Multer({
 
 // Mount userRouter middleware at "/login-System" path
 app.use("/login-system", apiLimiter, loginSystemRouter);
+
+// Mount userRouter middleware at "/payment-system" path
+app.use("/payment-system", apiLimiter, paymentSystemRouter);
 
 app.post("/updateDeiveryRate", async (req, res) => {
   let data = req.body;

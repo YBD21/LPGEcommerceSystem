@@ -11,5 +11,6 @@ admin.initializeApp({
 });
 
  const dataBase = admin.database();
+ const fireStoreDB = admin.firestore();
  const Bucket = admin.storage().bucket();
- export {dataBase,Bucket};
+ export {dataBase,Bucket,fireStoreDB};

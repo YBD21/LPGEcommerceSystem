@@ -218,3 +218,30 @@ Per Charge 100 for Delivery -- Client
 
 
 need to change item added popover to navBar just like userDropdown
+
+
+{
+  idx: 'vWFGLuqEXLuu7ubhHbvcy5',
+  type: { idx: '2jwzDS9wkxbkDFquJqfAEC', name: 'Wallet payment' },
+  state: {
+    idx: 'DhvMj9hdRufLqkP8ZY4d8g',
+    name: 'Completed',
+    template: 'is complete'
+  },
+  amount: 20000,
+  fee_amount: 600,
+  reference: null,
+  refunded: false,
+  created_on: '2023-03-16T17:27:09.491722+05:45',
+  user: { idx: '', name: 'Santosh Deuja (9860694050)' },
+  merchant: {
+    idx: 'awp3AVXzAu2V3W2JcY67sQ',
+    name: 'Santosh Deuja',
+    mobile: 'santosh.deuja2000@gmail.com',
+    email: 'santosh.deuja2000@gmail.com'
+  },
+  remarks: null,
+  token: 'XUnEskC3tSJkHPp6deXY55',
+  cashback: 0,
+  product_identity: '103'
+}

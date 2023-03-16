@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import KhaltiCheckout from "khalti-checkout-web";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import khaltiIcon from "../../dist/image/Khalti.png";
@@ -6,7 +7,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import DeliveryDropDown from "./PopUp/DeliveryDropDown";
 const Payment = () => {
-  const [{ basket, totalCharge}, dispatch] = useStateValue();
+  const [
+    { userData, basket, gasRateData, gasDeliveryRateData, totalCharge },
+    dispatch,
+  ] = useStateValue();
 
   const [status, setStatus] = useState(false);
 
@@ -20,22 +24,52 @@ const Payment = () => {
       type: "SET_PAY_STATUS",
       payStatus: false,
     });
+  };
 
-    //  testing remove this afterwards 
+  const displayThankYouPage = (status, respondData) => {
     dispatch({
       type: "SET_SHOW_POPUP",
-      showPopup: {show : "ThankYouPage" , isCashOnDelivery : true},
+      showPopup: {
+        show: "ThankYouPage",
+        isCashOnDelivery: status,
+        respondData : respondData,
+      },
     });
   };
 
-  const onSucessfulKhaltiPayment = () => {
+  const onSucessfulKhaltiPayment = (respondData) => {
     // close Payment Option
     close();
+
     // show Thankyou Page
+    displayThankYouPage(false, respondData);
   };
 
   const cashOnDelivery = () => {
     setStatus(!status);
+  };
+
+  const verifyTransaction = (token) => {
+    let payloadData = {
+      tokenId: token,
+      phoneNumber: userData?.id,
+      items: basket,
+      gasRate: gasRateData,
+      deliveryRate: gasDeliveryRateData,
+      totalAmount: totalCharge,
+    };
+    axios
+      .post("http://localhost:5000/payment-system/verify", payloadData, {
+        withCredentials: true, // enable sending and receiving cookies
+      })
+      .then(function (respond) {
+        // get order id from respond
+        // close payment and show thankyou page
+        onSucessfulKhaltiPayment(respond.data);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
   };
 
   const config = {
@@ -48,9 +82,8 @@ const Payment = () => {
       onSuccess(payload) {
         // hit merchant api for initiating verfication
         console.log(payload);
-        // call backend to verify the payload then
-
-        // redirect to order page
+        // call backend to verify the payload
+        verifyTransaction(payload?.token);
       },
       // onError handler is optional
       onError(error) {
@@ -69,7 +102,7 @@ const Payment = () => {
       "SCT",
     ],
   };
-  // change 200 into totalcharge -- in real payment
+  // change 200 into totalcharge -- for real payment
   const payment = () => {
     let checkout = new KhaltiCheckout(config);
     checkout.show({ amount: 200 * 100 });
