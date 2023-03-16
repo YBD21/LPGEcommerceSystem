@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import PopupPotal from "./PopUp/PopupPotal";
+import PopupPortal from "./PopUp/PopupPortal";
+import Payment from "./Payment";
+import ThankYouPage from "../ThankYouPage"
 const OrderSummary = ({ status }) => {
-  const [{ basket, gasRateData, gasDeliveryRateData, payStatus,showPopup }, dispatch] =
+  const [{ basket, gasRateData, gasDeliveryRateData, showPopup }, dispatch] =
     useStateValue();
   const [itemscount, setItemsCount] = useState(0);
   const [itemsPrice, setItemsPrice] = useState(0);
@@ -174,8 +176,23 @@ const OrderSummary = ({ status }) => {
         </div>
       )}
 
-      {/* activate payment potal */}
-      {showPopup && <PopupPotal />}
+      {/* activate payment portal */}
+      {showPopup?.show === "payment" ? (
+        <PopupPortal>
+          <Payment />
+        </PopupPortal>
+      ) : (
+        false
+      )}
+
+      {/* activate ThankYouPage portal */}
+      {showPopup?.show === "ThankYouPage" ? (
+        <PopupPortal>
+          <ThankYouPage status={showPopup?.isCashOnDelivery} />
+        </PopupPortal>
+      ) : (
+        false
+      )}
     </div>
   );
 };

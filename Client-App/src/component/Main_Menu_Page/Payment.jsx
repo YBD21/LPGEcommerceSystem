@@ -6,17 +6,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import DeliveryDropDown from "./PopUp/DeliveryDropDown";
 const Payment = () => {
-  const [
-    {
-      basket,
-      gasRateData,
-      gasDeliveryRateData,
-      payStatus,
-      totalCharge,
-      showPopup,
-    },
-    dispatch,
-  ] = useStateValue();
+  const [{ basket, totalCharge}, dispatch] = useStateValue();
 
   const [status, setStatus] = useState(false);
 
@@ -25,20 +15,32 @@ const Payment = () => {
       type: "SET_SHOW_POPUP",
       showPopup: false,
     });
-    
+
     dispatch({
       type: "SET_PAY_STATUS",
       payStatus: false,
     });
+
+    //  testing remove this afterwards 
+    dispatch({
+      type: "SET_SHOW_POPUP",
+      showPopup: {show : "ThankYouPage" , isCashOnDelivery : true},
+    });
+  };
+
+  const onSucessfulKhaltiPayment = () => {
+    // close Payment Option
+    close();
+    // show Thankyou Page
   };
 
   const cashOnDelivery = () => {
     setStatus(!status);
   };
 
-  let config = {
+  const config = {
     // replace this key with yours
-    publicKey: "test_public_key_84077dd9e2444a2782f2f8cbe62861f7",
+    publicKey: "test_public_key_02b32d73fafb4e02a2efcb2a960c1fa9",
     productIdentity: basket[0]?.itemId.toString(),
     productName: basket[0]?.ProductName,
     productUrl: "http://localhost:3000/Checkout",

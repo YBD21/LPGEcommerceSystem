@@ -6,14 +6,11 @@ const DeliveryInfo = () => {
   const [currentstate, setCurrentState] = useState("");
   const [currentDistrict, setCurrentDistrict] = useState("");
   // import userData from contexProvider or dataLayer
-  const [{ userData, payStatus, showPopup }, dispatch] = useStateValue();
-
-  const [checkStatus, setCheckStatus] = useState(showPopup);
+  const [{ userData, payStatus }, dispatch] = useStateValue();
 
   const phoneNumber = parseInt(userData?.id.slice(3));
 
   const name = userData?.firstName + " " + userData?.lastName;
-  // console.log(districtsByProvince["Pradesh-1"]);
 
   const selectLogProvince = (e) => {
     setCurrentState(e.target.value);
@@ -26,13 +23,13 @@ const DeliveryInfo = () => {
   const openPotal = () => {
     dispatch({
       type: "SET_SHOW_POPUP",
-      showPopup: true,
+      showPopup: { show: "payment" },
     });
   };
 
   useEffect(() => {
     if (payStatus) {
-      console.log("changed !")
+      // console.log("changed !")
       // check and validate fields then
       openPotal();
     }
