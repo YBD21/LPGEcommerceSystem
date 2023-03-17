@@ -70,8 +70,12 @@ const DeliveryInfo = () => {
               <option value="" disabled>
                 Select Province
               </option>
-              {provincesOfNepal.map((element) => {
-                return <option value={element}>{element}</option>;
+              {provincesOfNepal.map((element, index) => {
+                return (
+                  <option key={index} value={element}>
+                    {element}
+                  </option>
+                );
               })}
             </select>
             <ExpandMoreIcon className=" absolute top-3.5 right-5 svg-icons text-black" />
@@ -110,8 +114,12 @@ const DeliveryInfo = () => {
               <option value="" disabled>
                 Select District
               </option>
-              {districtsByProvince[currentstate]?.map((element) => {
-                return <option value={element}>{element}</option>;
+              {districtsByProvince[currentstate]?.map((element, index) => {
+                return (
+                  <option key={index} value={element}>
+                    {element}
+                  </option>
+                );
               })}
             </select>
             <ExpandMoreIcon className=" absolute top-3.5 right-5 svg-icons text-black" />

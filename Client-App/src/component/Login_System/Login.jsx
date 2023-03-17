@@ -224,6 +224,7 @@ export default function Login() {
                 type={open === false ? "password" : "text"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
               />
               <div className="text-2xl ml-[-2.5rem] mt-2.5">

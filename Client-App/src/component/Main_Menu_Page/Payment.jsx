@@ -145,20 +145,16 @@ const Payment = () => {
               <h2 className="text-xl font-bold mb-5">Payment Option </h2>
 
               <button
-                className="flex flex-col w-full px-5 py-2.5 tracking-wide 
+                className="flex flex-col w-full px-5 py-2 max-md:py-3 tracking-wide 
                 justify-center items-center font-medium 
                 rounded-lg text-lg text-center mb-5 border-2 border-black"
                 onClick={requestPayment}
               >
-                <img
-                  className="w-1/2 h-15"
-                  src={khaltiIcon}
-                  alt="Khalti logo"
-                />
+                <img className="w-1/2" src={khaltiIcon} alt="Khalti logo" />
               </button>
               <div className="relative">
                 <button
-                  className="w-full px-5 py-7 tracking-wide
+                  className="w-full px-5 py-7  max-lg:py-6 tracking-wide
             text-black font-semibold rounded-lg text-lg 
             text-center mb-2 border-2 border-black
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
