@@ -6,6 +6,7 @@ import khaltiIcon from "../../dist/image/Khalti.png";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import DeliveryDropDown from "./PopUp/DeliveryDropDown";
+import Processing from "./Processing";
 const Payment = () => {
   const [
     { userData, basket, gasRateData, gasDeliveryRateData, totalCharge },
@@ -13,6 +14,7 @@ const Payment = () => {
   ] = useStateValue();
 
   const [status, setStatus] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const close = () => {
     dispatch({
@@ -26,13 +28,19 @@ const Payment = () => {
     });
   };
 
+  const removeAllItemsFromBasket = () => {
+    dispatch({
+      type: "EMPTY_BASKET",
+    });
+  };
+
   const displayThankYouPage = (status, respondData) => {
     dispatch({
       type: "SET_SHOW_POPUP",
       showPopup: {
         show: "ThankYouPage",
         isCashOnDelivery: status,
-        respondData : respondData,
+        respondData: respondData,
       },
     });
   };
@@ -40,6 +48,9 @@ const Payment = () => {
   const onSucessfulKhaltiPayment = (respondData) => {
     // close Payment Option
     close();
+
+    // clear items from basket
+    removeAllItemsFromBasket();
 
     // show Thankyou Page
     displayThankYouPage(false, respondData);
@@ -49,7 +60,7 @@ const Payment = () => {
     setStatus(!status);
   };
 
-  const verifyTransaction = (token) => {
+  const verifyTransaction = async (token) => {
     let payloadData = {
       tokenId: token,
       phoneNumber: userData?.id,
@@ -58,18 +69,19 @@ const Payment = () => {
       deliveryRate: gasDeliveryRateData,
       totalAmount: totalCharge,
     };
-    axios
-      .post("http://localhost:5000/payment-system/verify", payloadData, {
-        withCredentials: true, // enable sending and receiving cookies
-      })
-      .then(function (respond) {
-        // get order id from respond
-        // close payment and show thankyou page
-        onSucessfulKhaltiPayment(respond.data);
-      })
-      .catch(function (error) {
-        console.log(error.message);
-      });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/payment-system/verify",
+        payloadData,
+        {
+          withCredentials: true, // enable sending and receiving cookies
+        }
+      );
+      onSucessfulKhaltiPayment(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const config = {
@@ -81,9 +93,13 @@ const Payment = () => {
     eventHandler: {
       onSuccess(payload) {
         // hit merchant api for initiating verfication
-        console.log(payload);
+
+        // console.log(payload);
+
         // call backend to verify the payload
-        verifyTransaction(payload?.token);
+        verifyTransaction(payload?.token).then(() => {
+          setIsProcessing(false);
+        });
       },
       // onError handler is optional
       onError(error) {
@@ -92,6 +108,7 @@ const Payment = () => {
       },
       onClose() {
         console.log("widget is closing");
+        setIsProcessing(false);
       },
     },
     paymentPreference: [
@@ -103,7 +120,8 @@ const Payment = () => {
     ],
   };
   // change 200 into totalcharge -- for real payment
-  const payment = () => {
+  const requestPayment = () => {
+    setIsProcessing(true);
     let checkout = new KhaltiCheckout(config);
     checkout.show({ amount: 200 * 100 });
   };
@@ -118,44 +136,53 @@ const Payment = () => {
           className="hidden sm:inline-block sm:align-middle sm:h-screen"
           aria-hidden="true"
         />
-        <div className="inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg shadow-xl transform sm:max-w-md sm:w-full sm:p-8">
-          <h2 className="text-xl font-bold mb-5">Payment Option </h2>
 
-          <button
-            className="flex flex-col w-full px-5 py-2.5 tracking-wide justify-center items-center
-             font-medium rounded-lg text-lg 
-            text-center mb-5 border-2 border-black 
-            
-            "
-            onClick={payment}
-          >
-            <img className="w-1/2 h-15" src={khaltiIcon} alt="Khalti logo" />
-          </button>
-          <div className="relative">
-            <button
-              className="w-full px-5 py-7 tracking-wide
+        <div className="inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg shadow-xl transform sm:max-w-md sm:w-full sm:p-8">
+          {isProcessing && <Processing />}
+
+          {!isProcessing && (
+            <>
+              <h2 className="text-xl font-bold mb-5">Payment Option </h2>
+
+              <button
+                className="flex flex-col w-full px-5 py-2.5 tracking-wide 
+                justify-center items-center font-medium 
+                rounded-lg text-lg text-center mb-5 border-2 border-black"
+                onClick={requestPayment}
+              >
+                <img
+                  className="w-1/2 h-15"
+                  src={khaltiIcon}
+                  alt="Khalti logo"
+                />
+              </button>
+              <div className="relative">
+                <button
+                  className="w-full px-5 py-7 tracking-wide
             text-black font-semibold rounded-lg text-lg 
             text-center mb-2 border-2 border-black
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
             "
-              onClick={cashOnDelivery}
-            >
-              <DirectionsBikeIcon className="svg-icons mr-5" />
-              Cash On Delivery
-            </button>
-            <DeliveryDropDown isOpen={status} />
-            {status && (
-              <button
-                className="absolute bottom-[-85%] right-5 mb-5 z-20"
-                onClick={cashOnDelivery}
-              >
+                  onClick={cashOnDelivery}
+                >
+                  <DirectionsBikeIcon className="svg-icons mr-5" />
+                  Cash On Delivery
+                </button>
+                <DeliveryDropDown isOpen={status} />
+                {status && (
+                  <button
+                    className="absolute bottom-[-85%] right-5 mb-5 z-20"
+                    onClick={cashOnDelivery}
+                  >
+                    <CancelIcon className="svg-icons text-red-800" />
+                  </button>
+                )}
+              </div>
+              <button className="absolute top-0 right-0 m-5" onClick={close}>
                 <CancelIcon className="svg-icons text-red-800" />
               </button>
-            )}
-          </div>
-          <button className="absolute top-0 right-0 m-5" onClick={close}>
-            <CancelIcon className="svg-icons text-red-800" />
-          </button>
+            </>
+          )}
         </div>
       </div>
     </div>

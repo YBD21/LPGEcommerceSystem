@@ -177,7 +177,7 @@ const OrderSummary = ({ status }) => {
       )}
 
       {/* activate payment portal */}
-      {showPopup?.show === "payment" ? (
+      {showPopup && showPopup?.show === "payment" ? (
         <PopupPortal>
           <Payment />
         </PopupPortal>
@@ -186,7 +186,7 @@ const OrderSummary = ({ status }) => {
       )}
 
       {/* activate ThankYouPage portal */}
-      {showPopup?.show === "ThankYouPage" ? (
+      {showPopup && showPopup?.show === "ThankYouPage" ? (
         <PopupPortal>
           <ThankYouPage
             status={showPopup?.isCashOnDelivery}

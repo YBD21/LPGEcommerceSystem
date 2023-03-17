@@ -32,6 +32,19 @@ const verifyTransaction = async (tokenId, totalAmount) => {
   return sendData;
 };
 
+const generateOrderId = (date, phoneNumber) => {
+  // Convert date to string in the format of yyyyMMddHHmmss
+  const formattedDate = date.toISOString().replace(/[-:]/g, "").slice(0, -5);
+
+  // Generate a random string of 6 characters using the characters from 0-9 and a-z.
+  const randomString = Math.random().toString(36).substr(2, 6);
+
+  // Combine all parts to create unique ID
+  const orderId = `${formattedDate}${phoneNumber}${randomString}`;
+
+  return orderId;
+};
+
 const saveOrderDetail = async (payloadData, confirmationData) => {
   let sendData;
 
@@ -69,18 +82,5 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
   }
   return sendData;
 };
-
-function generateOrderId(date, phoneNumber) {
-  // Convert date to string in the format of yyyyMMddHHmmss
-  const formattedDate = date.toISOString().replace(/[-:]/g, "").slice(0, -5);
-
-  // Generate a random string of 6 characters using the characters from 0-9 and a-z.
-  const randomString = Math.random().toString(36).substr(2, 6);
-
-  // Combine all parts to create unique ID
-  const orderId = `${formattedDate}${phoneNumber}${randomString}`;
-
-  return orderId;
-}
 
 export { verifyTransaction, saveOrderDetail };

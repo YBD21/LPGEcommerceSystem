@@ -11,8 +11,7 @@ import PageNotFound from "../component/PageNotFound";
 import AdminMenu from "../component/Main_Menu_Page/Admin/AdminMenu";
 import ViewOrders from "../component/Main_Menu_Page/Admin/Manage_Orders/ViewOrders";
 import Dashbord from "../component/Main_Menu_Page/Admin/Dashbord";
-import ThankYouPage from "../component/ThankYouPage";
-import Footer from "../component/Footer";
+import Processing from "../component/Main_Menu_Page/Processing";
 
 const AdminRoute = () => {
   return (
@@ -115,11 +114,11 @@ const AdminRoute = () => {
 
       {/* Demo testing here  */}
       <Route
-        path="/ThankYou"
+        path="/Demo"
         element={
           <>
             <NavBar />
-            <ThankYouPage />
+            <Processing />
           </>
         }
       />

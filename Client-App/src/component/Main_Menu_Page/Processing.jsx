@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-
-const Loading = () => {
+const Processing = () => {
   const [ellipsisPosition, setEllipsisPosition] = useState(1);
 
   useEffect(() => {
@@ -19,9 +18,10 @@ const Loading = () => {
       clearInterval(intervalId);
     };
   }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
-      <div className="flex justify-center items-center space-x-1 text-sm text-gray-700">
+    <div className="flex justify-center items-center">
+      <div className="flex items-center">
         <svg
           fill="none"
           className="w-10 h-10 animate-spin mt-4"
@@ -35,12 +35,13 @@ const Loading = () => {
             fillRule="evenodd"
           />
         </svg>
-        <p className=" text-2xl font-bold text-black mt-4 animate-pulse">
-          Loading <span>{".".repeat(ellipsisPosition)}</span>
-        </p>
+
+        <h2 className="text-xl font-semibold mt-4 animate-pulse">
+          Processing <span>{".".repeat(ellipsisPosition)}</span>
+        </h2>
       </div>
     </div>
   );
 };
 
-export default Loading;
+export default Processing;
