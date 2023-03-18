@@ -11,7 +11,7 @@ import PageNotFound from "../component/PageNotFound";
 import AdminMenu from "../component/Main_Menu_Page/Admin/AdminMenu";
 import ViewOrders from "../component/Main_Menu_Page/Admin/Manage_Orders/ViewOrders";
 import Dashbord from "../component/Main_Menu_Page/Admin/Dashbord";
-import ConfettiAnimation from "../component/Main_Menu_Page/ConfettiAnimation";
+import ThankYouPage from "../component/Main_Menu_Page//PopUp/ThankYouPage";
 
 const AdminRoute = () => {
   return (
@@ -118,7 +118,7 @@ const AdminRoute = () => {
         element={
           <>
             <NavBar />
-            <ConfettiAnimation />
+            <ThankYouPage message={12222} />
           </>
         }
       />

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import PaymentsIcon from "@mui/icons-material/Payments";
 import PopupPortal from "./PopUp/PopupPortal";
 import Payment from "./Payment";
-import ThankYouPage from "../ThankYouPage";
+import ThankYouPage from "../Main_Menu_Page/PopUp/ThankYouPage";
 const OrderSummary = ({ status }) => {
   const [{ basket, gasRateData, gasDeliveryRateData, showPopup }, dispatch] =
     useStateValue();
@@ -171,7 +172,10 @@ const OrderSummary = ({ status }) => {
             "
             onClick={getpaymentPotal}
           >
-            Pay
+            <div className="flex items-center justify-center">
+              <p className="mr-5">Pay</p>
+              <PaymentsIcon className="svg-icons" />
+            </div>
           </button>
         </div>
       )}
