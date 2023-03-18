@@ -4,7 +4,8 @@ import OrderSummary from "./OrderSummary";
 
 const Checkout = () => {
   return (
-    <div className="w-full flex flex-row m-10 max-lg:flex-col max-lg:m-0">
+    <div className="w-full flex flex-row py-10 px-5 
+     justify-around max-lg:flex-col max-lg:p-0">
       <DeliveryInfo />
       <OrderSummary status={false} />
     </div>
