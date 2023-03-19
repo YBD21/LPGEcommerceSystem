@@ -1,12 +1,22 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import ConfettiAnimation from "./ConfettiAnimation";
 const ThankYouPage = ({ status, message }) => {
+  const navigate = useNavigate();
   //  need to pass deliveryAmount , estimated Time , OrderId
   // console.log(status);
   // console.log(message);
+  const redirectToHome = () => {
+    navigate("/", { replace: true });
+  };
+
+  const redirectToOrder = () => {
+    navigate("/Order", { replace: true });
+  };
+
   return (
     <>
       <div className="fixed inset-0 flex justify-center items-center z-20">
@@ -42,12 +52,18 @@ const ThankYouPage = ({ status, message }) => {
               </p>
             </div>
             <div className="w-full flex flex-col lg:flex-row justify-between">
-              <button className="flex items-center justify-center w-full lg:w-1/2 px-5 py-2.5 text-white bg-black font-medium rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 mt-5 lg:mt-0 lg:mr-5">
+              <button
+                className="flex items-center justify-center w-full lg:w-1/2 px-5 py-2.5 text-white bg-black font-medium rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 mt-5 lg:mt-0 lg:mr-5"
+                onClick={redirectToOrder}
+              >
                 <AssignmentIcon className="svg-icons mr-5" />
                 <span>View Order</span>
               </button>
-              <button className="flex items-center justify-center w-full lg:w-1/2 px-5 py-2.5 text-white bg-black font-medium rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 mt-5 lg:mt-0 lg:ml-5">
-                <ShoppingCartIcon className=" svg-icons mr-5" />
+              <button
+                className="flex items-center justify-center w-full lg:w-1/2 px-5 py-2.5 text-white bg-black font-medium rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 mt-5 lg:mt-0 lg:ml-5"
+                onClick={redirectToHome}
+              >
+                <HomeIcon className=" svg-icons mr-5" />
                 <span>Shop More</span>
               </button>
             </div>

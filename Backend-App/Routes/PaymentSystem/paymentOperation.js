@@ -76,7 +76,7 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
   try {
     await userRef.set(newOrder);
     console.log("Order successfully added to Firestore!");
-    sendData = { orderId: orderId };
+    sendData = { orderId: orderId, basket: payloadData?.items };
   } catch (error) {
     console.error("Error adding order to Firestore: ", error);
   }

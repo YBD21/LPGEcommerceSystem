@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import KhaltiCheckout from "khalti-checkout-web";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import khaltiIcon from "../../dist/image/Khalti.png";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import TimerIcon from "@mui/icons-material/Timer";
 import DeliveryDropDown from "./PopUp/DeliveryDropDown";
 import Processing from "./Processing";
 const Payment = () => {
@@ -15,6 +16,26 @@ const Payment = () => {
 
   const [status, setStatus] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const [remainingTime, setRemainingTime] = useState(10); // 10 minutes in seconds
+
+  const minutes = String(Math.floor(remainingTime / 60)).padStart(2, "0");
+  const seconds = String(remainingTime % 60).padStart(2, "0");
+
+  useEffect(() => {
+    console.log(remainingTime);
+    if (remainingTime >= 0) {
+      const interval = setInterval(() => {
+        setRemainingTime((prevTime) => prevTime - 1);
+      }, 1000);
+      console.log(interval);
+      return () => clearInterval(interval);
+    }
+  }, []);
+
+  console.log(remainingTime);
+  // console.log(minutes);
+  // console.log(seconds);
 
   const close = () => {
     dispatch({
@@ -142,6 +163,13 @@ const Payment = () => {
 
           {!isProcessing && (
             <>
+              <div className=" flex justify-center pb-5">
+                <TimerIcon className="svg-icons mr-6" />
+                <p className="font-semibold">
+                  {minutes} : {seconds}{" "}
+                </p>
+              </div>
+
               <h2 className="text-xl font-bold mb-5">Payment Option </h2>
 
               <button

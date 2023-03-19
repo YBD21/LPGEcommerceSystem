@@ -66,7 +66,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
   }, [gasRateData]);
 
   return (
-    <div className="flex max-lg:flex-col flex-row mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%] relative">
+    <div className="flex max-lg:flex-col flex-row px-4 mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%] relative">
       {/* Stock Status */}
 
       <img
@@ -108,8 +108,16 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
         </div>
       </div>
 
+      {/* Show Per Stock */}
+      <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
+        <p className="text-2xl font-bold mb-2.5"> In Stock</p>
+        <div className="px-5 py-3  text-white bg-black rounded-lg text-lg font-semibold">
+          {stock - Qty}
+        </div>
+      </div>
+
       {/* Show Type */}
-      <div className="w-full mb-5 mx-5 text-center">
+      <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
         <p className="text-2xl font-bold mb-2.5"> Type </p>
         <div
           className=" w-full px-5 py-3 text-white bg-black rounded-lg 
@@ -120,7 +128,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
       </div>
 
       {/* Show Per Price */}
-      <div className="w-full mb-5 mx-5 text-center">
+      <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
         <p className="text-2xl font-bold mb-2.5">Price</p>
         <div className="px-5 py-3  text-white bg-black rounded-lg text-lg font-semibold">
           Rs.

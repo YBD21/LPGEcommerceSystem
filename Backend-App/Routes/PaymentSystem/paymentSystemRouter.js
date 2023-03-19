@@ -1,17 +1,22 @@
 import express from "express";
 import { verifyTransaction, saveOrderDetail } from "./paymentOperation.js";
-
+import { updateProductListQuantity } from "../ProductManagement/UpdateProduct/updateProduct.js";
 const paymentSystemRouter = express.Router();
 
 paymentSystemRouter.post("/verify", async (req, res) => {
   let data = req.body;
-  //   console.log(data); // data.tokenId
+  let respond;
 
   const verifyRespond = await verifyTransaction(data.tokenId, data.totalAmount);
 
-  //   console.log(respond);
   // if respond then upload these data into firestore database
-  const respond = await saveOrderDetail(data, verifyRespond);
+  const orderData = await saveOrderDetail(data, verifyRespond);
+
+  // copying OrderData into respond
+  respond = orderData;
+   
+  // const res = await updateProductListQuantity(respond.basket); 
+  
   res.json(respond);
 });
 
