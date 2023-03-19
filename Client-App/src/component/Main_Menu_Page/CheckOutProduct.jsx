@@ -5,9 +5,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 
 const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
-  const [{ gasRateData, productList }, dispatch] = useStateValue();
+  const [{ gasRateData, productList, basket }, dispatch] = useStateValue();
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
+  const [totalStock, setTotalStock] = useState(0);
 
   const removeFromBasket = () => {
     dispatch({
@@ -50,6 +51,18 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
     }
   };
 
+  const totalQty = () => {
+    // find item equal to id and sum Qty
+    const result = basket?.reduce((acc, cur) => {
+      if (cur.id === id) {
+        return acc + cur.Qty;
+      }
+      return acc;
+    }, 0);
+    // console.log(result);
+    setTotalStock(result);
+  };
+
   const getStocklimit = () => {
     // find object equal to id
     const result = Object.values(productList).find((item) => item.Id === id);
@@ -64,6 +77,10 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
   useEffect(() => {
     getGasRate();
   }, [gasRateData]);
+
+  useEffect(() => {
+    totalQty();
+  }, [basket]);
 
   return (
     <div className="flex max-lg:flex-col flex-row px-4 mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%] relative">
@@ -112,7 +129,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
       <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
         <p className="text-2xl font-bold mb-2.5"> In Stock</p>
         <div className="px-5 py-3  text-white bg-black rounded-lg text-lg font-semibold">
-          {stock - Qty}
+          {stock - totalStock}
         </div>
       </div>
 
