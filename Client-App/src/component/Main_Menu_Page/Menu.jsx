@@ -15,7 +15,6 @@ export const Menu = () => {
                 key={data.Key}
                 id={data.Id}
                 productName={data.ProductName}
-                stock={data.Stock}
                 imageUrl={data.imageUrl}
               />
             ))}

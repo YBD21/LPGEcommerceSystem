@@ -8,7 +8,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
   const [{ gasRateData, productList, basket }, dispatch] = useStateValue();
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
-  const [totalStock, setTotalStock] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
 
   const removeFromBasket = () => {
     dispatch({
@@ -51,7 +51,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
     }
   };
 
-  const totalQty = () => {
+  const sumQty = () => {
     // find item equal to id and sum Qty
     const result = basket?.reduce((acc, cur) => {
       if (cur.id === id) {
@@ -60,7 +60,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
       return acc;
     }, 0);
     // console.log(result);
-    setTotalStock(result);
+    setTotalQty(result);
   };
 
   const getStocklimit = () => {
@@ -79,7 +79,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
   }, [gasRateData]);
 
   useEffect(() => {
-    totalQty();
+    sumQty();
   }, [basket]);
 
   return (
@@ -129,7 +129,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
       <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
         <p className="text-2xl font-bold mb-2.5"> In Stock</p>
         <div className="px-5 py-3  text-white bg-black rounded-lg text-lg font-semibold">
-          {stock - totalStock}
+          {stock - totalQty}
         </div>
       </div>
 
