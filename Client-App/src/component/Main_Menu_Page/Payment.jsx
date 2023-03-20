@@ -23,19 +23,15 @@ const Payment = () => {
   const seconds = String(remainingTime % 60).padStart(2, "0");
 
   useEffect(() => {
-    console.log(remainingTime);
-    if (remainingTime >= 0) {
-      const interval = setInterval(() => {
-        setRemainingTime((prevTime) => prevTime - 1);
-      }, 1000);
-      console.log(interval);
-      return () => clearInterval(interval);
+    const interval = setInterval(() => {
+      setRemainingTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+    }, 1000);
+    // console.log(remainingTime);
+    if (remainingTime === 0) {
+      close();
     }
-  }, []);
-
-  console.log(remainingTime);
-  // console.log(minutes);
-  // console.log(seconds);
+    return () => clearInterval(interval);
+  }, [remainingTime]);
 
   const close = () => {
     dispatch({
@@ -47,6 +43,8 @@ const Payment = () => {
       type: "SET_PAY_STATUS",
       payStatus: false,
     });
+
+    // console.log("I am Closed !! Do Not LOOK ! X_X ")
   };
 
   const removeAllItemsFromBasket = () => {

@@ -171,36 +171,49 @@ const NavBar = () => {
 
       <ul className="flex justify-between w-full max-w-screen-lg mx-auto lg:max-w-full">
         <li
-          className={`m-auto px-2 py-5 ${
+          className={`relative m-auto px-2 py-5 ${
             isHome ? `border-b-4 border-black` : false
-          }`}
+          } group`}
         >
           <Link to="/Store">
             <HomeIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </Link>
+          <div className="absolute top-5 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+            <span className="text-white font-semibold"> Home </span>
+          </div>
         </li>
+
         <li className="svg-icons m-auto transition duration-300 transform active:scale-105 cursor-pointer">
           <NotificationsIcon />
         </li>
 
-        <li className="m-auto">
+        <li className="relative m-auto group">
           <button onClick={showUserMenu}>
             <AccountCircleIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </button>
+          <div className="absolute top-0 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+            <span className="text-white font-semibold"> User Profile </span>
+          </div>
         </li>
 
         <li
-          className={`m-auto px-2 py-5 ${
-            isCart ? `border-b-4 border-black` : false
-          }`}
+          className={`relative flex m-auto px-2 py-5 ${
+            isCart ? "border-b-4 border-black" : ""
+          } group `}
         >
           <Link to="/Cart">
-            <ShoppingCartIcon className="relative svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
-            <strong className="absolute top-2 right-[2.5%] text-lg rounded-full h-7 w-7 flex items-center justify-center">
-              {basket?.length}
-            </strong>
+            <ShoppingCartIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </Link>
+
+          <strong className="absolute top-2 left-16 mr-2 text-lg rounded-full h-7 w-7 flex items-center justify-center">
+            {basket?.length}
+          </strong>
+
+          <div className="absolute top-5 right-8 transform -translate-x-1/2 opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md group-hover:opacity-100 ">
+            <span className="text-white font-semibold"> Cart</span>
+          </div>
         </li>
+
         <div className="relative inline-block z-20">
           <ItemAddedPopOver show={showItemPopOver} />
         </div>
