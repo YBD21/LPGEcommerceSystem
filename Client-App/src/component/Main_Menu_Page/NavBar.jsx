@@ -191,7 +191,7 @@ const NavBar = () => {
           <button onClick={showUserMenu}>
             <AccountCircleIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </button>
-          <div className="absolute top-0 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+          <div className="absolute top-0 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
             <span className="text-white font-semibold"> User Profile </span>
           </div>
         </li>
@@ -205,11 +205,11 @@ const NavBar = () => {
             <ShoppingCartIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </Link>
 
-          <strong className="absolute top-2 left-16 mr-2 text-lg rounded-full h-7 w-7 flex items-center justify-center">
+          <strong className="absolute top-2 left-full mr-2 text-lg rounded-full h-7 w-7 flex items-center justify-center">
             {basket?.length}
           </strong>
 
-          <div className="absolute top-5 right-8 transform -translate-x-1/2 opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md group-hover:opacity-100 ">
+          <div className="absolute top-5 right-8 transform -translate-x-1/2 opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md group-hover:opacity-100 max-sm:group-hover:opacity-0">
             <span className="text-white font-semibold"> Cart</span>
           </div>
         </li>

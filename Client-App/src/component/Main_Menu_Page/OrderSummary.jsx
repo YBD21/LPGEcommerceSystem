@@ -6,15 +6,18 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import PopupPortal from "./PopUp/PopupPortal";
 import Payment from "./Payment";
 import ThankYouPage from "../Main_Menu_Page/PopUp/ThankYouPage";
+import Processing from "./Processing";
 const OrderSummary = ({ status }) => {
-  const [{ basket, gasRateData, gasDeliveryRateData, showPopup }, dispatch] =
-    useStateValue();
+  const [
+    { basket, gasRateData, gasDeliveryRateData, showPopup, payStatus },
+    dispatch,
+  ] = useStateValue();
   const [itemscount, setItemsCount] = useState(0);
   const [itemsPrice, setItemsPrice] = useState(0);
   const [delivery_charge, setDelivery_charge] = useState(0);
   const [totalprice, setTotalPrice] = useState(0);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const getpaymentPotal = () => {
     dispatch({
@@ -24,15 +27,15 @@ const OrderSummary = ({ status }) => {
   };
 
   const redirectToStore = () => {
-    history("/Store");
+    navigate("/Store");
   };
 
   const redirectToCheckout = () => {
-    history("/Checkout");
+    navigate("/Checkout");
   };
 
   const redirectToCart = () => {
-    history("/Cart");
+    navigate("/Cart");
   };
 
   const countItemsInBasket = () => {
@@ -171,11 +174,17 @@ const OrderSummary = ({ status }) => {
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
             "
             onClick={getpaymentPotal}
+            disabled={payStatus}
           >
-            <div className="flex items-center justify-center">
-              <p className="mr-5">Pay</p>
-              <PaymentsIcon className="svg-icons" />
-            </div>
+            {console.log(payStatus)}
+            {!payStatus ? (
+              <div className="flex items-center justify-center">
+                <p className="mr-5">Pay</p>
+                <PaymentsIcon className="svg-icons" />
+              </div>
+            ) : (
+              <Processing />
+            )}
           </button>
         </div>
       )}

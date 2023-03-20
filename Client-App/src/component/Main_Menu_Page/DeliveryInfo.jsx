@@ -27,9 +27,22 @@ const DeliveryInfo = () => {
     });
   };
 
+  const requestToReserveStock = () => {
+    // send cookie "userData" and  basket data for reservsing
+    // To check for avilablity of stock -- backend
+    // and if possible lock user requested Qty for 10 Min. -- backend
+    // else throw--send error please update your cart -- backend
+  };
+
+  const processPayment = () => {
+    // onClick pay send request to backend
+    requestToReserveStock();
+    // onsucess of reserved getPaymentPortal
+  };
+
   useEffect(() => {
     if (payStatus) {
-      // console.log("changed !")
+      // console.log("changed !");
       // check and validate fields then
       openPotal();
     }

@@ -24,7 +24,7 @@ const Processing = () => {
       <div className="flex items-center">
         <svg
           fill="none"
-          className="w-10 h-10 animate-spin mt-4"
+          className="w-10 h-10 animate-spin"
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -36,9 +36,9 @@ const Processing = () => {
           />
         </svg>
 
-        <h2 className="text-xl font-semibold mt-4 animate-pulse">
+        <p className="text-xl font-semibold animate-pulse">
           Processing <span>{".".repeat(ellipsisPosition)}</span>
-        </h2>
+        </p>
       </div>
     </div>
   );
