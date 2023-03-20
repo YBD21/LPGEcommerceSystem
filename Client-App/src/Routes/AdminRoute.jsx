@@ -12,12 +12,17 @@ import AdminMenu from "../component/Main_Menu_Page/Admin/AdminMenu";
 import ViewOrders from "../component/Main_Menu_Page/Admin/Manage_Orders/ViewOrders";
 import Dashbord from "../component/Main_Menu_Page/Admin/Dashbord";
 import Payment from "../component/Main_Menu_Page/Payment";
+import { useStateValue } from "../ContextAPI/StateProvider";
 
 const AdminRoute = () => {
+  const [{ basket }] = useStateValue();
   return (
     <Routes>
       {/* Redirect from "/" to "/Admin/Dashboard" */}
-      <Route path="/" element={<Navigate to="/Admin/Dashboard" />} />
+      <Route
+        path="/"
+        element={<Navigate to="/Admin/Dashboard" replace={true} />}
+      />
 
       <Route
         path="/Admin/Dashboard"
@@ -105,10 +110,14 @@ const AdminRoute = () => {
       <Route
         path="/Checkout"
         element={
-          <>
-            <NavBar />
-            <Checkout />
-          </>
+          basket.length > 0 ? (
+            <>
+              <NavBar />
+              <Checkout />
+            </>
+          ) : (
+            <Navigate to="/Store" replace={true} />
+          )
         }
       />
 

@@ -5,8 +5,10 @@ import NavBar from "../component/Main_Menu_Page/NavBar";
 import Cart from "../component/Main_Menu_Page/Cart";
 import Checkout from "../component/Main_Menu_Page/Checkout";
 import PageNotFound from "../component/PageNotFound";
+import { useStateValue } from "../ContextAPI/StateProvider";
 
 const ClientRoute = () => {
+  const [{ basket }] = useStateValue();
   return (
     <Routes>
       {/* Client Access */}
@@ -35,12 +37,17 @@ const ClientRoute = () => {
       <Route
         path="/Checkout"
         element={
-          <>
-            <NavBar />
-            <Checkout />
-          </>
+          basket.length > 0 ? (
+            <>
+              <NavBar />
+              <Checkout />
+            </>
+          ) : (
+            <Navigate to="/Store" replace={true} />
+          )
         }
       />
+
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
