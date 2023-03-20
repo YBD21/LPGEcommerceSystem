@@ -18,7 +18,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
   };
 
   const increaseQty = () => {
-    if (stock > Qty) {
+    if (stock - totalQty > 0) {
       dispatch({
         type: "Update_Basket_Qty",
         item: {

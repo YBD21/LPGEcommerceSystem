@@ -16,6 +16,7 @@ export const Menu = () => {
                 id={data.Id}
                 productName={data.ProductName}
                 imageUrl={data.imageUrl}
+                stock={data.Stock}
               />
             ))}
       </main>

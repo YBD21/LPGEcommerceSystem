@@ -3,11 +3,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../../ContextAPI/StateProvider";
-const Product = ({ id, productName, stock, imageUrl }) => {
-  const [
-    { basket, gasRateData, gasDeliveryRateData, totalCount, itemAdded },
-    dispatch,
-  ] = useStateValue();
+const Product = ({ id, productName, imageUrl, stock }) => {
+  const [{ basket, gasRateData, gasDeliveryRateData }, dispatch] =
+    useStateValue();
 
   const productType = ["Refill", "New"];
   const [selectedType, setSelectedType] = useState(productType[0]);
@@ -15,6 +13,8 @@ const Product = ({ id, productName, stock, imageUrl }) => {
   const [displayRate, setDisplayRate] = useState(gasRateData?.Refill_Rate);
 
   const [itemCount, setItemCount] = useState(0);
+  const [inStock, setInStock] = useState(stock);
+  const [totalQty, setTotalQty] = useState(0);
 
   const [is_Item_Exist_With_Refill, SetIs_Item_Exist_With_Refill] =
     useState(false);
@@ -33,6 +33,18 @@ const Product = ({ id, productName, stock, imageUrl }) => {
   };
 
   //  Basket Operation
+
+  const sumQty = () => {
+    // find item equal to id and sum Qty
+    const result = basket?.reduce((acc, cur) => {
+      if (cur.id === id) {
+        return acc + cur.Qty;
+      }
+      return acc;
+    }, 0);
+    // console.log(result);
+    setTotalQty(result);
+  };
 
   const addBasket = (itemId) => {
     dispatch({
@@ -102,7 +114,7 @@ const Product = ({ id, productName, stock, imageUrl }) => {
 
   // Count Operation
   const addItemCount = () => {
-    if (stock > itemCount) {
+    if (inStock - totalQty > itemCount) {
       return setItemCount(itemCount + 1);
     }
   };
@@ -111,7 +123,7 @@ const Product = ({ id, productName, stock, imageUrl }) => {
     if (itemCount < 0) {
       return setItemCount(0);
     }
-    if (stock >= itemCount && itemCount > 0) {
+    if (inStock - totalQty >= itemCount && itemCount > 0) {
       return setItemCount(itemCount - 1);
     }
   };
@@ -129,18 +141,18 @@ const Product = ({ id, productName, stock, imageUrl }) => {
 
   useEffect(() => {
     findItemInBasket();
+    sumQty();
   }, [basket]);
 
   return (
     <div className="flex flex-col mx-4 my-5 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[15%]">
       {/* Stock Status */}
-
       <div className="w-full text-end  max-lg:mr-5">
         <strong
           className="border-4 border-green-500 p-2 rounded-lg 
         text-green-700"
         >
-          In stock :<strong className="px-2 text-green-900">{stock}</strong>
+          In stock :<strong className="px-2 text-green-900">{inStock}</strong>
         </strong>
       </div>
 
