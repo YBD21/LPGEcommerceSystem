@@ -245,3 +245,19 @@ need to change item added popover to navBar just like userDropdown
   cashback: 0,
   product_identity: '103'
 }
+
+  useEffect(() => {
+    let interval;
+
+    if (!isPaused) {
+      interval = setInterval(() => {
+        setRemainingTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+      }, 1000);
+    }
+
+    if (remainingTime === 0) {
+      close();
+    }
+
+    return () => clearInterval(interval);
+  }, [remainingTime, isPaused]);

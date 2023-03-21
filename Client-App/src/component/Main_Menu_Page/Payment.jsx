@@ -16,6 +16,7 @@ const Payment = () => {
 
   const [status, setStatus] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isEpay, setIsEpay] = useState(false);
 
   const [remainingTime, setRemainingTime] = useState(10); // 10 minutes in seconds
 
@@ -23,15 +24,22 @@ const Payment = () => {
   const seconds = String(remainingTime % 60).padStart(2, "0");
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    let interval;
+
+    interval = setInterval(() => {
       setRemainingTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
     }, 1000);
-    // console.log(remainingTime);
-    if (remainingTime === 0) {
+
+    if (remainingTime === 0 && isEpay === false) {
       close();
     }
+
+    if (remainingTime === 0 && isEpay === true) {
+      window.location.reload(false);
+    }
+
     return () => clearInterval(interval);
-  }, [remainingTime]);
+  }, [remainingTime, isEpay]);
 
   const close = () => {
     dispatch({
@@ -128,6 +136,7 @@ const Payment = () => {
       onClose() {
         console.log("widget is closing");
         setIsProcessing(false);
+        setIsEpay(false);
       },
     },
     paymentPreference: [
@@ -141,6 +150,7 @@ const Payment = () => {
   // change 200 into totalcharge -- for real payment
   const requestPayment = () => {
     setIsProcessing(true);
+    setIsEpay(true);
     let checkout = new KhaltiCheckout(config);
     checkout.show({ amount: 200 * 100 });
   };
@@ -161,7 +171,7 @@ const Payment = () => {
 
           {!isProcessing && (
             <>
-              <div className=" flex justify-center pb-5">
+              <div className=" flex justify-center pb-5 z-50">
                 <TimerIcon className="svg-icons mr-6" />
                 <p className="font-semibold">
                   {minutes} : {seconds}{" "}
