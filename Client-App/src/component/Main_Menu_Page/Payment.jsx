@@ -17,12 +17,10 @@ const Payment = () => {
   const [status, setStatus] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isEpay, setIsEpay] = useState(false);
-
-  const [remainingTime, setRemainingTime] = useState(10); // 10 minutes in seconds
+  const [remainingTime, setRemainingTime] = useState(600); // 10 minutes in seconds
 
   const minutes = String(Math.floor(remainingTime / 60)).padStart(2, "0");
   const seconds = String(remainingTime % 60).padStart(2, "0");
-
   useEffect(() => {
     let interval;
 
@@ -36,6 +34,7 @@ const Payment = () => {
 
     if (remainingTime === 0 && isEpay === true) {
       window.location.reload(false);
+      // reload current page
     }
 
     return () => clearInterval(interval);
@@ -147,6 +146,7 @@ const Payment = () => {
       "SCT",
     ],
   };
+
   // change 200 into totalcharge -- for real payment
   const requestPayment = () => {
     setIsProcessing(true);
@@ -177,7 +177,6 @@ const Payment = () => {
                   {minutes} : {seconds}{" "}
                 </p>
               </div>
-
               <h2 className="text-xl font-bold mb-5">Payment Option </h2>
 
               <button

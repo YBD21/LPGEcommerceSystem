@@ -17,6 +17,7 @@ loginSystemRouter.get("/user-data", (req, res) => {
   } else {
     res.json(accessToken);
   }
+  console.log("User Requested AccessToken !");
 });
 
 loginSystemRouter.delete("/user-data", (req, res) => {
@@ -26,7 +27,7 @@ loginSystemRouter.delete("/user-data", (req, res) => {
     sameSite: "strict",
   });
   res.send("Cookie cleared!");
-  console.log("User Disconnected");
+  console.log("User Disconnected X_X !");
 });
 
 loginSystemRouter.post("/login", async (req, res) => {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { provincesOfNepal, districtsByProvince } from "./NepalLocationData";
@@ -6,7 +7,7 @@ const DeliveryInfo = () => {
   const [currentstate, setCurrentState] = useState("");
   const [currentDistrict, setCurrentDistrict] = useState("");
   // import userData from contexProvider or dataLayer
-  const [{ userData, payStatus }, dispatch] = useStateValue();
+  const [{ userData, payStatus , basket }, dispatch] = useStateValue();
 
   const phoneNumber = parseInt(userData?.id.slice(3));
 
@@ -29,22 +30,36 @@ const DeliveryInfo = () => {
 
   const requestToReserveStock = () => {
     // send cookie "userData" and  basket data for reservsing
-    // To check for avilablity of stock -- backend
-    // and if possible lock user requested Qty for 10 Min. -- backend
-    // else throw--send error please update your cart -- backend
+    axios
+      .post(
+        "http://localhost:5000/payment-system/reserve-stock",
+        {
+          Basket: basket,
+          UserInfo : userData
+        }
+      )
+      .then((respond) => {
+        console.log(respond);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+
+  
   };
 
   const processPayment = () => {
     // onClick pay send request to backend
     requestToReserveStock();
     // onsucess of reserved getPaymentPortal
+    openPotal();
   };
 
   useEffect(() => {
     if (payStatus) {
       // console.log("changed !");
-      // check and validate fields then
-      openPotal();
+      // check and validate fields of address then
+      processPayment();
     }
   }, [payStatus]);
 

@@ -146,42 +146,6 @@ app.get("/getProductList", async (req, res) => {
     "widget_id": "khalti-widget-1676968764003"
 }
 
-
-let config = {
-    // replace this key with yours
-    publicKey: "test_public_key_0fefe32ff9084ffbb30e4e3277ed0bc4",
-    productIdentity: "1234567890",
-    productName: "Everest",
-    productUrl: "http://localhost:3000/Checkout",
-    eventHandler: {
-      onSuccess(payload) {
-        // hit merchant api for initiating verfication
-        console.log(payload);
-      },
-      // onError handler is optional
-      onError(error) {
-        // handle errors
-        console.log(error);
-      },
-      onClose() {
-        // console.log('widget is closing');
-      },
-    },
-    paymentPreference: [
-      "KHALTI",
-      "EBANKING",
-      "MOBILE_BANKING",
-      "CONNECT_IPS",
-      "SCT",
-    ],
-  };
-
-  let checkout = new KhaltiCheckout(config);
-
-  const payment = () => {
-    checkout.show({ amount: totalCharge * 100 });
-  };
-
   const newToken = jwt.sign({
     data: 'foobar'
   }, 'secret', { expiresIn: '30' });
@@ -261,3 +225,111 @@ need to change item added popover to navBar just like userDropdown
 
     return () => clearInterval(interval);
   }, [remainingTime, isPaused]);
+
+
+    let remainingTime = 600;
+  let interval;
+  // map basket and identify product by name
+  interval = setInterval(() => {
+    remainingTime = remainingTime > 0 ? remainingTime - 1 : 0;
+    let minutes = String(Math.floor(remainingTime / 60)).padStart(2, "0");
+    let seconds = String(remainingTime % 60).padStart(2, "0");
+    console.log(`Time : ${minutes} : ${seconds} `);
+  }, 1000);
+
+
+  const updateProductListQuantity = async (basket, userData) => {
+  // 10-minute delay
+  await new Promise(resolve => setTimeout(resolve, 10 * 60 * 1000));
+
+  // Get list of product names in basket
+  const productNames = basket.map(item => item.productName);
+
+  // Get products from productList that match productNames in basket
+  const productsToUpdate = productList.filter(product => productNames.includes(product.productName));
+
+  // Update product quantities based on quantities in basket
+  productsToUpdate.forEach(product => {
+    const basketItem = basket.find(item => item.productName === product.productName);
+    if (basketItem) {
+      product.qty -= basketItem.qty;
+    }
+  });
+
+  // Restore quantities of products that were not purchased
+  const unpurchasedProducts = productList.filter(product => !productNames.includes(product.productName));
+  unpurchasedProducts.forEach(product => {
+    product.qty += product.initialQty - product.qty;
+  });
+};
+
+
+const LOCK_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+paymentSystemRouter.post("/reserve-stock", async (req, res) => {
+  const data = req.body;
+  const userId = data.UserInfo.id;
+  const basket = data.Basket;
+
+  // Retrieve the current product quantities
+  const productList = await getProductList();
+
+  // Check that there is enough stock to reserve
+  const canReserve = basket.every(({ productId, quantity }) => {
+    const product = productList.find((p) => p.id === productId);
+    return product && product.quantity >= quantity;
+  });
+
+  if (!canReserve) {
+    return res.status(400).json({ message: "Not enough stock available" });
+  }
+
+  // Lock the requested amount of each product for the user
+  const reservedProducts = basket.map(({ productId, quantity }) => {
+    const product = productList.find((p) => p.id === productId);
+    const remainingQuantity = product.quantity - quantity;
+
+    // Save the user who reserved the product and the timestamp of the lock
+    product.lock = {
+      userId,
+      timestamp: Date.now() + LOCK_TIMEOUT_MS,
+    };
+
+    return {
+      id: product.id,
+      quantity,
+      remainingQuantity,
+    };
+  });
+
+  // Update the product list in the database
+  await updateProductList(productList);
+
+  // Wait for the lock to expire
+  await new Promise((resolve) => setTimeout(resolve, LOCK_TIMEOUT_MS));
+
+  // Release the locked products
+  reservedProducts.forEach(({ id, quantity, remainingQuantity }) => {
+    const product = productList.find((p) => p.id === id);
+    product.quantity = remainingQuantity;
+    delete product.lock;
+  });
+
+  // Update the product list in the database
+  await updateProductList(productList);
+
+  // Respond with the updated product list
+  const updatedProductList = await getProductList();
+  res.json(updatedProductList);
+});
+
+async function getProductList() {
+  // Retrieve the product list from the database or another source
+  // and return it as an array of { id, name, quantity, lock } objects
+}
+
+async function updateProductList(productList) {
+  // Update the product list in the database or another source
+}
+
+
