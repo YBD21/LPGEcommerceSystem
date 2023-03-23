@@ -1,13 +1,10 @@
 import express from "express";
 import { verifyTransaction, saveOrderDetail } from "./paymentOperation.js";
-import {
-  updateProductListQuantity,
-  readProductListfile,
-} from "../ProductManagement/UpdateProduct/updateProduct.js";
+import { canReserveQuantity } from "../ProductManagement/UpdateProduct/updateProduct.js";
 
 const paymentSystemRouter = express.Router();
 
-const StockReservationRecord = [];
+const stockReservationRecord = [];
 
 paymentSystemRouter.post("/verify", async (req, res) => {
   try {
@@ -23,29 +20,26 @@ paymentSystemRouter.post("/verify", async (req, res) => {
 paymentSystemRouter.post("/reserve-stock", async (req, res) => {
   try {
     const { Basket: basketData, UserInfo: userData } = req.body;
-    const allProductData = await readProductListfile(); // ProductList
+
     const userBasketList = createBasketList(basketData); // users baskets
+
     console.log("userBasketList :", userBasketList);
-    // check if user already exist
-    const recordIndex = findRecordIndex(userData.id);
+
+    // check if quantity can be reserved
+    const respond = await canReserveQuantity(userBasketList);
+
+    // console.log(respond);
 
     const createdDate = new Date().toString(); // generate Data
-    // if user doesnot exist createRecord else updateRecord
-    if (recordIndex === -1) {
-      // create record
-      StockReservationRecord.push({
-        userId: userData.id,
-        userBasketList,
-        created: createdDate,
-      });
-    } else {
-      // update record
-      StockReservationRecord[recordIndex].userBasketList = userBasketList;
-      StockReservationRecord[recordIndex].created = createdDate;
-    }
-    console.log("StockReservationRecord :", StockReservationRecord);
 
-    // await updateProductListQuantity(basketData, userData);
+    // create record
+    stockReservationRecord.push({
+      userId: userData.id,
+      userBasketList: userBasketList,
+      created: createdDate,
+    });
+
+    console.log("stockReservationRecord :", stockReservationRecord);
 
     res.json({ message: "Stock reserved successfully" });
   } catch (error) {
@@ -64,21 +58,26 @@ const createBasketList = (basketData) => {
     if (existingItem) {
       existingItem.Qty += Qty;
     } else {
-      basketList.push({ ProductName, Qty });
+      let KeyName = ProductName.replace(/\s/g, ""); // remove all space
+      basketList.push({ KeyName, ProductName, Qty });
     }
   });
   return basketList;
 };
 
 const findRecordIndex = (userId) => {
-  return StockReservationRecord.findIndex((record) => record.userId === userId);
+  return stockReservationRecord.findIndex((record) => record.userId === userId);
 };
 
 paymentSystemRouter.delete("/release-stock", async (req, res) => {
-  const data = req.body;
-  const basketData = data.Basket;
-  const userData = data.UserInfo;
-  // release stock
+  const userData = req.body;
+  // find user record
+  const recordIndex = findRecordIndex(userData.id);
+
+  stockReservationRecord.splice(recordIndex, 1);
+
+  console.log("stockReservationRecord :", stockReservationRecord);
+  res.json({ message: "Stock cancel successfully" });
 });
 
 export default paymentSystemRouter;

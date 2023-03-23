@@ -47,32 +47,56 @@ const readProductListfile = async () => {
   }
 };
 
-// {
-//   Basket: [
-//     {
-//       id: 0,
-//       itemId: 100,
-//       Image: 'https://storage.googleapis.com/final-year-project-b1ff7.appspot.com/Product_Images/Baba%20Gas.png?GoogleAccessId=firebase-adminsdk-8wzet%40final-year-project-b1ff7.iam.gserviceaccount.com&Expires=16730302500&Signature=VnAnP2GWpzWALblm0JF2vxjCuAlVg%2FyHC%2BKG33D18ouk0KqCgpk3UORtT1K8Jh64LOaH1gQWFM0wUdffyJ5hssj%2F3eF4Kn68KENcSxbBUFD2qeW0y64USr9EsK8WTGD38LLk53zAG8Xo5cOnE5%2FiJWDnqiAjRTg81nv6J%2F334LHORMDOKPfcFAYHJjNdENq2V5zyvD2V3%2FafFpU5yPpplPfQmi2quUt5DbtYIMQsqg89sD7kS4aUmK3ZVrjFYsRHgVEo47Jik5qqqz8mE39dpef2Pif0MZpuYkISIPuJjsCxYmy6PZkYD%2BO61c46WJdMpcDZnDlO9mbgRU7eHek4ww%3D%3D',
-//       ProductName: 'Baba Gas',
-//       ProductType: 'Refill',
-//       Qty: 3
-//     }
-//   ],
-//   UserInfo: {
-//     firstName: 'Santosh',
-//     lastName: 'Deuja',
-//     role: 'Admin',
-//     id: '9779860694050',
-//     iat: 1679405064,
-//     exp: 1679408664
-//   }
-// }
+// userBasketList : [ { KeyName:"EverestGas" , ProductName: 'Everest Gas', Qty: 4 } ]
 
-const updateProductListQuantity = async (basket, userData) => {
-  console.log(userData);
+const canReserveQuantity = async (basketList) => {
+  let sendData = false;
+  try {
+    // Read product list from file
+    const { ProductList: productList } = await readProductListfile();
 
-  // and if possible lock user requested Qty for 10 Min. -- backend
-  // else throw--send error please update your cart -- backend
+    // Map through basket items and get product name and in stock quantity
+    const productToUpdate = basketList.map((basket) => {
+      const { ProductName, InStock } = productList[basket.KeyName];
+      return { ProductName, InStock };
+    });
+
+    // Update product list by subtracting basket quantity from product in stock quantity
+    productToUpdate.forEach(({ ProductName }) => {
+      // Find the corresponding item in the basket list based on the product name
+      const basketItem = basketList.find(
+        (item) => item.ProductName === ProductName
+      );
+
+      // Get the product information from the product list using the key name
+      const product = productList[basketItem.KeyName];
+
+      // If the product is still in stock, subtract the quantity from the inventory
+      if (product.InStock <= 0) {
+        return sendData;
+      }
+      product.InStock -= basketItem.Qty;
+    });
+
+    // Log the updated product list and the products that need to be updated
+    // console.log(productList);
+    console.log(productToUpdate);
+
+    // Prepare data for writing to file
+    const updateData = {
+      ProductList: productList,
+    };
+
+    // Update the productlist with the updated data
+    updateProductListfile(updateData);
+  } catch (error) {
+    console.log(error.message);
+  }
+
+  // and if possible lock user requested Qty for 10 Min.
+  // else throw--send error please update your cart
+
+  return sendData;
 };
 
-export { sendProductList, readProductListfile, updateProductListQuantity };
+export { sendProductList, readProductListfile, canReserveQuantity };

@@ -41,6 +41,8 @@ const Payment = () => {
   }, [remainingTime, isEpay]);
 
   const close = () => {
+    releaseStock();
+
     dispatch({
       type: "SET_SHOW_POPUP",
       showPopup: false,
@@ -51,7 +53,20 @@ const Payment = () => {
       payStatus: false,
     });
 
-    // console.log("I am Closed !! Do Not LOOK ! X_X ")
+    // console.log("I am Closed  X_X ")
+  };
+
+  const releaseStock = () => {
+    axios
+      .delete("http://localhost:5000/payment-system/release-stock", {
+        UserInfo: userData,
+      })
+      .then((respond) => {
+        console.log(respond.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const removeAllItemsFromBasket = () => {
@@ -124,6 +139,7 @@ const Payment = () => {
 
         // call backend to verify the payload
         verifyTransaction(payload?.token).then(() => {
+          setIsEpay(false);
           setIsProcessing(false);
         });
       },
@@ -133,7 +149,7 @@ const Payment = () => {
         console.log(error);
       },
       onClose() {
-        console.log("widget is closing");
+        // console.log("widget is closing");
         setIsProcessing(false);
         setIsEpay(false);
       },
