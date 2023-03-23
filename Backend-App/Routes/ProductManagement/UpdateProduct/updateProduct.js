@@ -71,7 +71,6 @@ const readProductListfile = async () => {
 const updateProductListQuantity = async (basket, userData) => {
   console.log(userData);
 
-  // To check for avilablity of stock -- backend
   // and if possible lock user requested Qty for 10 Min. -- backend
   // else throw--send error please update your cart -- backend
 };
