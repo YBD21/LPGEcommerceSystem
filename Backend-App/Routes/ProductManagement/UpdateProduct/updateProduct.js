@@ -49,38 +49,24 @@ const readProductListfile = async () => {
 
 // userBasketList : [ { KeyName:"EverestGas" , ProductName: 'Everest Gas', Qty: 4 } ]
 
-const canReserveQuantity = async (basketList) => {
-  let sendData = false;
+const reserveQuantity = async (basketList) => {
   try {
     // Read product list from file
     const { ProductList: productList } = await readProductListfile();
 
-    // Map through basket items and get product name and in stock quantity
-    const productToUpdate = basketList.map((basket) => {
-      const { ProductName, InStock } = productList[basket.KeyName];
-      return { ProductName, InStock };
-    });
-
-    // Update product list by subtracting basket quantity from product in stock quantity
-    productToUpdate.forEach(({ ProductName }) => {
-      // Find the corresponding item in the basket list based on the product name
-      const basketItem = basketList.find(
-        (item) => item.ProductName === ProductName
-      );
-
-      // Get the product information from the product list using the key name
+    // Loop through basket items and update the product stock
+    for (const basketItem of basketList) {
       const product = productList[basketItem.KeyName];
 
-      // If the product is still in stock, subtract the quantity from the inventory
-      if (product.InStock <= 0) {
-        return sendData;
+      // Check if product is in stock
+      if (product.InStock < basketItem.Qty) {
+        console.log(`${basketItem.ProductName} is out of stock.`);
+        return `${basketItem.ProductName} is out of stock.`;
       }
-      product.InStock -= basketItem.Qty;
-    });
 
-    // Log the updated product list and the products that need to be updated
-    // console.log(productList);
-    console.log(productToUpdate);
+      // Subtract the quantity from the inventory
+      product.InStock -= basketItem.Qty;
+    }
 
     // Prepare data for writing to file
     const updateData = {
@@ -88,15 +74,19 @@ const canReserveQuantity = async (basketList) => {
     };
 
     // Update the productlist with the updated data
-    updateProductListfile(updateData);
+    await updateProductListfile(updateData);
+
+    // Lock the user requested quantity for 10 minutes
+
+    // Return success message
+    return "Stock reserved successfully";
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
-
-  // and if possible lock user requested Qty for 10 Min.
-  // else throw--send error please update your cart
-
-  return sendData;
 };
 
-export { sendProductList, readProductListfile, canReserveQuantity };
+// and if possible lock user requested Qty for 10 Min.
+// else throw--send error please update your cart
+
+export { sendProductList, readProductListfile, reserveQuantity };

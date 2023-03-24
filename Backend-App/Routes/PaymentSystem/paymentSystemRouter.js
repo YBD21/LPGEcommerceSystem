@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyTransaction, saveOrderDetail } from "./paymentOperation.js";
-import { canReserveQuantity } from "../ProductManagement/UpdateProduct/updateProduct.js";
+import { reserveQuantity } from "../ProductManagement/UpdateProduct/updateProduct.js";
 
 const paymentSystemRouter = express.Router();
 
@@ -26,7 +26,7 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
     console.log("userBasketList :", userBasketList);
 
     // check if quantity can be reserved
-    const respond = await canReserveQuantity(userBasketList);
+    const respond = await reserveQuantity(userBasketList);
 
     // console.log(respond);
 
@@ -41,7 +41,8 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
 
     console.log("stockReservationRecord :", stockReservationRecord);
 
-    res.json({ message: "Stock reserved successfully" });
+    res.json({ message: respond });
+    // res.json({ message: "Stock reserved successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error reserving stock" });
   }
