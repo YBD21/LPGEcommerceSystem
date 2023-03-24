@@ -1,6 +1,9 @@
 import express from "express";
 import { verifyTransaction, saveOrderDetail } from "./paymentOperation.js";
-import { reserveQuantity } from "../ProductManagement/UpdateProduct/updateProduct.js";
+import {
+  subtractReservedQuantity,
+  addReservedQuantity,
+} from "../ProductManagement/UpdateProduct/updateProduct.js";
 
 const paymentSystemRouter = express.Router();
 
@@ -25,8 +28,8 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
 
     console.log("userBasketList :", userBasketList);
 
-    // check if quantity can be reserved
-    const respond = await reserveQuantity(userBasketList);
+    // check if quantity can be subtracted
+    const respond = await subtractReservedQuantity(userBasketList);
 
     const createdDate = new Date().toString(); // generate Data
 
@@ -38,7 +41,7 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
     });
 
     console.log("stockReservationRecord :", stockReservationRecord);
-  
+
     res.json(respond);
   } catch (error) {
     console.log(error.message);
@@ -69,14 +72,35 @@ const findRecordIndex = (userId) => {
 };
 
 paymentSystemRouter.delete("/release-stock", async (req, res) => {
-  const userData = req.body;
-  // find user record
-  const recordIndex = findRecordIndex(userData.id);
+  const { id } = req.body;
 
+  // Find the index of the user's record in stockReservationRecord
+  const recordIndex = findRecordIndex(id);
+
+  // Return 404 error if user's record is not found
+  if (recordIndex === -1) {
+    return res.status(404).json({ message: "User record not found" });
+  }
+
+  // Get the user's basket list from the stockReservationRecord
+  const userBasketList = stockReservationRecord[recordIndex].userBasketList;
+
+  // Check if the quantity can be subtracted from the reserved stock
+  const canSubtractQuantity = await subtractReservedQuantity(userBasketList);
+
+  // Return 400 error if quantity cannot be subtracted
+  if (!canSubtractQuantity) {
+    return res.status(400).json({ message: "Quantity cannot be subtracted" });
+  }
+
+  // Remove the user's record from the stockReservationRecord if quantity can be subtracted
   stockReservationRecord.splice(recordIndex, 1);
 
-  console.log("stockReservationRecord :", stockReservationRecord);
-  res.json({ message: "Stock cancel successfully" });
+  // Log the updated stockReservationRecord to console
+  console.log("stockReservationRecord: ", stockReservationRecord);
+
+  // Return success message
+  return res.json({ message: "Stock released successfully" });
 });
 
 export default paymentSystemRouter;

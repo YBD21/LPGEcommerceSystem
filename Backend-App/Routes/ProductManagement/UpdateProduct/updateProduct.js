@@ -50,7 +50,7 @@ const readProductListfile = async () => {
 
 // userBasketList : [ { KeyName:"EverestGas" , ProductName: 'Everest Gas', Qty: 4 } ]
 
-const reserveQuantity = async (basketList) => {
+const subtractReservedQuantity = async (basketList) => {
   let sendData = {};
   try {
     // Read product list from file
@@ -90,4 +90,40 @@ const reserveQuantity = async (basketList) => {
 // Lock the user requested quantity for 10 minutes
 // else throw--send error please update your cart
 
-export { sendProductList, readProductListfile, reserveQuantity };
+const addReservedQuantity = async (basketList) => {
+  try {
+    // Read product list from file
+    const { ProductList: productList } = await readProductListfile();
+
+    // Loop through basket items and add the reserved product stock back to inventory
+    for (const basketItem of basketList) {
+      const product = productList[basketItem.KeyName];
+
+      // Add the quantity back to the inventory
+      product.InStock += basketItem.Qty;
+      console.log(`${basketItem.ProductName} added back ${basketItem.Qty}`);
+    }
+
+    // Prepare data for writing to file
+    const updateData = {
+      ProductList: productList,
+    };
+
+    // Update the productlist with the updated data
+    await updateProductListfile(updateData);
+    console.log("Stock added back to inventory successfully" );
+
+    // Return success message
+    return true;
+  } catch (error) {
+    console.log(error.message);
+    return false
+  }
+};
+
+export {
+  sendProductList,
+  readProductListfile,
+  subtractReservedQuantity,
+  addReservedQuantity,
+};
