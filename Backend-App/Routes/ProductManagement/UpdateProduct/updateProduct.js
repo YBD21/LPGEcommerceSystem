@@ -25,7 +25,8 @@ const sendProductList = async () => {
 };
 
 const updateProductListfile = async (data) => {
-  const jsonData = JSON.stringify(data);
+  const jsonData = JSON.stringify(data, null, 2);
+
   try {
     await fs.promises.writeFile(filePath, jsonData);
   } catch (error) {
@@ -50,6 +51,7 @@ const readProductListfile = async () => {
 // userBasketList : [ { KeyName:"EverestGas" , ProductName: 'Everest Gas', Qty: 4 } ]
 
 const reserveQuantity = async (basketList) => {
+  let sendData = {};
   try {
     // Read product list from file
     const { ProductList: productList } = await readProductListfile();
@@ -61,7 +63,8 @@ const reserveQuantity = async (basketList) => {
       // Check if product is in stock
       if (product.InStock < basketItem.Qty) {
         console.log(`${basketItem.ProductName} is out of stock.`);
-        return `${basketItem.ProductName} is out of stock.`;
+        sendData = { message: `${basketItem.ProductName} is out of stock.` };
+        return sendData;
       }
 
       // Subtract the quantity from the inventory
@@ -76,17 +79,15 @@ const reserveQuantity = async (basketList) => {
     // Update the productlist with the updated data
     await updateProductListfile(updateData);
 
-    // Lock the user requested quantity for 10 minutes
-
-    // Return success message
-    return "Stock reserved successfully";
+    sendData = { message: "Stock reserved successfully", timer: 10 * 60 };
+    // Return success message with timer 10 * 60  = 10 min
+    return sendData;
   } catch (error) {
     console.log(error.message);
-    return error.message;
   }
 };
 
-// and if possible lock user requested Qty for 10 Min.
+// Lock the user requested quantity for 10 minutes
 // else throw--send error please update your cart
 
 export { sendProductList, readProductListfile, reserveQuantity };

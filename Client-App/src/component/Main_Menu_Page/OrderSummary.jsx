@@ -192,7 +192,7 @@ const OrderSummary = ({ status }) => {
       {/* activate payment portal */}
       {showPopup && showPopup?.show === "payment" ? (
         <PopupPortal>
-          <Payment />
+          <Payment timer = {showPopup?.timer} />
         </PopupPortal>
       ) : (
         false

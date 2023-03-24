@@ -88,7 +88,7 @@ const multer = Multer({
 app.use("/login-system", apiLimiter, loginSystemRouter);
 
 // Mount userRouter middleware at "/payment-system" path
-app.use("/payment-system", apiLimiter, paymentSystemRouter);
+app.use("/payment-system", paymentSystemRouter);
 
 app.post("/updateDeiveryRate", async (req, res) => {
   let data = req.body;

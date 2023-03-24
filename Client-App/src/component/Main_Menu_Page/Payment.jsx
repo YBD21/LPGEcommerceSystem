@@ -8,7 +8,7 @@ import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import TimerIcon from "@mui/icons-material/Timer";
 import DeliveryDropDown from "./PopUp/DeliveryDropDown";
 import Processing from "./Processing";
-const Payment = () => {
+const Payment = ({timer}) => {
   const [
     { userData, basket, gasRateData, gasDeliveryRateData, totalCharge },
     dispatch,
@@ -17,7 +17,7 @@ const Payment = () => {
   const [status, setStatus] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isEpay, setIsEpay] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(600); // 10 minutes in seconds
+  const [remainingTime, setRemainingTime] = useState(timer); // 10 minutes in seconds
 
   const minutes = String(Math.floor(remainingTime / 60)).padStart(2, "0");
   const seconds = String(remainingTime % 60).padStart(2, "0");

@@ -28,8 +28,6 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
     // check if quantity can be reserved
     const respond = await reserveQuantity(userBasketList);
 
-    // console.log(respond);
-
     const createdDate = new Date().toString(); // generate Data
 
     // create record
@@ -40,11 +38,11 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
     });
 
     console.log("stockReservationRecord :", stockReservationRecord);
-
-    res.json({ message: respond });
-    // res.json({ message: "Stock reserved successfully" });
+  
+    res.json(respond);
   } catch (error) {
-    res.status(500).json({ message: "Error reserving stock" });
+    console.log(error.message);
+    res.status(500).json({ error: "Error reserving stock" });
   }
   // if UserInfo.id from the record then  else renew lock
   // const respond = await updateProductListQuantity(basketData, userData);

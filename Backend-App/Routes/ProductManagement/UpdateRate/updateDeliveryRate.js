@@ -1,18 +1,18 @@
 import { dataBase } from "../../firebaseConfig.js";
 import fs from "fs";
 
- const filePath = 'BufferData/deliveryRate.json';
+const filePath = "BufferData/deliveryRate.json";
 
 const updateDeliveryRate = async (RefillRate, NewGasRate) => {
   let sendData = { Message: "", Error: "" };
   let createDate = new Date().toString();
   let unixTimestamp = Date.parse(createDate);
 
-   const pathToUpdate = `DeliveryRate/${unixTimestamp}`;
+  const pathToUpdate = `DeliveryRate/${unixTimestamp}`;
 
-    const refToUpdateRate = dataBase.ref(pathToUpdate);
+  const refToUpdateRate = dataBase.ref(pathToUpdate);
 
-      await refToUpdateRate.update(
+  await refToUpdateRate.update(
     {
       New_Delivery_Rate: +NewGasRate,
       Refill_Delivery_Rate: +RefillRate,
@@ -27,7 +27,7 @@ const updateDeliveryRate = async (RefillRate, NewGasRate) => {
       }
     }
   );
-    return sendData;
+  return sendData;
 };
 
 const sendDeliveryRate = async () => {
@@ -37,20 +37,19 @@ const sendDeliveryRate = async () => {
   const refToUpdateRate = dataBase.ref(pathToUpdate);
 
   try {
-       await refToUpdateRate.limitToLast(2).once("value", (snapshot) => {
+    await refToUpdateRate.limitToLast(2).once("value", (snapshot) => {
       // console.log(snapshot.val());
       let data = snapshot.val();
 
       let keys = Object.keys(data); // date as key
-    
+
       sendData = {
         oldData: data[keys[0]],
         currentData: data[keys[1]],
-        Error: null
+        Error: null,
       };
-    updateDeliveryRatefile(sendData);
+      updateDeliveryRatefile(sendData);
     });
-    
   } catch (error) {
     sendData.Error = error.message;
   }
@@ -58,30 +57,28 @@ const sendDeliveryRate = async () => {
   return sendData;
 };
 
-
 const updateDeliveryRatefile = async (data) => {
-     const jsonData = JSON.stringify(data);
-       
-     try {
-          await fs.promises.writeFile(filePath, jsonData);
-     } catch (error) {
-        console.log(error.message);
-     }
+  const jsonData = JSON.stringify(data, null, 2);
 
+  try {
+    await fs.promises.writeFile(filePath, jsonData);
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
-const readDeliveryRatefile = async() => {
+const readDeliveryRatefile = async () => {
   try {
     // read the file
     const jsonData = await fs.promises.readFile(filePath);
     //Parse the JSON data
     const data = await JSON.parse(jsonData);
-     
+
     // console.log(data);
-     return data;
-} catch (error) {
+    return data;
+  } catch (error) {
     console.log(error.message);
-}
+  }
 };
 
-export {updateDeliveryRate,readDeliveryRatefile,sendDeliveryRate};
+export { updateDeliveryRate, readDeliveryRatefile, sendDeliveryRate };

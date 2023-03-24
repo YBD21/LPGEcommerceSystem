@@ -1,9 +1,9 @@
 import { dataBase } from "../../firebaseConfig.js";
-import fs from 'fs';
+import fs from "fs";
 
-const filePath = 'BufferData/gasRate.json';
+const filePath = "BufferData/gasRate.json";
 
-const updateGasRate = async (RefillRate,NewGasRate) => {
+const updateGasRate = async (RefillRate, NewGasRate) => {
   let sendData = { Message: "", Error: "" };
   let createDate = new Date().toString();
   let unixTimestamp = Date.parse(createDate);
@@ -37,20 +37,19 @@ const sendGasRate = async () => {
   const refToUpdateRate = dataBase.ref(pathToUpdate);
 
   try {
-       await refToUpdateRate.limitToLast(2).once("value", (snapshot) => {
+    await refToUpdateRate.limitToLast(2).once("value", (snapshot) => {
       // console.log(snapshot.val());
       let data = snapshot.val();
 
       let keys = Object.keys(data); // date as key
-    
+
       sendData = {
         oldData: data[keys[0]],
         currentData: data[keys[1]],
-        Error: null
+        Error: null,
       };
-     updateGasRatefile(sendData);
+      updateGasRatefile(sendData);
     });
-    
   } catch (error) {
     sendData.Error = error.message;
   }
@@ -58,32 +57,28 @@ const sendGasRate = async () => {
   return sendData;
 };
 
- const updateGasRatefile = async(data) => {
-    const jsonData = JSON.stringify(data);
-  
-    try {
-      await fs.promises.writeFile(filePath, jsonData);
-    } catch (error) {
-      console.log(error.message);
-    }
- };
+const updateGasRatefile = async (data) => {
+  const jsonData = JSON.stringify(data, null, 2);
 
- const readGasRateFile = async() => {
-  
   try {
-       // read the file 
-   const jsonData = await fs.promises.readFile(filePath);
-
-   //Parse the JSON data
-   const data = await JSON.parse(jsonData);
-
-   return data;
- 
+    await fs.promises.writeFile(filePath, jsonData);
   } catch (error) {
     console.log(error.message);
   }
+};
 
- };
+const readGasRateFile = async () => {
+  try {
+    // read the file
+    const jsonData = await fs.promises.readFile(filePath);
 
+    //Parse the JSON data
+    const data = await JSON.parse(jsonData);
+
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 export { updateGasRate, readGasRateFile, sendGasRate };

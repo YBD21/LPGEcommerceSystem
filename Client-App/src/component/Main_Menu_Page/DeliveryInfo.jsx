@@ -7,7 +7,7 @@ const DeliveryInfo = () => {
   const [currentstate, setCurrentState] = useState("");
   const [currentDistrict, setCurrentDistrict] = useState("");
   // import userData from contexProvider or dataLayer
-  const [{ userData, payStatus , basket }, dispatch] = useStateValue();
+  const [{ userData, payStatus, basket }, dispatch] = useStateValue();
 
   const phoneNumber = parseInt(userData?.id.slice(3));
 
@@ -21,38 +21,35 @@ const DeliveryInfo = () => {
     setCurrentDistrict(e.target.value);
   };
 
-  const openPotal = () => {
-    dispatch({
-      type: "SET_SHOW_POPUP",
-      showPopup: { show: "payment" },
-    });
-  };
-
-  const requestToReserveStock = () => {
-    // send cookie "userData" and  basket data for reservsing
-    axios
-      .post(
+  const requestToReserveStock = async () => {
+    try {
+      const response = await axios.post(
         "http://localhost:5000/payment-system/reserve-stock",
         {
           Basket: basket,
-          UserInfo : userData
+          UserInfo: userData,
         }
-      )
-      .then((respond) => {
-        console.log(respond);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-
-  
+      );
+      console.log(response);
+      return response?.data?.timer ? response?.data?.timer : 0;
+    } catch (error) {
+      console.log(error.message);
+      return 0;
+    }
   };
 
-  const processPayment = () => {
+  const processPayment = async () => {
     // onClick pay send request to backend
-    requestToReserveStock();
+    const timer = await requestToReserveStock();
     // onsucess of reserved getPaymentPortal
-    openPotal();
+    openPotal(timer);
+  };
+
+  const openPotal = (timer) => {
+    dispatch({
+      type: "SET_SHOW_POPUP",
+      showPopup: { show: "payment", timer: timer },
+    });
   };
 
   useEffect(() => {
