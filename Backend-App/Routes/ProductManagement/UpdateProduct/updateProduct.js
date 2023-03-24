@@ -51,10 +51,11 @@ const readProductListfile = async () => {
 // userBasketList : [ { KeyName:"EverestGas" , ProductName: 'Everest Gas', Qty: 4 } ]
 
 const subtractReservedQuantity = async (basketList) => {
-  let sendData = {};
   try {
     // Read product list from file
     const { ProductList: productList } = await readProductListfile();
+
+    let updated = false; // flag to check if product stock was updated
 
     // Loop through basket items and update the product stock
     for (const basketItem of basketList) {
@@ -63,25 +64,28 @@ const subtractReservedQuantity = async (basketList) => {
       // Check if product is in stock
       if (product.InStock < basketItem.Qty) {
         console.log(`${basketItem.ProductName} is out of stock.`);
-        sendData = { message: `${basketItem.ProductName} is out of stock.` };
-        return sendData;
+        return { message: `${basketItem.ProductName} is out of stock.` };
       }
 
       // Subtract the quantity from the inventory
       product.InStock -= basketItem.Qty;
+      // Set updated flag to true if product stock was updated
+      updated = true;
     }
 
-    // Prepare data for writing to file
-    const updateData = {
-      ProductList: productList,
-    };
+    // Update the productlist with the updated data only if product stock was updated
+    if (updated) {
+      // Prepare data for writing to file
+      const updateData = {
+        ProductList: productList,
+      };
 
-    // Update the productlist with the updated data
-    await updateProductListfile(updateData);
+      // Update the productlist with the updated data
+      await updateProductListfile(updateData);
+    }
 
-    sendData = { message: "Stock reserved successfully", timer: 10 * 60 };
+    return { message: "Stock reserved successfully", timer: 10 * 60 };
     // Return success message with timer 10 * 60  = 10 min
-    return sendData;
   } catch (error) {
     console.log(error.message);
   }
@@ -95,29 +99,37 @@ const addReservedQuantity = async (basketList) => {
     // Read product list from file
     const { ProductList: productList } = await readProductListfile();
 
+    let updated = false; // flag to check if product stock was updated
+
     // Loop through basket items and add the reserved product stock back to inventory
     for (const basketItem of basketList) {
       const product = productList[basketItem.KeyName];
 
       // Add the quantity back to the inventory
       product.InStock += basketItem.Qty;
+
+      // Set updated flag to true if product stock was updated
+      updated = true;
       console.log(`${basketItem.ProductName} added back ${basketItem.Qty}`);
     }
 
-    // Prepare data for writing to file
-    const updateData = {
-      ProductList: productList,
-    };
+    // Update the productlist with the updated data only if product stock was updated
+    if (updated) {
+      // Prepare data for writing to file
+      const updateData = {
+        ProductList: productList,
+      };
 
-    // Update the productlist with the updated data
-    await updateProductListfile(updateData);
-    console.log("Stock added back to inventory successfully" );
+      // Update the productlist with the updated data
+      await updateProductListfile(updateData);
+    }
+    console.log("Stock added back to inventory successfully");
 
     // Return success message
     return true;
   } catch (error) {
     console.log(error.message);
-    return false
+    return false;
   }
 };
 

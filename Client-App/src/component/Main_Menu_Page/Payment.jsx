@@ -8,7 +8,7 @@ import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import TimerIcon from "@mui/icons-material/Timer";
 import DeliveryDropDown from "./PopUp/DeliveryDropDown";
 import Processing from "./Processing";
-const Payment = ({timer}) => {
+const Payment = ({ timer }) => {
   const [
     { userData, basket, gasRateData, gasDeliveryRateData, totalCharge },
     dispatch,
@@ -40,8 +40,8 @@ const Payment = ({timer}) => {
     return () => clearInterval(interval);
   }, [remainingTime, isEpay]);
 
-  const close = () => {
-    releaseStock();
+  const close = async () => {
+    await releaseStock();
 
     dispatch({
       type: "SET_SHOW_POPUP",
@@ -56,17 +56,18 @@ const Payment = ({timer}) => {
     // console.log("I am Closed  X_X ")
   };
 
-  const releaseStock = () => {
-    axios
-      .delete("http://localhost:5000/payment-system/release-stock", {
-        UserInfo: userData,
-      })
-      .then((respond) => {
-        console.log(respond.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+  const releaseStock = async () => {
+    try {
+      const response = await axios.patch(
+        "http://localhost:5000/payment-system/release-stock",
+        {
+          UserInfo: userData,
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const removeAllItemsFromBasket = () => {

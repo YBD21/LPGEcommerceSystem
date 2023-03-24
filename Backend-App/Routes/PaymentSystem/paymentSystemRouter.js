@@ -33,14 +33,19 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
 
     const createdDate = new Date().toString(); // generate Data
 
-    // create record
-    stockReservationRecord.push({
-      userId: userData.id,
-      userBasketList: userBasketList,
-      created: createdDate,
-    });
+    // Find the index of the user's record in stockReservationRecord
+    const recordIndex = findRecordIndex(userData.id);
 
-    console.log("stockReservationRecord :", stockReservationRecord);
+    if (recordIndex === -1) {
+      // create record
+      stockReservationRecord.push({
+        userId: userData.id,
+        userBasketList: userBasketList,
+        created: createdDate,
+      });
+
+      console.log("stockReservationRecord :", stockReservationRecord);
+    }
 
     res.json(respond);
   } catch (error) {
@@ -71,11 +76,11 @@ const findRecordIndex = (userId) => {
   return stockReservationRecord.findIndex((record) => record.userId === userId);
 };
 
-paymentSystemRouter.delete("/release-stock", async (req, res) => {
-  const { id } = req.body;
+paymentSystemRouter.patch("/release-stock", async (req, res) => {
+  const { UserInfo: userData } = req.body;
 
   // Find the index of the user's record in stockReservationRecord
-  const recordIndex = findRecordIndex(id);
+  const recordIndex = findRecordIndex(userData.id);
 
   // Return 404 error if user's record is not found
   if (recordIndex === -1) {
@@ -83,10 +88,11 @@ paymentSystemRouter.delete("/release-stock", async (req, res) => {
   }
 
   // Get the user's basket list from the stockReservationRecord
-  const userBasketList = stockReservationRecord[recordIndex].userBasketList;
+  const userBasketList = await stockReservationRecord[recordIndex]
+    .userBasketList;
 
-  // Check if the quantity can be subtracted from the reserved stock
-  const canSubtractQuantity = await subtractReservedQuantity(userBasketList);
+  //Release stock holding
+  const canSubtractQuantity = await addReservedQuantity(userBasketList);
 
   // Return 400 error if quantity cannot be subtracted
   if (!canSubtractQuantity) {
