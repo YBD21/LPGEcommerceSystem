@@ -31,6 +31,10 @@ const Product = ({ id, productName, imageUrl, stock }) => {
       itemAdded: true,
     });
   };
+ // Update stock 
+  useEffect(() => {
+    setInStock(stock);
+  }, [stock]);
 
   //  Basket Operation
 
