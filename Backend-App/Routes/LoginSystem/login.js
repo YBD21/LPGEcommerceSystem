@@ -99,8 +99,8 @@ const verifyToken = (token) => {
   return sendData;
 };
 
-const decodeToken = (token) => {
-  const decoded = jwt_decode(token);
+const decodeToken = async (token) => {
+  const decoded = await jwt_decode(token);
   return decoded;
 };
 

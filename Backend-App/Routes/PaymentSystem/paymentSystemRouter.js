@@ -7,6 +7,7 @@ import {
 import { decodeToken } from "../LoginSystem/login.js";
 import {
   readStockReservationRecord,
+  removeStockReservationRecord,
   updateStockReservationRecord,
 } from "./stockReservation.js";
 
@@ -38,7 +39,7 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
       const createdDate = new Date().toString(); // generate Data
 
       // Find the index of the user's record in stockReservationRecord
-      const recordIndex = findRecordIndex(userData.id);
+      const recordIndex = await findRecordIndex(userData.id);
 
       if (recordIndex === -1) {
         // create record
@@ -48,9 +49,7 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
           userBasketList: userBasketList,
           created: createdDate,
         };
-
         await updateStockReservationRecord(stockReservationRecord);
-
         console.log("stockReservationRecord :", stockReservationRecord);
       }
     }
@@ -96,7 +95,7 @@ const findRecordIndex = async (userId) => {
 
 const releaseStock = async (userData) => {
   // Find the index of the user's record in stockReservationRecord
-  const recordIndex = findRecordIndex(userData.id);
+  const recordIndex = await findRecordIndex(userData.id);
 
   // Return 404 error if user's record is not found
   if (recordIndex === -1) {
@@ -116,19 +115,16 @@ const releaseStock = async (userData) => {
   }
 
   // Remove the user's record from the stockReservationRecord if quantity can be subtracted
-  stockReservationRecord.splice(recordIndex, 1);
-
-  // Log the updated stockReservationRecord to console
-  console.log("stockReservationRecord: ", stockReservationRecord);
+  await removeStockReservationRecord(recordIndex);
 
   // Return success message
   return { message: "Stock released successfully" };
 };
 
 const releaseStockOnDisconnect = async (token) => {
-  const userData = decodeToken(token);
+  const userData = await decodeToken(token);
   // now release the stock if found user id found
-  const respond = await releaseStock(userData?.id);
+  const respond = await releaseStock(userData);
   return respond;
 };
 
