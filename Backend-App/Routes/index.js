@@ -60,7 +60,7 @@ const speedLimiter = slowDown({
   delayMs: 500, // begin adding 5ms of delay per request above 50:
 });
 
-app.use(speedLimiter);
+// app.use(speedLimiter); 
 
 //use cors to allow cross origin resource sharing
 app.use(

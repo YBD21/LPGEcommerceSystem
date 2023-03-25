@@ -31,20 +31,22 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
     // check if quantity can be subtracted
     const respond = await subtractReservedQuantity(userBasketList);
 
-    const createdDate = new Date().toString(); // generate Data
+    if (respond?.timer) {
+      const createdDate = new Date().toString(); // generate Data
 
-    // Find the index of the user's record in stockReservationRecord
-    const recordIndex = findRecordIndex(userData.id);
+      // Find the index of the user's record in stockReservationRecord
+      const recordIndex = findRecordIndex(userData.id);
 
-    if (recordIndex === -1) {
-      // create record
-      stockReservationRecord.push({
-        userId: userData.id,
-        userBasketList: userBasketList,
-        created: createdDate,
-      });
+      if (recordIndex === -1) {
+        // create record
+        stockReservationRecord.push({
+          userId: userData.id,
+          userBasketList: userBasketList,
+          created: createdDate,
+        });
 
-      console.log("stockReservationRecord :", stockReservationRecord);
+        console.log("stockReservationRecord :", stockReservationRecord);
+      }
     }
 
     res.json(respond);
