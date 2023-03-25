@@ -40,22 +40,6 @@ const Payment = ({ timer }) => {
     return () => clearInterval(interval);
   }, [remainingTime, isEpay]);
 
-  useEffect(() => {
-    // add event listener to handle beforeunload event
-    const handleBeforeUnload = async (event) => {
-      // Handle the beforeunload event here
-      event.preventDefault();
-      event.returnValue = "";
-      await close(); // call close function when beforeunload event occurs
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload); // register the event listener
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload); // remove the event listener when component unmounts
-    };
-  }, []);
-
   const close = async () => {
     await releaseStock();
 

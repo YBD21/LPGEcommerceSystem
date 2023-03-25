@@ -64,7 +64,10 @@ const subtractReservedQuantity = async (basketList) => {
       // Check if product is in stock
       if (product.InStock < basketItem.Qty) {
         console.log(`${basketItem.ProductName} is out of stock.`);
-        return { message: `${basketItem.ProductName} is out of stock.`, timer : updated };
+        return {
+          message: `${basketItem.ProductName} is out of stock.`,
+          timer: updated,
+        };
       }
 
       // Subtract the quantity from the inventory

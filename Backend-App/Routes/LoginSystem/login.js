@@ -2,6 +2,7 @@ import { dataBase } from "../firebaseConfig.js";
 import bcrypt from "bcryptjs";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
+import jwt_decode from "jwt-decode";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -98,4 +99,9 @@ const verifyToken = (token) => {
   return sendData;
 };
 
-export { login, verifyToken };
+const decodeToken = (token) => {
+  const decoded = jwt_decode(token);
+  return decoded;
+};
+
+export { login, verifyToken, decodeToken };

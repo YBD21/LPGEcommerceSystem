@@ -4,10 +4,13 @@ import {
   subtractReservedQuantity,
   addReservedQuantity,
 } from "../ProductManagement/UpdateProduct/updateProduct.js";
+import { decodeToken } from "../LoginSystem/login.js";
+import {
+  readStockReservationRecord,
+  updateStockReservationRecord,
+} from "./stockReservation.js";
 
 const paymentSystemRouter = express.Router();
-
-const stockReservationRecord = [];
 
 paymentSystemRouter.post("/verify", async (req, res) => {
   try {
@@ -39,11 +42,14 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
 
       if (recordIndex === -1) {
         // create record
-        stockReservationRecord.push({
+
+        let stockReservationRecord = {
           userId: userData.id,
           userBasketList: userBasketList,
           created: createdDate,
-        });
+        };
+
+        await updateStockReservationRecord(stockReservationRecord);
 
         console.log("stockReservationRecord :", stockReservationRecord);
       }
@@ -54,8 +60,17 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
     console.log(error.message);
     res.status(500).json({ error: "Error reserving stock" });
   }
-  // if UserInfo.id from the record then  else renew lock
-  // const respond = await updateProductListQuantity(basketData, userData);
+});
+
+paymentSystemRouter.patch("/release-stock", async (req, res) => {
+  const { UserInfo: userData } = req.body;
+  const releaseResult = await releaseStock(userData);
+
+  if (releaseResult.error) {
+    return res.status(404).json({ message: releaseResult.error });
+  }
+
+  return res.json({ message: releaseResult.message });
 });
 
 const createBasketList = (basketData) => {
@@ -74,21 +89,20 @@ const createBasketList = (basketData) => {
   return basketList;
 };
 
-const findRecordIndex = (userId) => {
+const findRecordIndex = async (userId) => {
+  const stockReservationRecord = await readStockReservationRecord();
   return stockReservationRecord.findIndex((record) => record.userId === userId);
 };
 
-paymentSystemRouter.patch("/release-stock", async (req, res) => {
-  const { UserInfo: userData } = req.body;
-
+const releaseStock = async (userData) => {
   // Find the index of the user's record in stockReservationRecord
   const recordIndex = findRecordIndex(userData.id);
 
   // Return 404 error if user's record is not found
   if (recordIndex === -1) {
-    return res.status(404).json({ message: "User record not found" });
+    return { error: "User record not found" };
   }
-
+  const stockReservationRecord = await readStockReservationRecord();
   // Get the user's basket list from the stockReservationRecord
   const userBasketList = await stockReservationRecord[recordIndex]
     .userBasketList;
@@ -98,7 +112,7 @@ paymentSystemRouter.patch("/release-stock", async (req, res) => {
 
   // Return 400 error if quantity cannot be subtracted
   if (!canSubtractQuantity) {
-    return res.status(400).json({ message: "Quantity cannot be subtracted" });
+    return { error: "Quantity cannot be subtracted" };
   }
 
   // Remove the user's record from the stockReservationRecord if quantity can be subtracted
@@ -108,7 +122,14 @@ paymentSystemRouter.patch("/release-stock", async (req, res) => {
   console.log("stockReservationRecord: ", stockReservationRecord);
 
   // Return success message
-  return res.json({ message: "Stock released successfully" });
-});
+  return { message: "Stock released successfully" };
+};
 
-export default paymentSystemRouter;
+const releaseStockOnDisconnect = async (token) => {
+  const userData = decodeToken(token);
+  // now release the stock if found user id found
+  const respond = await releaseStock(userData?.id);
+  return respond;
+};
+
+export { paymentSystemRouter, releaseStockOnDisconnect };

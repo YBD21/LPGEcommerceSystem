@@ -9,7 +9,10 @@ import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import cookieParser from "cookie-parser";
 import loginSystemRouter from "./LoginSystem/loginSystemRouter.js";
-import paymentSystemRouter from "./PaymentSystem/paymentSystemRouter.js";
+import {
+  paymentSystemRouter,
+  releaseStockOnDisconnect,
+} from "./PaymentSystem/paymentSystemRouter.js";
 import { CreateProduct } from "./ProductManagement/CreateProductSystem/createProduct.js";
 import { ImageUpload } from "./ProductManagement/CreateProductSystem/imageUpload.js";
 import {
@@ -43,7 +46,7 @@ app.set("trust proxy", 1);
 const httpServer = createServer(app);
 // Enable CORS for the socket connection
 const io = new Server(httpServer, {
-  cors: { origin: "http://localhost:3000" },
+  cors: { origin: "http://localhost:3000", credentials: true }, // set credentials to true
 });
 
 const port = 5000;
@@ -60,7 +63,7 @@ const speedLimiter = slowDown({
   delayMs: 500, // begin adding 5ms of delay per request above 50:
 });
 
-// app.use(speedLimiter); 
+app.use(speedLimiter);
 
 //use cors to allow cross origin resource sharing
 app.use(
@@ -135,7 +138,7 @@ io.on("connection", (socket) => {
       }
     });
   } catch (error) {
-    console.log(error.message);
+    console.error(`Error watching ${filePathGasRate}: ${error.message}`);
     // if file not found to watch
     sendGasRate();
   }
@@ -152,7 +155,7 @@ io.on("connection", (socket) => {
       }
     });
   } catch (error) {
-    console.log(error.message);
+    console.error(`Error watching ${filePathDeliveryRate}: ${error.message}`);
     // if file not found to watch
     sendDeliveryRate();
   }
@@ -169,13 +172,21 @@ io.on("connection", (socket) => {
       }
     });
   } catch (error) {
-    console.log(error.message);
+    console.error(`Error watching ${filePathProductList}: ${error.message}`);
     // if file not found to watch
     sendProductList();
   }
 
-  // stop watch when all are disconnected
-  socket.on("disconnect", () => {
+  // stop watch when user are disconnected
+  socket.on("disconnect", async () => {
+    console.log("User Disconnected X_X !");
+    // Extract the value of the HTTP-only cookie
+    const accessToken = socket.request.headers.cookie
+      .split(";")
+      .find((c) => c.trim().startsWith("userData"))
+      .split("=")[1];
+    const respond = await releaseStockOnDisconnect(accessToken);
+    console.log(respond);
     fs.unwatchFile(filePathGasRate);
     fs.unwatchFile(filePathDeliveryRate);
     fs.unwatchFile(filePathProductList);

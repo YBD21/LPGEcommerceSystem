@@ -27,24 +27,26 @@ loginSystemRouter.delete("/user-data", (req, res) => {
     sameSite: "strict",
   });
   res.send("Cookie cleared!");
-  console.log("User Disconnected X_X !");
+  console.log("User LogOut X_X !");
 });
 
 loginSystemRouter.post("/login", async (req, res) => {
   let data = req.body;
+  console.log(`User : ${data.phoneNumber} Trying To Logged In ! `);
 
   const respond = await login(data.phoneNumber, data.encPass);
-  // console.log(respond);
-  // set cookie
-  res.cookie("userData", respond.accessToken, {
-    secure: true, // set to true to enable sending the cookie only over HTTPS
-    httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-    sameSite: "strict", // set to 'strict' to prevent CSRF attacks
-  });
+
+  if (respond?.Message === true) {
+    // set cookie
+    res.cookie("userData", respond.accessToken, {
+      secure: true, // set to true to enable sending the cookie only over HTTPS
+      httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
+      sameSite: "strict", // set to 'strict' to prevent CSRF attacks
+    });
+    console.log(`User : ${data.phoneNumber} is Logged In ! `);
+  }
 
   res.json(respond);
-
-  console.log(`User : ${data.phoneNumber} Trying To Logged In ! `);
 });
 
 loginSystemRouter.post("/forget-password", async (req, res) => {

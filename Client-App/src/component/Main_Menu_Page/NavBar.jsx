@@ -91,7 +91,9 @@ const NavBar = () => {
 
   useEffect(() => {
     //call to backend for connection
-    const socket = openSocket("http://localhost:5000");
+    const socket = openSocket("http://localhost:5000", {
+      withCredentials: true,
+    });
 
     // socket.on('connect', () => {
     //   console.log('Connected to socket.io server');
