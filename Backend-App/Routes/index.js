@@ -9,10 +9,7 @@ import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import cookieParser from "cookie-parser";
 import loginSystemRouter from "./LoginSystem/loginSystemRouter.js";
-import {
-  paymentSystemRouter,
-  releaseStockOnDisconnect,
-} from "./PaymentSystem/paymentSystemRouter.js";
+import { paymentSystemRouter } from "./PaymentSystem/paymentSystemRouter.js";
 import { CreateProduct } from "./ProductManagement/CreateProductSystem/createProduct.js";
 import { ImageUpload } from "./ProductManagement/CreateProductSystem/imageUpload.js";
 import {
@@ -34,6 +31,7 @@ import {
   sendProductList,
   readProductListfile,
 } from "./ProductManagement/UpdateProduct/updateProduct.js";
+import { releaseStockOnDisconnectWithAccessToken } from "./PaymentSystem/stockReservation.js";
 
 const app = express();
 
@@ -180,13 +178,9 @@ io.on("connection", (socket) => {
   // stop watch when user are disconnected
   socket.on("disconnect", async () => {
     console.log("User Disconnected X_X !");
-    // Extract the value of the HTTP-only cookie
-    const accessToken = socket.request.headers.cookie
-      .split(";")
-      .find((c) => c.trim().startsWith("userData"))
-      .split("=")[1];
-    const respond = await releaseStockOnDisconnect(accessToken);
-    console.log(respond);
+
+    await releaseStockOnDisconnectWithAccessToken(socket);
+
     fs.unwatchFile(filePathGasRate);
     fs.unwatchFile(filePathDeliveryRate);
     fs.unwatchFile(filePathProductList);

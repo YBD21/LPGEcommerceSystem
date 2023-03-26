@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import openSocket from "socket.io-client";
+import { socket } from "../socket";
 import { Link, useLocation } from "react-router-dom";
 import Logo_img from "../../dist/image/Logo.png";
 import HomeIcon from "@mui/icons-material/Home";
@@ -91,17 +91,6 @@ const NavBar = () => {
 
   useEffect(() => {
     //call to backend for connection
-    const socket = openSocket("http://localhost:5000", {
-      withCredentials: true,
-    });
-
-    // socket.on('connect', () => {
-    //   console.log('Connected to socket.io server');
-    // });
-
-    //socket.on('disconnect', () => {
-    //   console.log('Disconnected from socket.io server');
-    // });
 
     socket.on("gasRate", (data) => {
       filterGasRateData(data.currentData);

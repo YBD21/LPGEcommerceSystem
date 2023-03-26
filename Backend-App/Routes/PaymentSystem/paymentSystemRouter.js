@@ -18,6 +18,7 @@ paymentSystemRouter.post("/verify", async (req, res) => {
     const { tokenId, totalAmount } = req.body;
     const verifyResponse = await verifyTransaction(tokenId, totalAmount);
     const orderData = await saveOrderDetail(req.body, verifyResponse);
+    // need to update realtime database
     res.json(orderData);
   } catch (error) {
     res.status(500).json({ message: "Error verifying transaction" });

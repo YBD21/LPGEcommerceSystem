@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import openSocket from "socket.io-client";
+import { socket } from "../../../socket";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
 import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
@@ -17,15 +17,6 @@ const EditGasPrice = () => {
 
   useEffect(() => {
     //call to backend for connection
-    const socket = openSocket("http://localhost:5000");
-
-    // socket.on('connect', () => {
-    //   console.log('Connected to socket.io server');
-    // });
-
-    //socket.on('disconnect', () => {
-    //   console.log('Disconnected from socket.io server');
-    // });
 
     socket.on("gasRate", (data) => {
       setGasRateData(data);
@@ -93,9 +84,7 @@ const EditGasPrice = () => {
 
   return (
     <div className="flex-1 flex-col mx-2 overflow-hidden">
-      <h2 className="text-3xl font-bold mt-4 ml-2 mb-8">
-        Update Gas Rate
-      </h2>
+      <h2 className="text-3xl font-bold mt-4 ml-2 mb-8">Update Gas Rate</h2>
       {/* Display Old Rate Here */}
       <table className="w-3/4 max-lg:w-full text-left table-collapse border-2 border-black mx-auto">
         <thead>
@@ -207,7 +196,7 @@ const EditGasPrice = () => {
             text-center mr-3"
           onClick={sendUpdateGasRate}
         >
-          Update Rate
+          Update Rates
         </button>
       </div>
     </div>

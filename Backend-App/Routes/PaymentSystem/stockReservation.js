@@ -1,4 +1,5 @@
 import fs from "fs";
+import { releaseStockOnDisconnect } from "./paymentSystemRouter.js";
 const filePath = "BufferData/stockReservationRecord.json";
 
 const updateStockReservationRecord = async (stockReservation) => {
@@ -63,8 +64,24 @@ const removeStockReservationRecord = async (recordIndex) => {
   }
 };
 
+const releaseStockOnDisconnectWithAccessToken = async (socket) => {
+  try {
+    // Extract the value of the HTTP-only cookie
+    const accessToken = socket.request.headers.cookie
+      ?.split(";")
+      ?.find((c) => c.trim().startsWith("userData"))
+      ?.split("=")[1];
+
+    const respond = await releaseStockOnDisconnect(accessToken);
+    console.log(respond);
+    fs.unwatchFile(filePath);
+  } catch (error) {
+    console.error(`Error releasing stock on disconnect: ${error}`);
+  }
+};
 export {
   updateStockReservationRecord,
   readStockReservationRecord,
   removeStockReservationRecord,
+  releaseStockOnDisconnectWithAccessToken,
 };

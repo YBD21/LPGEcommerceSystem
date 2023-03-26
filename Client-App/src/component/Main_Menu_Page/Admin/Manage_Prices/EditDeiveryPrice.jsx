@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import openSocket from "socket.io-client";
+import {socket } from "../../../socket";
 import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
@@ -17,16 +17,8 @@ const EditDeiveryPrice = () => {
 
   useEffect(() => {
     //call to backend for connection
-    const socket = openSocket("http://localhost:5000");
-    //  socket.on('connect', () => {
-    //   console.log('Connected to socket.io server');
-    // });
-
-    // socket.on('disconnect', () => {
-    //   console.log('Disconnected from socket.io server');
-    // });
-
-    socket.emit("getDeliveryRate");
+ 
+   socket.emit("getDeliveryRate");
 
     socket.on("deliveryRate", (data) => {
       setDeliveryRateData(data);
@@ -92,7 +84,10 @@ const EditDeiveryPrice = () => {
 
   return (
     <div className="flex-1 flex-col mx-2 overflow-hidden">
-      <h2 className="text-3xl font-bold mt-4 ml-2 mb-8"> Update Delivery Charge</h2>
+      <h2 className="text-3xl font-bold mt-4 ml-2 mb-8">
+        {" "}
+        Update Delivery Charge
+      </h2>
       {/* Display Old Charge Here */}
       <table className="w-3/4 max-lg:w-full text-left table-collapse mx-auto">
         <thead>
@@ -156,8 +151,11 @@ const EditDeiveryPrice = () => {
       {/* New Refill Charge Here */}
       <div className="flex flex-col my-5">
         <strong className="w-full text-center text-lg p-3">
-          For Refill Gas Delivery
+         Refill Gas Delivery
         </strong>
+        <label className="block text-sm font-semibold text-gray-800">
+          Set New Refill Delivery Rate
+        </label>
         <div className="relative flex flex-row cursor-pointer">
           <input
             type="number"
@@ -179,6 +177,9 @@ const EditDeiveryPrice = () => {
         <strong className="w-full text-center text-lg p-3">
           For New Gas Delivery
         </strong>
+        <label className="block text-sm font-semibold text-gray-800">
+          Set New Delivery Rate
+        </label>
         <div className="relative flex flex-row cursor-pointer">
           <input
             type="number"
