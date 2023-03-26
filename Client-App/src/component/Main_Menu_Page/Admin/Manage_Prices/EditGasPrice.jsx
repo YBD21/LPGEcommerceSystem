@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { socket } from "../../../socket";
+import openSocket from "socket.io-client";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
 import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
@@ -17,8 +17,10 @@ const EditGasPrice = () => {
 
   useEffect(() => {
     //call to backend for connection
+    const socket = openSocket("http://localhost:5000");
 
     socket.on("gasRate", (data) => {
+      // console.log(data);
       setGasRateData(data);
     });
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {socket } from "../../../socket";
+import openSocket from "socket.io-client";
 import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
@@ -17,10 +17,12 @@ const EditDeiveryPrice = () => {
 
   useEffect(() => {
     //call to backend for connection
- 
-   socket.emit("getDeliveryRate");
+    const socket = openSocket("http://localhost:5000");
+    
+    socket.emit("getDeliveryRate");
 
     socket.on("deliveryRate", (data) => {
+      // console.log(data);
       setDeliveryRateData(data);
     });
     return () => {
@@ -151,7 +153,7 @@ const EditDeiveryPrice = () => {
       {/* New Refill Charge Here */}
       <div className="flex flex-col my-5">
         <strong className="w-full text-center text-lg p-3">
-         Refill Gas Delivery
+          Refill Gas Delivery
         </strong>
         <label className="block text-sm font-semibold text-gray-800">
           Set New Refill Delivery Rate

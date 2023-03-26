@@ -64,6 +64,7 @@ const removeStockReservationRecord = async (recordIndex) => {
   }
 };
 
+// This function releases stock when a user disconnects from the socket, using the user's access token from their HTTP-only cookie
 const releaseStockOnDisconnectWithAccessToken = async (socket) => {
   try {
     // Extract the value of the HTTP-only cookie
@@ -72,13 +73,19 @@ const releaseStockOnDisconnectWithAccessToken = async (socket) => {
       ?.find((c) => c.trim().startsWith("userData"))
       ?.split("=")[1];
 
-    const respond = await releaseStockOnDisconnect(accessToken);
-    console.log(respond);
+    // Call the releaseStockOnDisconnect function with the access token
+    if (accessToken) {
+      const respond = await releaseStockOnDisconnect(accessToken);
+      console.log(respond);
+    }
+
+    // Stop watching the file for changes
     fs.unwatchFile(filePath);
   } catch (error) {
     console.error(`Error releasing stock on disconnect: ${error}`);
   }
 };
+
 export {
   updateStockReservationRecord,
   readStockReservationRecord,

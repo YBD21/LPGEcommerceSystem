@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { socket } from "../socket";
+import React, { useState, useEffect, useCallback } from "react";
+import openSocket from "socket.io-client";
 import { Link, useLocation } from "react-router-dom";
 import Logo_img from "../../dist/image/Logo.png";
 import HomeIcon from "@mui/icons-material/Home";
@@ -13,7 +13,7 @@ import ItemAddedPopOver from "./PopUp/ItemAddedPopOver";
 const NavBar = () => {
   const location = useLocation();
   const [{ basket, userData, itemAdded }, dispatch] = useStateValue();
-  const [productData, setProductData] = useState(null);
+  const [productData, setProductData] = useState([]);
   const [gasRateData, setGasRateData] = useState(null);
   const [deliveryRateData, setDeliveryRateData] = useState(null);
 
@@ -52,9 +52,9 @@ const NavBar = () => {
     setIsUserClicked(!isUserclicked);
   };
 
-  const filterProductData = (data) => {
+  const filterProductData = useCallback((data) => {
     let productDetail = [];
-    Object.entries(data).map(([key, value], index) => {
+    Object.entries(data).forEach(([key, value], index) => {
       productDetail.push({
         Key: key,
         Id: index,
@@ -62,35 +62,35 @@ const NavBar = () => {
         Stock: value.InStock,
         imageUrl: value.ImageInfo.Link,
       });
-      // console.log(productDetail);
-      setProductData(productDetail);
     });
-  };
+    setProductData(productDetail);
+  }, []);
 
-  const filterGasRateData = (data) => {
+  const filterGasRateData = useCallback((data) => {
     let gasRateDetail = {};
     Object.keys(data).forEach((key) => {
       if (key !== "Created") {
         gasRateDetail[key] = data[key];
       }
     });
-    // console.log(gasRateDetail);
     setGasRateData(gasRateDetail);
-  };
+  }, []);
 
-  const filterDeliveryRateData = (data) => {
+  const filterDeliveryRateData = useCallback((data) => {
     let gasDeliveryRateDetail = {};
     Object.keys(data).forEach((key) => {
       if (key !== "Created") {
         gasDeliveryRateDetail[key] = data[key];
       }
     });
-    // console.log(gasDeliveryRateDetail);
     setDeliveryRateData(gasDeliveryRateDetail);
-  };
+  }, []);
 
   useEffect(() => {
     //call to backend for connection
+    const socket = openSocket("http://localhost:5000", {
+      withCredentials: true,
+    });
 
     socket.on("gasRate", (data) => {
       filterGasRateData(data.currentData);
