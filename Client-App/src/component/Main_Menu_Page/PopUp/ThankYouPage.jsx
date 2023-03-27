@@ -19,7 +19,7 @@ const ThankYouPage = ({ status, message }) => {
 
   return (
     <>
-      <div className="fixed inset-0 flex justify-center items-center z-20">
+      <div className="fixed inset-0 flex justify-center items-center z-50">
         <ConfettiAnimation />
         <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
         <div className="relative z-10 inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg transform sm:max-w-md sm:p-8 ">

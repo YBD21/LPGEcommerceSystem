@@ -64,7 +64,7 @@ const Payment = ({ timer }) => {
           UserInfo: userData,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -89,10 +89,18 @@ const Payment = ({ timer }) => {
 
   const onSucessfulKhaltiPayment = (respondData) => {
     // close Payment Option
-    close();
+    dispatch({
+      type: "SET_SHOW_POPUP",
+      showPopup: false,
+    });
+
+    dispatch({
+      type: "SET_PAY_STATUS",
+      payStatus: false,
+    });
 
     // clear items from basket
-    removeAllItemsFromBasket();
+    // removeAllItemsFromBasket();
 
     // show Thankyou Page
     displayThankYouPage(false, respondData);
@@ -188,7 +196,7 @@ const Payment = ({ timer }) => {
 
           {!isProcessing && (
             <>
-              <div className=" flex justify-center pb-5 z-50">
+              <div className=" flex justify-center pb-5">
                 <TimerIcon className="svg-icons mr-6" />
                 <p className="font-semibold">
                   {minutes} : {seconds}{" "}

@@ -11,8 +11,8 @@ import PageNotFound from "../component/PageNotFound";
 import AdminMenu from "../component/Main_Menu_Page/Admin/AdminMenu";
 import ViewOrders from "../component/Main_Menu_Page/Admin/Manage_Orders/ViewOrders";
 import Dashbord from "../component/Main_Menu_Page/Admin/Dashbord";
-import Payment from "../component/Main_Menu_Page/Payment";
 import { useStateValue } from "../ContextAPI/StateProvider";
+import ThankYouPage from "../component/Main_Menu_Page/PopUp/ThankYouPage";
 
 const AdminRoute = () => {
   const [{ basket }] = useStateValue();
@@ -127,7 +127,7 @@ const AdminRoute = () => {
         element={
           <>
             <NavBar />
-            <Payment />
+            <ThankYouPage status={false} message={{ orderId: 123546 }} />
           </>
         }
       />

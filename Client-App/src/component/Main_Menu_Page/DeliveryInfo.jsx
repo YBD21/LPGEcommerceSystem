@@ -30,7 +30,7 @@ const DeliveryInfo = () => {
           UserInfo: userData,
         }
       );
-      console.log(response);
+      // console.log(response);
       return response?.data?.timer ? response?.data?.timer : 0;
     } catch (error) {
       console.log(error.message);
