@@ -147,13 +147,13 @@ const NavBar = () => {
   }, [deliveryRateData]);
 
   return (
-    <header className="sticky top-0 z-30 bg-white opacity-95 flex flex-row w-full drop-shadow-lg">
+    <header className="sticky top-0 z-30 bg-white opacity-95 flex flex-row w-full drop-shadow-lg h-16">
       {/* Logo */}
 
       <div className="flex flex-row w-full mx-5 max-lg:hidden">
         <Link to={role === "Admin" ? "/Admin/Dashboard" : "/Store"}>
           <img
-            className="w-16"
+            className="h-16"
             src={Logo_img}
             alt="Melamchi Online Store Logo"
           />
@@ -162,11 +162,11 @@ const NavBar = () => {
 
       <ul className="flex justify-between w-full max-w-screen-lg mx-auto lg:max-w-full">
         <li
-          className={`relative m-auto px-2 py-5 ${
+          className={`relative m-auto ${
             isHome ? `border-b-4 border-black` : false
           } group`}
         >
-          <Link to="/Store">
+          <Link to="/Store" className="block px-2 py-4">
             <HomeIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </Link>
           <div className="absolute top-5 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
@@ -179,7 +179,7 @@ const NavBar = () => {
         </li>
 
         <li className="relative m-auto group">
-          <button onClick={showUserMenu}>
+          <button onClick={showUserMenu} className="block px-2 py-4">
             <AccountCircleIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </button>
           <div className="absolute top-0 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
@@ -188,11 +188,11 @@ const NavBar = () => {
         </li>
 
         <li
-          className={`relative flex m-auto px-2 py-5 ${
+          className={`relative flex m-auto ${
             isCart ? "border-b-4 border-black" : ""
           } group `}
         >
-          <Link to="/Cart">
+          <Link to="/Cart" className="block px-2 py-4">
             <ShoppingCartIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </Link>
 
