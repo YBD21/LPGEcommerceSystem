@@ -1,19 +1,42 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useStateValue } from "../../../ContextAPI/StateProvider";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import ConfettiAnimation from "./ConfettiAnimation";
 const ThankYouPage = ({ status, message }) => {
+  const [{ basket }, dispatch] = useStateValue();
   const navigate = useNavigate();
   //  need to pass deliveryAmount , estimated Time , OrderId
-  // console.log(status);
-  // console.log(message);
+  const close = async () => {
+    removeAllItemsFromBasket();
+    dispatch({
+      type: "SET_SHOW_POPUP",
+      showPopup: false,
+    });
+
+    dispatch({
+      type: "SET_PAY_STATUS",
+      payStatus: false,
+    });
+
+    // console.log("I am Closed  X_X ")
+  };
+
+  const removeAllItemsFromBasket = () => {
+    dispatch({
+      type: "EMPTY_BASKET",
+    });
+  };
+
   const redirectToHome = () => {
-    navigate("/", { replace: true });
+    close();
+    navigate("/Store", { replace: true });
   };
 
   const redirectToOrder = () => {
+    close();
     navigate("/Order", { replace: true });
   };
 

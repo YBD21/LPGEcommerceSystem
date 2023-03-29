@@ -70,11 +70,6 @@ const Payment = ({ timer }) => {
     }
   };
 
-  const removeAllItemsFromBasket = () => {
-    dispatch({
-      type: "EMPTY_BASKET",
-    });
-  };
 
   const displayThankYouPage = (status, respondData) => {
     dispatch({
