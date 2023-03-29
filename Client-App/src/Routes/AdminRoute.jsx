@@ -86,6 +86,8 @@ const AdminRoute = () => {
         }
       />
 
+      {/* Manage User */}
+
       {/* Client Access */}
       <Route
         path="/Store"
