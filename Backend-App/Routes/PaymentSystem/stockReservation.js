@@ -43,6 +43,7 @@ const readStockReservationRecord = async () => {
     console.log(error.message);
   }
 };
+
 const removeRecordByIndex = (prevData, recordIndex) => {
   // Create a new array with all the elements except the one at the specified index.
   return prevData.filter((_, index) => index !== recordIndex);
@@ -69,29 +70,32 @@ const removeStockReservationRecord = async (recordIndex) => {
 };
 
 const updateStockDatabaseThenRemoveStockReservation = async (userId) => {
-  // Read the existing stock reservation data.
-  const stockReservationRecord = await readStockReservationRecord();
+  try {
+    // Read the existing stock reservation data.
+    const stockReservationRecord = await readStockReservationRecord();
 
-  // find id from record then subtract Qty --Basket Realtime Database
+    // find userReservationRecord from  stockReservationRecord
+    const index = stockReservationRecord.findIndex(
+      (record) => record.userId === userId
+    );
+    console.log(index);
 
-  // find userReservationRecord from  stockReservationRecord
-  const index = stockReservationRecord.findIndex(
-    (record) => record.userId === userId
-  );
-  //  userReservationRecord = {
-  //   userId: userData.id,
-  //   userBasketList: userBasketList,
-  //   created: createdDate,
-  // };
+    //  userReservationRecord = {
+    //   userId: userData.id,
+    //   userBasketList: userBasketList,
+    //   created: createdDate,
+    // };
 
-  if (index !== -1) {
-    const { userBasketList } = stockReservationRecord[index];
-    console.log(userBasketList);
-    await subtractQuantityFromDatabase(userBasketList);
+    if (index !== -1) {
+      const { userBasketList } = stockReservationRecord[index];
+      console.log(userBasketList);
+      await subtractQuantityFromDatabase(userBasketList);
+      // now removefrom stockReservation
+      await removeStockReservationRecord(index);
+    }
+  } catch (error) {
+    console.log(error.message);
   }
-
-  // now removefrom stockReservation
-  await removeStockReservationRecord(stockReservationRecord, index);
 };
 
 // This function releases stock when a user disconnects from the socket, using the user's access token from their HTTP-only cookie
