@@ -69,9 +69,9 @@ const releaseStockOnDisconnectWithAccessToken = async (socket) => {
   try {
     // Extract the value of the HTTP-only cookie
     const accessToken = socket.request.headers.cookie
-      ?.split(";")
-      ?.find((c) => c.trim().startsWith("userData"))
-      ?.split("=")[1];
+      .split(";")
+      .find((c) => c.trim().startsWith("userData"))
+      .split("=")[1];
 
     // Call the releaseStockOnDisconnect function with the access token
     if (accessToken) {
