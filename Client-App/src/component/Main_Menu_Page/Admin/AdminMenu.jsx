@@ -15,14 +15,12 @@ function AdminMenu({ children }) {
   }, [location]);
 
   return (
-    <main className="flex-1 flex bg-gray-100 h-screen">
+    <main className="flex-1 flex h-screen">
       {/* Navigation menu */}
       {/* BreadCrum Place Here */}
 
-      {/* Content section */}
-
       {/* Sidebar */}
-      <nav className="bg-gray-50 shadow w-64">
+      <nav className="bg-white w-64">
         <div className="p-4 mt-5">
           <ul className="space-y-2">
             <li>

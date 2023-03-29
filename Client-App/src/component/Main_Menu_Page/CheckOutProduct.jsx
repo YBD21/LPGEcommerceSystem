@@ -88,7 +88,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
         className="w-20 m-6 max-lg:mt-7"
         src={image}
         alt={name}
-        loading="lazy"
+        loading="eager"
       />
       {/* add and subtract */}
       <div className="w-full flex flex-col place-items-center">
