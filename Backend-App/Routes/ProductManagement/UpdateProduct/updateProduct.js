@@ -48,7 +48,25 @@ const readProductListfile = async () => {
   }
 };
 
-// userBasketList : [ { KeyName:"EverestGas" , ProductName: 'Everest Gas', Qty: 4 } ]
+// basketList : [ { KeyName:"EverestGas" , ProductName: 'Everest Gas', Qty: 4 } ]
+
+const subtractQuantityFromDatabase = async (basketList) => {
+  const startCountRef = "ProductList/LPGasList";
+  const ref = dataBase.ref(startCountRef);
+  // loop here
+  for (const basketItem of basketList) {
+    let userRef = ref.child(basketItem.KeyName);
+    await userRef.child("InStock").transaction((currentQty) => {
+      if (currentQty === null || currentQty === undefined) {
+        // If the InStock field does not exist, set it to 0.
+        return 0;
+      } else {
+        // Otherwise, subtract the basketItem.Qty from the current value of InStock.
+        return currentQty - basketItem.Qty;
+      }
+    });
+  }
+};
 
 const subtractReservedQuantity = async (basketList) => {
   try {
@@ -94,9 +112,6 @@ const subtractReservedQuantity = async (basketList) => {
   }
 };
 
-// Lock the user requested quantity for 10 minutes
-// else throw--send error please update your cart
-
 const addReservedQuantity = async (basketList) => {
   try {
     // Read product list from file
@@ -141,4 +156,5 @@ export {
   readProductListfile,
   subtractReservedQuantity,
   addReservedQuantity,
+  subtractQuantityFromDatabase,
 };

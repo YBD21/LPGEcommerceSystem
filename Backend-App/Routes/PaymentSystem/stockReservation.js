@@ -1,4 +1,5 @@
 import fs from "fs";
+import { subtractQuantityFromDatabase } from "../ProductManagement/UpdateProduct/updateProduct.js";
 import { releaseStockOnDisconnect } from "./paymentSystemRouter.js";
 const filePath = "BufferData/stockReservationRecord.json";
 
@@ -42,13 +43,16 @@ const readStockReservationRecord = async () => {
     console.log(error.message);
   }
 };
+const removeRecordByIndex = (prevData, recordIndex) => {
+  // Create a new array with all the elements except the one at the specified index.
+  return prevData.filter((_, index) => index !== recordIndex);
+};
 
 const removeStockReservationRecord = async (recordIndex) => {
   // Read the existing stock reservation data.
   const prevData = await readStockReservationRecord();
 
-  // Create a new array with all the elements except the one at the specified index.
-  const newData = prevData.filter((_, index) => index !== recordIndex);
+  const newData = removeRecordByIndex(prevData, recordIndex);
   // Log the updated stockReservationRecord to console
   console.log("stockReservationRecord: ", newData);
 
@@ -62,6 +66,32 @@ const removeStockReservationRecord = async (recordIndex) => {
     // Log any errors that occur while writing the file.
     console.log(error.message);
   }
+};
+
+const updateStockDatabaseThenRemoveStockReservation = async (userId) => {
+  // Read the existing stock reservation data.
+  const stockReservationRecord = await readStockReservationRecord();
+
+  // find id from record then subtract Qty --Basket Realtime Database
+
+  // find userReservationRecord from  stockReservationRecord
+  const index = stockReservationRecord.findIndex(
+    (record) => record.userId === userId
+  );
+  //  userReservationRecord = {
+  //   userId: userData.id,
+  //   userBasketList: userBasketList,
+  //   created: createdDate,
+  // };
+
+  if (index !== -1) {
+    const { userBasketList } = stockReservationRecord[index];
+    console.log(userBasketList);
+    await subtractQuantityFromDatabase(userBasketList);
+  }
+
+  // now removefrom stockReservation
+  await removeStockReservationRecord(stockReservationRecord, index);
 };
 
 // This function releases stock when a user disconnects from the socket, using the user's access token from their HTTP-only cookie
@@ -91,4 +121,5 @@ export {
   readStockReservationRecord,
   removeStockReservationRecord,
   releaseStockOnDisconnectWithAccessToken,
+  updateStockDatabaseThenRemoveStockReservation,
 };

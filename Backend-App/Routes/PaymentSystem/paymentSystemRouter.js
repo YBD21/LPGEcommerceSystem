@@ -8,6 +8,7 @@ import { decodeToken } from "../LoginSystem/login.js";
 import {
   readStockReservationRecord,
   removeStockReservationRecord,
+  updateStockDatabaseThenRemoveStockReservation,
   updateStockReservationRecord,
 } from "./stockReservation.js";
 
@@ -18,10 +19,9 @@ paymentSystemRouter.post("/verify", async (req, res) => {
     const { tokenId, totalAmount, phoneNumber } = req.body;
     const verifyResponse = await verifyTransaction(tokenId, totalAmount);
     const orderData = await saveOrderDetail(req.body, verifyResponse);
-    // find index in stockReservation
-    const recordIndex = await findRecordIndex(phoneNumber);
-    // need to update realtime database then
-    await removeStockReservationRecord(recordIndex);
+
+    // update realtime database then erase userRecord from stockReservationRecord
+    await updateStockDatabaseThenRemoveStockReservation(phoneNumber);
     res.json(orderData);
   } catch (error) {
     res.status(500).json({ message: "Error verifying transaction" });
