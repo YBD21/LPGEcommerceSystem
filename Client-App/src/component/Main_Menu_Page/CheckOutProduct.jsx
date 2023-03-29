@@ -84,8 +84,6 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
 
   return (
     <div className="flex max-lg:flex-col flex-row px-4 mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%] relative">
-      {/* Stock Status */}
-
       <img
         className="w-20 m-6 max-lg:mt-7"
         src={image}
@@ -100,7 +98,8 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
           <button
             className="px-4 py-2.5 tracking-wide
           text-white bg-black font-medium rounded-lg mx-auto
-          focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
+          focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative 
+          overflow-hidden
           "
             onClick={decreaseQty}
           >
@@ -128,7 +127,10 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
       {/* Show Per Stock */}
       <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
         <p className="text-2xl font-bold mb-2.5"> In Stock</p>
-        <div className="px-5 py-3  text-white bg-black rounded-lg text-lg font-semibold">
+        <div
+          className="px-5 py-3  text-white bg-black rounded-lg text-lg 
+        font-semibold"
+        >
           {stock - totalQty}
         </div>
       </div>
@@ -147,7 +149,10 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
       {/* Show Per Price */}
       <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
         <p className="text-2xl font-bold mb-2.5">Price</p>
-        <div className="px-5 py-3  text-white bg-black rounded-lg text-lg font-semibold">
+        <div
+          className="px-5 py-3  text-white bg-black rounded-lg text-lg 
+        font-semibold"
+        >
           Rs.
           {Qty === 0
             ? price

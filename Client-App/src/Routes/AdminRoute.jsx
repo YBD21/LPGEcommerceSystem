@@ -13,6 +13,7 @@ import ViewOrders from "../component/Main_Menu_Page/Admin/Manage_Orders/ViewOrde
 import Dashbord from "../component/Main_Menu_Page/Admin/Dashbord";
 import { useStateValue } from "../ContextAPI/StateProvider";
 import ThankYouPage from "../component/Main_Menu_Page/PopUp/ThankYouPage";
+import ViewLPGasProduct from "../component/Main_Menu_Page/Admin/Manage_Products/ViewLPGasProduct";
 
 const AdminRoute = () => {
   const [{ basket }] = useStateValue();
@@ -56,6 +57,18 @@ const AdminRoute = () => {
             <NavBar />
             <AdminMenu>
               <CreateLPGasProduct />
+            </AdminMenu>
+          </>
+        }
+      />
+
+      <Route
+        path="/Admin/Manage-Product/View-Gas-Product"
+        element={
+          <>
+            <NavBar />
+            <AdminMenu>
+              <ViewLPGasProduct />
             </AdminMenu>
           </>
         }

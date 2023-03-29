@@ -8,6 +8,8 @@ const ManageGasProductsTab = () => {
 
   const [isCreateGasProduct, setIsCreateGasProduct] = useState(false);
 
+  const [isViewGasProduct, setIsViewGasProduct] = useState(false);
+
   const toggleManageProduct = () => {
     setIsManageGasProductOpen(!isManageGasProductOpen);
   };
@@ -20,6 +22,10 @@ const ManageGasProductsTab = () => {
 
     setIsCreateGasProduct(
       location.pathname === "/Admin/Manage-Product/Create-Gas-Product"
+    );
+
+    setIsViewGasProduct(
+      location.pathname === "/Admin/Manage-Product/View-Gas-Product"
     );
   }, [location]);
 
@@ -49,10 +55,13 @@ const ManageGasProductsTab = () => {
       {isManageGasProductOpen && (
         <div className="flex flex-col w-full py-2 mt-2 bg-white rounded-lg">
           <Link
-            href="#"
-            className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
+            to="/Admin/Manage-Product/View-Gas-Product"
+            className={`block px-4 py-3
+            text-gray-800 hover:bg-gray-100
+            ${isViewGasProduct ? "bg-gray-200" : ""}`}
           >
-            View Gas Product
+            {isViewGasProduct && <ArrowRightIcon className="svg-icons mr-6" />}
+            <span className="mr-auto"> View Gas Product</span>
           </Link>
           <Link
             to="/Admin/Manage-Product/Create-Gas-Product"
