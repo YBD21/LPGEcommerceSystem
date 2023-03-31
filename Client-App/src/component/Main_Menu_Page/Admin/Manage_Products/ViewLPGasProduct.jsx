@@ -13,7 +13,7 @@ const ViewLPGasProduct = () => {
           : Object.entries(productList).map(([key, data]) => (
               <GasProduct
                 key={data.Key}
-                id={data.Id}
+                keyName = {data.Key}
                 name={data.ProductName}
                 image={data.imageUrl}
                 stock={data.Stock}

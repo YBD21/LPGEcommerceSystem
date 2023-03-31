@@ -12,9 +12,9 @@ const ManageUserTab = () => {
   };
 
   useEffect(() => {
-    const manageUsersPath = "/Admin/Manage-Orders/";
+    const manageUsersPath = "/Admin/Manage-Users/";
     setIsManageUsersOpen(location.pathname.startsWith(manageUsersPath));
-    setIsViewUsers(location.pathname === "/Admin/Manage-Orders/ViewOrders");
+    setIsViewUsers(location.pathname === "/Admin/Manage-Users/ViewUsers");
   }, [location]);
   return (
     <li className="relative">

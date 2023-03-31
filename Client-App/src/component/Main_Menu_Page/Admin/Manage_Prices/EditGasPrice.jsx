@@ -53,7 +53,7 @@ const EditGasPrice = () => {
 
   const updateGasRate = () => {
     axios
-      .post("http://localhost:5000/updateGasRate", {
+      .post("http://localhost:5000/product-management/updateGasRate", {
         RefillRate: refillGasRate,
         NewGasRate: newGasRate,
       })

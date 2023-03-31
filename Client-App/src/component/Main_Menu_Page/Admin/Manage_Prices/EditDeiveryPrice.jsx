@@ -18,7 +18,7 @@ const EditDeiveryPrice = () => {
   useEffect(() => {
     //call to backend for connection
     const socket = openSocket("http://localhost:5000");
-    
+
     socket.emit("getDeliveryRate");
 
     socket.on("deliveryRate", (data) => {
@@ -53,7 +53,7 @@ const EditDeiveryPrice = () => {
 
   const updateDeiveryRate = () => {
     axios
-      .post("http://localhost:5000/updateDeiveryRate", {
+      .post("http://localhost:5000/product-management/updateDeiveryRate", {
         RefillRate: refillRate,
         NewGasRate: newRate,
       })

@@ -101,7 +101,7 @@ function CreateLPGProduct() {
     formData.append("data", JSON.stringify(data));
 
     axios
-      .post("http://localhost:5000/uploadData", formData, {
+      .post("http://localhost:5000/product-management/uploadData", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

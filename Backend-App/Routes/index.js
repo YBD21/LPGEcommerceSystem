@@ -3,26 +3,18 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import helmet from "helmet";
-import Multer from "multer";
 import fs from "fs";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 import cookieParser from "cookie-parser";
 import loginSystemRouter from "./LoginSystem/loginSystemRouter.js";
 import { paymentSystemRouter } from "./PaymentSystem/paymentSystemRouter.js";
-import { CreateProduct } from "./ProductManagement/CreateProductSystem/createProduct.js";
-import { ImageUpload } from "./ProductManagement/CreateProductSystem/imageUpload.js";
 import {
-  CheckExistenceOfImage,
-  CheckExistenceOfProductData,
-} from "./ProductManagement/CreateProductSystem/checkExistence.js";
-import {
-  updateGasRate,
   readGasRateFile,
   sendGasRate,
 } from "./ProductManagement/UpdateRate/updateGasRate.js";
+
 import {
-  updateDeliveryRate,
   readDeliveryRatefile,
   sendDeliveryRate,
 } from "./ProductManagement/UpdateRate/updateDeliveryRate.js";
@@ -32,6 +24,7 @@ import {
   readProductListfile,
 } from "./ProductManagement/UpdateProduct/updateProduct.js";
 import { releaseStockOnDisconnectWithAccessToken } from "./PaymentSystem/stockReservation.js";
+import productManagementSystemRouter from "./ProductManagement/productManagementSystemRouter.js";
 
 const app = express();
 
@@ -77,31 +70,14 @@ app.use(urlencoded({ extended: false }));
 
 app.use(cookieParser());
 
-// used for uploading files
-const multer = Multer({
-  storage: Multer.memoryStorage(),
-  limits: {
-    fileSize: 5 * 1024 * 1024, // no larger than 5mb
-  },
-});
-
 // Mount userRouter middleware at "/login-System" path
 app.use("/login-system", apiLimiter, loginSystemRouter);
 
 // Mount userRouter middleware at "/payment-system" path
 app.use("/payment-system", paymentSystemRouter);
 
-app.post("/updateDeiveryRate", async (req, res) => {
-  let data = req.body;
-  const respond = await updateDeliveryRate(data.RefillRate, data.NewGasRate);
-  res.json(respond);
-});
-
-app.post("/updateGasRate", async (req, res) => {
-  let data = req.body;
-  const respond = await updateGasRate(data.RefillRate, data.NewGasRate);
-  res.json(respond);
-});
+// Mount userRouter middleware at "/product-management" path
+app.use("/product-management", productManagementSystemRouter);
 
 const filePathGasRate = "BufferData/gasRate.json";
 const filePathDeliveryRate = "BufferData/deliveryRate.json";
@@ -185,30 +161,6 @@ io.on("connection", (socket) => {
     fs.unwatchFile(filePathDeliveryRate);
     fs.unwatchFile(filePathProductList);
   });
-});
-
-app.post("/uploadData", multer.single("img"), async (req, res) => {
-  let data = JSON.parse(req.body.data);
-  // console.log(data);
-  const imageStatus = await CheckExistenceOfImage(req.file);
-  const productDataStatus = await CheckExistenceOfProductData(data);
-
-  if (!imageStatus.imageError && !productDataStatus.productDataError) {
-    const getUrl = await ImageUpload(req.file);
-    const respond = await CreateProduct(data, getUrl);
-    return res.json(respond);
-  }
-  // imageExist but productData is not
-  if (imageStatus.imageError && !productDataStatus.productDataError) {
-    // get the image name and url
-    const getUrl = await ImageUpload(req.file);
-    // create product
-    const respond = await CreateProduct(data, getUrl);
-    return res.json(respond);
-  }
-
-  let error = { ...imageStatus, ...productDataStatus };
-  return res.json(error);
 });
 
 httpServer.listen(port, () => {
