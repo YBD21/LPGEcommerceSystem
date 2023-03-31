@@ -78,7 +78,7 @@ const reducer = (state, action) => {
     case "SET_PRODUCT_LIST":
       return {
         ...state,
-        productList: { ...state.productList, ...action.productList },
+        productList: { ...action.productList },
       };
 
     case "SET_USER":

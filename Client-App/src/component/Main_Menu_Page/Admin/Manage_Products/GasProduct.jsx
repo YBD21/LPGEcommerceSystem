@@ -37,7 +37,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
         stock: value,
       })
       .then(function (respond) {
-         console.log(respond.data);
+        console.log(respond.data);
         // reset is successful redirect
       })
       .catch(function (error) {
