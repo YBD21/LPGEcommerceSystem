@@ -8,6 +8,7 @@ import {
 } from "./CreateProductSystem/checkExistence.js";
 import { CreateProduct } from "./CreateProductSystem/createProduct.js";
 import { ImageUpload } from "./CreateProductSystem/imageUpload.js";
+import { updateProductStock } from "./UpdateProduct/updateProduct.js";
 
 // used for uploading files
 const multer = Multer({
@@ -58,5 +59,11 @@ productManagementSystemRouter.post(
     return res.json(error);
   }
 );
+
+productManagementSystemRouter.patch("/updateStock", async (req, res) => {
+  const { keyName: KeyName, stock: newStock } = req.body;
+  const respond = await updateProductStock(KeyName, newStock);
+  res.json(respond);
+});
 
 export default productManagementSystemRouter;

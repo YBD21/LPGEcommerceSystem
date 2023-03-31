@@ -151,10 +151,29 @@ const addReservedQuantity = async (basketList) => {
   }
 };
 
+const updateProductStock = async (KeyName, newStock) => {
+  const pathToUpdateStock = `ProductList/LPGasList/${KeyName}`;
+
+  const refToUpdateProductStock = dataBase.ref(pathToUpdateStock);
+
+  try {
+    await refToUpdateProductStock.update({
+      InStock: +newStock,
+    });
+    console.log("Stock updated successfully!");
+    await sendProductList();
+    return true;
+  } catch (error) {
+    console.error("Error updating stock:", error);
+    return false;
+  }
+};
+
 export {
   sendProductList,
   readProductListfile,
   subtractReservedQuantity,
   addReservedQuantity,
   subtractQuantityFromDatabase,
+  updateProductStock,
 };
