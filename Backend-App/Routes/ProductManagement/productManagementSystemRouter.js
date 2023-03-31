@@ -9,6 +9,7 @@ import {
 import { CreateProduct } from "./CreateProductSystem/createProduct.js";
 import { ImageUpload } from "./CreateProductSystem/imageUpload.js";
 import { updateProductStock } from "./UpdateProduct/updateProduct.js";
+import { deleteProductfromDatabase } from "./UpdateProduct/deleteProduct.js";
 
 // used for uploading files
 const multer = Multer({
@@ -63,6 +64,12 @@ productManagementSystemRouter.post(
 productManagementSystemRouter.patch("/updateStock", async (req, res) => {
   const { keyName: KeyName, stock: newStock } = req.body;
   const respond = await updateProductStock(KeyName, newStock);
+  res.json(respond);
+});
+
+productManagementSystemRouter.delete("/delete-product", async (req, res) => {
+  const { keyName: KeyName } = req.query;
+  const respond = await deleteProductfromDatabase(KeyName);
   res.json(respond);
 });
 

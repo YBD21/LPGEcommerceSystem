@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DeleteIcon from "@mui/icons-material/Delete";
+import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
+import DeleteIcon from "@mui/icons-material/Delete";
 const GasProduct = ({ keyName, name, image, stock }) => {
   const [isShaking, setIsShaking] = useState(false);
   const [value, setValue] = useState(stock);
@@ -24,9 +25,23 @@ const GasProduct = ({ keyName, name, image, stock }) => {
     console.log("Change");
   };
 
+  const close = () => {
+    setIsShaking(false);
+  };
+
   const deleteProduct = () => {
     // delete product
-    console.log("Delete Product X_X !");
+    axios
+      .delete(
+        `http://localhost:5000/product-management/delete-product?keyName=${keyName}`
+      )
+      .then(function (response) {
+        // console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+        alert("An error occurred while deleting the product.");
+      });
   };
 
   const updateProductStock = () => {
@@ -49,10 +64,25 @@ const GasProduct = ({ keyName, name, image, stock }) => {
   return (
     <div
       className={`flex max-lg:flex-col flex-row px-4 mx-4 mb-5 place-items-center justify-between bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%]
-    hover:translate-x-2 hover:-translate-y-2 transform transition ease-in-out ${
-      isShaking ? "animate-shake" : ""
+    hover:translate-x-2 hover:-translate-y-2 transform transition ease-in-out relative ${
+      isShaking ? "animate-shake border-2 border-black" : ""
     }`}
     >
+      {isShaking ? (
+        <div className="absolute top-2 right-10">
+          <button
+            className="px-5 py-2.5 text-lg font-semibold group relative"
+            onClick={close}
+          >
+            <CancelIcon className="svg-icons" />
+            <div className="absolute top-0 right-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+              <span className="text-white font-semibold"> Close </span>
+            </div>
+          </button>
+        </div>
+      ) : (
+        false
+      )}
       {/* Product Name */}
       <div className="flex flex-col w-1/4 max-lg:w-full mb-5 mx-5 items-center">
         <img
@@ -69,9 +99,10 @@ const GasProduct = ({ keyName, name, image, stock }) => {
         <p className="text-2xl font-bold py-10"> In Stock</p>
 
         <input
-          className="px-5 py-3 text-black text-center bg-gray-300 
-        border-2 border-black rounded-lg text-lg font-semibold
-        focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+          className={`px-5 py-3 text-black text-center bg-gray-300 
+         rounded-lg text-lg font-semibold focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 border-2
+         ${!isShaking ? "" : "border-black"}
+         `}
           type="number"
           value={!isShaking ? stock : value}
           disabled={!isShaking}
@@ -80,7 +111,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
       </div>
 
       {/*  Action  */}
-      <div className="w-1/4 max-lg:w-full mb-5 mx-5 text-center flex flex-col ">
+      <div className="w-1/4 max-lg:w-full mb-5 mx-5 text-center flex flex-col">
         <strong className="text-2xl font-bold py-10">Action</strong>
 
         <div className="w-full flex flex-row justify-between">
@@ -117,7 +148,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
               >
                 <DeleteIcon className="svg-icons" />
                 <div className="absolute top-0 right-14 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-red-900 py-1 px-2 rounded-md">
-                  <span className="text-white font-semibold"> Delete </span>
+                  <span className="text-white font-semibold"> Back </span>
                 </div>
               </button>
             </>
