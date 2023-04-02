@@ -63,9 +63,11 @@ const GasProduct = ({ keyName, name, image, stock }) => {
 
   return (
     <div
-      className={`flex max-lg:flex-col flex-row px-4 mx-4 mb-5 place-items-center justify-between bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%]
+      className={`flex max-lg:flex-col flex-row px-4 mx-4 mb-5 place-items-center justify-between bg-gray-200 rounded-2xl max-lg:my-[10%]
     hover:translate-x-2 hover:-translate-y-2 transform transition ease-in-out relative ${
-      isShaking ? "animate-shake border-2 border-black" : ""
+      isShaking
+        ? "animate-shake border-2 border-black"
+        : "border-2 border-gray-300"
     }`}
     >
       {isShaking ? (
@@ -89,7 +91,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
           className="w-1/4 m-6 max-lg:mt-7 max-lg:w-1/6"
           src={image}
           alt={name}
-          loading="lazy"
+          loading="eager"
         />
 
         <p className="text-2xl font-bold mb-2.5">{name}</p>
@@ -99,9 +101,13 @@ const GasProduct = ({ keyName, name, image, stock }) => {
         <p className="text-2xl font-bold py-10"> In Stock</p>
 
         <input
-          className={`px-5 py-3 text-black text-center bg-gray-300 
-         rounded-lg text-lg font-semibold focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 border-2
-         ${!isShaking ? "" : "border-black"}
+          className={`px-5 py-3 text-black text-center 
+         rounded-lg text-lg font-semibold focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 border
+         ${
+           !isShaking
+             ? "border-gray-500 bg-gray-300 "
+             : "border-2 border-black bg-slate-100"
+         }
          `}
           type="number"
           value={!isShaking ? stock : value}
@@ -148,7 +154,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
               >
                 <DeleteIcon className="svg-icons" />
                 <div className="absolute top-0 right-14 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-red-900 py-1 px-2 rounded-md">
-                  <span className="text-white font-semibold"> Back </span>
+                  <span className="text-white font-semibold"> Delete </span>
                 </div>
               </button>
             </>

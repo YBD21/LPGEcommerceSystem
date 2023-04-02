@@ -83,13 +83,17 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
   }, [basket]);
 
   return (
-    <div className="flex max-lg:flex-col flex-row px-4 mx-4 mt-5 mb-10 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[10%] relative">
-      <img
-        className="w-20 m-6 max-lg:mt-7"
-        src={image}
-        alt={name}
-        loading="eager"
-      />
+    <div className="flex max-lg:flex-col flex-row px-4 mx-4 mt-5 mb-10 place-items-center bg-gray-200 rounded-2xl max-lg:my-[10%] relative">
+      <div className="flex flex-col w-1/3 max-lg:w-full mb-5 mx-5 items-center">
+        <img
+          className="w-full m-6 max-lg:mt-7 max-lg:w-1/6"
+          src={image}
+          alt={name}
+          loading="eager"
+        />
+
+        <p className="text-2xl font-bold mb-2.5">{name}</p>
+      </div>
       {/* add and subtract */}
       <div className="w-full flex flex-col place-items-center">
         <p className="text-2xl font-bold mt-2.5"> Qty </p>
@@ -162,7 +166,7 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
         </div>
       </div>
 
-      <button className="absolute top-0 right-2" onClick={removeFromBasket}>
+      <button className="absolute top-4 right-6" onClick={removeFromBasket}>
         <CancelIcon className="svg-icons text-red-800" />
       </button>
     </div>

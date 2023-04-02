@@ -149,29 +149,31 @@ const Product = ({ id, productName, imageUrl, stock }) => {
   }, [basket]);
 
   return (
-    <div className="flex flex-col mx-4 my-5 place-items-center bg-[rgba(250,250,210,.2)] rounded-2xl max-lg:my-[15%]">
+    <div className="flex flex-col px-4 py-5 place-items-center bg-gray-200 rounded-2xl max-lg:my-[15%] shadow-md">
       {/* Stock Status */}
-      <div className="w-full text-end  max-lg:mr-5">
-        <strong
-          className="border-4 border-green-500 p-2 rounded-lg 
+      {inStock >= 1 ? (
+        <div className="w-full text-end  max-lg:mr-5">
+          <strong
+            className="border-4 border-green-500 p-2 rounded-lg 
         text-green-700"
-        >
-          In stock :<strong className="px-2 text-green-900">{inStock}</strong>
-        </strong>
-      </div>
-
-      {/* <div className="w-full text-end">
-          <strong className="bg-red-700 p-2 rounded-lg text-white "> 
-           Out Stock !
-          </strong> 
-          </div> */}
-
+          >
+            In stock :<strong className="px-2 text-green-900">{inStock}</strong>
+          </strong>
+        </div>
+      ) : (
+        <div className="w-full text-end">
+          <strong className="bg-red-700 p-2 rounded-lg text-white ">
+            Out Stock ! {console.log(inStock)}
+          </strong>
+        </div>
+      )}
       <img
         className="w-24 max-lg:mt-7"
         src={imageUrl}
         alt={productName}
         loading="eager"
       />
+      <p className="px-5 pt-5 pb-2 text-2xl font-semibold">{productName}</p>
       {/* add and subtract */}
       <div className="flex flex-row my-6 justify-between place-items-center">
         <button
