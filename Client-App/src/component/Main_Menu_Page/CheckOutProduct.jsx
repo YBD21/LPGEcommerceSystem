@@ -84,9 +84,9 @@ const CheckOutProduct = ({ id, itemId, name, image, type, Qty }) => {
 
   return (
     <div className="flex max-lg:flex-col flex-row px-4 mx-4 mt-5 mb-10 place-items-center bg-gray-200 rounded-2xl max-lg:my-[10%] relative">
-      <div className="flex flex-col w-1/3 max-lg:w-full mb-5 mx-5 items-center">
+      <div className="flex flex-col w-1/2 max-lg:w-full mb-5 mx-5 items-center">
         <img
-          className="w-full m-6 max-lg:mt-7 max-lg:w-1/6"
+          className="w-1/2 m-6 max-lg:mt-7 max-lg:w-1/6"
           src={image}
           alt={name}
           loading="eager"

@@ -150,15 +150,18 @@ const NavBar = () => {
     <header className="sticky top-0 z-30 bg-white opacity-95 flex flex-row w-full drop-shadow-lg h-16">
       {/* Logo */}
 
-      <div className="flex w-1/4 mx-5 max-lg:hidden items-center">
-        <Link to={role === "Admin" ? "/Admin/Dashboard" : "/Store"}>
+      <div className="flex w-1/4 mx-5 max-lg:hidden">
+        <Link
+          to={role === "Admin" ? "/Admin/Dashboard" : "/Store"}
+          className="flex items-center"
+        >
           <img
             className="h-16"
             src={Logo_img}
             alt="Melamchi Online Store Logo"
           />
+          <strong className="mx-5">Melamchi Online Store</strong>
         </Link>
-        <strong className="mx-5">Melamchi Online Store</strong>
       </div>
 
       <ul className="flex justify-between w-full max-w-screen-lg mx-auto lg:max-w-full">
