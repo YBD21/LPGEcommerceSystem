@@ -150,7 +150,7 @@ const NavBar = () => {
     <header className="sticky top-0 z-30 bg-white opacity-95 flex flex-row w-full drop-shadow-lg h-16">
       {/* Logo */}
 
-      <div className="flex flex-row w-full mx-5 max-lg:hidden">
+      <div className="flex w-1/4 mx-5 max-lg:hidden items-center">
         <Link to={role === "Admin" ? "/Admin/Dashboard" : "/Store"}>
           <img
             className="h-16"
@@ -158,6 +158,7 @@ const NavBar = () => {
             alt="Melamchi Online Store Logo"
           />
         </Link>
+        <strong className="mx-5">Melamchi Online Store</strong>
       </div>
 
       <ul className="flex justify-between w-full max-w-screen-lg mx-auto lg:max-w-full">
@@ -185,6 +186,10 @@ const NavBar = () => {
           <div className="absolute top-0 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
             <span className="text-white font-semibold"> User Profile </span>
           </div>
+          {/* UserDropDown */}
+          {isUserclicked && (
+            <UserDropDown status={isUserclicked} className="translate-y-0" />
+          )}
         </li>
 
         <li
@@ -209,11 +214,6 @@ const NavBar = () => {
           <ItemAddedPopOver show={showItemPopOver} />
         </div>
       </ul>
-
-      {/* UserDropDown */}
-      {isUserclicked && (
-        <UserDropDown status={isUserclicked} className="translate-y-0" />
-      )}
     </header>
   );
 };

@@ -63,7 +63,7 @@ const UserDropDown = ({ status }) => {
       ref={dropdownRef}
     >
       <div
-        className={`absolute top-[100%] right-36 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${
+        className={`absolute transform origin-top-right -translate-x-1/2 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${
           isOpen ? "block" : "hidden"
         }`}
       >
