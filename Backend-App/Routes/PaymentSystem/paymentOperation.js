@@ -50,7 +50,7 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
 
   const timestamp = confirmationData?.created_on;
   const date = new Date(timestamp);
-
+  // change status here
   const newOrder = {
     token: payloadData?.tokenId,
     basket: payloadData?.items,
@@ -83,4 +83,39 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
   return sendData;
 };
 
-export { verifyTransaction, saveOrderDetail };
+const saveOrderDetailForCashOnDelivery = async (payloadData) => {
+  let sendData;
+
+  const date = new Date();
+  // change status here
+  const newOrder = {
+    basket: payloadData?.items,
+    amount: payloadData?.totalAmount,
+    created: date.toString(),
+    gasRate: payloadData?.gasRate,
+    deliveryRate: payloadData?.deliveryRate,
+    status: "Not Delivered",
+  };
+
+  const countryCode = payloadData?.phoneNumber.substring(0, 3);
+  const phoneNumber = payloadData?.phoneNumber.substring(3);
+
+  const orderId = generateOrderId(date, phoneNumber);
+
+  const userRef = fireStoreDB
+    .collection("Users")
+    .doc(countryCode)
+    .collection(phoneNumber)
+    .doc(orderId);
+
+  try {
+    await userRef.set(newOrder);
+    console.log("Order successfully added to Firestore!");
+    sendData = { orderId: orderId, basket: payloadData?.items };
+  } catch (error) {
+    console.error("Error adding order to Firestore: ", error);
+  }
+  return sendData;
+};
+
+export { verifyTransaction, saveOrderDetail, saveOrderDetailForCashOnDelivery };

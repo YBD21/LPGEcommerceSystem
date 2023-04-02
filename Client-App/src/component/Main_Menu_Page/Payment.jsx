@@ -16,6 +16,10 @@ const Payment = ({ timer }) => {
 
   const [status, setStatus] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [
+    processingStatusReceivedFromChild,
+    setProcessingStatusReceivedFromChild,
+  ] = useState(false);
   const [isEpay, setIsEpay] = useState(false);
   const [remainingTime, setRemainingTime] = useState(timer); // 10 minutes in seconds
 
@@ -56,6 +60,18 @@ const Payment = ({ timer }) => {
     // console.log("I am Closed  X_X ")
   };
 
+  const handleDataFromChild = (data) => {
+    setProcessingStatusReceivedFromChild(data);
+  };
+
+  useEffect(() => {
+    if (processingStatusReceivedFromChild) {
+      setIsProcessing(true);
+    } else {
+      setIsProcessing(false);
+    }
+  }, [processingStatusReceivedFromChild]);
+
   const releaseStock = async () => {
     try {
       const response = await axios.patch(
@@ -70,7 +86,6 @@ const Payment = ({ timer }) => {
     }
   };
 
-
   const displayThankYouPage = (status, respondData) => {
     dispatch({
       type: "SET_SHOW_POPUP",
@@ -82,7 +97,7 @@ const Payment = ({ timer }) => {
     });
   };
 
-  const onSucessfulKhaltiPayment = (respondData) => {
+  const onSucessfulPayment = (respondData) => {
     // close Payment Option
     dispatch({
       type: "SET_SHOW_POPUP",
@@ -106,7 +121,7 @@ const Payment = ({ timer }) => {
   };
 
   const verifyTransaction = async (token) => {
-    let payloadData = {
+    const payloadData = {
       tokenId: token,
       phoneNumber: userData?.id,
       items: basket,
@@ -123,7 +138,7 @@ const Payment = ({ timer }) => {
           withCredentials: true, // enable sending and receiving cookies
         }
       );
-      onSucessfulKhaltiPayment(response.data);
+      onSucessfulPayment(response.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -219,10 +234,13 @@ const Payment = ({ timer }) => {
                   <DirectionsBikeIcon className="svg-icons mr-5" />
                   Cash On Delivery
                 </button>
-                <DeliveryDropDown isOpen={status} />
+                <DeliveryDropDown
+                  isOpen={status}
+                  onData={handleDataFromChild}
+                />
                 {status && (
                   <button
-                    className="absolute bottom-[-85%] right-5 mb-5 z-20"
+                    className="absolute bottom-[-90%] right-5 mb-5 z-20"
                     onClick={cashOnDelivery}
                   >
                     <CancelIcon className="svg-icons text-red-800" />

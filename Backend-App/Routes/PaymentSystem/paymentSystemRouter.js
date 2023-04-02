@@ -1,5 +1,9 @@
 import express from "express";
-import { verifyTransaction, saveOrderDetail } from "./paymentOperation.js";
+import {
+  verifyTransaction,
+  saveOrderDetail,
+  saveOrderDetailForCashOnDelivery,
+} from "./paymentOperation.js";
 import {
   subtractReservedQuantity,
   addReservedQuantity,
@@ -25,6 +29,21 @@ paymentSystemRouter.post("/verify", async (req, res) => {
     res.json(orderData);
   } catch (error) {
     res.status(500).json({ message: "Error verifying transaction" });
+  }
+});
+
+paymentSystemRouter.post("/delivery-order", async (req, res) => {
+  try {
+    const orderData = req.body;
+    const sendOrderData = await saveOrderDetailForCashOnDelivery(orderData);
+    const { phoneNumber } = orderData;
+    console.log(orderData);
+    // update realtime database then erase userRecord from stockReservationRecord
+    await updateStockDatabaseThenRemoveStockReservation(phoneNumber);
+    res.json(sendOrderData);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "Error while saving delivery order" });
   }
 });
 

@@ -166,7 +166,12 @@ const Product = ({ id, productName, imageUrl, stock }) => {
           </strong> 
           </div> */}
 
-      <img className="w-24 max-lg:mt-7" src={imageUrl} alt={productName} />
+      <img
+        className="w-24 max-lg:mt-7"
+        src={imageUrl}
+        alt={productName}
+        loading="eager"
+      />
       {/* add and subtract */}
       <div className="flex flex-row my-6 justify-between place-items-center">
         <button
