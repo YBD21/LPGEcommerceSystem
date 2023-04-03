@@ -52,6 +52,8 @@ const DeliveryInfo = () => {
     });
   };
 
+  const checkField = () => {};
+
   useEffect(() => {
     if (payStatus) {
       // console.log("changed !");
