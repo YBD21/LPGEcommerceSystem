@@ -60,6 +60,8 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
     deliveryRate: payloadData?.deliveryRate,
     status: "Not Delivered",
     idx: confirmationData?.idx,
+    PaymentType: "E-Pay",
+    deliveryInfo: payloadData?.deliveryInfo,
   };
 
   const countryCode = payloadData?.phoneNumber.substring(0, 3);
@@ -95,6 +97,8 @@ const saveOrderDetailForCashOnDelivery = async (payloadData) => {
     gasRate: payloadData?.gasRate,
     deliveryRate: payloadData?.deliveryRate,
     status: "Not Delivered",
+    PaymentType: "Cash On Delivery",
+    deliveryInfo: payloadData?.deliveryInfo,
   };
 
   const countryCode = payloadData?.phoneNumber.substring(0, 3);
