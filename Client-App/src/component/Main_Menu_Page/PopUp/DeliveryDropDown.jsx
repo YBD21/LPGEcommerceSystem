@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
+import instance from "../../../instance";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 
 const DeliveryDropDown = ({ isOpen, onData }) => {
@@ -54,7 +54,7 @@ const DeliveryDropDown = ({ isOpen, onData }) => {
       deliveryInfo: userData?.DeliveryInfo,
     };
     try {
-      const response = await axios.post(
+      const response = await instance.post(
         "/payment-system/delivery-order",
         orderData
       );

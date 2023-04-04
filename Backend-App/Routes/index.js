@@ -25,6 +25,8 @@ import {
 } from "./ProductManagement/UpdateProduct/updateProduct.js";
 import { releaseStockOnDisconnectWithAccessToken } from "./PaymentSystem/stockReservation.js";
 import productManagementSystemRouter from "./ProductManagement/productManagementSystemRouter.js";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
@@ -36,11 +38,14 @@ app.set("trust proxy", 1);
 // connecting to same localhost as app for socket.io
 const httpServer = createServer(app);
 // Enable CORS for the socket connection
+
+const url = process.env.URL || "http://localhost:3000";
+console.log(url);
 const io = new Server(httpServer, {
-  cors: { origin: "http://localhost:3000", credentials: true }, // set credentials to true
+  cors: { origin: url, credentials: true }, // set credentials to true
 });
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 const apiLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
@@ -59,7 +64,7 @@ app.use(speedLimiter);
 //use cors to allow cross origin resource sharing
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: url,
     credentials: true,
   })
 );

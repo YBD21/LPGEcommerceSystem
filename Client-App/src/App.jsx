@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import axios from "axios";
 import { UserAuthContextProvider } from "./ContextAPI/UserAuthContext";
 import { useStateValue } from "./ContextAPI/StateProvider";
 import { decodeToken } from "react-jwt";
 import AppRoutes from "./Routes/AppRoutes";
 import Loading from "./component/Loading";
+import instance from "./instance";
 function App() {
   const [{ userData }, dispatch] = useStateValue();
   const [loading, setLoading] = useState(true);
 
   // call backend to set UserData from http-Only Cookies
   const fetchUser = () => {
-    axios
+    instance
       .get("/login-system/user-data", {
         withCredentials: true, // enable sending and receiving cookies
       })

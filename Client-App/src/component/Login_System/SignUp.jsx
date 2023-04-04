@@ -9,7 +9,7 @@ import Logo from "../Logo";
 import ErrorMessageSignup from "./Error_Handeling_Message/ErrorMessageSignup";
 import ErrorMessageForgotPassword from "./Error_Handeling_Message/ErrorMessageForgotPassword";
 import { useUserAuth } from "../../ContextAPI/UserAuthContext";
-import axios from "axios";
+import instance from "../../instance";
 import bcrypt from "bcryptjs";
 import SuccessMessageReset from "./Success_Message/successMessageReset";
 
@@ -328,7 +328,7 @@ const SignUp = () => {
     const hashed_Password = bcrypt.hashSync(createpassword, salt);
     const create_Date = new Date().toString();
     //  console.log(create_Date);
-    axios
+    instance
       .post("/login-system//signup", {
         PhoneNumber: number,
         encPass: hashed_Password,
@@ -374,7 +374,7 @@ const SignUp = () => {
 
   const CallBackendToFindPhoneNumber = () => {
     let status = false;
-    axios
+    instance
       .post("/login-system/forget-password", {
         PhoneNumber: number,
       })

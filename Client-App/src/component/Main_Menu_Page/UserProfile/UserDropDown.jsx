@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import axios from "axios";
+import instance from "../../../instance";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -23,7 +23,7 @@ const UserDropDown = ({ status }) => {
 
   // request Backend to delete httpOnly Cookies
   const callBackendToLogOut = () => {
-    axios
+    instance
       .delete("/login-system/user-data", {
         withCredentials: true, // enable sending and receiving cookies
       })

@@ -7,12 +7,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Cookies from "js-cookie";
 import { decodeToken } from "react-jwt";
-import axios from "axios";
 import { hashKey } from "./hashKey";
 import "./login.css";
 import Logo from "../Logo";
 import ErrorMessageLogin from "./Error_Handeling_Message/ErrorMessageLogin";
 import { useStateValue } from "../../ContextAPI/StateProvider";
+import instance from "../../instance";
 
 export default function Login() {
   const CryptoJS = require("crypto-js");
@@ -127,7 +127,7 @@ export default function Login() {
 
     setLoggingIn(true); // disable button
 
-    axios
+    instance
       .post(
         "/login-system/login",
         {

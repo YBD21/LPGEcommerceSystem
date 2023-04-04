@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import instance from "../../instance";
 import KhaltiCheckout from "khalti-checkout-web";
 import { useStateValue } from "../../ContextAPI/StateProvider";
 import khaltiIcon from "../../dist/image/Khalti.png";
@@ -74,7 +74,7 @@ const Payment = ({ timer }) => {
 
   const releaseStock = async () => {
     try {
-      const response = await axios.patch("/payment-system/release-stock", {
+      const response = await instance.patch("/payment-system/release-stock", {
         UserInfo: userData,
       });
       // console.log(response.data);
@@ -129,9 +129,13 @@ const Payment = ({ timer }) => {
     };
 
     try {
-      const response = await axios.post("/payment-system/verify", payloadData, {
-        withCredentials: true, // enable sending and receiving cookies
-      });
+      const response = await instance.post(
+        "/payment-system/verify",
+        payloadData,
+        {
+          withCredentials: true, // enable sending and receiving cookies
+        }
+      );
       onSucessfulPayment(response.data);
     } catch (error) {
       console.log(error.message);

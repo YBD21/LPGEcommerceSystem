@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState} from "react";
+import instance from "../../../../instance";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
@@ -31,7 +31,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
 
   const deleteProduct = () => {
     // delete product
-    axios
+    instance
       .delete(`/product-management/delete-product?keyName=${keyName}`)
       .then(function (response) {
         // console.log(response.data);
@@ -44,7 +44,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
 
   const updateProductStock = () => {
     // send KeyName and value to Update InStock
-    axios
+    instance
       .patch("/product-management/updateStock", {
         keyName,
         stock: value,

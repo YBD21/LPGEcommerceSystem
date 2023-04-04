@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SuccessMessageAdmin from "../Success_Message/SuccessMessageBox";
 import ErrorTextMessageAdmin from "../Error_Handeling_Message/ErrorTextMessageAdmin";
-import axios from "axios";
+import instance from "../../../../instance";
 import ErrorMessageBoxAdmin from "../Error_Handeling_Message/ErrorMessageBoxAdmin";
 
 function CreateLPGProduct() {
@@ -100,7 +100,7 @@ function CreateLPGProduct() {
     formData.append("img", image.img);
     formData.append("data", JSON.stringify(data));
 
-    axios
+    instance
       .post("/product-management/uploadData", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

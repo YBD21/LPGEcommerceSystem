@@ -7,7 +7,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import SearchIcon from "@mui/icons-material/Search";
 import ErrorMessageForgotPassword from "./Error_Handeling_Message/ErrorMessageForgotPassword";
 import { useUserAuth } from "../../ContextAPI/UserAuthContext";
-import axios from "axios";
+import instance from "../../instance";
 
 const ForgetPassword = () => {
   const { setUpRecaptha } = useUserAuth();
@@ -60,7 +60,7 @@ const ForgetPassword = () => {
   };
 
   const CallBackendToFindPhoneNumber = () => {
-    axios
+    instance
       .post("/login-system/forget-password", {
         PhoneNumber: number,
       })

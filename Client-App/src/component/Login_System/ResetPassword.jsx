@@ -6,9 +6,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ErrorMessageSignup from "./Error_Handeling_Message/ErrorMessageSignup";
 import bcrypt from "bcryptjs";
-import axios from "axios";
 import ErrorMessageLogin from "./Error_Handeling_Message/ErrorMessageLogin";
 import SuccessMessageReset from "./Success_Message/successMessageReset";
+import instance from "../../instance";
+
 const ResetPassword = () => {
   const { state } = useLocation();
   const history = useNavigate();
@@ -130,7 +131,7 @@ const ResetPassword = () => {
     // genetate a hash_password here
     const newHashedPassword = bcrypt.hashSync(createpassword, salt);
 
-    axios
+    instance
       .patch("/login-system/reset-password", {
         PhoneNumber: number,
         EncPass: newHashedPassword,

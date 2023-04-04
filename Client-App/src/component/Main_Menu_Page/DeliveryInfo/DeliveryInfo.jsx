@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import  instance from "../../../instance"
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { provincesOfNepal, districtsByProvince } from "../NepalLocationData";
@@ -48,7 +48,7 @@ const DeliveryInfo = () => {
 
   const requestToReserveStock = async () => {
     try {
-      const response = await axios.post("/payment-system/reserve-stock", {
+      const response = await  instance.post("/payment-system/reserve-stock", {
         Basket: basket,
         UserInfo: userData,
       });

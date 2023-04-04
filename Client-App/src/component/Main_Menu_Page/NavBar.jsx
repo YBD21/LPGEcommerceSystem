@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import {url} from "../../instance"
 import openSocket from "socket.io-client";
 import { Link, useLocation } from "react-router-dom";
 import Logo_img from "../../dist/image/Logo.png";
@@ -88,7 +89,7 @@ const NavBar = () => {
 
   useEffect(() => {
     //call to backend for connection
-    const socket = openSocket("http://localhost:5000", {
+    const socket = openSocket(url, {
       withCredentials: true,
     });
 
