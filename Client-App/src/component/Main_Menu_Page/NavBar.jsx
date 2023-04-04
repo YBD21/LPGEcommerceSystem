@@ -7,7 +7,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useStateValue } from "../../ContextAPI/StateProvider";
-import UserDropDown from "./UserSystem/UserDropDown";
+import UserDropDown from "./UserProfile/UserDropDown";
 import ItemAddedPopOver from "./PopUp/ItemAddedPopOver";
 
 const NavBar = () => {
