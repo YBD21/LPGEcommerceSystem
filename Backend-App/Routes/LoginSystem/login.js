@@ -21,9 +21,7 @@ const login = async (phoneNumber, encPassword) => {
     // decrypt
     const bytesOfPassword = CryptoJS.AES.decrypt(encPassword, phoneNumber);
     // parse into meaningful information
-    const parsedPassword = JSON.parse(
-      bytesOfPassword.toString(CryptoJS.enc.Utf8)
-    );
+    const parsedPassword = bytesOfPassword.toString(CryptoJS.enc.Utf8);
 
     return parsedPassword.toString();
   };

@@ -32,9 +32,9 @@ export default function Login() {
     // if cookies is empty dont run else run getCookies
     try {
       const outPutCookies = getCookies();
-      const number = JSON.stringify(outPutCookies.decryptedUserName);
+      const number = outPutCookies.decryptedUserName;
 
-      const decryped_password = JSON.stringify(outPutCookies.decryptedPassword);
+      const decryped_password = outPutCookies.decryptedPassword;
 
       // console.log("Pass",decryped_password)
       // console.log("user",number)
@@ -101,9 +101,7 @@ export default function Login() {
     );
 
     // parse into meaningful information
-    const decryptedUserName = JSON.parse(
-      bytesOfUserName.toString(CryptoJS.enc.Utf8)
-    );
+    const decryptedUserName = bytesOfUserName.toString(CryptoJS.enc.Utf8);
 
     // console.log("This is from getCookies",decryptedUserName);
 
@@ -112,11 +110,9 @@ export default function Login() {
       hashKey.secretKey
     );
 
-    const decryptedPassword = JSON.parse(
-      bytesOfPassword.toString(CryptoJS.enc.Utf8)
-    );
+    const decryptedPassword = bytesOfPassword.toString(CryptoJS.enc.Utf8);
 
-    // console.log("This is from getCookies",decryptedPassword);
+    // console.log("This is from getCookies", decryptedPassword);
 
     return { decryptedPassword, decryptedUserName };
   };
