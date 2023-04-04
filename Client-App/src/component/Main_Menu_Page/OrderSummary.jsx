@@ -176,7 +176,6 @@ const OrderSummary = ({ status }) => {
             onClick={getpaymentPotal}
             disabled={payStatus}
           >
-            {/* {console.log(payStatus)} */}
             {!payStatus ? (
               <div className="flex items-center justify-center">
                 <p className="mr-5">Pay</p>
