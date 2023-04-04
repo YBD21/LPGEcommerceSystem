@@ -2,7 +2,7 @@ const provincesOfNepal = [
   "Bagmati",
   "Sudurpaschim",
   "Lumbini",
-  "Pradesh-1",
+  "Koshi",
   "Madhesh",
   "Gandaki",
   "Karnali",

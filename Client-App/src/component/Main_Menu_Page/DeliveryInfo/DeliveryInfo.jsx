@@ -8,10 +8,12 @@ import ErrorMessageDeliveryInfo from "./ErrorMessageDeliveryInfo";
 const DeliveryInfo = () => {
   const [currentstate, setCurrentState] = useState("");
   const [currentDistrict, setCurrentDistrict] = useState("");
+  const [errorState, setErrorState] = useState(null);
+  const [errorDistrict, setErrorDistrict] = useState(null);
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  const [errorcity, setErrorCity] = useState({});
-  const [erroraddress, setErrorAddress] = useState({});
+  const [errorCity, setErrorCity] = useState(null);
+  const [errorAddress, setErrorAddress] = useState(null);
   // import userData from contexProvider or dataLayer
   const [{ userData, payStatus, basket }, dispatch] = useStateValue();
 
@@ -27,6 +29,23 @@ const DeliveryInfo = () => {
     setCurrentDistrict(e.target.value);
   };
 
+  const saveDeliveryInfo = () => {
+    const updateData = {
+      ...userData,
+      DeliveryInfo: {
+        State: currentstate,
+        District: currentstate,
+        Address: address,
+        City: city,
+      },
+    };
+
+    dispatch({
+      type: "SET_USER",
+      userData: updateData,
+    });
+  };
+
   const requestToReserveStock = async () => {
     try {
       const response = await axios.post(
@@ -36,10 +55,12 @@ const DeliveryInfo = () => {
           UserInfo: userData,
         }
       );
+
+      saveDeliveryInfo();
       // console.log(response);
       return response?.data?.timer ? response?.data?.timer : 0;
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       return 0;
     }
   };
@@ -48,7 +69,7 @@ const DeliveryInfo = () => {
     // onClick pay send request to backend
     const timer = await requestToReserveStock();
     // onsucess of reserved getPaymentPortal
-    openPotal(timer);
+    openPotal(+timer);
   };
 
   const openPotal = (timer) => {
@@ -58,10 +79,19 @@ const DeliveryInfo = () => {
     });
   };
 
-  const checkFields = () => {
+  const checkInputFields = () => {
     const isValidDeliveryAddress = checkDeliveryAddress();
     const isValidCity = checkCity();
     if (isValidCity && isValidDeliveryAddress) {
+      return true;
+    }
+    return false;
+  };
+
+  const checkSelectFields = () => {
+    const isValidState = checkState();
+    const isValidDistrict = checkDistrict();
+    if (isValidState && isValidDistrict) {
       return true;
     }
     return false;
@@ -83,7 +113,7 @@ const DeliveryInfo = () => {
     }
 
     // Update the address state with the valid and message values
-    setErrorAddress({ valid, message });
+    setErrorAddress({ message });
 
     // Return the valid flag
     return valid;
@@ -105,7 +135,41 @@ const DeliveryInfo = () => {
     }
 
     // Update the city state with the valid and message values
-    setErrorCity({ valid, message });
+    setErrorCity({ message });
+
+    // Return the valid flag
+    return valid;
+  };
+
+  const checkState = () => {
+    let message = ""; // Initialize error message to an empty string
+    let valid = true; // Set valid to true by default
+
+    // Check if the city is empty
+    if (currentstate.trim().length === 0) {
+      message = "Please Select Province !"; // Set the error message
+      valid = false; // Set valid to false
+    }
+
+    // Update the city state with the valid and message values
+    setErrorState({ message });
+
+    // Return the valid flag
+    return valid;
+  };
+
+  const checkDistrict = () => {
+    let message = ""; // Initialize error message to an empty string
+    let valid = true; // Set valid to true by default
+
+    // Check if the city is empty
+    if (currentDistrict.trim().length === 0) {
+      message = "Please Select District !"; // Set the error message
+      valid = false; // Set valid to false
+    }
+
+    // Update the city state with the valid and message values
+    setErrorDistrict({ message });
 
     // Return the valid flag
     return valid;
@@ -119,17 +183,30 @@ const DeliveryInfo = () => {
   };
 
   useEffect(() => {
+    setErrorState(null);
+  }, [currentstate]);
+
+  useEffect(() => {
+    setErrorDistrict(null);
+  }, [currentDistrict]);
+
+  useEffect(() => {
+    setErrorCity(null);
+  }, [city]);
+
+  useEffect(() => {
+    setErrorAddress(null);
+  }, [address]);
+
+  useEffect(() => {
     if (!payStatus) {
       return;
     }
 
-    // Clear any previous error messages
-    setErrorAddress("");
-    setErrorCity("");
+    const isInputFieldValid = checkInputFields();
+    const isSelectFieldValid = checkSelectFields();
 
-    const isFieldsValid = checkFields();
-
-    if (isFieldsValid) {
+    if (isInputFieldValid && isSelectFieldValid) {
       processPayment();
     } else {
       // Delay resetting payStatus to give time for error message to display
@@ -157,7 +234,8 @@ const DeliveryInfo = () => {
             <input
               type="text"
               value={name}
-              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-gray-100 rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40
+              cursor-not-allowed"
               disabled
             />
           </div>
@@ -167,11 +245,21 @@ const DeliveryInfo = () => {
           <label className="block text-sm font-semibold text-gray-800">
             Province
           </label>
-
+          {/* Error Message Province */}
+          {errorState?.message && (
+            <ErrorMessageDeliveryInfo message={errorState?.message} />
+          )}
           {/* Select Dropdown */}
           <div className="relative w-full mt-3.5">
             <select
-              className=" w-full px-5 py-2.5 text-black  rounded-lg text-lg font-semibold text-center appearance-none cursor-pointer border-2 border-black  focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+              className={`w-full px-5 py-2.5 text-black bg-white rounded-lg text-lg font-semibold text-center appearance-none cursor-pointer border-2 
+              focus:outline-none focus:ring focus:ring-opacity-40
+              ${
+                errorState?.message
+                  ? " border-red-500 focus:border-red-700 focus:ring-red-600"
+                  : " border-black focus:border-black focus:ring-black"
+              }
+              `}
               onChange={selectLogProvince}
               value={currentstate}
             >
@@ -186,7 +274,11 @@ const DeliveryInfo = () => {
                 );
               })}
             </select>
-            <ExpandMoreIcon className=" absolute top-3.5 right-5 svg-icons text-black" />
+            <ExpandMoreIcon
+              className={`absolute top-3.5 right-5 svg-icons 
+            ${errorState?.message ? "text-red-500" : "text-black"}
+            `}
+            />
           </div>
         </div>
       </div>
@@ -201,7 +293,9 @@ const DeliveryInfo = () => {
             <input
               type="number"
               value={phoneNumber}
-              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-gray-100 rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40
+              cursor-not-allowed
+              "
               disabled
             />
           </div>
@@ -211,11 +305,21 @@ const DeliveryInfo = () => {
           <label className="block text-sm font-semibold text-gray-800">
             District
           </label>
-
+          {/* Error Message District */}
+          {errorDistrict?.message && (
+            <ErrorMessageDeliveryInfo message={errorDistrict?.message} />
+          )}
           {/* Select Dropdown */}
           <div className="relative w-full mt-3.5 ">
             <select
-              className=" w-full px-5 py-2.5 text-black  rounded-lg text-lg font-semibold text-center appearance-none cursor-pointer border-2 border-black  focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+              className={`w-full px-5 py-2.5 text-black bg-white rounded-lg text-lg font-semibold text-center appearance-none cursor-pointer border-2 
+              focus:outline-none focus:ring focus:ring-opacity-40
+              ${
+                errorDistrict?.message
+                  ? " border-red-500 focus:border-red-700 focus:ring-red-600"
+                  : " border-black focus:border-black focus:ring-black"
+              }
+              `}
               onChange={selectLogDistrictsByProvince}
               value={currentDistrict}
             >
@@ -230,7 +334,11 @@ const DeliveryInfo = () => {
                 );
               })}
             </select>
-            <ExpandMoreIcon className=" absolute top-3.5 right-5 svg-icons text-black" />
+            <ExpandMoreIcon
+              className={`absolute top-3.5 right-5 svg-icons 
+            ${errorDistrict?.message ? "text-red-500" : "text-black"}
+            `}
+            />
           </div>
         </div>
       </div>
@@ -242,8 +350,8 @@ const DeliveryInfo = () => {
             City
           </label>
           {/* Error Message City */}
-          {!errorcity?.valid && (
-            <ErrorMessageDeliveryInfo message={errorcity?.message} />
+          {errorCity?.message && (
+            <ErrorMessageDeliveryInfo message={errorCity?.message} />
           )}
           <div className="flex flex-row cursor-pointer">
             <input
@@ -251,9 +359,10 @@ const DeliveryInfo = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="Enter City Name"
-              className={`block w-full px-4 py-2 mt-2 text-black-700 bg-white rounded-md border-2 focus:outline-none focus:ring focus:ring-opacity-40
+              className={`block w-full px-4 py-2 mt-2 text-black-700 bg-white 
+              rounded-md border-2 focus:outline-none focus:ring focus:ring-opacity-40
               ${
-                !errorcity?.valid
+                errorCity?.message
                   ? "border-red-500 focus:border-red-700 focus:ring-red-600"
                   : "border-black focus:border-black focus:ring-black"
               }
@@ -270,8 +379,8 @@ const DeliveryInfo = () => {
             Address
           </label>
           {/* Error Message Address */}
-          {!erroraddress?.valid && (
-            <ErrorMessageDeliveryInfo message={erroraddress?.message} />
+          {errorAddress?.message && (
+            <ErrorMessageDeliveryInfo message={errorAddress?.message} />
           )}
           <div className="flex flex-row cursor-pointer">
             <textarea
@@ -281,7 +390,7 @@ const DeliveryInfo = () => {
               placeholder="Enter Your Address"
               className={`block w-full px-4 py-2 mt-2 text-black-700 bg-white rounded-md border-2 focus:outline-none focus:ring focus:ring-opacity-40
               ${
-                !erroraddress?.valid
+                errorAddress?.message
                   ? "border-red-500 focus:border-red-700 focus:ring-red-600"
                   : "border-black focus:border-black focus:ring-black"
               }

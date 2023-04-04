@@ -7,22 +7,10 @@ const DeliveryDropDown = ({ isOpen, onData }) => {
     { userData, basket, gasRateData, gasDeliveryRateData, totalCharge },
     dispatch,
   ] = useStateValue();
-  const [isProcessing, setIsProcessing] = useState(false);
 
   const processing = () => {
     onData(true);
   };
-  // const closePaymentOption = () => {
-  //   dispatch({
-  //     type: "SET_SHOW_POPUP",
-  //     showPopup: false,
-  //   });
-
-  //   dispatch({
-  //     type: "SET_PAY_STATUS",
-  //     payStatus: false,
-  //   });
-  // };
 
   const onConfirmOrder = (respondData) => {
     // close Payment Option
@@ -63,6 +51,7 @@ const DeliveryDropDown = ({ isOpen, onData }) => {
       gasRate: gasRateData,
       deliveryRate: gasDeliveryRateData,
       totalAmount: totalCharge,
+      deliveryInfo: userData?.DeliveryInfo,
     };
     try {
       const response = await axios.post(

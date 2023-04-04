@@ -128,6 +128,7 @@ const Payment = ({ timer }) => {
       gasRate: gasRateData,
       deliveryRate: gasDeliveryRateData,
       totalAmount: totalCharge,
+      deliveryInfo: userData?.DeliveryInfo,
     };
 
     try {
