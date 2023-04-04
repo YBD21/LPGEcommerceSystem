@@ -129,7 +129,7 @@ export default function Login() {
 
     axios
       .post(
-        "http://localhost:5000/login-system/login",
+        "/login-system/login",
         {
           phoneNumber: number,
           encPass: encryptPassword,

@@ -48,13 +48,10 @@ const DeliveryInfo = () => {
 
   const requestToReserveStock = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/payment-system/reserve-stock",
-        {
-          Basket: basket,
-          UserInfo: userData,
-        }
-      );
+      const response = await axios.post("/payment-system/reserve-stock", {
+        Basket: basket,
+        UserInfo: userData,
+      });
 
       saveDeliveryInfo();
       // console.log(response);

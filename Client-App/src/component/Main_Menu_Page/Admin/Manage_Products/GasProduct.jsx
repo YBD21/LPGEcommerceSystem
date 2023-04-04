@@ -32,9 +32,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
   const deleteProduct = () => {
     // delete product
     axios
-      .delete(
-        `http://localhost:5000/product-management/delete-product?keyName=${keyName}`
-      )
+      .delete(`/product-management/delete-product?keyName=${keyName}`)
       .then(function (response) {
         // console.log(response.data);
       })
@@ -47,7 +45,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
   const updateProductStock = () => {
     // send KeyName and value to Update InStock
     axios
-      .patch("http://localhost:5000/product-management/updateStock", {
+      .patch("/product-management/updateStock", {
         keyName,
         stock: value,
       })

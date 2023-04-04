@@ -53,7 +53,7 @@ const EditDeiveryPrice = () => {
 
   const updateDeiveryRate = () => {
     axios
-      .post("http://localhost:5000/product-management/updateDeiveryRate", {
+      .post("/product-management/updateDeiveryRate", {
         RefillRate: refillRate,
         NewGasRate: newRate,
       })

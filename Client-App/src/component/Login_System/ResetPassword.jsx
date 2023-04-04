@@ -131,7 +131,7 @@ const ResetPassword = () => {
     const newHashedPassword = bcrypt.hashSync(createpassword, salt);
 
     axios
-      .patch("http://localhost:5000/login-system/reset-password", {
+      .patch("/login-system/reset-password", {
         PhoneNumber: number,
         EncPass: newHashedPassword,
       })

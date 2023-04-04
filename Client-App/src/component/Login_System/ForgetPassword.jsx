@@ -61,7 +61,7 @@ const ForgetPassword = () => {
 
   const CallBackendToFindPhoneNumber = () => {
     axios
-      .post("http://localhost:5000/login-system/forget-password", {
+      .post("/login-system/forget-password", {
         PhoneNumber: number,
       })
       .then(function (respond) {

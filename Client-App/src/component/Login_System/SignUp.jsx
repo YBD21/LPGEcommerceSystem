@@ -329,7 +329,7 @@ const SignUp = () => {
     const create_Date = new Date().toString();
     //  console.log(create_Date);
     axios
-      .post("http://localhost:5000/login-system//signup", {
+      .post("/login-system//signup", {
         PhoneNumber: number,
         encPass: hashed_Password,
         FirstName: firstname,
@@ -375,7 +375,7 @@ const SignUp = () => {
   const CallBackendToFindPhoneNumber = () => {
     let status = false;
     axios
-      .post("http://localhost:5000/login-system/forget-password", {
+      .post("/login-system/forget-password", {
         PhoneNumber: number,
       })
       .then(function (respond) {

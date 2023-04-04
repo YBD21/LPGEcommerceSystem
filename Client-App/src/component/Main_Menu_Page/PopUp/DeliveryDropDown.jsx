@@ -55,7 +55,7 @@ const DeliveryDropDown = ({ isOpen, onData }) => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5000/payment-system/delivery-order",
+        "/payment-system/delivery-order",
         orderData
       );
       // closePaymentOption();

@@ -74,12 +74,9 @@ const Payment = ({ timer }) => {
 
   const releaseStock = async () => {
     try {
-      const response = await axios.patch(
-        "http://localhost:5000/payment-system/release-stock",
-        {
-          UserInfo: userData,
-        }
-      );
+      const response = await axios.patch("/payment-system/release-stock", {
+        UserInfo: userData,
+      });
       // console.log(response.data);
     } catch (error) {
       console.log(error.message);
@@ -132,13 +129,9 @@ const Payment = ({ timer }) => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/payment-system/verify",
-        payloadData,
-        {
-          withCredentials: true, // enable sending and receiving cookies
-        }
-      );
+      const response = await axios.post("/payment-system/verify", payloadData, {
+        withCredentials: true, // enable sending and receiving cookies
+      });
       onSucessfulPayment(response.data);
     } catch (error) {
       console.log(error.message);
