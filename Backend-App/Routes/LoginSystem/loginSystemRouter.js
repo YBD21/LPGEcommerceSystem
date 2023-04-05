@@ -24,7 +24,7 @@ loginSystemRouter.delete("/user-data", (req, res) => {
   res.clearCookie("userData", {
     httpOnly: true,
     secure: true,
-    sameSite: "none", // set to 'strict' to prevent CSRF attacks
+    sameSite: "none",
   });
   res.send("Cookie cleared!");
   console.log("User LogOut X_X !");
@@ -41,7 +41,7 @@ loginSystemRouter.post("/login", async (req, res) => {
     res.cookie("userData", respond.accessToken, {
       secure: true, // set to true to enable sending the cookie only over HTTPS
       httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-      sameSite: "none", // set to 'strict' to prevent CSRF attacks
+      sameSite: "none",
     });
     console.log(`User : ${data.phoneNumber} is Logged In ! `);
   }
