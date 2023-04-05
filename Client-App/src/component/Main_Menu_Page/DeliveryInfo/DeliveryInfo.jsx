@@ -34,7 +34,7 @@ const DeliveryInfo = () => {
       ...userData,
       DeliveryInfo: {
         State: currentstate,
-        District: currentstate,
+        District: currentDistrict,
         Address: address,
         City: city,
       },

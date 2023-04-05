@@ -14,7 +14,6 @@ const nepalOptions = {
   hour: "numeric",
   minute: "numeric",
   second: "numeric",
-  timeZoneName: "short",
 };
 
 const verifyTransaction = async (tokenId, totalAmount) => {
@@ -63,7 +62,7 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
   const timestamp = confirmationData?.created_on;
   const date = new Date(timestamp);
 
-  const nepalTimeDate = date.toString("en-US", nepalOptions);
+  const nepalTimeDate = date.toLocaleString("en-US", nepalOptions);
   // change status here
   const newOrder = {
     token: payloadData?.tokenId,
@@ -103,7 +102,7 @@ const saveOrderDetailForCashOnDelivery = async (payloadData) => {
   let sendData;
 
   const date = new Date();
-  const nepalTimeDate = date.toString("en-US", nepalOptions);
+  const nepalTimeDate = date.toLocaleString("en-US", nepalOptions);
   // change status here
   const newOrder = {
     basket: payloadData?.items,
