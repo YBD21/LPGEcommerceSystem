@@ -5,6 +5,18 @@ dotenv.config();
 
 const secretKey = process.env.KHALTI_SECRET_KEY;
 
+const nepalOptions = {
+  timeZone: "Asia/Kathmandu",
+  weekday: "short",
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+  timeZoneName: "short",
+};
+
 const verifyTransaction = async (tokenId, totalAmount) => {
   let sendData;
   // for test mode max allowed  Rs.200  replace with totalAmount
@@ -50,12 +62,14 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
 
   const timestamp = confirmationData?.created_on;
   const date = new Date(timestamp);
+
+  const nepalTimeDate = date.toString("en-US", nepalOptions);
   // change status here
   const newOrder = {
     token: payloadData?.tokenId,
     basket: payloadData?.items,
     amount: payloadData?.totalAmount,
-    created: date.toString(),
+    created: nepalTimeDate,
     gasRate: payloadData?.gasRate,
     deliveryRate: payloadData?.deliveryRate,
     status: "Not Delivered",
@@ -89,11 +103,12 @@ const saveOrderDetailForCashOnDelivery = async (payloadData) => {
   let sendData;
 
   const date = new Date();
+  const nepalTimeDate = date.toString("en-US", nepalOptions);
   // change status here
   const newOrder = {
     basket: payloadData?.items,
     amount: payloadData?.totalAmount,
-    created: date.toString(),
+    created: nepalTimeDate,
     gasRate: payloadData?.gasRate,
     deliveryRate: payloadData?.deliveryRate,
     status: "Not Delivered",
