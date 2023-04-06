@@ -22,7 +22,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
 
     updateProductStock();
 
-    console.log("Change");
+    // console.log("Change");
   };
 
   const close = () => {

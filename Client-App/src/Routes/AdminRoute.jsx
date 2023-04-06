@@ -137,6 +137,18 @@ const AdminRoute = () => {
         }
       />
 
+      <Route
+        path="/Setting"
+        element={
+          <>
+            <NavBar />
+            <Setting />
+          </>
+        }
+      />
+
+      <Route path="*" element={<PageNotFound />} />
+
       {/* Demo testing here  */}
       <Route
         path="/Demo"
@@ -148,8 +160,6 @@ const AdminRoute = () => {
           </>
         }
       />
-
-      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

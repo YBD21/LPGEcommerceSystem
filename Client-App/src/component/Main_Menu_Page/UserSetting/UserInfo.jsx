@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
-
+import { useStateValue } from "../../../ContextAPI/StateProvider";
 const UserInfo = () => {
-  const [number, setNumber] = useState("9779860694050");
+  const [{ userData }] = useStateValue();
+
+  const [number, setNumber] = useState(userData?.id);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+
   return (
-    <div className="w-1/2 max-lg:w-1/2 max-md:w-full max-lg:mb-5">
-      <div className="w-full flex flex-row max-lg:flex-col">
+    <div className="w-full max-md:w-full max-lg:mb-5">
+      <div className="w-full flex max-lg:flex-col">
         {/* First Name */}
         <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
@@ -15,10 +20,8 @@ const UserInfo = () => {
           <div className="flex flex-row cursor-pointer">
             <input
               type="text"
-              value={"Santosh"}
-              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-gray-100 rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40
-              cursor-not-allowed"
-              disabled
+              value={userData?.firstName}
+              className="block w-full px-4 py-2 mt-4 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
         </div>
@@ -31,11 +34,9 @@ const UserInfo = () => {
           <div className="flex flex-row cursor-pointer">
             <input
               type="text"
-              value={"Deuja"}
-              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-gray-100 rounded-md focus:border-black
-            focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40
-              cursor-not-allowed"
-              disabled
+              value={userData?.lastName}
+              className="block w-full px-4 py-2 mt-4 text-black-700 border-2 border-black bg-white rounded-md focus:border-black
+            focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
         </div>
@@ -58,7 +59,29 @@ const UserInfo = () => {
           />
         </div>
       </div>
-      
+
+      {/*  Action  */}
+
+      <div className="w-full flex flex-row justify-between mt-5">
+        <div className="w-full ml-3">
+          <button
+            className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
+            text-white bg-black font-medium rounded-lg text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
+          >
+            Save
+          </button>
+        </div>
+        <div className="w-full mr-3">
+          <button
+            className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
+            text-white bg-neutral-700 font-medium rounded-lg text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -7,8 +7,8 @@ const EditProfile = () => {
   const name = userData?.firstName + " " + userData?.lastName;
   return (
     <div
-      className="w-1/2 max-md:w-full 
-      flex flex-col ml-2"
+      className="w-full max-md:w-full 
+      flex flex-col ml-2 justify-between border-l-4 border-black"
     >
       <div className="w-full flex justify-center pb-2">
         <img
@@ -22,8 +22,8 @@ const EditProfile = () => {
       <div className="flex mt-3 justify-center">
         <button
           className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
-            text-white bg-black font-medium rounded-lg text-s text-center mr-2 mb-2
-            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
+            text-white bg-black font-medium rounded-lg text-s text-center 
+            mr-2 mb-2 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
         >
           Change Password
         </button>

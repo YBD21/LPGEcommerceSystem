@@ -6,6 +6,7 @@ import Cart from "../component/Main_Menu_Page/Cart";
 import Checkout from "../component/Main_Menu_Page/Checkout";
 import PageNotFound from "../component/PageNotFound";
 import { useStateValue } from "../ContextAPI/StateProvider";
+import Setting from "../component/Main_Menu_Page/UserSetting/Setting";
 
 const ClientRoute = () => {
   const [{ basket }] = useStateValue();
@@ -48,6 +49,16 @@ const ClientRoute = () => {
         }
       />
 
+      <Route
+        path="/Setting"
+        element={
+          <>
+            <NavBar />
+            <Setting />
+          </>
+        }
+      />
+      
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

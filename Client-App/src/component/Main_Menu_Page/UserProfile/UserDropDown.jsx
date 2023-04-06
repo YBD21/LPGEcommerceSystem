@@ -83,7 +83,7 @@ const UserDropDown = ({ status }) => {
           <li className="flex items-center px-4 py-5  text-gray-700  hover:bg-gray-100 hover:text-black">
             <SettingsIcon className="svg-icons ml-3 mr-10" />
             <Link
-              to="/"
+              to="/Setting"
               className=" w-full font-medium text-lg hover:text-[#d42109]"
             >
               Setting
