@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import  instance from "../../../instance"
+import instance from "../../../instance";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { provincesOfNepal, districtsByProvince } from "../NepalLocationData";
@@ -48,7 +48,7 @@ const DeliveryInfo = () => {
 
   const requestToReserveStock = async () => {
     try {
-      const response = await  instance.post("/payment-system/reserve-stock", {
+      const response = await instance.post("/payment-system/reserve-stock", {
         Basket: basket,
         UserInfo: userData,
       });
@@ -273,6 +273,7 @@ const DeliveryInfo = () => {
             </select>
             <ExpandMoreIcon
               className={`absolute top-3.5 right-5 svg-icons 
+              cursor-pointer pointer-events-none
             ${errorState?.message ? "text-red-500" : "text-black"}
             `}
             />
@@ -332,7 +333,8 @@ const DeliveryInfo = () => {
               })}
             </select>
             <ExpandMoreIcon
-              className={`absolute top-3.5 right-5 svg-icons 
+              className={`absolute top-3.5 right-5 svg-icons
+              cursor-pointer pointer-events-none 
             ${errorDistrict?.message ? "text-red-500" : "text-black"}
             `}
             />
