@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import instance from "../../../../instance";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
@@ -69,7 +69,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
     }`}
     >
       {isShaking ? (
-        <div className="absolute top-2 right-10">
+        <div className="absolute top-2 right-4">
           <button
             className="px-5 py-2.5 text-lg font-semibold group relative"
             onClick={close}
@@ -140,7 +140,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
               >
                 <DoneIcon className="svg-icons" />
 
-                <div className="absolute top-0 right-14 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-green-500 py-1 px-2 rounded-md">
+                <div className="absolute bottom-20 left-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-green-500 py-1 px-2 rounded-md">
                   <span className="text-white font-semibold">Done</span>
                 </div>
               </button>
@@ -151,7 +151,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
                 onClick={deleteProduct}
               >
                 <DeleteIcon className="svg-icons" />
-                <div className="absolute top-0 right-14 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-red-900 py-1 px-2 rounded-md">
+                <div className="absolute bottom-20 left-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-red-900 py-1 px-2 rounded-md">
                   <span className="text-white font-semibold"> Delete </span>
                 </div>
               </button>
