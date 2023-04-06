@@ -75,6 +75,16 @@ app.use(urlencoded({ extended: false }));
 
 app.use(cookieParser());
 
+// Define the updateBufferData function
+const updateBufferData = () => {
+  sendProductList();
+  sendDeliveryRate();
+  sendGasRate();
+};
+
+// Immediately invoke the updateBufferData function
+updateBufferData();
+
 // Mount userRouter middleware at "/login-System" path
 app.use("/login-system", apiLimiter, loginSystemRouter);
 

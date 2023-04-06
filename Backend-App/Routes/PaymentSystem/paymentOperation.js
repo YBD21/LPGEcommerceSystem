@@ -14,6 +14,7 @@ const nepalOptions = {
   hour: "numeric",
   minute: "numeric",
   second: "numeric",
+  timeZoneName: "short",
 };
 
 const verifyTransaction = async (tokenId, totalAmount) => {
