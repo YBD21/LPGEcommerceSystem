@@ -222,7 +222,7 @@ const Product = ({ id, productName, imageUrl, stock }) => {
           <option value={productType[0]}>{productType[0]}</option>
           <option value={productType[1]}> {productType[1]}</option>
         </select>
-        <ExpandMoreIcon className=" absolute top-3.5 right-5 svg-icons text-white" />
+        <ExpandMoreIcon className=" absolute top-3.5 right-5 svg-icons text-white pointer-events-none" />
       </div>
 
       <button
