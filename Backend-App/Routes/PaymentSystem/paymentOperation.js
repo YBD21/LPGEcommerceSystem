@@ -92,7 +92,7 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
   try {
     await userRef.set(newOrder);
     console.log("Order successfully added to Firestore!");
-    sendData = { orderId: orderId, basket: payloadData?.items };
+    sendData = { orderId: orderId }; // add min max delivery Time here
   } catch (error) {
     console.error("Error adding order to Firestore: ", error);
   }
@@ -130,7 +130,7 @@ const saveOrderDetailForCashOnDelivery = async (payloadData) => {
   try {
     await userRef.set(newOrder);
     console.log("Order successfully added to Firestore!");
-    sendData = { orderId: orderId, basket: payloadData?.items };
+    sendData = { orderId: orderId }; // add min max delivery Time here
   } catch (error) {
     console.error("Error adding order to Firestore: ", error);
   }

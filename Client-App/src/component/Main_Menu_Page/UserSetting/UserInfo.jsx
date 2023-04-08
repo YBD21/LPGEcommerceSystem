@@ -9,7 +9,7 @@ const UserInfo = () => {
   const [lastName, setLastName] = useState(null);
 
   return (
-    <div className="w-full max-md:w-full max-lg:mb-5">
+    <div className="flex flex-col justify-between w-full max-md:w-full max-lg:mb-5">
       <div className="w-full flex max-lg:flex-col">
         {/* First Name */}
         <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
@@ -69,16 +69,7 @@ const UserInfo = () => {
             text-white bg-black font-medium rounded-lg text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
           >
-            Save
-          </button>
-        </div>
-        <div className="w-full mr-3">
-          <button
-            className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
-            text-white bg-neutral-700 font-medium rounded-lg text-center mr-2 mb-2
-            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
-          >
-            Cancel
+            Save Changes
           </button>
         </div>
       </div>

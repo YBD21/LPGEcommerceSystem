@@ -6,7 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import ConfettiAnimation from "./ConfettiAnimation";
 const ThankYouPage = ({ status, message }) => {
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ totalCharge }, dispatch] = useStateValue();
   const navigate = useNavigate();
   //  need to pass deliveryAmount , estimated Time , OrderId
   const close = async () => {
@@ -23,6 +23,9 @@ const ThankYouPage = ({ status, message }) => {
 
     // console.log("I am Closed  X_X ")
   };
+  const formatedTotalAmount = totalCharge.toLocaleString("en-IN", {
+    maximumFractionDigits: 2,
+  });
 
   const removeAllItemsFromBasket = () => {
     dispatch({
@@ -65,10 +68,9 @@ const ThankYouPage = ({ status, message }) => {
                   Please have Amount shown below ready when the item is
                   delivered.
                 </p>
-                <h2 className="text-3xl font-bold">Rs. 8,000</h2>
+                <h2 className="text-3xl font-bold">Rs.{formatedTotalAmount}</h2>
               </div>
             )}
-
             <div className="flex w-full justify-center items-center p-3 m-5 max-h-12">
               <p className="text-green-600 text-lg font-semibold">
                 Order confirmation : #{message.orderId}

@@ -29,6 +29,8 @@ const EditProfile = () => {
         </button>
       </div>
 
+      {/* ChangePassword Popup*/}
+
       <div className="flex mt-10 justify-center">
         <button
           className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
@@ -38,6 +40,8 @@ const EditProfile = () => {
           Delete Account
         </button>
       </div>
+
+      {/* Are you Sure ? */}
     </div>
   );
 };
