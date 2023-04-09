@@ -3,13 +3,27 @@ import PhoneInput from "react-phone-input-2";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 const UserInfo = () => {
   const [{ userData }] = useStateValue();
+  const [isEdit, setIsEdit] = useState(false);
 
   const [number, setNumber] = useState(userData?.id);
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const edit = () => {
+    setIsEdit(true);
+  };
+
+  const saveChanges = () => {
+    setIsEdit(false);
+    // add here
+  };
+
+  const cancel = () => {
+    setIsEdit(false);
+  };
 
   return (
-    <div className="flex flex-col justify-between w-full max-md:w-full max-lg:mb-5">
+    <div className=" basis-1/2 justify-between w-full max-md:w-full max-lg:mb-5">
       <div className="w-full flex max-lg:flex-col">
         {/* First Name */}
         <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
@@ -17,11 +31,15 @@ const UserInfo = () => {
             First Name
           </label>
 
-          <div className="flex flex-row cursor-pointer">
+          <div className="flex flex-row">
             <input
               type="text"
-              value={userData?.firstName}
-              className="block w-full px-4 py-2 mt-4 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+              value={!isEdit ? userData?.firstName : firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className={`block w-full px-4 py-2 mt-4 text-black-700 border-2 border-black bg-white rounded-md focus:border-black
+               focus:ring-black focus:outline-none focus:ring 
+               focus:ring-opacity-40 ${!isEdit ? "cursor-not-allowed" : false}`}
+              disabled={!isEdit}
             />
           </div>
         </div>
@@ -34,9 +52,12 @@ const UserInfo = () => {
           <div className="flex flex-row cursor-pointer">
             <input
               type="text"
-              value={userData?.lastName}
-              className="block w-full px-4 py-2 mt-4 text-black-700 border-2 border-black bg-white rounded-md focus:border-black
-            focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+              value={!isEdit ? userData?.lastName : lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className={`block w-full px-4 py-2 mt-4 text-black-700 border-2 border-black bg-white rounded-md focus:border-black
+              focus:ring-black focus:outline-none focus:ring 
+              focus:ring-opacity-40 ${!isEdit ? "cursor-not-allowed" : false}`}
+              disabled={!isEdit}
             />
           </div>
         </div>
@@ -62,15 +83,37 @@ const UserInfo = () => {
 
       {/*  Action  */}
 
-      <div className="w-full flex flex-row justify-between mt-5">
+      <div className="w-full flex flex-row justify-center mt-5">
         <div className="w-full ml-3">
-          <button
-            className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
+          {!isEdit ? (
+            <button
+              className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-center mr-2 mb-2
-            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
-          >
-            Save Changes
-          </button>
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
+              onClick={edit}
+            >
+              <span className="text-white font-semibold">Edit</span>
+            </button>
+          ) : (
+            <div className="flex justify-between">
+              <button
+                className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
+           text-white bg-black font-medium rounded-lg text-center mr-2 mb-2
+           focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
+                onClick={saveChanges}
+              >
+                <span className="text-white font-semibold">Save Changes</span>
+              </button>
+              <button
+                className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
+             text-white bg-black font-medium rounded-lg text-center mr-2 mb-2
+             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
+                onClick={cancel}
+              >
+                <span className="text-white font-semibold">Cancel</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

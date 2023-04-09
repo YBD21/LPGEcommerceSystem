@@ -61,12 +61,11 @@ const GasProduct = ({ keyName, name, image, stock }) => {
 
   return (
     <div
-      className={`flex max-lg:flex-col flex-row px-4 mx-4 mb-5 place-items-center justify-between bg-gray-200 rounded-2xl max-lg:my-[10%]
-    hover:translate-x-2 hover:-translate-y-2 transform transition ease-in-out relative ${
-      isShaking
-        ? "animate-shake border-2 border-black"
-        : "border-2 border-gray-300"
-    }`}
+      className={`flex max-lg:flex-col flex-row px-4 mx-4 mb-5 place-items-center justify-between bg-gray-200 rounded-2xl max-lg:my-[10%] hover:translate-x-2 hover:-translate-y-2 transform transition ease-in-out relative ${
+        isShaking
+          ? "animate-shake border-2 border-black"
+          : "border-2 border-gray-300"
+      }`}
     >
       {isShaking ? (
         <div className="absolute top-2 right-4">
@@ -103,7 +102,7 @@ const GasProduct = ({ keyName, name, image, stock }) => {
          rounded-lg text-lg font-semibold focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 border
          ${
            !isShaking
-             ? "border-gray-500 bg-gray-300 "
+             ? "border-gray-500 bg-gray-300"
              : "border-2 border-black bg-slate-100"
          }
          `}

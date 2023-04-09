@@ -15,7 +15,6 @@ import { useStateValue } from "../ContextAPI/StateProvider";
 import ThankYouPage from "../component/Main_Menu_Page/PopUp/ThankYouPage";
 import ViewLPGasProduct from "../component/Main_Menu_Page/Admin/Manage_Products/ViewLPGasProduct";
 import Setting from "../component/Main_Menu_Page/UserSetting/Setting";
-import SettingMenu from "../component/Main_Menu_Page/UserSetting/SettingMenu";
 
 const AdminRoute = () => {
   const [{ basket }] = useStateValue();
@@ -138,6 +137,7 @@ const AdminRoute = () => {
         }
       />
 
+      {/* User Setting */}
       <Route
         path="/Setting"
         element={
@@ -156,9 +156,8 @@ const AdminRoute = () => {
         element={
           <>
             <NavBar />
-            <ThankYouPage status={false} message={{ orderId: 123546 }} />
-            {/* <Setting /> */}
-            <SettingMenu />
+            {/* <ThankYouPage status={false} message={{ orderId: 123546 }} /> */}
+            <Setting />
           </>
         }
       />
