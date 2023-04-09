@@ -156,8 +156,8 @@ const AdminRoute = () => {
         element={
           <>
             <NavBar />
-            {/* <ThankYouPage status={false} message={{ orderId: 123546 }} /> */}
-            <Setting />
+            <ThankYouPage status={false} message={{ orderId: 123546 }} />
+            {/* <Setting /> */}
           </>
         }
       />

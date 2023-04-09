@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import userProfileDefaultImage from "../../../dist/image/user-profile-icon.webp";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
+import ChangePassword from "./ChangePassword";
+import PopupPortal from "../PopUp/PopupPortal";
 
 const EditProfile = () => {
   const [{ userData }] = useStateValue();
   const name = userData?.firstName + " " + userData?.lastName;
+  const [isChange, setIsChange] = useState(false);
+  const [isDelete, setDelete] = useState(false);
+
+  const changePassword = () => {
+    setIsChange(true);
+  };
+
   return (
     <div className="basis-1/3 ml-2 py-5 justify-between">
       <div className="w-full flex justify-center py-3">
@@ -21,12 +30,20 @@ const EditProfile = () => {
           className="w-1/3 max-lg:w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-s text-center 
             mr-2 mb-2 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
+          onClick={changePassword}
         >
           Change Password
         </button>
       </div>
-
       {/* ChangePassword Popup*/}
+      {/* activate Change Password portal */}
+      {isChange ? (
+        <PopupPortal>
+          <ChangePassword />
+        </PopupPortal>
+      ) : (
+        false
+      )}
 
       <div className="flex mt-10 justify-center">
         <button
@@ -37,7 +54,7 @@ const EditProfile = () => {
           Delete Account
         </button>
       </div>
-
+      {/* Delete Account Popup*/}
       {/* Are you Sure ? */}
     </div>
   );
