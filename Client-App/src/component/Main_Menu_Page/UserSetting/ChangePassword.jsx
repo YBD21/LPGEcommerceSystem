@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import CancelIcon from "@mui/icons-material/Cancel";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-const ChangePassword = () => {
+const ChangePassword = ({ onChild }) => {
   const [open, setOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -16,14 +17,14 @@ const ChangePassword = () => {
     // add here
   };
 
-  const cancel = () => {
-    // add here
+  const close = () => {
+    onChild(false);
   };
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
-      <div className="relative z-10 inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg transform sm:max-w-3xl sm:h-[60vh] sm:p-8">
+      <div className="relative z-10 inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg transform sm:max-w-2xl sm:h-[55vh] sm:p-8">
         {/* Start Change Password */}
         <div className="w-full flex flex-col px-12 py-3 rounded-lg items-center">
           <h3 className="text-2xl font-bold mb-4 text-center">
@@ -119,13 +120,16 @@ const ChangePassword = () => {
               className="w-1/3 px-5 py-2.5 tracking-wide
              text-white bg-neutral-700 font-medium rounded-lg text-center mr-2 mb-2
              focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
-              onClick={cancel}
+              onClick={close}
             >
               <span className="text-white font-semibold">Cancel</span>
             </button>
           </div>
         </div>
         {/*End Change Password */}
+        <button className="absolute top-0 right-0 m-5" onClick={close}>
+          <CancelIcon className="svg-icons text-red-800" />
+        </button>
       </div>
     </div>
   );

@@ -14,6 +14,10 @@ const EditProfile = () => {
     setIsChange(true);
   };
 
+  const handleChildData = (data) => {
+    setIsChange(data);
+  };
+
   return (
     <div className="basis-1/3 ml-2 py-5 justify-between">
       <div className="w-full flex justify-center py-3">
@@ -39,7 +43,7 @@ const EditProfile = () => {
       {/* activate Change Password portal */}
       {isChange ? (
         <PopupPortal>
-          <ChangePassword />
+          <ChangePassword onChild={handleChildData} />
         </PopupPortal>
       ) : (
         false
