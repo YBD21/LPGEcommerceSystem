@@ -128,7 +128,7 @@ const ChangePassword = ({ onChild }) => {
         </div>
         {/*End Change Password */}
         <button className="absolute top-0 right-0 m-5" onClick={close}>
-          <CancelIcon className="svg-icons text-red-800" />
+          <CancelIcon className="svg-icons text-neutral-700" />
         </button>
       </div>
     </div>

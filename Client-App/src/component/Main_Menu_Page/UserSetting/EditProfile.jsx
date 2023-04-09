@@ -3,19 +3,28 @@ import userProfileDefaultImage from "../../../dist/image/user-profile-icon.webp"
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 import ChangePassword from "./ChangePassword";
 import PopupPortal from "../PopUp/PopupPortal";
+import DeleteAccount from "./DeleteAccount";
 
 const EditProfile = () => {
   const [{ userData }] = useStateValue();
   const name = userData?.firstName + " " + userData?.lastName;
   const [isChange, setIsChange] = useState(false);
-  const [isDelete, setDelete] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
 
   const changePassword = () => {
     setIsChange(true);
   };
 
-  const handleChildData = (data) => {
+  const handleChildChangePasswordPopup = (data) => {
     setIsChange(data);
+  };
+
+  const deleteAccount = () => {
+    setIsDelete(true);
+  };
+
+  const handleChildDeleteAccountPopup = (data) => {
+    setIsDelete(data);
   };
 
   return (
@@ -43,7 +52,7 @@ const EditProfile = () => {
       {/* activate Change Password portal */}
       {isChange ? (
         <PopupPortal>
-          <ChangePassword onChild={handleChildData} />
+          <ChangePassword onChild={handleChildChangePasswordPopup} />
         </PopupPortal>
       ) : (
         false
@@ -54,12 +63,19 @@ const EditProfile = () => {
           className="w-1/3 max-lg:w-full px-5 py-2.5 tracking-wide
             text-white bg-red-900 font-medium rounded-lg text-s text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-red-900 focus:ring-opacity-50 active:ring-4 active:ring-red-900 active:ring-opacity-50 relative overflow-hidden"
+          onClick={deleteAccount}
         >
           Delete Account
         </button>
       </div>
       {/* Delete Account Popup*/}
-      {/* Are you Sure ? */}
+      {isDelete ? (
+        <PopupPortal>
+          <DeleteAccount onChild={handleChildDeleteAccountPopup} />
+        </PopupPortal>
+      ) : (
+        false
+      )}
     </div>
   );
 };

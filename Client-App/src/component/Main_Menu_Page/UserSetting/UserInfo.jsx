@@ -6,8 +6,8 @@ const UserInfo = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   const [number, setNumber] = useState(userData?.id);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState(userData?.firstName);
+  const [lastName, setLastName] = useState(userData?.lastName);
 
   const edit = () => {
     setIsEdit(true);
