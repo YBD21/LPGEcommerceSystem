@@ -71,21 +71,21 @@ const UserDropDown = ({ status }) => {
           <UserProfile />
         </div>
         <ul className="divide-y divide-gray-600">
-          <li className="flex items-center px-4 py-5 text-gray-700 hover:bg-gray-100 hover:text-black">
-            <AssignmentIcon className="svg-icons ml-3 mr-10" />
+          <li className="flex items-center px-4 py-5 text-gray-700 hover:bg-gray-100 ">
             <Link
               to="/"
-              className="w-full font-medium text-lg hover:text-[#d42109]"
+              className="w-full font-medium text-lg hover:text-black"
             >
+              <AssignmentIcon className="svg-icons ml-3 mr-10" />
               Order
             </Link>
           </li>
-          <li className="flex items-center px-4 py-5  text-gray-700  hover:bg-gray-100 hover:text-black">
-            <SettingsIcon className="svg-icons ml-3 mr-10" />
+          <li className="flex items-center px-4 py-5  text-gray-700  hover:bg-gray-100 ">
             <Link
               to="/Setting"
-              className=" w-full font-medium text-lg hover:text-[#d42109]"
+              className=" w-full font-medium text-lg hover:text-black"
             >
+              <SettingsIcon className="svg-icons ml-3 mr-10" />
               Setting
             </Link>
           </li>
