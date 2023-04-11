@@ -194,7 +194,7 @@ const EditGasPrice = () => {
       <div className="my-5">
         <button
           className="w-full px-5 py-2.5 tracking-wide
-            text-white bg-black font-medium rounded-lg text-s 
+            text-white bg-black font-medium rounded-lg  
             text-center mr-3"
           onClick={sendUpdateGasRate}
         >

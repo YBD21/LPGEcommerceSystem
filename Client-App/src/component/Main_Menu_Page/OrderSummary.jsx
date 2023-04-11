@@ -134,7 +134,7 @@ const OrderSummary = ({ status }) => {
           {/* Go Back ? */}
           <button
             className="w-full px-5 py-2.5 text-white bg-neutral-700 
-        font-medium rounded-lg text-s mr-3 mb-2
+        font-medium rounded-lg  mr-3 mb-2
         focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
         "
             onClick={redirectToStore}
@@ -159,7 +159,7 @@ const OrderSummary = ({ status }) => {
           {/* Go Back ? */}
           <button
             className="w-full px-5 py-2.5 text-white bg-neutral-700 
-        font-medium rounded-lg text-s mr-3 mb-2 
+        font-medium rounded-lg  mr-3 mb-2 
         focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
         "
             onClick={redirectToCart}

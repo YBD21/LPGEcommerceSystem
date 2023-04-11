@@ -248,7 +248,7 @@ const ResetPassword = () => {
           <div className="mt-5">
             <button
               className="w-full px-5 py-2.5 tracking-wide
-            text-white bg-black font-medium rounded-lg text-s text-center mr-3 mb-2
+            text-white bg-black font-medium rounded-lg t text-center mr-3 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
             "
               onClick={resetPassword}
@@ -260,7 +260,7 @@ const ResetPassword = () => {
         <div className="mt-4">
           <div className="mt-3">
             <button
-              className="w-full px-5 py-2.5 text-white bg-neutral-700 font-medium rounded-lg text-s mr-3 mb-2  focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
+              className="w-full px-5 py-2.5 text-white bg-neutral-700 font-medium rounded-lg mr-3 mb-2  focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
               onClick={GoBack}
             >
               <KeyboardBackspaceIcon className="svg-icons " />

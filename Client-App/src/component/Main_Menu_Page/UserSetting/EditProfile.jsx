@@ -41,7 +41,7 @@ const EditProfile = () => {
       <div className="flex mt-3 justify-center">
         <button
           className="w-1/3 max-lg:w-full px-5 py-2.5 tracking-wide
-            text-white bg-black font-medium rounded-lg text-s text-center 
+            text-white bg-black font-medium rounded-lg text-center 
             mr-2 mb-2 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
           onClick={changePassword}
         >
@@ -61,7 +61,7 @@ const EditProfile = () => {
       <div className="flex mt-10 justify-center">
         <button
           className="w-1/3 max-lg:w-full px-5 py-2.5 tracking-wide
-            text-white bg-red-900 font-medium rounded-lg text-s text-center mr-2 mb-2
+            text-white bg-red-900 font-medium rounded-lg text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-red-900 focus:ring-opacity-50 active:ring-4 active:ring-red-900 active:ring-opacity-50 relative overflow-hidden"
           onClick={deleteAccount}
         >

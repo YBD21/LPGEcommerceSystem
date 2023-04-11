@@ -162,7 +162,7 @@ function CreateLPGProduct() {
         )}
         <div
           className="w-full px-5 py-2.5 tracking-wide 
-      text-black font-medium text-s"
+      text-black font-medium"
         >
           {/* only accept image */}
           <input
@@ -223,7 +223,7 @@ function CreateLPGProduct() {
       )}
       <button
         className="w-full px-5 py-2.5 tracking-wide
-            text-white bg-black font-medium rounded-lg text-s 
+            text-white bg-black font-medium rounded-lg  
             text-center mr-3"
         onClick={submitForm}
       >
