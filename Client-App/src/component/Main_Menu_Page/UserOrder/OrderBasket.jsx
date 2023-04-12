@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Gas from "../../../dist/image/Lpg.png";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CancelOrderPopUp from "./CancelOrderPopUp";
+import PopupPortal from "../PopUp/PopupPortal";
 const OrderBasket = () => {
   const image = Gas;
   const name = "Baba Gas";
@@ -7,8 +10,19 @@ const OrderBasket = () => {
   const type = "Refill";
   const price = 1800;
   const totalprice = Qty * price;
+
+  const [isCancel, setIsCancel] = useState(false);
+
+  const handleChildCancelOrderPopup = (data) => {
+    setIsCancel(data);
+  };
+
+  const cancel = () => {
+    setIsCancel(true);
+  };
+
   return (
-    <div className="flex flex-col justify-between px-4 py-4 bg-[whitesmoke] rounded-2xl shadow shadow-gray-300">
+    <div className="flex flex-col justify-between px-8 py-10 bg-[whitesmoke] rounded-2xl shadow shadow-gray-500 border-2 border-gray-300 relative">
       {/* Order Summary */}
       <div className="flex justify-between">
         <strong className="text-2xl font-semibold px-4"> Order</strong>
@@ -29,7 +43,7 @@ const OrderBasket = () => {
 
       {/* Basket Details */}
       <div
-        className="flex flex-row px-4 mt-5 mb-10 place-items-center bg-gray-200 rounded-2xl shadow shadow-gray-300 
+        className="flex flex-row px-4 mt-5 mb-10 place-items-center bg-gray-200 rounded-2xl shadow-md shadow-gray-400 border-2 border-gray-300
         max-sm:flex-col max-sm:w-1/2 max-sm:my-[10%] max-sm:mx-auto"
       >
         <div className="flex flex-col w-1/2 max-lg:w-full mb-5 mx-5 items-center">
@@ -82,7 +96,10 @@ const OrderBasket = () => {
       </div>
       <div className="flex justify-between">
         {/* Payment Type */}
-        <p className="w-full text-2xl font-medium my-2"> Cash On Delivery</p>
+        <p className="w-full text-2xl font-medium my-2 px-4">
+          {" "}
+          Cash On Delivery
+        </p>
         {/* Total Amount */}
         <div className="w-full flex flex-row justify-end my-2">
           <p className="text-3xl font-bold mx-4">Total :</p>
@@ -94,6 +111,17 @@ const OrderBasket = () => {
           </p>
         </div>
       </div>
+      <button className="absolute top-2 right-3" onClick={cancel}>
+        <CancelIcon className="svg-icons text-red-800" />
+      </button>
+      {/* Delete Account Popup*/}
+      {isCancel ? (
+        <PopupPortal>
+          <CancelOrderPopUp onChild={handleChildCancelOrderPopup} />
+        </PopupPortal>
+      ) : (
+        false
+      )}
     </div>
   );
 };
