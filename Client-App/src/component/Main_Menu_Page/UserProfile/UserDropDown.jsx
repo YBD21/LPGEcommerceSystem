@@ -73,7 +73,7 @@ const UserDropDown = ({ status }) => {
         <ul className="divide-y divide-gray-600">
           <li className="flex items-center px-4 py-5 text-gray-700 hover:bg-gray-100 ">
             <Link
-              to="/"
+              to="/Order"
               className="w-full font-medium text-lg hover:text-black"
             >
               <AssignmentIcon className="svg-icons ml-3 mr-10" />

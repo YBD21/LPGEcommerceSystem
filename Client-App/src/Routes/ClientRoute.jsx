@@ -7,6 +7,7 @@ import Checkout from "../component/Main_Menu_Page/Checkout";
 import PageNotFound from "../component/PageNotFound";
 import { useStateValue } from "../ContextAPI/StateProvider";
 import Setting from "../component/Main_Menu_Page/UserSetting/Setting";
+import ViewOrder from "../component/Main_Menu_Page/UserOrder/ViewOrder";
 
 const ClientRoute = () => {
   const [{ basket }] = useStateValue();
@@ -58,7 +59,18 @@ const ClientRoute = () => {
           </>
         }
       />
-      
+
+      {/* User ViewOrder  */}
+      <Route
+        path="/Order"
+        element={
+          <>
+            <NavBar />
+            <ViewOrder />
+          </>
+        }
+      />
+
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
