@@ -2,10 +2,11 @@ import React from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-const CancelOrderPopUp = ({ onChild }) => {
+const CancelOrderPopUp = ({ onChild, id }) => {
   const close = () => {
     onChild(false);
   };
+
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
@@ -15,6 +16,7 @@ const CancelOrderPopUp = ({ onChild }) => {
           <h3 className="text-2xl font-bold mb-4 text-center text-black">
             Cancel Order
           </h3>
+          <p className="text-lg font-bold mb-4 text-center text-black">{id}</p>
           <div className="w-full flex flex-col mt-2 justify-center text-center">
             <div className="pt-6 pb-10">
               <DeleteForeverIcon className="scale-[3] text-red-800" />

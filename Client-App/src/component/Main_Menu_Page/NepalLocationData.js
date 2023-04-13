@@ -48,7 +48,7 @@ const districtsByProvince = {
     "Banke",
     "Bardiya",
   ],
-  "Pradesh-1": [
+  Koshi: [
     "Bhojpur",
     "Dhankuta",
     "Ilam",

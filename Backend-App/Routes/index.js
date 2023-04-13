@@ -25,7 +25,10 @@ import {
 } from "./ProductManagement/UpdateProduct/updateProduct.js";
 import { releaseStockOnDisconnectWithAccessToken } from "./PaymentSystem/stockReservation.js";
 import productManagementSystemRouter from "./ProductManagement/productManagementSystemRouter.js";
+import orderManagementSystemRouter from "./OrderManagement/orderManagementSystemRouter.js";
+
 import * as dotenv from "dotenv";
+
 dotenv.config();
 
 const app = express();
@@ -83,7 +86,8 @@ const updateBufferData = () => {
 };
 
 // Immediately invoke the updateBufferData function
-updateBufferData();
+
+// updateBufferData();    -- Testing mode remove comment here
 
 // Mount userRouter middleware at "/login-System" path
 app.use("/login-system", apiLimiter, loginSystemRouter);
@@ -93,6 +97,9 @@ app.use("/payment-system", paymentSystemRouter);
 
 // Mount userRouter middleware at "/product-management" path
 app.use("/product-management", productManagementSystemRouter);
+
+// Mount userRouter middleware at "/order-management" path
+app.use("/order-management", orderManagementSystemRouter);
 
 const filePathGasRate = "BufferData/gasRate.json";
 const filePathDeliveryRate = "BufferData/deliveryRate.json";

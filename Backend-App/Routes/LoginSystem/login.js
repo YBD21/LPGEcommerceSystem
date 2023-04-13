@@ -84,14 +84,26 @@ const generateToken = (data, number) => {
 };
 
 const verifyToken = (token) => {
-  let sendData = null;
+  let sendData = false;
   jwt.verify(token, secretKey, function (err) {
     if (err) {
       console.log(err.message);
-      sendData = false;
     } else {
       // console.log(decoded);
       sendData = true;
+    }
+  });
+  return sendData;
+};
+
+const verifyTokenAndDecodeToken = (token) => {
+  let sendData = {};
+  jwt.verify(token, secretKey, function (err, decoded) {
+    if (err) {
+      console.log(err.message);
+      sendData = { error: `${err.message}` };
+    } else {
+      sendData = { ...decoded };
     }
   });
   return sendData;
@@ -102,4 +114,4 @@ const decodeToken = async (token) => {
   return decoded;
 };
 
-export { login, verifyToken, decodeToken };
+export { login, verifyToken, decodeToken, verifyTokenAndDecodeToken };

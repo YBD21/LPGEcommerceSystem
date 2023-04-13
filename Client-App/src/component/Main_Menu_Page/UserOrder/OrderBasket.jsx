@@ -1,16 +1,9 @@
 import React, { useState } from "react";
-import Gas from "../../../dist/image/Lpg.png";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CancelOrderPopUp from "./CancelOrderPopUp";
 import PopupPortal from "../PopUp/PopupPortal";
-const OrderBasket = () => {
-  const image = Gas;
-  const name = "Baba Gas";
-  const Qty = 5;
-  const type = "Refill";
-  const price = 1800;
-  const totalprice = Qty * price;
-
+import ShowItemsFromOrderBasket from "./ShowItemsFromOrderBasket";
+const OrderBasket = ({ items, id }) => {
   const [isCancel, setIsCancel] = useState(false);
 
   const handleChildCancelOrderPopup = (data) => {
@@ -21,85 +14,60 @@ const OrderBasket = () => {
     setIsCancel(true);
   };
 
+  const showStatus = (OrderState) => {
+    switch (OrderState) {
+      case "Delivered":
+        textColor = "text-green-500";
+        return "Delivered";
+
+      case "Cancel":
+        textColor = "text-red-700";
+        return "Cancel";
+
+      default:
+        return "Processing";
+    }
+  };
+
+  let totalprice = items?.amount;
+  let OrderId = id;
+  let DataAndTime = items?.created; // change DataAndTime into meaningful info
+  let textColor = "text-orange-600";
+  let status = showStatus(items?.status);
+  let paymentMethod = items?.PaymentType;
+
+  // console.log(items);
   return (
-    <div className="flex flex-col justify-between px-8 py-10 bg-[whitesmoke] rounded-2xl shadow shadow-gray-500 border-2 border-gray-300 relative">
+    <div className="flex flex-col justify-between px-8 py-10 my-5 bg-[whitesmoke] rounded-2xl shadow shadow-gray-500 border-2 border-gray-300 relative">
       {/* Order Summary */}
       <div className="flex justify-between">
         <strong className="text-2xl font-semibold px-4"> Order</strong>
 
-        <p className="text-lg font-semibold px-4">
-          20230408T0540119860694050et7dl8
-        </p>
+        <p className="text-lg font-semibold px-4">{OrderId}</p>
       </div>
       {/* Order Date */}
       <div className="flex justify-between">
-        <p className="text-lg font-medium px-4">
-          Sat, Apr 8, 2023, 11:25:11 AM
-        </p>
-        <p className="text-3xl font-semibold text-orange-600 px-5">
-          Processing
-        </p>
+        <p className="text-lg font-medium px-4">{DataAndTime}</p>
+        <p className={`text-3xl font-semibold px-5 ${textColor}`}>{status}</p>
       </div>
 
-      {/* Basket Details */}
-      <div
-        className="flex flex-row px-4 mt-5 mb-10 place-items-center bg-gray-200 rounded-2xl shadow-md shadow-gray-400 border-2 border-gray-300
-        max-sm:flex-col max-sm:w-1/2 max-sm:my-[10%] max-sm:mx-auto"
-      >
-        <div className="flex flex-col w-1/2 max-lg:w-full mb-5 mx-5 items-center">
-          <img
-            className="w-1/4 m-6 max-lg:mt-7 max-lg:w-1/2"
-            src={image}
-            alt={name}
-            loading="eager"
+      {/* Show Items From OrderBasket */}
+      {items?.basket
+        ?.sort((a, b) => (a.itemId > b.itemId ? 1 : -1))
+        .map((item) => (
+          <ShowItemsFromOrderBasket
+            key={item.itemId}
+            name={item.ProductName}
+            image={item.Image}
+            type={item.ProductType}
+            Qty={item.Qty}
+            gasRateData={items?.gasRate}
           />
+        ))}
 
-          <p className="text-2xl font-bold mb-2.5">{name}</p>
-        </div>
-        {/* Show Qty */}
-        <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
-          <p className="text-2xl font-bold mb-2.5"> Qty </p>
-          <div
-            className=" w-1/2 px-5 py-3 text-white bg-black 
-            rounded-lg text-lg font-semibold mx-auto"
-          >
-            {Qty}
-          </div>
-        </div>
-
-        {/* Show Type */}
-        <div className="w-1/2 max-lg:w-full mb-5 mx-5 text-center">
-          <p className="text-2xl font-bold mb-2.5"> Type </p>
-          <div
-            className=" w-1/2 px-5 py-3 text-white bg-black 
-            rounded-lg text-lg font-semibold mx-auto"
-          >
-            {type}
-          </div>
-        </div>
-
-        {/* Show Per Price */}
-        <div className="w-1/2 mb-5 mx-5 text-center">
-          <p className="text-2xl font-bold mb-2.5">Price</p>
-          <div
-            className="w-1/2 max-lg:w-full px-5 py-3 text-white bg-black 
-            rounded-lg text-lg font-semibold mx-auto"
-          >
-            Rs.
-            {Qty === 0
-              ? price
-              : (price * Qty).toLocaleString("en-IN", {
-                  maximumFractionDigits: 2,
-                })}
-          </div>
-        </div>
-      </div>
       <div className="flex justify-between">
         {/* Payment Type */}
-        <p className="w-full text-2xl font-medium my-2 px-4">
-          {" "}
-          Cash On Delivery
-        </p>
+        <p className="w-full text-2xl font-medium my-2 px-4">{paymentMethod}</p>
         {/* Total Amount */}
         <div className="w-full flex flex-row justify-end my-2">
           <p className="text-3xl font-bold mx-4">Total :</p>
@@ -111,13 +79,17 @@ const OrderBasket = () => {
           </p>
         </div>
       </div>
+      {/* Cancel Order */}
       <button className="absolute top-2 right-3" onClick={cancel}>
         <CancelIcon className="svg-icons text-red-800" />
       </button>
       {/* Delete Account Popup*/}
       {isCancel ? (
         <PopupPortal>
-          <CancelOrderPopUp onChild={handleChildCancelOrderPopup} />
+          <CancelOrderPopUp
+            onChild={handleChildCancelOrderPopup}
+            id={OrderId}
+          />
         </PopupPortal>
       ) : (
         false
