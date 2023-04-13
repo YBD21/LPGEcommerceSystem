@@ -13,7 +13,7 @@ const getOrderList = async (userId) => {
     `Retrieving documents from collection 'Users/${countryCode}/${phoneNumber}'...`
   );
   const querySnapshot = await userCollectionRef
-    .orderBy("created", "asc")
+    .orderBy("created", "desc")
     .limit(5)
     .get();
 
@@ -26,11 +26,11 @@ const getOrderList = async (userId) => {
 
   console.log(`Documents:`, documents);
 
-  const documentsSizeInBytes = new TextEncoder().encode(
-    JSON.stringify(documents)
-  ).length;
-  const documentsSizeInKB = documentsSizeInBytes / 1024;
-  console.log(`Documents size: ${documentsSizeInKB} KB`);
+  // const documentsSizeInBytes = new TextEncoder().encode(
+  //   JSON.stringify(documents)
+  // ).length;
+  // const documentsSizeInKB = documentsSizeInBytes / 1024;
+  // console.log(`Documents size: ${documentsSizeInKB} KB`);
 
   const sendData = { OrderData: documents };
   return sendData;

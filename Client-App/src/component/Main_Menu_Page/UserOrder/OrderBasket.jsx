@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CancelOrderPopUp from "./CancelOrderPopUp";
 import PopupPortal from "../PopUp/PopupPortal";
 import ShowItemsFromOrderBasket from "./ShowItemsFromOrderBasket";
 const OrderBasket = ({ items, id }) => {
   const [isCancel, setIsCancel] = useState(false);
+  const [disableCancel, setDisableCancel] = useState(false);
 
   const handleChildCancelOrderPopup = (data) => {
     setIsCancel(data);
+  };
+
+  const handelDisableCancel = (DeliveryType) => {
+    if (DeliveryType !== "Not Delivered") {
+      setDisableCancel(true);
+    }
   };
 
   const cancel = () => {
@@ -35,6 +42,10 @@ const OrderBasket = ({ items, id }) => {
   let textColor = "text-orange-600";
   let status = showStatus(items?.status);
   let paymentMethod = items?.PaymentType;
+
+  useEffect(() => {
+    handelDisableCancel(items?.status);
+  }, []);
 
   // console.log(items);
   return (
@@ -80,9 +91,13 @@ const OrderBasket = ({ items, id }) => {
         </div>
       </div>
       {/* Cancel Order */}
-      <button className="absolute top-2 right-3" onClick={cancel}>
-        <CancelIcon className="svg-icons text-red-800" />
-      </button>
+      {!disableCancel ? (
+        <button className="absolute top-2 right-3" onClick={cancel}>
+          <CancelIcon className="svg-icons text-red-800" />
+        </button>
+      ) : (
+        false
+      )}
       {/* Delete Account Popup*/}
       {isCancel ? (
         <PopupPortal>
