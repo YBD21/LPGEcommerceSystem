@@ -40,10 +40,11 @@ app.set("trust proxy", 1);
 
 // connecting to same localhost as app for socket.io
 const httpServer = createServer(app);
-// Enable CORS for the socket connection
 
 const url = process.env.URL || "http://localhost:3000";
 console.log(url);
+
+// Enable CORS for the socket connection
 const io = new Server(httpServer, {
   cors: { origin: url, credentials: true }, // set credentials to true
 });
@@ -106,17 +107,28 @@ const filePathDeliveryRate = "BufferData/deliveryRate.json";
 const filePathProductList = "BufferData/productList.json";
 
 io.on("connection", (socket) => {
+
+  // on connection access token
+  
+  // const clientId = "9779860694050";
+  // // Send message to the client with ID 9779860694050
+  // if (socket.handshake.query.userId === clientId) {
+  //   socket.emit("message", "I love pizza");
+  // }
+
   // Send the current gas rate data when the client connects
   socket.on("getGasRate", async () => {
     const respond = await readGasRateFile();
     socket.emit("gasRate", respond);
   });
 
+  // Send the current Delivery Rate data when the client connects
   socket.on("getDeliveryRate", async () => {
     const respond = await readDeliveryRatefile();
     socket.emit("deliveryRate", respond);
   });
 
+  // Send the current ProductList data when the client connects
   socket.on("getProductList", async () => {
     const respond = await readProductListfile();
     socket.emit("productList", respond);

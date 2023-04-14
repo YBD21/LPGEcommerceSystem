@@ -36,12 +36,30 @@ const OrderBasket = ({ items, id }) => {
     }
   };
 
+  const convertUnixTimeStamp = (timestamp) => {
+    const options = {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+
+    const date = new Date(timestamp);
+    const dateString = date.toLocaleDateString("en-US", options); // format date and time
+    return dateString;
+  };
+
   let totalprice = items?.amount;
   let OrderId = id;
-  let DataAndTime = items?.created; // change DataAndTime into meaningful info
+  let DataAndTime = convertUnixTimeStamp(items?.created);
   let textColor = "text-orange-600";
   let status = showStatus(items?.status);
   let paymentMethod = items?.PaymentType;
+  let deliveryInfo = items?.deliveryInfo;
+  let cityName = deliveryInfo?.City;
+  let addressName = deliveryInfo?.Address;
 
   useEffect(() => {
     handelDisableCancel(items?.status);
@@ -61,7 +79,11 @@ const OrderBasket = ({ items, id }) => {
         <p className="text-lg font-medium px-4">{DataAndTime}</p>
         <p className={`text-3xl font-semibold px-5 ${textColor}`}>{status}</p>
       </div>
-
+      {/* Delivery Info */}
+      <div className="flex flex-col justify-between">
+        <p className="text-lg font-medium px-4">City : {cityName}</p>
+        <p className="text-lg font-medium px-4">Address : {addressName}</p>
+      </div>
       {/* Show Items From OrderBasket */}
       {items?.basket
         ?.sort((a, b) => (a.itemId > b.itemId ? 1 : -1))
