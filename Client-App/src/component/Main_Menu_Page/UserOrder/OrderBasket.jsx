@@ -58,6 +58,8 @@ const OrderBasket = ({ items, id }) => {
   let status = showStatus(items?.status);
   let paymentMethod = items?.PaymentType;
   let deliveryInfo = items?.deliveryInfo;
+  let stateName = deliveryInfo?.State;
+  let districtName = deliveryInfo.District;
   let cityName = deliveryInfo?.City;
   let addressName = deliveryInfo?.Address;
 
@@ -80,9 +82,25 @@ const OrderBasket = ({ items, id }) => {
         <p className={`text-3xl font-semibold px-5 ${textColor}`}>{status}</p>
       </div>
       {/* Delivery Info */}
-      <div className="flex flex-col justify-between">
-        <p className="text-lg font-medium px-4">City : {cityName}</p>
-        <p className="text-lg font-medium px-4">Address : {addressName}</p>
+      <div className="flex justify-start py-0.5">
+        <span className="flex text-lg font-semibold px-4">
+          {" "}
+          Province <p className="text-lg font-medium px-1"> : {stateName}</p>
+        </span>
+        <span className="flex text-lg font-semibold px-4">
+          {" "}
+          District <p className="text-lg font-medium px-1"> : {districtName}</p>
+        </span>
+      </div>
+      <div className="flex flex-col justify-between py-0.5">
+        <span className="flex text-lg font-semibold px-4 py-1">
+          {" "}
+          City <p className="text-lg font-medium px-1"> : {cityName}</p>
+        </span>
+        <span className="flex text-lg font-semibold px-4 py-1">
+          {" "}
+          Address <p className="text-lg font-medium px-1"> : {addressName}</p>
+        </span>
       </div>
       {/* Show Items From OrderBasket */}
       {items?.basket

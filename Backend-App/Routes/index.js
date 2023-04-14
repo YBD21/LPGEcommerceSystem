@@ -26,7 +26,7 @@ import {
 import { releaseStockOnDisconnectWithAccessToken } from "./PaymentSystem/stockReservation.js";
 import productManagementSystemRouter from "./ProductManagement/productManagementSystemRouter.js";
 import orderManagementSystemRouter from "./OrderManagement/orderManagementSystemRouter.js";
-
+import { checkUpdateOrderData } from "./OrderManagement/orderOperation.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -107,14 +107,15 @@ const filePathDeliveryRate = "BufferData/deliveryRate.json";
 const filePathProductList = "BufferData/productList.json";
 
 io.on("connection", (socket) => {
-
   // on connection access token
-  
-  // const clientId = "9779860694050";
-  // // Send message to the client with ID 9779860694050
-  // if (socket.handshake.query.userId === clientId) {
-  //   socket.emit("message", "I love pizza");
-  // }
+
+  socket.on("updateViewOrderdata", async () => {
+    const userId = socket.handshake.query.userId;
+    // console.log(userId);
+    const { OrderData } = await checkUpdateOrderData(userId);
+
+    socket.emit("updateViewOrder", OrderData);
+  });
 
   // Send the current gas rate data when the client connects
   socket.on("getGasRate", async () => {

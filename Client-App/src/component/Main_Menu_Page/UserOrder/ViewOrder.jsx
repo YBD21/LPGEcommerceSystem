@@ -1,30 +1,22 @@
 import React, { useState, useEffect } from "react";
 import OrderBasket from "./OrderBasket";
 import openSocket from "socket.io-client";
-import instance, { url } from "../../../instance";
+import { url } from "../../../instance";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 const ViewOrder = () => {
   const [{ userData }] = useStateValue();
 
-  const [orders, setOrders] = useState([]);
-  // userData  ==> id
-  const fetchOrders = async () => {
-    try {
-      const response = await instance.get("/order-management/order-data", {
-        withCredentials: true,
-      });
-      const data = await response.data.OrderData;
+  const [orders, setOrders] = useState({});
+  const [showTopBtn, setShowTopBtn] = useState(false);
 
-      setOrders(data);
-      // console.log(response.data.OrderData);
-    } catch (error) {
-      console.log(error.message);
-    }
+  const goToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
-  useEffect(() => {
-    fetchOrders();
-  }, []);
 
   useEffect(() => {
     //call to backend for connection
@@ -34,17 +26,32 @@ const ViewOrder = () => {
       },
     });
 
-    socket.on("message", (data) => {
-      console.log(data);
+    socket.on("updateViewOrder", (data) => {
+      // console.log(data);
+      // console.log(typeof data);
+      setOrders(data);
     });
+
+    // emit the event to listen for updates
+    socket.emit("updateViewOrderdata");
 
     return () => {
       socket.disconnect();
     };
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) {
+        setShowTopBtn(true);
+      } else {
+        setShowTopBtn(false);
+      }
+    });
+  }, []);
+
   return (
-    <div className="flex-1 p-6 bg-white overflow-scroll">
+    <div className="flex-1 p-6 bg-white overflow-scroll relative">
       <h2 className="text-3xl font-bold mt-4 ml-2 mb-8 text-center">
         {" "}
         Your Orders
@@ -53,6 +60,15 @@ const ViewOrder = () => {
       {Object.entries(orders).map(([key, data]) => (
         <OrderBasket key={key} id={key} items={data} />
       ))}
+
+      {showTopBtn && (
+        <button
+          className="absolute bottom-2 right-1 z-20 py-2.5 px-2.5 bg-gray-400 shadow shadow-gray-700 rounded-full"
+          onClick={goToTop}
+        >
+          <ArrowUpwardIcon className=" scale-150" />
+        </button>
+      )}
     </div>
   );
 };
