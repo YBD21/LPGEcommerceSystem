@@ -11,8 +11,11 @@ const OrderBasket = ({ items, id }) => {
     setIsCancel(data);
   };
 
-  const handelDisableCancel = (DeliveryType) => {
-    if (DeliveryType !== "Not Delivered") {
+  const handelDisableCancel = (DeliveryType, PaymentType) => {
+    if (
+      DeliveryType !== "Not Delivered" ||
+      PaymentType !== "Cash On Delivery"
+    ) {
       setDisableCancel(true);
     }
   };
@@ -64,7 +67,7 @@ const OrderBasket = ({ items, id }) => {
   let addressName = deliveryInfo?.Address;
 
   useEffect(() => {
-    handelDisableCancel(items?.status);
+    handelDisableCancel(items?.status, paymentMethod);
   }, []);
 
   // console.log(items);

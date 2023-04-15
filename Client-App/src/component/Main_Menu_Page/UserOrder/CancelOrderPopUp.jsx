@@ -10,7 +10,10 @@ const CancelOrderPopUp = ({ onChild, id }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
-      <div className="relative z-10 inline-block w-full p-6 mx-auto bg-white rounded-lg sm:max-w-lg sm:p-5">
+      <div
+        className="relative z-10 inline-block w-full p-6 mx-auto 
+      bg-white rounded-lg sm:max-w-lg sm:p-5"
+      >
         {/* Start Delete Account */}
         <div className="w-full flex flex-col px-12 py-3 rounded-lg items-center">
           <h3 className="text-2xl font-bold mb-4 text-center text-black">

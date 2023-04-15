@@ -14,12 +14,15 @@ const ViewOrder = () => {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // to testing set false
   const [sortBy, setSortBy] = useState("Latest Date");
-  const [filterBy, setFilterBy] = useState("None");
+  const [filterBy, setFilterBy] = useState("All");
   const [dateTime, setDateTime] = useState(0);
+  const [nextClickCount, setNextClickCount] = useState(-1);
+  const [hideNextButton, setHideNextButton] = useState(false);
+  const [comparisonOperator, setComparisonOperators] = useState("<");
 
   const sortByOptions = ["Latest Date", "Oldest Date"];
 
-  const filterByOptions = ["None", "Processing", "Delivered", "Cancel"];
+  const filterByOptions = ["All", "Processing", "Delivered", "Cancel"];
 
   const goToTop = () => {
     window.scrollTo({
@@ -30,6 +33,8 @@ const ViewOrder = () => {
 
   const selectLogSortBy = (e) => {
     setSortBy(e.target.value);
+    setNextClickCount(-1); // dont not popup prev btn
+    setDateTime(0);
   };
 
   const selectLogFilterBy = (e) => {
@@ -44,8 +49,8 @@ const ViewOrder = () => {
       case "Cancel":
         return "Cancel";
 
-      case "None":
-        return "None";
+      case "All":
+        return "All";
 
       default:
         return "Not Delivered";
@@ -59,11 +64,22 @@ const ViewOrder = () => {
         userId: userData?.id,
         orderBy: sortBy,
         dateTime: +dateTime,
+        operator: comparisonOperator,
       },
     });
 
     socket.on("updateViewOrder", (data) => {
-      console.log("activated");
+      // console.log("activated");
+
+      // Check if the data received is null or empty
+      if (!data || Object.keys(data).length === 0) {
+        // console.log("Data is empty");
+        setHideNextButton(true); // hide nextbutton
+        return;
+      }
+      setComparisonOperators("<");
+      setNextClickCount(nextClickCount + 1); // increase count by 1
+      setHideNextButton(false); // do not hide nextbutton
       setOrders(data);
       setIsLoading(false); // set loading to false when data is fetched
     });
@@ -87,10 +103,10 @@ const ViewOrder = () => {
   }, []);
 
   const filteredOrders = (orders, filterBy) => {
-    // If `filterBy` is "None", all orders are returned.
+    // If `filterBy` is "All", all orders are returned.
     // Otherwise, only the orders with a status that matches `filterBy` are returned.
     const status = showStatus(filterBy);
-    return status === "None"
+    return status === "All"
       ? Object.values(orders).map((data, index) => ({
           key: Object.keys(orders)[index],
           data,
@@ -98,6 +114,37 @@ const ViewOrder = () => {
       : Object.entries(orders)
           .filter(([key, order]) => order.status === status)
           .map(([key, data]) => ({ key, data }));
+  };
+
+  const getlastItemDate = () => {
+    const keys = Object.keys(orders);
+    // console.log(keys.length);
+    const lastKey = keys[keys.length - 1];
+    const lastDateTime = orders[lastKey].created;
+    setDateTime(lastDateTime);
+    // console.log(lastDateTime);
+  };
+
+  const getfirstItemDate = () => {
+    const keys = Object.keys(orders);
+    const lastKey = keys[0];
+    const lastDateTime = orders[lastKey].created;
+    setDateTime(lastDateTime);
+    // console.log(lastDateTime);
+  };
+
+  const next = () => {
+    setComparisonOperators("<");
+    // set lastdate of the list
+    getlastItemDate();
+  };
+
+  const prev = () => {
+    setComparisonOperators(">");
+    // set firstdate of the list
+    getfirstItemDate();
+
+    setNextClickCount(nextClickCount - 2);
   };
 
   if (isLoading) {
@@ -161,6 +208,32 @@ const ViewOrder = () => {
               cursor-pointer pointer-events-none text-black
             `}
           />
+        </div>
+        <div className="flex w-1/5 mx-5 justify-between">
+          {nextClickCount > 0 ? (
+            <button
+              className=" px-5 py-2.5 tracking-wide
+            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
+              onClick={prev}
+            >
+              Prev
+            </button>
+          ) : (
+            false
+          )}
+          {!hideNextButton ? (
+            <button
+              className="px-5 py-2.5 tracking-wide
+            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
+              onClick={next}
+            >
+              Next
+            </button>
+          ) : (
+            false
+          )}
         </div>
       </div>
 

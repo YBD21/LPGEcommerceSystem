@@ -23,7 +23,12 @@ const getOrderList = async (userId) => {
   return sendData;
 };
 
-const checkUpdateOrderData = async (userId, orderBy, dataTime) => {
+const checkUpdateOrderData = async (
+  userId,
+  orderBy,
+  dataTime,
+  comparisonOperator
+) => {
   const countryCode = userId.substring(0, 3);
   const phoneNumber = userId.substring(3);
 
@@ -57,7 +62,7 @@ const checkUpdateOrderData = async (userId, orderBy, dataTime) => {
     .doc(countryCode)
     .collection(phoneNumber)
     .orderBy(fieldNameToFilterBy, sortBy)
-    .where(fieldNameToFilterBy, "<", startingTimeStamp)
+    .where(fieldNameToFilterBy, comparisonOperator, startingTimeStamp)
     .limit(5);
 
   console.log(
@@ -86,6 +91,7 @@ const checkUpdateOrderData = async (userId, orderBy, dataTime) => {
 
         console.log(`Documents:`, documents);
 
+        // console.log(startingTimeStamp);
         // const documentsSizeInBytes = new TextEncoder().encode(
         //   JSON.stringify(documents)
         // ).length;

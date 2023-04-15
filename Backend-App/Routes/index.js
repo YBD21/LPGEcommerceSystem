@@ -113,11 +113,13 @@ io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;
     const orderBy = socket.handshake.query.orderBy;
     const searchFromUnixTimeStamp = +socket.handshake.query.dateTime;
+    const comparisonOperator = socket.handshake.query.operator;
     // console.log(userId);
     const { OrderData } = await checkUpdateOrderData(
       userId,
       orderBy,
-      searchFromUnixTimeStamp
+      searchFromUnixTimeStamp,
+      comparisonOperator
     );
 
     socket.emit("updateViewOrder", OrderData);
