@@ -231,7 +231,8 @@ const DeliveryInfo = () => {
             <input
               type="text"
               value={name}
-              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-gray-100 rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40
+              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-gray-100 rounded-md focus:border-black
+              focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40
               cursor-not-allowed"
               disabled
             />

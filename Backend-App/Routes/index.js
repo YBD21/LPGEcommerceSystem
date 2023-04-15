@@ -88,7 +88,7 @@ const updateBufferData = () => {
 
 // Immediately invoke the updateBufferData function
 
-// updateBufferData();    -- Testing mode remove comment here
+// updateBufferData();    //-- Testing mode remove comment here
 
 // Mount userRouter middleware at "/login-System" path
 app.use("/login-system", apiLimiter, loginSystemRouter);
@@ -111,8 +111,14 @@ io.on("connection", (socket) => {
 
   socket.on("updateViewOrderdata", async () => {
     const userId = socket.handshake.query.userId;
+    const orderBy = socket.handshake.query.orderBy;
+    const searchFromUnixTimeStamp = +socket.handshake.query.dateTime;
     // console.log(userId);
-    const { OrderData } = await checkUpdateOrderData(userId);
+    const { OrderData } = await checkUpdateOrderData(
+      userId,
+      orderBy,
+      searchFromUnixTimeStamp
+    );
 
     socket.emit("updateViewOrder", OrderData);
   });
