@@ -8,13 +8,13 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ViewOrder = () => {
-  const [{ userData }] = useStateValue();
+  const [{ userData, isCancelOrder }] = useStateValue();
 
   const [orders, setOrders] = useState({});
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // to testing set false
   const [sortBy, setSortBy] = useState("Latest Date");
-  const [filterBy, setFilterBy] = useState("All");
+  const [filterBy, setFilterBy] = useState("None");
   const [dateTime, setDateTime] = useState(0);
   const [nextClickCount, setNextClickCount] = useState(-1);
   const [hideNextButton, setHideNextButton] = useState(false);
@@ -22,7 +22,7 @@ const ViewOrder = () => {
 
   const sortByOptions = ["Latest Date", "Oldest Date"];
 
-  const filterByOptions = ["All", "Processing", "Delivered", "Cancel"];
+  const filterByOptions = ["None", "Processing", "Delivered", "Cancel"];
 
   const goToTop = () => {
     window.scrollTo({
@@ -49,8 +49,8 @@ const ViewOrder = () => {
       case "Cancel":
         return "Cancel";
 
-      case "All":
-        return "All";
+      case "None":
+        return "None";
 
       default:
         return "Not Delivered";
@@ -90,7 +90,9 @@ const ViewOrder = () => {
     return () => {
       socket.disconnect();
     };
-  }, [sortBy, dateTime]);
+  }, [sortBy, dateTime, isCancelOrder]);
+
+  // isCancelOrder -- if any order has been canceled will send message
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -106,7 +108,7 @@ const ViewOrder = () => {
     // If `filterBy` is "All", all orders are returned.
     // Otherwise, only the orders with a status that matches `filterBy` are returned.
     const status = showStatus(filterBy);
-    return status === "All"
+    return status === "None"
       ? Object.values(orders).map((data, index) => ({
           key: Object.keys(orders)[index],
           data,
@@ -119,6 +121,8 @@ const ViewOrder = () => {
   const getlastItemDate = () => {
     const keys = Object.keys(orders);
     // console.log(keys.length);
+    // Sort the keys array by date in descending order
+    keys.sort((a, b) => orders[b].created - orders[a].created);
     const lastKey = keys[keys.length - 1];
     const lastDateTime = orders[lastKey].created;
     setDateTime(lastDateTime);
@@ -127,9 +131,11 @@ const ViewOrder = () => {
 
   const getfirstItemDate = () => {
     const keys = Object.keys(orders);
-    const lastKey = keys[0];
-    const lastDateTime = orders[lastKey].created;
-    setDateTime(lastDateTime);
+    // Sort the keys array by date in descending order
+    keys.sort((a, b) => orders[b].created - orders[a].created);
+    const firstKey = keys[0];
+    const firstDateTime = orders[firstKey].created;
+    setDateTime(firstDateTime);
     // console.log(lastDateTime);
   };
 
@@ -209,11 +215,11 @@ const ViewOrder = () => {
             `}
           />
         </div>
-        <div className="flex w-1/5 mx-5 justify-between">
+        <div className="flex mx-8 justify-between">
           {nextClickCount > 0 ? (
             <button
-              className=" px-5 py-2.5 tracking-wide
-            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
+              className="px-5 py-2.5 tracking-wide
+            text-white bg-black font-medium rounded-lg  text-center mr-4 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
               onClick={prev}
             >
@@ -225,7 +231,7 @@ const ViewOrder = () => {
           {!hideNextButton ? (
             <button
               className="px-5 py-2.5 tracking-wide
-            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
+            text-white bg-black font-medium rounded-lg  text-center ml-4 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
               onClick={next}
             >

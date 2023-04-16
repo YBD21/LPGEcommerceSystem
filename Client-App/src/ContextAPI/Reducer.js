@@ -9,6 +9,7 @@ export const initialState = {
   totalCharge: 0,
   itemAdded: false,
   showPopup: false,
+  isCancelOrder: false,
 };
 
 const reducer = (state, action) => {
@@ -109,6 +110,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         showPopup: action.showPopup,
+      };
+
+    case "SET_CANCEL_ORDER":
+      return {
+        ...state,
+        isCancelOrder: action.isCancelOrder,
       };
 
     case "SET_TOTAL_CHARGE":

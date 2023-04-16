@@ -7,6 +7,8 @@ const CancelOrderPopUp = ({ onChild, id }) => {
     onChild(false);
   };
 
+  //  SET_CANCEL_ORDER
+
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
