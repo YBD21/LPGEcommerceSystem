@@ -1,13 +1,43 @@
 import React from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useStateValue } from "../../../ContextAPI/StateProvider";
+import instance from "../../../instance";
 
 const CancelOrderPopUp = ({ onChild, id }) => {
+  const [{ isCancelOrder }, dispatch] = useStateValue();
+
   const close = () => {
     onChild(false);
   };
 
-  //  SET_CANCEL_ORDER
+  const refetchOrder = () => {
+    // this will change useEffect on ViewOrder Page
+    //  SET_CANCEL_ORDER
+    dispatch({
+      type: "SET_CANCEL_ORDER",
+      isCancelOrder: !isCancelOrder,
+    });
+  };
+
+  const cancelOrder = (orderID) => {
+    instance
+      .patch(
+        "/order-management/cancel-order",
+        { id: orderID },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        refetchOrder();
+        close();
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  const cancelButton = () => {
+    // call backend here to modify data then call refetchOrder
+    cancelOrder(id);
+  };
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
@@ -35,6 +65,7 @@ const CancelOrderPopUp = ({ onChild, id }) => {
                 className="w-1/2 px-5 py-2.5 tracking-wide
              bg-red-800  rounded-lg text-center mr-2 mb-2
        focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-opacity-50 active:ring-4 active:ring-red-800 active:ring-opacity-50 overflow-hidden"
+                onClick={cancelButton}
               >
                 <span className="text-white font-semibold text-lg ">Yes</span>
               </button>

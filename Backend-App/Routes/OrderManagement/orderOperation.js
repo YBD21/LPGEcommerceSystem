@@ -1,26 +1,28 @@
 import { fireStoreDB } from "../firebaseConfig.js";
 
-const getOrderList = async (userId) => {
+const getOrderList = async (userId, orderId) => {
+  let status = false;
+  const unixTimeStamp = new Date().getTime();
   const countryCode = userId.substring(0, 3);
   const phoneNumber = userId.substring(3);
 
   const userCollectionRef = fireStoreDB
     .collection("Users")
     .doc(countryCode)
-    .collection(phoneNumber);
+    .collection(phoneNumber)
+    .doc(orderId);
 
-  const querySnapshot = await userCollectionRef
-    .orderBy("created", "desc")
-    .limit(5)
-    .get();
+  userCollectionRef
+    .update({ status: "Cancel", cancel_at: unixTimeStamp })
+    .then(() => {
+      console.log("Status hasbeen updated to Cancel");
+      status = true;
+    })
+    .catch((error) => {
+      console.log("Error updating status: ", error.message);
+    });
 
-  const documents = querySnapshot.docs.reduce((acc, doc) => {
-    acc[doc.id] = doc.data();
-    return acc;
-  }, {});
-
-  const sendData = { OrderData: documents };
-  return sendData;
+  return status;
 };
 
 const checkUpdateOrderData = async (

@@ -68,7 +68,7 @@ const OrderBasket = ({ items, id }) => {
 
   useEffect(() => {
     handelDisableCancel(items?.status, paymentMethod);
-  }, []);
+  }, [status]);
 
   // console.log(items);
   return (
