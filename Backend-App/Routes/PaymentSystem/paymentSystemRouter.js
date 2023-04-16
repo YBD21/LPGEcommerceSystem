@@ -96,6 +96,7 @@ paymentSystemRouter.patch("/release-stock", async (req, res) => {
 });
 
 const createBasketList = (basketData) => {
+  console.log(basketData);
   const basketList = [];
   basketData.forEach(({ ProductName, Qty }) => {
     const existingItem = basketList.find(
@@ -151,4 +152,4 @@ const releaseStockOnDisconnect = async (token) => {
   return respond;
 };
 
-export { paymentSystemRouter, releaseStockOnDisconnect };
+export { paymentSystemRouter, releaseStockOnDisconnect, createBasketList };

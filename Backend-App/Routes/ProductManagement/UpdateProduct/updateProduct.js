@@ -67,6 +67,29 @@ const subtractQuantityFromDatabase = async (basketList) => {
     });
   }
 };
+const addBasketListQuantityToDatabase = async (basketList) => {
+  const startCountRef = "ProductList/LPGasList";
+  const ref = dataBase.ref(startCountRef);
+  // loop here
+  for (const basketItem of basketList) {
+    let userRef = ref.child(basketItem.KeyName);
+    const result = await userRef.child("InStock").transaction((currentQty) => {
+      if (currentQty === null || currentQty === undefined) {
+        // If the InStock field does not exist, set it to basketItem.Qty.
+        return basketItem.Qty;
+      } else {
+        // Otherwise, add the basketItem.Qty from the current value of InStock.
+        return currentQty + basketItem.Qty;
+      }
+    });
+    if (!result.committed) {
+      return false;
+    }
+  }
+  // update BufferData
+  await sendProductList();
+  return true;
+};
 
 const subtractReservedQuantity = async (basketList) => {
   try {
@@ -176,4 +199,5 @@ export {
   addReservedQuantity,
   subtractQuantityFromDatabase,
   updateProductStock,
+  addBasketListQuantityToDatabase,
 };

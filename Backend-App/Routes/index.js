@@ -80,10 +80,10 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Define the updateBufferData function
-const updateBufferData = () => {
-  sendProductList();
-  sendDeliveryRate();
-  sendGasRate();
+const updateBufferData = async () => {
+  await sendProductList();
+  await sendDeliveryRate();
+  await sendGasRate();
 };
 
 // Immediately invoke the updateBufferData function

@@ -1,7 +1,8 @@
+import { createBasketList } from "../PaymentSystem/paymentSystemRouter.js";
+import { addBasketListQuantityToDatabase } from "../ProductManagement/UpdateProduct/updateProduct.js";
 import { fireStoreDB } from "../firebaseConfig.js";
 
-const getOrderList = async (userId, orderId) => {
-  let status = false;
+const cancelOrder = async (userId, orderId) => {
   const unixTimeStamp = new Date().getTime();
   const countryCode = userId.substring(0, 3);
   const phoneNumber = userId.substring(3);
@@ -12,17 +13,23 @@ const getOrderList = async (userId, orderId) => {
     .collection(phoneNumber)
     .doc(orderId);
 
-  userCollectionRef
+  // Get a snapshot of the order details
+  const orderListSnapshot = await userCollectionRef.get();
+  // Extract the Orderlist from the snapshot
+  const orderData = orderListSnapshot.data();
+  // Extract the basket from the data
+  const basketList = orderData.basket;
+
+  await userCollectionRef
     .update({ status: "Cancel", cancel_at: unixTimeStamp })
     .then(() => {
-      console.log("Status hasbeen updated to Cancel");
-      status = true;
+      console.log("Status updated to Cancel");
     })
     .catch((error) => {
       console.log("Error updating status: ", error.message);
     });
 
-  return status;
+  return basketList;
 };
 
 const checkUpdateOrderData = async (
@@ -109,4 +116,13 @@ const checkUpdateOrderData = async (
   });
 };
 
-export { getOrderList, checkUpdateOrderData };
+const replenishCancelStockToDatabase = async (basket) => {
+  // filterBasketList
+  const filteredBasketData = createBasketList(basket);
+  // update Stock
+  const respond = await addBasketListQuantityToDatabase(filteredBasketData);
+
+  return respond;
+};
+
+export { cancelOrder, checkUpdateOrderData, replenishCancelStockToDatabase };
