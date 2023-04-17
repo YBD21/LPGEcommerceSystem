@@ -168,7 +168,7 @@ const Product = ({ id, productName, imageUrl, stock }) => {
         </div>
       )}
       <img
-        class="object-contain h-48 w-96 max-lg:mt-7"
+        className="object-contain h-48 w-96 max-lg:mt-7"
         src={imageUrl}
         alt={productName}
         loading="eager"

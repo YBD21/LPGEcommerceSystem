@@ -23,7 +23,7 @@ const ShowItemsFromOrderBasket = ({ name, image, type, Qty, gasRateData }) => {
     >
       <div className="flex flex-col w-1/2 max-lg:w-full mb-5 mx-5 items-center">
         <img
-          className="w-1/4 m-6 max-lg:mt-7 max-lg:w-1/2"
+          className="object-contain h-48 w-96 m-6 max-lg:mt-7"
           src={image}
           alt={name}
           loading="eager"
