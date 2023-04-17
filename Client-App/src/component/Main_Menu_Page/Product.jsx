@@ -163,16 +163,17 @@ const Product = ({ id, productName, imageUrl, stock }) => {
       ) : (
         <div className="w-full text-end">
           <strong className="bg-red-700 p-2 rounded-lg text-white ">
-            Out Stock ! {console.log(inStock)}
+            Out Stock !{/* {console.log(inStock)} */}
           </strong>
         </div>
       )}
       <img
-        className="w-24 max-lg:mt-7"
+        class="object-contain h-48 w-96 max-lg:mt-7"
         src={imageUrl}
         alt={productName}
         loading="eager"
       />
+
       <p className="px-5 pt-5 pb-2 text-2xl font-semibold">{productName}</p>
       {/* add and subtract */}
       <div className="flex flex-row my-6 justify-between place-items-center">
