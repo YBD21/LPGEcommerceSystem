@@ -127,4 +127,23 @@ const saveOrderDetailForCashOnDelivery = async (payloadData) => {
   return sendData;
 };
 
-export { verifyTransaction, saveOrderDetail, saveOrderDetailForCashOnDelivery };
+const checkReservationTimeValidity = () => {
+  // Check if the request to reserve stock was made between 6 PM and 6 AM Nepal time. If so, block the user.
+  const unixTimeStampNow = new Date().getTime();
+
+  const requestHour = new Date(unixTimeStampNow).getUTCHours() + 5.75; // Add 5 hours and 45 minutes for Nepal time
+  if (requestHour >= 18 || requestHour < 6) {
+    // Request made between 6 PM and 6 AM Nepal time, block user
+    return false;
+  } else {
+    // Request made between 6 AM and 6 PM Nepal time, allow reservation
+    return true;
+  }
+};
+
+export {
+  verifyTransaction,
+  saveOrderDetail,
+  saveOrderDetailForCashOnDelivery,
+  checkReservationTimeValidity,
+};

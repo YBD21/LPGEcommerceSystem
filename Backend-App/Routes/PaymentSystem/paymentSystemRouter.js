@@ -3,6 +3,7 @@ import {
   verifyTransaction,
   saveOrderDetail,
   saveOrderDetailForCashOnDelivery,
+  checkReservationTimeValidity,
 } from "./paymentOperation.js";
 import {
   subtractReservedQuantity,
@@ -48,40 +49,53 @@ paymentSystemRouter.post("/delivery-order", async (req, res) => {
 });
 
 paymentSystemRouter.post("/reserve-stock", async (req, res) => {
-  try {
-    const { Basket: basketData, UserInfo: userData } = req.body;
+  // if request reserve-stock is in 6 PM - 6 AM : block user
+  const shouldReserveStock = checkReservationTimeValidity();
+  // if true
+  if (shouldReserveStock) {
+    try {
+      const { Basket: basketData, UserInfo: userData } = req.body;
 
-    const userBasketList = createBasketList(basketData); // users baskets
+      const userBasketList = createBasketList(basketData); // users baskets
 
-    console.log("userBasketList :", userBasketList);
+      console.log("userBasketList :", userBasketList);
 
-    // check if quantity can be subtracted
-    const respond = await subtractReservedQuantity(userBasketList);
+      // check if quantity can be subtracted
+      const respond = await subtractReservedQuantity(userBasketList);
 
-    if (respond?.timer) {
-      const createdDate = new Date().toString(); // generate Data
+      if (respond?.timer) {
+        const createdDate = new Date().toString(); // generate Data
 
-      // Find the index of the user's record in stockReservationRecord
-      const recordIndex = await findRecordIndex(userData.id);
+        // Find the index of the user's record in stockReservationRecord
+        const recordIndex = await findRecordIndex(userData.id);
 
-      if (recordIndex === -1) {
-        // create record
+        if (recordIndex === -1) {
+          // create record
 
-        let stockReservationRecord = {
-          userId: userData.id,
-          userBasketList: userBasketList,
-          created: createdDate,
-        };
-        await updateStockReservationRecord(stockReservationRecord);
-        console.log("stockReservationRecord :", stockReservationRecord);
+          let stockReservationRecord = {
+            userId: userData.id,
+            userBasketList: userBasketList,
+            created: createdDate,
+          };
+          await updateStockReservationRecord(stockReservationRecord);
+          console.log("stockReservationRecord :", stockReservationRecord);
+        }
       }
-    }
 
-    res.json(respond);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ error: "Error reserving stock" });
+      res.json(respond);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json({ error: "Error reserving stock" });
+    }
   }
+  console.log(
+    "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time"
+  );
+
+  res.status(500).json({
+    error:
+      "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time",
+  });
 });
 
 paymentSystemRouter.patch("/release-stock", async (req, res) => {

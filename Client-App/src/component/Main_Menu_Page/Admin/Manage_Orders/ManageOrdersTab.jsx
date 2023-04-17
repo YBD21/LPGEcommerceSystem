@@ -52,12 +52,12 @@ const ManageOrdersTab = () => {
             {isViewOrder && <ArrowRightIcon className="svg-icons mr-6" />}
             <span className="mr-auto">Orders Details</span>
           </Link>
-          <Link
+          {/* <Link
             href="#"
             className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
           >
             Create Orders
-          </Link>
+          </Link> */}
           <div className="shadow-lg relative">
             <div className="absolute inset-0 bottom-auto w-full h-1 bg-gradient-to-t from-gray-300 via-gray-200 to-transparent" />
           </div>
