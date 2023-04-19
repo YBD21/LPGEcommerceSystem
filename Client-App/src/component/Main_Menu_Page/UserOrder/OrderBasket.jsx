@@ -56,7 +56,7 @@ const OrderBasket = ({ items, id }) => {
 
   let totalprice = items?.amount;
   let OrderId = id;
-  let DataAndTime = convertUnixTimeStamp(items?.created);
+  let DateAndTime = convertUnixTimeStamp(items?.created);
   let textColor = "text-orange-600";
   let status = showStatus(items?.status);
   let paymentMethod = items?.PaymentType;
@@ -81,7 +81,7 @@ const OrderBasket = ({ items, id }) => {
       </div>
       {/* Order Date */}
       <div className="flex justify-between">
-        <p className="text-lg font-medium px-4">{DataAndTime}</p>
+        <p className="text-lg font-medium px-4">{DateAndTime}</p>
         <p className={`text-3xl font-semibold px-5 ${textColor}`}>{status}</p>
       </div>
       {/* Delivery Info */}

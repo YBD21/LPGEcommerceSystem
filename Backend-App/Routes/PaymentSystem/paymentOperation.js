@@ -33,11 +33,18 @@ const verifyTransaction = async (tokenId, totalAmount) => {
 };
 
 const generateOrderId = (date, phoneNumber) => {
+  // Convert the given date to a string in the format YYYYMMDDTHHmmss
+  // by first converting it to ISO format, removing any "-" dashes or ":" colons, and
+  // then slicing off the last 5 characters (which represent the milliseconds).
   // Convert date to string in the format of yyyyMMddHHmmss
   const formattedDate = date.toISOString().replace(/[-:]/g, "").slice(0, -5);
 
+  // Generate a random string by first generating a random decimal number
+  // between 0 and 1 using Math.random(), then converting it to base 36 (using
+  // alphanumeric characters 0-9 and a-z), and finally extracting a substring
+  // of length 6 starting at index 2 to remove the "0." prefix.
   // Generate a random string of 6 characters using the characters from 0-9 and a-z.
-  const randomString = Math.random().toString(36).substr(2, 6);
+  const randomString = Math.random().toString(36).substring(2, 8);
 
   // Combine all parts to create unique ID
   const orderId = `${formattedDate}${phoneNumber}${randomString}`;

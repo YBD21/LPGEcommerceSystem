@@ -2,6 +2,7 @@ import express from "express";
 import { decodeToken } from "../LoginSystem/login.js";
 import {
   cancelOrder,
+  getAllOrderData,
   replenishCancelStockToDatabase,
 } from "./orderOperation.js";
 
@@ -21,6 +22,11 @@ orderManagementSystemRouter.patch("/cancel-order", async (req, res) => {
 
   const respond = replenishCancelStockToDatabase(cancelBasketData);
 
+  res.json(respond);
+});
+
+orderManagementSystemRouter.get("/get-all-order", async (req, res) => {
+  const respond = await getAllOrderData();
   res.json(respond);
 });
 

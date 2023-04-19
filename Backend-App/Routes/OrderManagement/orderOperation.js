@@ -32,6 +32,100 @@ const cancelOrder = async (userId, orderId) => {
   return basketList;
 };
 
+const getAllOrderData = async () => {
+  const usersRef = fireStoreDB.collection("Users");
+
+  let status = false;
+
+  // array of countryCode
+  const countryCodes = await getAllCountryCode(usersRef);
+  console.log("Country Codes :", countryCodes);
+
+  // array of phoneNumber
+  const phoneNumbers = await getAllPhoneNumber(usersRef, countryCodes);
+  console.log("PhoneNumber List :", phoneNumbers);
+
+  // array of OrderId
+  const orderIdList = await getAllOrderId(usersRef, phoneNumbers);
+  console.log("OrderIdList :", orderIdList);
+
+  return status;
+};
+
+const getAllCountryCode = async (usersRef) => {
+  const countryCodeList = []; // 977
+  await usersRef
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.id, " => ", doc.data());
+        countryCodeList.push(doc.id);
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+  // console.log("Country Code :", countryCodeList);
+  return countryCodeList;
+};
+
+const getAllPhoneNumber = async (usersRef, countryCodes) => {
+  let phoneNumber = {}; // 9860694050
+  await Promise.all(
+    countryCodes.map((countryIndex) => {
+      phoneNumber[countryIndex] = {};
+      return usersRef
+        .doc(countryIndex)
+        .listCollections()
+        .then((subcollections) => {
+          subcollections.forEach((subcollection) => {
+            // phoneNumber.push(subcollection.id);
+            phoneNumber[countryIndex][subcollection.id] = {};
+          });
+        })
+        .catch((error) => {
+          console.log("Error getting subcollections: ", error);
+        });
+    })
+  );
+  return phoneNumber;
+};
+
+const getAllOrderId = async (usersRef, phoneNumbers) => {
+  let orderIds = {}; //20230412T1446129860694050vbpf08
+
+  const dateTimeNow = new Date().getTime();
+
+  await Promise.all(
+    Object.keys(phoneNumbers).map((countryIndex) => {
+      orderIds[countryIndex] = {};
+      return Promise.all(
+        Object.keys(phoneNumbers[countryIndex]).map((phoneNumber) => {
+          orderIds[countryIndex][phoneNumber] = {};
+          return new Promise((resolve, reject) => {
+            usersRef
+              .doc(countryIndex)
+              .collection(phoneNumber)
+              .orderBy("created", "desc")
+              .where("created", "<", dateTimeNow)
+              .limit(5)
+              .onSnapshot((querySnapshot) => {
+                const data = {};
+                querySnapshot.forEach((doc) => {
+                  data[doc.id] = doc.data();
+                });
+                orderIds[countryIndex][phoneNumber] = data;
+                resolve();
+              }, reject);
+          });
+        })
+      );
+    })
+  );
+
+  return orderIds;
+};
+
 const checkUpdateOrderData = async (
   userId,
   orderBy,
@@ -125,4 +219,9 @@ const replenishCancelStockToDatabase = async (basket) => {
   return respond;
 };
 
-export { cancelOrder, checkUpdateOrderData, replenishCancelStockToDatabase };
+export {
+  cancelOrder,
+  checkUpdateOrderData,
+  replenishCancelStockToDatabase,
+  getAllOrderData,
+};
