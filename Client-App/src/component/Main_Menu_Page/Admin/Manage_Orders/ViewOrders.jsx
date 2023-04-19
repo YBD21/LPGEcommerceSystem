@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import instance from "../../../../instance";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
 import ViewSingleOrder from "./ViewSingleOrder";
 
 const ViewOrders = () => {
@@ -40,7 +42,12 @@ const ViewOrders = () => {
           Not Delivered
         </td>
         <td className="border px-4 py-2 font-bold">Rs. {1800}</td>
-        <td className="border px-4 py-2 font-bold">View More</td>
+        <td className="flex justify-between border px-8 py-2 font-bold">
+          {/* Edit */}
+          <EditIcon className="scale-125" />
+          {/* View More */}
+          <VisibilityIcon className="scale-125" />
+        </td>
       </tr>
     );
   }

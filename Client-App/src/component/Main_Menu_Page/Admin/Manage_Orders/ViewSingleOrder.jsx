@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const ViewSingleOrder = () => {
   let Name = "Santosh Deuja";
 
@@ -24,7 +25,7 @@ const ViewSingleOrder = () => {
   let totalprice = 18_00;
 
   return (
-    <div className="flex flex-col justify-between mx-8 py-8 my-5 bg-[whitesmoke] rounded-2xl shadow shadow-gray-500 border-2 border-gray-300 relative">
+    <div className="flex flex-col justify-between px-8 py-8 my-5 bg-[whitesmoke] rounded-2xl shadow shadow-gray-500 border-2 border-gray-300">
       {/* Order Summary */}
       <div className="flex justify-between mb-2">
         <strong className="text-2xl font-semibold px-4">{Name}</strong>
