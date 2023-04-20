@@ -1,5 +1,8 @@
 import express from "express";
-import { decodeToken } from "../LoginSystem/login.js";
+import {
+  decodeToken,
+  verifyTokenAndDecodeToken,
+} from "../LoginSystem/login.js";
 import {
   cancelOrder,
   getAllOrderData,
@@ -26,8 +29,20 @@ orderManagementSystemRouter.patch("/cancel-order", async (req, res) => {
 });
 
 orderManagementSystemRouter.get("/get-all-order", async (req, res) => {
-  const respond = await getAllOrderData();
-  res.json(respond);
+  // access who is user from http cookies
+  const accessToken = req.cookies.userData;
+  const decodeToken = await verifyTokenAndDecodeToken(accessToken);
+
+  if (!decodeToken.error && decodeToken.role === "Admin") {
+    console.log(
+      `User ID : ${decodeToken.id} with Role of : ${decodeToken.role} is Accessing getAllOrder !`
+    );
+
+    const respond = await getAllOrderData();
+    res.json(respond);
+  }
+
+  res.json(decodeToken.error);
 });
 
 export default orderManagementSystemRouter;

@@ -96,7 +96,7 @@ const verifyToken = (token) => {
   return sendData;
 };
 
-const verifyTokenAndDecodeToken = (token) => {
+const verifyTokenAndDecodeToken = async (token) => {
   let sendData = {};
   jwt.verify(token, secretKey, function (err, decoded) {
     if (err) {

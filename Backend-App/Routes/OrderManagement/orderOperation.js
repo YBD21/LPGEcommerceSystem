@@ -1,6 +1,6 @@
 import { createBasketList } from "../PaymentSystem/paymentSystemRouter.js";
 import { addBasketListQuantityToDatabase } from "../ProductManagement/UpdateProduct/updateProduct.js";
-import { fireStoreDB } from "../firebaseConfig.js";
+import { fireStoreDB, dataBase } from "../firebaseConfig.js";
 
 const cancelOrder = async (userId, orderId) => {
   const unixTimeStamp = new Date().getTime();
@@ -35,8 +35,6 @@ const cancelOrder = async (userId, orderId) => {
 const getAllOrderData = async () => {
   const usersRef = fireStoreDB.collection("Users");
 
-  let status = false;
-
   // array of countryCode
   const countryCodes = await getAllCountryCode(usersRef);
   console.log("Country Codes :", countryCodes);
@@ -47,9 +45,13 @@ const getAllOrderData = async () => {
 
   // array of OrderId
   const orderIdList = await getAllOrderId(usersRef, phoneNumbers);
-  console.log("OrderIdList :", orderIdList);
+  // console.log("OrderIdList :", orderIdList);
 
-  return status;
+  //  add costumer name into OrderList
+  const orderListWithCustomerName = await addCustomerName(orderIdList);
+  console.log("OrderIdList :", orderListWithCustomerName);
+
+  return orderListWithCustomerName;
 };
 
 const getAllCountryCode = async (usersRef) => {
@@ -124,6 +126,38 @@ const getAllOrderId = async (usersRef, phoneNumbers) => {
   );
 
   return orderIds;
+};
+
+const addCustomerName = async (orderList) => {
+  // get CustomerName and attach into orderList
+
+  let orderListWithCustomerName = { ...orderList }; // copy OrderList
+
+  let startCountRef;
+
+  let refDatabase;
+
+  await Promise.all(
+    Object.keys(orderList).map((countryCodeIndex) => {
+      return Promise.all(
+        Object.keys(orderList[countryCodeIndex]).map(async (phoneNumber) => {
+          startCountRef = `SignInWithPhoneNumber/+${countryCodeIndex}/${phoneNumber}`;
+          refDatabase = dataBase.ref(startCountRef);
+          await refDatabase.once("value", (snapshot) => {
+            let firstName = snapshot.val().FirstName;
+            let lastName = snapshot.val().LastName;
+            orderListWithCustomerName[countryCodeIndex][phoneNumber] = {
+              ...orderListWithCustomerName[countryCodeIndex][phoneNumber],
+              FirstName: firstName,
+              LastName: lastName,
+            };
+          });
+        })
+      );
+    })
+  );
+
+  return orderListWithCustomerName;
 };
 
 const checkUpdateOrderData = async (

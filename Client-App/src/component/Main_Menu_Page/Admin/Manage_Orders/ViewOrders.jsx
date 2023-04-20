@@ -8,7 +8,7 @@ const ViewOrders = () => {
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
 
-  const handleClick = (event) => {
+  const handelPageNumberClick = (event) => {
     setPage(Number(event.target.id));
   };
 
@@ -20,7 +20,7 @@ const ViewOrders = () => {
         withCredentials: true, // enable sending and receiving cookies
       })
       .then((respond) => {
-        console.log(respond);
+        console.log(respond.data);
       })
       .catch((error) => {
         console.log(error.message);
@@ -53,12 +53,12 @@ const ViewOrders = () => {
   }
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(45 / itemsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(10 / itemsPerPage); i++) {
     pageNumbers.push(
       <li key={i}>
         <button
           id={i}
-          onClick={handleClick}
+          onClick={handelPageNumberClick}
           className={`${
             i === page ? "bg-gray-400 text-white" : "bg-white text-black"
           } hover:bg-gray-500 hover:text-white py-2 px-4 border-2
