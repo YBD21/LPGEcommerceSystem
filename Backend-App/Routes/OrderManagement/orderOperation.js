@@ -148,8 +148,7 @@ const addCustomerName = async (orderList) => {
             let lastName = snapshot.val().LastName;
             orderListWithCustomerName[countryCodeIndex][phoneNumber] = {
               ...orderListWithCustomerName[countryCodeIndex][phoneNumber],
-              FirstName: firstName,
-              LastName: lastName,
+              FullName: firstName + " " + lastName,
             };
           });
         })
