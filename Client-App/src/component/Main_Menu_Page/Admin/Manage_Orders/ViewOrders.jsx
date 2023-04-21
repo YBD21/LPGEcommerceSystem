@@ -8,6 +8,12 @@ const ViewOrders = () => {
   const [page, setPage] = useState(1);
   const [orderList, setOrderList] = useState({});
   const [orderCount, setOrderCount] = useState(1);
+  const [countryCode, setCountryCode] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
+  const [orderId, setOrderId] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [renderOnce, setRenderOnce] = useState(false);
+
   const itemsPerPage = 5;
 
   const handelPageNumberClick = (event) => {
@@ -34,7 +40,6 @@ const ViewOrders = () => {
     let totalOrderCount = 0;
     Object.keys(orderList).forEach((countryCode) => {
       Object.keys(orderList[countryCode]).forEach((phoneNumber) => {
-        // totalOrderCount = totalOrderCount - 1; // minus Full Name
         Object.keys(orderList[countryCode][phoneNumber]).forEach((orderId) => {
           if (orderId !== "FullName") {
             totalOrderCount++;
@@ -77,15 +82,24 @@ const ViewOrders = () => {
     Object.keys(orderList[countryCode]).forEach((phoneNumber) => {
       Object.keys(orderList[countryCode][phoneNumber]).forEach((orderId) => {
         if (orderId !== "FullName") {
-          ++index; // increase after
           userName = orderList[countryCode][phoneNumber]["FullName"];
           deliveryStatus = showStatus(
             orderList[countryCode][phoneNumber][orderId]["status"]
           );
           totalAmount = orderList[countryCode][phoneNumber][orderId]["amount"];
+
+          // if index = 0 and once if not render = false
+          if (index === 0 && renderOnce === false) {
+            setCountryCode(countryCode);
+            setphoneNumber(phoneNumber);
+            setOrderId(orderId);
+            setFullName(userName);
+            setRenderOnce(true);
+          }
+
           tableRows.push(
             <tr key={index}>
-              <td className="border px-4 py-2.5 font-bold">{index}</td>
+              <td className="border px-4 py-2.5 font-bold">{index + 1}</td>
               <td className="border px-4 py-2.5 font-bold">{orderId}</td>
               <td className="border px-4 py-2.5 font-bold">{userName}</td>
               <td className="border px-4 py-2.5 font-bold">{phoneNumber}</td>
@@ -106,6 +120,7 @@ const ViewOrders = () => {
               </td>
             </tr>
           );
+          index++; // increase by 1
         }
       });
     });
@@ -142,7 +157,17 @@ const ViewOrders = () => {
     <div className="flex-1 bg-white p-2">
       <h2 className="text-3xl font-bold mt-4 ml-2 mb-8">Orders</h2>
       {/* View OrderItems */}
-      <ViewSingleOrder />
+      {Object.keys(orderList).length > 0 ? (
+        <ViewSingleOrder
+          countryCode={countryCode}
+          phoneNumber={phoneNumber}
+          orderId={orderId}
+          fullName={fullName}
+          orderList={orderList}
+        />
+      ) : (
+        false
+      )}
       <button
         className="px-5 py-2.5 bg-gray-200 rounded-2xl m-2"
         onClick={getData}
