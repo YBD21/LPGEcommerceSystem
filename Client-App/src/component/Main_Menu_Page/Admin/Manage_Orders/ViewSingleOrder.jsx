@@ -14,7 +14,7 @@ const ViewSingleOrder = ({
     setBasketFromOrderList(
       orderList[countryCode][phoneNumber][orderId]["basket"]
     );
-  }, []);
+  }, [orderId]);
 
   const showStatus = (OrderState) => {
     switch (OrderState) {
@@ -135,6 +135,9 @@ const ViewSingleOrder = ({
                   Qty={item.Qty}
                   gasRateData={
                     orderList[countryCode][phoneNumber][orderId]["gasRate"]
+                  }
+                  gasDeliveryRateData={
+                    orderList[countryCode][phoneNumber][orderId]["deliveryRate"]
                   }
                   index={index}
                 />

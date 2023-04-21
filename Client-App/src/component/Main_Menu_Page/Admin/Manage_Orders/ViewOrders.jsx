@@ -16,6 +16,13 @@ const ViewOrders = () => {
 
   const itemsPerPage = 5;
 
+  const handelViewIconClick = (countryCode, phoneNumber, orderId, userName) => {
+    setCountryCode(countryCode);
+    setphoneNumber(phoneNumber);
+    setOrderId(orderId);
+    setFullName(userName);
+  };
+
   const handelPageNumberClick = (event) => {
     setPage(Number(event.target.id));
   };
@@ -76,6 +83,7 @@ const ViewOrders = () => {
   let textColor = "text-orange-600";
   let userName = "";
   let deliveryStatus = "";
+  let deliveredBy = "";
   let totalAmount = 0;
 
   Object.keys(orderList).forEach((countryCode) => {
@@ -87,7 +95,8 @@ const ViewOrders = () => {
             orderList[countryCode][phoneNumber][orderId]["status"]
           );
           totalAmount = orderList[countryCode][phoneNumber][orderId]["amount"];
-
+          deliveredBy =
+            orderList[countryCode][phoneNumber][orderId]["deliveredBy"] || "-";
           // if index = 0 and once if not render = false
           if (index === 0 && renderOnce === false) {
             setCountryCode(countryCode);
@@ -112,11 +121,33 @@ const ViewOrders = () => {
                   maximumFractionDigits: 2,
                 })}
               </td>
-              <td className="flex justify-between border px-8 py-2 font-bold">
-                {/* Edit */}
-                <EditIcon className="scale-125" />
-                {/* View More */}
-                <VisibilityIcon className="scale-125" />
+              <td className="border px-4 py-2 font-bold">{deliveredBy}</td>
+              <td className="flex justify-between border px-8 py-4 font-bold">
+                <button className="py-2 px-3.5 bg-black mr-3 rounded-lg group relative">
+                  {/* Edit */}
+                  <EditIcon className="scale-125 text-white pointer-events-none" />
+                  <div className="absolute bottom-5 right-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+                    <span className="text-white font-semibold"> Edit </span>
+                  </div>
+                </button>
+
+                <button
+                  className="py-2 px-3.5 bg-black ml-3 rounded-lg group relative"
+                  onClick={() =>
+                    handelViewIconClick(
+                      countryCode,
+                      phoneNumber,
+                      orderId,
+                      userName
+                    )
+                  }
+                >
+                  {/* View More */}
+                  <VisibilityIcon className="scale-125 text-white" />
+                  <div className="absolute bottom-10 left-16 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+                    <span className="text-white font-semibold">View</span>
+                  </div>
+                </button>
               </td>
             </tr>
           );
@@ -194,6 +225,9 @@ const ViewOrders = () => {
             </th>
             <th className="px-4 py-3 text-gray-800 border-2 border-gray-200">
               Total Amount
+            </th>
+            <th className="px-4 py-3 text-gray-800 border-2 border-gray-200">
+              Delivered By
             </th>
             <th className="px-4 py-3 text-gray-800 border-2 border-gray-200">
               Action
