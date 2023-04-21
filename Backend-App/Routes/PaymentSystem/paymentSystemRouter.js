@@ -87,15 +87,16 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
       console.log(error.message);
       res.status(500).json({ error: "Error reserving stock" });
     }
-  }
-  console.log(
-    "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time"
-  );
+  } else {
+    console.log(
+      "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time"
+    );
 
-  res.status(500).json({
-    error:
-      "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time",
-  });
+    res.status(500).json({
+      error:
+        "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time",
+    });
+  }
 });
 
 paymentSystemRouter.patch("/release-stock", async (req, res) => {
