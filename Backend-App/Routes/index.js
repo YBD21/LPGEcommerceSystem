@@ -26,7 +26,7 @@ import {
 import { releaseStockOnDisconnectWithAccessToken } from "./PaymentSystem/stockReservation.js";
 import productManagementSystemRouter from "./ProductManagement/productManagementSystemRouter.js";
 import orderManagementSystemRouter from "./OrderManagement/orderManagementSystemRouter.js";
-import { checkUpdateOrderData } from "./OrderManagement/orderOperation.js";
+import { checkUpdateOrderData, getAllOrderData } from "./OrderManagement/orderOperation.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -107,7 +107,21 @@ const filePathDeliveryRate = "BufferData/deliveryRate.json";
 const filePathProductList = "BufferData/productList.json";
 
 io.on("connection", (socket) => {
-  // on connection access token
+  socket.on("ViewOrderListAdmin", async () => {
+    const userId = socket.handshake.query.userId;
+    const userRole = socket.handshake.query.userRole;
+    const orderBy = socket.handshake.query.orderBy;
+    // const searchFromUnixTimeStamp = +socket.handshake.query.dateTime;
+    // const comparisonOperator = socket.handshake.query.operator;
+
+    if (userRole === "Admin") {
+      console.log(
+        `User ID : ${userId} with Role of : ${userRole} is Accessing getAllOrder !`
+      );
+      const OrderData = await getAllOrderData();
+      return socket.emit("updateViewOrderListAdmin", OrderData);
+    }
+  });
 
   socket.on("updateViewOrderdata", async () => {
     const userId = socket.handshake.query.userId;

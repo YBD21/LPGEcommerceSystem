@@ -1,59 +1,83 @@
 import React, { useState, useEffect } from "react";
-import instance from "../../../../instance";
+import openSocket from "socket.io-client";
+import { url } from "../../../../instance";
+import ViewSingleOrder from "./ViewSingleOrder";
+import { useStateValue } from "../../../../ContextAPI/StateProvider";
+import Loading from "../../../Loading";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
-import ViewSingleOrder from "./ViewSingleOrder";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ViewOrders = () => {
+  const [{ userData }] = useStateValue();
   const [page, setPage] = useState(1);
   const [orderList, setOrderList] = useState({});
   const [orderCount, setOrderCount] = useState(1);
   const [countryCode, setCountryCode] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
   const [orderId, setOrderId] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // to testing set false
   const [renderOnce, setRenderOnce] = useState(false);
-
+  const [filterBy, setFilterBy] = useState("None");
+  const filterByOptions = ["None", "Not Delivered", "Delivered", "Cancel"];
   const itemsPerPage = 5;
 
-  const handelViewIconClick = (countryCode, phoneNumber, orderId, userName) => {
+  const handelViewIconClick = (countryCode, phoneNumber, orderId) => {
     setCountryCode(countryCode);
     setphoneNumber(phoneNumber);
     setOrderId(orderId);
-    setFullName(userName);
   };
 
   const handelPageNumberClick = (event) => {
     setPage(Number(event.target.id));
   };
 
-  const getData = () => {
-    // call axios here
-    //path : order-management/get-all-order
-    instance
-      .get("order-management/get-all-order", {
-        withCredentials: true, // enable sending and receiving cookies
-      })
-      .then((respond) => {
-        setOrderList(respond.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+  const selectLogFilterBy = (e) => {
+    setFilterBy(e.target.value);
+    setRenderOnce(false);
   };
 
+  useEffect(() => {
+    //call to backend for connection
+    const socket = openSocket(url, {
+      query: {
+        userId: userData?.id,
+        userRole: userData?.role,
+      },
+    });
+
+    socket.on("updateViewOrderListAdmin", (data) => {
+      // console.log("activated");
+      setOrderList(data);
+      setIsLoading(false); // set loading to false when data is fetched
+    });
+
+    // emit the event to listen for updates
+    socket.emit("ViewOrderListAdmin");
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   // count total number orders
+
   const getTotalOrderCount = () => {
     let totalOrderCount = 0;
     Object.keys(orderList).forEach((countryCode) => {
       Object.keys(orderList[countryCode]).forEach((phoneNumber) => {
         Object.keys(orderList[countryCode][phoneNumber]).forEach((orderId) => {
           if (orderId !== "FullName") {
-            totalOrderCount++;
+            let deliveryStatus =
+              orderList[countryCode][phoneNumber][orderId]["status"];
+
+            (filterBy === "None" || deliveryStatus === filterBy) &&
+              totalOrderCount++;
           }
         });
       });
     });
+    console.log(totalOrderCount);
     return totalOrderCount;
   };
 
@@ -76,7 +100,7 @@ const ViewOrders = () => {
   useEffect(() => {
     const totalCount = getTotalOrderCount();
     setOrderCount(totalCount);
-  }, [orderList]);
+  }, [orderList, filterBy]);
 
   const tableRows = [];
   let index = 0;
@@ -97,61 +121,58 @@ const ViewOrders = () => {
           totalAmount = orderList[countryCode][phoneNumber][orderId]["amount"];
           deliveredBy =
             orderList[countryCode][phoneNumber][orderId]["deliveredBy"] || "-";
-          // if index = 0 and once if not render = false
-          if (index === 0 && renderOnce === false) {
-            setCountryCode(countryCode);
-            setphoneNumber(phoneNumber);
-            setOrderId(orderId);
-            setFullName(userName);
-            setRenderOnce(true);
+          // filter
+          if (filterBy === "None" || deliveryStatus === filterBy) {
+            // if index = 0 and once if not render = false
+            if (index === 0 && renderOnce === false) {
+              setCountryCode(countryCode);
+              setphoneNumber(phoneNumber);
+              setOrderId(orderId);
+              setRenderOnce(true);
+            }
+
+            tableRows.push(
+              <tr key={index}>
+                <td className="border px-4 py-2.5 font-bold">{index + 1}</td>
+                <td className="border px-4 py-2.5 font-bold">{orderId}</td>
+                <td className="border px-4 py-2.5 font-bold">{userName}</td>
+                <td className="border px-4 py-2.5 font-bold">{phoneNumber}</td>
+                <td className={`border px-4 py-2 font-bold ${textColor}`}>
+                  {deliveryStatus}
+                </td>
+                <td className="border px-4 py-2 font-bold">
+                  Rs.{" "}
+                  {totalAmount.toLocaleString("en-IN", {
+                    maximumFractionDigits: 2,
+                  })}
+                </td>
+                <td className="border px-4 py-2 font-bold">{deliveredBy}</td>
+                <td className="flex justify-between border px-8 py-4 font-bold">
+                  <button className="py-2 px-3.5 bg-black mr-3 rounded-lg group relative">
+                    {/* Edit */}
+                    <EditIcon className="scale-125 text-white pointer-events-none" />
+                    <div className="absolute bottom-5 right-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+                      <span className="text-white font-semibold"> Edit </span>
+                    </div>
+                  </button>
+
+                  <button
+                    className="py-2 px-3.5 bg-black ml-3 rounded-lg group relative"
+                    onClick={() =>
+                      handelViewIconClick(countryCode, phoneNumber, orderId)
+                    }
+                  >
+                    {/* View More */}
+                    <VisibilityIcon className="scale-125 text-white" />
+                    <div className="absolute bottom-10 left-16 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+                      <span className="text-white font-semibold">View</span>
+                    </div>
+                  </button>
+                </td>
+              </tr>
+            );
+            index++; // increase by 1
           }
-
-          tableRows.push(
-            <tr key={index}>
-              <td className="border px-4 py-2.5 font-bold">{index + 1}</td>
-              <td className="border px-4 py-2.5 font-bold">{orderId}</td>
-              <td className="border px-4 py-2.5 font-bold">{userName}</td>
-              <td className="border px-4 py-2.5 font-bold">{phoneNumber}</td>
-              <td className={`border px-4 py-2 font-bold ${textColor}`}>
-                {deliveryStatus}
-              </td>
-              <td className="border px-4 py-2 font-bold">
-                Rs.{" "}
-                {totalAmount.toLocaleString("en-IN", {
-                  maximumFractionDigits: 2,
-                })}
-              </td>
-              <td className="border px-4 py-2 font-bold">{deliveredBy}</td>
-              <td className="flex justify-between border px-8 py-4 font-bold">
-                <button className="py-2 px-3.5 bg-black mr-3 rounded-lg group relative">
-                  {/* Edit */}
-                  <EditIcon className="scale-125 text-white pointer-events-none" />
-                  <div className="absolute bottom-5 right-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
-                    <span className="text-white font-semibold"> Edit </span>
-                  </div>
-                </button>
-
-                <button
-                  className="py-2 px-3.5 bg-black ml-3 rounded-lg group relative"
-                  onClick={() =>
-                    handelViewIconClick(
-                      countryCode,
-                      phoneNumber,
-                      orderId,
-                      userName
-                    )
-                  }
-                >
-                  {/* View More */}
-                  <VisibilityIcon className="scale-125 text-white" />
-                  <div className="absolute bottom-10 left-16 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
-                    <span className="text-white font-semibold">View</span>
-                  </div>
-                </button>
-              </td>
-            </tr>
-          );
-          index++; // increase by 1
         }
       });
     });
@@ -184,6 +205,10 @@ const ViewOrders = () => {
     );
   });
 
+  if (isLoading) {
+    return <Loading />; // render loading component when isLoading is true
+  }
+
   return (
     <div className="flex-1 bg-white p-2">
       <h2 className="text-3xl font-bold mt-4 ml-2 mb-8">Orders</h2>
@@ -193,18 +218,40 @@ const ViewOrders = () => {
           countryCode={countryCode}
           phoneNumber={phoneNumber}
           orderId={orderId}
-          fullName={fullName}
           orderList={orderList}
         />
       ) : (
         false
       )}
-      <button
-        className="px-5 py-2.5 bg-gray-200 rounded-2xl m-2"
-        onClick={getData}
-      >
-        get data{" "}
-      </button>
+      {/* Sorting Operation */}
+      <div className="w-full flex justify-start py-3">
+        {/* Filter By */}
+        <span className="mx-3 my-auto text-lg font-semibold">Filter By : </span>
+        {/* Select Dropdown Filter By */}
+        <div className="relative w-1/4">
+          <select
+            className={`w-full px-5 py-1.5 text-black bg-white rounded-lg text-lg font-semibold text-center appearance-none cursor-pointer border-2 
+              focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black
+              `}
+            onChange={selectLogFilterBy}
+            value={filterBy}
+          >
+            {filterByOptions.map((element, index) => {
+              return (
+                <option key={index} value={element}>
+                  {element}
+                </option>
+              );
+            })}
+          </select>
+          <ExpandMoreIcon
+            className={`absolute top-2.5 right-3.5 svg-icons
+              cursor-pointer pointer-events-none text-black
+            `}
+          />
+        </div>
+      </div>
+
       <table className="table-auto w-full">
         <thead>
           <tr className="bg-gray-100">

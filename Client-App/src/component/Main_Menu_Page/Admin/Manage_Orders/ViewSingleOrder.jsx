@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ViewOrderBasketFromAdmin from "./ViewOrderBasketFromAdmin";
 
-const ViewSingleOrder = ({
-  countryCode,
-  phoneNumber,
-  orderId,
-  fullName,
-  orderList,
-}) => {
+const ViewSingleOrder = ({ countryCode, phoneNumber, orderId, orderList }) => {
   const [basketFromOrderList, setBasketFromOrderList] = useState([]);
 
   useEffect(() => {
@@ -32,7 +26,26 @@ const ViewSingleOrder = ({
     }
   };
 
-  let DataAndTime = new Date().toString();
+  let fullName = orderList[countryCode][phoneNumber]["FullName"];
+
+  const convertUnixTimeStamp = (timestamp) => {
+    const options = {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+
+    const date = new Date(timestamp);
+    const dateString = date.toLocaleDateString("en-US", options); // format date and time
+    return dateString;
+  };
+
+  let DataAndTime = convertUnixTimeStamp(
+    orderList[countryCode][phoneNumber][orderId]["created"]
+  );
 
   let textColor = "text-red-700";
 

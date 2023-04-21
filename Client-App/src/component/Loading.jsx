@@ -20,7 +20,7 @@ const Loading = () => {
     };
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
+    <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-200">
       <div className="flex justify-center items-center space-x-1 text-sm text-gray-700">
         <svg
           fill="none"
