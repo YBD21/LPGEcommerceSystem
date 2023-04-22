@@ -20,9 +20,12 @@ const ViewOrders = () => {
   const [orderId, setOrderId] = useState("");
   const [isLoading, setIsLoading] = useState(true); // to testing set false
   const [renderOnce, setRenderOnce] = useState(false);
+  const [sortBy, setSortBy] = useState("Latest Date");
   const [filterBy, setFilterBy] = useState("None");
-  const filterByOptions = ["None", "Not Delivered", "Delivered", "Cancel"];
   const [isEdit, setIsEdit] = useState(false);
+
+  const sortByOptions = ["Latest Date", "Oldest Date"];
+  const filterByOptions = ["None", "Not Delivered", "Delivered", "Cancel"];
   const itemsPerPage = 5;
 
   const handelViewIconClick = (countryCode, phoneNumber, orderId) => {
@@ -37,6 +40,11 @@ const ViewOrders = () => {
 
   const selectLogFilterBy = (e) => {
     setFilterBy(e.target.value);
+    setRenderOnce(false);
+  };
+
+  const selectLogSortBy = (e) => {
+    setSortBy(e.target.value);
     setRenderOnce(false);
   };
 
@@ -104,11 +112,29 @@ const ViewOrders = () => {
     }
   };
 
+  const sortByDate = (a, b) => {
+    // Latest Date
+    // from latest to earliest
+    let result = b.date - a.date;
+
+    if (sortBy === sortByOptions[1]) {
+      // Oldest Date
+      // from earliest to latest
+      result = a.date - b.date;
+    }
+
+    return result;
+  };
+
   useEffect(() => {
     const totalCount = getTotalOrderCount();
     setOrderCount(totalCount);
     setPage(1);
-  }, [orderList, filterBy]);
+  }, [orderList, filterBy, sortBy]);
+
+  // useEffect(() => {
+
+  // }, [sortBy]);
 
   const convertOrderIdToUnixTimeStamp = (OrderId) => {
     const filterDate = OrderId.substring(0, 15); // takes first 15 char
@@ -148,8 +174,8 @@ const ViewOrders = () => {
           })
       )
     )
-    // Sort orders by date, from latest to earliest
-    .sort((a, b) => b.date - a.date);
+    // Sort orders by date
+    .sort(sortByDate);
 
   // Render orders as table rows
   console.log(orders);
@@ -260,6 +286,32 @@ const ViewOrders = () => {
       )}
       {/* Sorting Operation */}
       <div className="w-full flex justify-start py-3">
+        {/* Sort By */}
+        <span className="mx-3 my-auto text-lg font-semibold">Sort By : </span>
+        {/* Select Dropdown Sort By */}
+        <div className="relative w-1/4">
+          <select
+            className={`w-full px-5 py-1.5 text-black bg-white rounded-lg text-lg font-semibold text-center appearance-none cursor-pointer border-2 
+              focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black
+              `}
+            onChange={selectLogSortBy}
+            value={sortBy}
+          >
+            {sortByOptions.map((element, index) => {
+              return (
+                <option key={index} value={element}>
+                  {element}
+                </option>
+              );
+            })}
+          </select>
+          <ExpandMoreIcon
+            className={`absolute top-2.5 right-3.5 svg-icons
+              cursor-pointer pointer-events-none text-black
+            `}
+          />
+        </div>
+
         {/* Filter By */}
         <span className="mx-3 my-auto text-lg font-semibold">Filter By : </span>
         {/* Select Dropdown Filter By */}
