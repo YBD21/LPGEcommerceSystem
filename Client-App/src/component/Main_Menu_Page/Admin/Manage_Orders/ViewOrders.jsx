@@ -4,6 +4,8 @@ import { url } from "../../../../instance";
 import ViewSingleOrder from "./ViewSingleOrder";
 import { useStateValue } from "../../../../ContextAPI/StateProvider";
 import Loading from "../../../Loading";
+import PopupPortal from "../../PopUp/PopupPortal";
+import EditOrderListPopUp from "./EditOrderListPopUp";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -20,6 +22,7 @@ const ViewOrders = () => {
   const [renderOnce, setRenderOnce] = useState(false);
   const [filterBy, setFilterBy] = useState("None");
   const filterByOptions = ["None", "Not Delivered", "Delivered", "Cancel"];
+  const [isEdit, setIsEdit] = useState(false);
   const itemsPerPage = 5;
 
   const handelViewIconClick = (countryCode, phoneNumber, orderId) => {
@@ -35,6 +38,14 @@ const ViewOrders = () => {
   const selectLogFilterBy = (e) => {
     setFilterBy(e.target.value);
     setRenderOnce(false);
+  };
+
+  const handelEdit = () => {
+    setIsEdit(true);
+  };
+
+  const handleChildCancelOrderPopup = (data) => {
+    setIsEdit(data);
   };
 
   useEffect(() => {
@@ -77,106 +88,130 @@ const ViewOrders = () => {
         });
       });
     });
-    console.log(totalOrderCount);
     return totalOrderCount;
   };
 
-  const showStatus = (OrderState) => {
+  const showStatusTextColor = (OrderState) => {
     switch (OrderState) {
       case "Delivered":
-        textColor = "text-green-500";
-        return "Delivered";
+        return "text-green-500";
 
       case "Cancel":
-        textColor = "text-red-800";
-        return "Cancel";
+        return "text-red-800";
 
       default:
-        textColor = "text-orange-600";
-        return "Not Delivered";
+        return "text-orange-600";
     }
   };
 
   useEffect(() => {
     const totalCount = getTotalOrderCount();
     setOrderCount(totalCount);
+    setPage(1);
   }, [orderList, filterBy]);
 
-  const tableRows = [];
-  let index = 0;
-  let textColor = "text-orange-600";
-  let userName = "";
-  let deliveryStatus = "";
-  let deliveredBy = "";
-  let totalAmount = 0;
+  const convertOrderIdToUnixTimeStamp = (OrderId) => {
+    const filterDate = OrderId.substring(0, 15); // takes first 15 char
 
-  Object.keys(orderList).forEach((countryCode) => {
-    Object.keys(orderList[countryCode]).forEach((phoneNumber) => {
-      Object.keys(orderList[countryCode][phoneNumber]).forEach((orderId) => {
-        if (orderId !== "FullName") {
-          userName = orderList[countryCode][phoneNumber]["FullName"];
-          deliveryStatus = showStatus(
-            orderList[countryCode][phoneNumber][orderId]["status"]
-          );
-          totalAmount = orderList[countryCode][phoneNumber][orderId]["amount"];
-          deliveredBy =
-            orderList[countryCode][phoneNumber][orderId]["deliveredBy"] || "-";
-          // filter
-          if (filterBy === "None" || deliveryStatus === filterBy) {
-            // if index = 0 and once if not render = false
-            if (index === 0 && renderOnce === false) {
-              setCountryCode(countryCode);
-              setphoneNumber(phoneNumber);
-              setOrderId(orderId);
-              setRenderOnce(true);
-            }
+    const year = filterDate.substr(0, 4);
+    const month = filterDate.substr(4, 2) - 1; // month is zero-based in Date object
+    const day = filterDate.substr(6, 2);
+    const hour = filterDate.substr(9, 2);
+    const minute = filterDate.substr(11, 2);
+    const second = filterDate.substr(13, 2);
 
-            tableRows.push(
-              <tr key={index}>
-                <td className="border px-4 py-2.5 font-bold">{index + 1}</td>
-                <td className="border px-4 py-2.5 font-bold">{orderId}</td>
-                <td className="border px-4 py-2.5 font-bold">{userName}</td>
-                <td className="border px-4 py-2.5 font-bold">{phoneNumber}</td>
-                <td className={`border px-4 py-2 font-bold ${textColor}`}>
-                  {deliveryStatus}
-                </td>
-                <td className="border px-4 py-2 font-bold">
-                  Rs.{" "}
-                  {totalAmount.toLocaleString("en-IN", {
-                    maximumFractionDigits: 2,
-                  })}
-                </td>
-                <td className="border px-4 py-2 font-bold">{deliveredBy}</td>
-                <td className="flex justify-between border px-8 py-4 font-bold">
-                  <button className="py-2 px-3.5 bg-black mr-3 rounded-lg group relative">
-                    {/* Edit */}
-                    <EditIcon className="scale-125 text-white pointer-events-none" />
-                    <div className="absolute bottom-5 right-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
-                      <span className="text-white font-semibold"> Edit </span>
-                    </div>
-                  </button>
+    const dateObj = new Date(year, month, day, hour, minute, second);
+    const unixTimestamp = dateObj.getTime();
 
-                  <button
-                    className="py-2 px-3.5 bg-black ml-3 rounded-lg group relative"
-                    onClick={() =>
-                      handelViewIconClick(countryCode, phoneNumber, orderId)
-                    }
-                  >
-                    {/* View More */}
-                    <VisibilityIcon className="scale-125 text-white" />
-                    <div className="absolute bottom-10 left-16 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
-                      <span className="text-white font-semibold">View</span>
-                    </div>
-                  </button>
-                </td>
-              </tr>
-            );
-            index++; // increase by 1
-          }
-        }
-      });
+    return unixTimestamp;
+  };
+
+  // Get all orders as an array
+  const orders = Object.keys(orderList)
+    .flatMap((countryCode) =>
+      Object.keys(orderList[countryCode]).flatMap((phoneNumber) =>
+        Object.keys(orderList[countryCode][phoneNumber])
+          .filter((orderId) => orderId !== "FullName")
+          .map((orderId) => {
+            const order = orderList[countryCode][phoneNumber][orderId];
+            return {
+              countryCode,
+              phoneNumber,
+              orderId,
+              date: convertOrderIdToUnixTimeStamp(orderId),
+              userName: order.FullName,
+              deliveryStatus: order.status,
+              totalAmount: order.amount,
+              deliveredBy: order.delivered_By || "-",
+              textColor: showStatusTextColor(order.status),
+            };
+          })
+      )
+    )
+    // Sort orders by date, from latest to earliest
+    .sort((a, b) => b.date - a.date);
+
+  // Render orders as table rows
+  console.log(orders);
+  const tableRows = orders
+    .filter((order) => filterBy === "None" || order.deliveryStatus === filterBy)
+    .map((order, index) => {
+      if (index === 0 && renderOnce === false) {
+        setCountryCode(order.countryCode);
+        setphoneNumber(order.phoneNumber);
+        setOrderId(order.orderId);
+        setRenderOnce(true);
+      }
+      const userName =
+        orderList[order.countryCode][order.phoneNumber]["FullName"];
+      return (
+        <tr key={index}>
+          <td className="border px-4 py-2.5 font-bold">{index + 1}</td>
+          <td className="border px-4 py-2.5 font-bold">{order.orderId}</td>
+          <td className="border px-4 py-2.5 font-bold">{userName}</td>
+          <td className="border px-4 py-2.5 font-bold">{order.phoneNumber}</td>
+          <td className={`border px-4 py-2 font-bold ${order.textColor}`}>
+            {order.deliveryStatus}
+          </td>
+          <td className="border px-4 py-2 font-bold">
+            Rs.{" "}
+            {order.totalAmount.toLocaleString("en-IN", {
+              maximumFractionDigits: 2,
+            })}
+          </td>
+          <td className="border px-4 py-2 font-bold">{order.deliveredBy}</td>
+          <td className="flex justify-between border px-8 py-4 font-bold">
+            <button className="py-2 px-3.5 bg-black mr-3 rounded-lg group relative">
+              {/* Edit */}
+              <EditIcon className="scale-125 text-white pointer-events-none" />
+              <div
+                className="absolute bottom-5 right-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md"
+                onClick={handelEdit}
+              >
+                <span className="text-white font-semibold"> Edit </span>
+              </div>
+            </button>
+
+            <button
+              className="py-2 px-3.5 bg-black ml-3 rounded-lg group relative"
+              onClick={() =>
+                handelViewIconClick(
+                  order.countryCode,
+                  order.phoneNumber,
+                  order.orderId
+                )
+              }
+            >
+              {/* View More */}
+              <VisibilityIcon className="scale-125 text-white" />
+              <div className="absolute bottom-10 left-16 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
+                <span className="text-white font-semibold">View</span>
+              </div>
+            </button>
+          </td>
+        </tr>
+      );
     });
-  });
 
   const indexOfLastItem = page * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -286,6 +321,17 @@ const ViewOrders = () => {
       </table>
 
       <ul className="flex pl-1 list-none my-5">{renderPageNumbers}</ul>
+
+      {isEdit ? (
+        <PopupPortal>
+          <EditOrderListPopUp
+            onChild={handleChildCancelOrderPopup}
+            // id={OrderId}
+          />
+        </PopupPortal>
+      ) : (
+        false
+      )}
     </div>
   );
 };

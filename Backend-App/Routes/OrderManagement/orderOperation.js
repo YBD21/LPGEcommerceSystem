@@ -98,6 +98,8 @@ const getAllOrderId = async (usersRef, phoneNumbers) => {
 
   const dateTimeNow = new Date().getTime();
 
+  const fieldNameToFilterBy = "created";
+
   await Promise.all(
     Object.keys(phoneNumbers).map((countryIndex) => {
       orderIds[countryIndex] = {};
@@ -108,9 +110,9 @@ const getAllOrderId = async (usersRef, phoneNumbers) => {
             usersRef
               .doc(countryIndex)
               .collection(phoneNumber)
-              .orderBy("created", "desc")
-              .where("created", "<", dateTimeNow)
-              .limit(5)
+              .orderBy(fieldNameToFilterBy, "desc")
+              .where(fieldNameToFilterBy, "<", dateTimeNow)
+              .limit(15)
               .onSnapshot((querySnapshot) => {
                 const data = {};
                 querySnapshot.forEach((doc) => {
