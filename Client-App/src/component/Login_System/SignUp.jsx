@@ -150,13 +150,13 @@ const SignUp = () => {
       count += 1;
     }
 
-    if (confirmpassword.length < 8) {
-      setErrorConfirmPassword({
-        ConfirmPassword: true,
-        Message: "Password Must Be 8 Character Long !",
-      });
-      count += 1;
-    }
+    // if (confirmpassword.length < 8) {
+    //   setErrorConfirmPassword({
+    //     ConfirmPassword: true,
+    //     Message: "Password Must Be 8 Character Long !",
+    //   });
+    //   count += 1;
+    // }
 
     if (createpassword.length < 8) {
       setErrorCreatePassword({

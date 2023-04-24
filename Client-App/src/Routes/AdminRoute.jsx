@@ -16,6 +16,7 @@ import ThankYouPage from "../component/Main_Menu_Page/PopUp/ThankYouPage";
 import ViewLPGasProduct from "../component/Main_Menu_Page/Admin/Manage_Products/ViewLPGasProduct";
 import Setting from "../component/Main_Menu_Page/UserSetting/Setting";
 import ViewOrder from "../component/Main_Menu_Page/UserOrder/ViewOrder";
+import EditOrderListPopUp from "../component/Main_Menu_Page/Admin/Manage_Orders/EditOrderListPopUp";
 
 const AdminRoute = () => {
   const [{ basket }] = useStateValue();
@@ -170,6 +171,7 @@ const AdminRoute = () => {
             <NavBar />
             <ThankYouPage status={false} message={{ orderId: 123546 }} />
             {/* <Setting /> */}
+            {/* <EditOrderListPopUp/> */}
           </>
         }
       />

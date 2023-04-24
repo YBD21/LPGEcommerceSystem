@@ -22,6 +22,7 @@ const ViewOrders = () => {
   const [renderOnce, setRenderOnce] = useState(false);
   const [sortBy, setSortBy] = useState("Latest Date");
   const [filterBy, setFilterBy] = useState("None");
+  const [currentEditData, setCurrentEditData] = useState({});
   const [isEdit, setIsEdit] = useState(false);
 
   const sortByOptions = ["Latest Date", "Oldest Date"];
@@ -48,8 +49,9 @@ const ViewOrders = () => {
     setRenderOnce(false);
   };
 
-  const handelEdit = () => {
+  const handelEdit = (orderData) => {
     setIsEdit(true);
+    setCurrentEditData(orderData);
   };
 
   const handleChildCancelOrderPopup = (data) => {
@@ -132,10 +134,6 @@ const ViewOrders = () => {
     setPage(1);
   }, [orderList, filterBy, sortBy]);
 
-  // useEffect(() => {
-
-  // }, [sortBy]);
-
   const convertOrderIdToUnixTimeStamp = (OrderId) => {
     const filterDate = OrderId.substring(0, 15); // takes first 15 char
 
@@ -165,7 +163,6 @@ const ViewOrders = () => {
               phoneNumber,
               orderId,
               date: convertOrderIdToUnixTimeStamp(orderId),
-              userName: order.FullName,
               deliveryStatus: order.status,
               totalAmount: order.amount,
               deliveredBy: order.delivered_By || "-",
@@ -178,7 +175,7 @@ const ViewOrders = () => {
     .sort(sortByDate);
 
   // Render orders as table rows
-  console.log(orders);
+  // console.log(orders);
   const tableRows = orders
     .filter((order) => filterBy === "None" || order.deliveryStatus === filterBy)
     .map((order, index) => {
@@ -207,13 +204,13 @@ const ViewOrders = () => {
           </td>
           <td className="border px-4 py-2 font-bold">{order.deliveredBy}</td>
           <td className="flex justify-between border px-8 py-4 font-bold">
-            <button className="py-2 px-3.5 bg-black mr-3 rounded-lg group relative">
+            <button
+              className="py-2 px-3.5 bg-black mr-3 rounded-lg group relative"
+              onClick={() => handelEdit(order)}
+            >
               {/* Edit */}
               <EditIcon className="scale-125 text-white pointer-events-none" />
-              <div
-                className="absolute bottom-5 right-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md"
-                onClick={handelEdit}
-              >
+              <div className="absolute bottom-5 right-8 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
                 <span className="text-white font-semibold"> Edit </span>
               </div>
             </button>
@@ -378,7 +375,8 @@ const ViewOrders = () => {
         <PopupPortal>
           <EditOrderListPopUp
             onChild={handleChildCancelOrderPopup}
-            // id={OrderId}
+            currentData={currentEditData}
+            orderList={orderList}
           />
         </PopupPortal>
       ) : (
