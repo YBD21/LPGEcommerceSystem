@@ -26,7 +26,10 @@ import {
 import { releaseStockOnDisconnectWithAccessToken } from "./PaymentSystem/stockReservation.js";
 import productManagementSystemRouter from "./ProductManagement/productManagementSystemRouter.js";
 import orderManagementSystemRouter from "./OrderManagement/orderManagementSystemRouter.js";
-import { checkUpdateOrderData, getAllOrderData } from "./OrderManagement/orderOperation.js";
+import {
+  checkUpdateOrderData,
+  getAllOrderData,
+} from "./OrderManagement/orderOperation.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -165,7 +168,7 @@ io.on("connection", (socket) => {
       if (current.mtime !== prev.mtime) {
         console.log("GasRate has been Changed !");
         const respond = await readGasRateFile();
-        socket.emit("gasRate", respond);
+        io.emit("gasRate", respond);
       }
     });
   } catch (error) {
@@ -182,7 +185,7 @@ io.on("connection", (socket) => {
       if (current.mtime !== prev.mtime) {
         console.log("DeliveryRate has been Changed !");
         const respond = await readDeliveryRatefile();
-        socket.emit("deliveryRate", respond);
+        io.emit("deliveryRate", respond);
       }
     });
   } catch (error) {
@@ -199,7 +202,7 @@ io.on("connection", (socket) => {
       if (current.mtime !== prev.mtime) {
         console.log("Product List has been Changed !");
         const respond = await readProductListfile();
-        socket.emit("productList", respond);
+        io.emit("productList", respond);
       }
     });
   } catch (error) {
