@@ -1,5 +1,8 @@
 import { createBasketList } from "../PaymentSystem/paymentSystemRouter.js";
-import { addBasketListQuantityToDatabase } from "../ProductManagement/UpdateProduct/updateProduct.js";
+import {
+  addBasketListQuantityToDatabase,
+  subtractQuantityFromDatabase,
+} from "../ProductManagement/UpdateProduct/updateProduct.js";
 import { fireStoreDB, dataBase } from "../firebaseConfig.js";
 
 const cancelOrder = async (userId, orderId) => {
@@ -21,7 +24,7 @@ const cancelOrder = async (userId, orderId) => {
   const basketList = orderData.basket;
 
   await userCollectionRef
-    .update({ status: "Cancel", cancel_at: unixTimeStamp })
+    .update({ status: "Cancel", cancel_at: unixTimeStamp, delivered_By: "-" })
     .then(() => {
       console.log("Status updated to Cancel");
     })
@@ -30,6 +33,63 @@ const cancelOrder = async (userId, orderId) => {
     });
 
   return basketList;
+};
+
+const editOrder = async (userId, orderId, deliveredBy, deliveryStatus) => {
+  let response = false;
+  const countryCode = userId.substring(0, 3);
+  const phoneNumber = userId.substring(3);
+
+  const userCollectionRef = fireStoreDB
+    .collection("Users")
+    .doc(countryCode)
+    .collection(phoneNumber)
+    .doc(orderId);
+
+  // Get a snapshot of the order details
+  const orderListSnapshot = await userCollectionRef.get();
+  // Extract the Orderlist from the snapshot
+  const orderData = orderListSnapshot.data();
+  // Extract the basket from the data
+  const basketList = orderData.basket;
+  // Extract the previous deliveryStatus from the data
+  const prevStatus = orderData.status;
+
+  if (prevStatus === "Cancel" && prevStatus !== deliveryStatus) {
+    // subtract stock from database as per basket ordered
+    const isSubtract = subtractStockToDataBase(basketList);
+
+    await userCollectionRef
+      .update({
+        status: deliveryStatus,
+        delivered_By: deliveredBy,
+      })
+      .then(() => {
+        console.log(`Status updated to ${deliveryStatus}`);
+      })
+      .catch((error) => {
+        console.log("Error updating status: ", error.message);
+      });
+
+    response = true;
+  } else {
+    // just change status
+    await userCollectionRef
+      .update({
+        status: deliveryStatus,
+        delivered_By: deliveredBy,
+      })
+      .then(() => {
+        console.log(`Status updated to ${deliveryStatus}`);
+      })
+      .catch((error) => {
+        console.log("Error updating status: ", error.message);
+      });
+
+    response = true;
+  }
+
+  return response;
 };
 
 const getAllOrderData = async () => {
@@ -254,9 +314,19 @@ const replenishCancelStockToDatabase = async (basket) => {
   return respond;
 };
 
+const subtractStockToDataBase = async (basket) => {
+  // filterBasketList
+  const filteredBasketData = createBasketList(basket);
+  // update Stock
+  await subtractQuantityFromDatabase(filteredBasketData);
+
+  return true;
+};
+
 export {
   cancelOrder,
   checkUpdateOrderData,
   replenishCancelStockToDatabase,
   getAllOrderData,
+  editOrder,
 };

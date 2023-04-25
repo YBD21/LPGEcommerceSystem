@@ -66,7 +66,10 @@ const subtractQuantityFromDatabase = async (basketList) => {
       }
     });
   }
+  // update BufferData
+  await sendProductList();
 };
+
 const addBasketListQuantityToDatabase = async (basketList) => {
   const startCountRef = "ProductList/LPGasList";
   const ref = dataBase.ref(startCountRef);

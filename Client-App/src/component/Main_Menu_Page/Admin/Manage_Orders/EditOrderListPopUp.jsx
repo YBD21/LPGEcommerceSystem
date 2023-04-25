@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import instance, { url } from "../../../../instance";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ErrorMessageEditOrder from "./ErrorMessageEditOrder";
 
-const EditOrderListPopUp = ({ onChild, currentData, orderList }) => {
+const EditOrderListPopUp = ({
+  onChild,
+  currentData,
+  orderList,
+  isChange,
+  prevIsChange,
+}) => {
   // console.log(currentData);
   // console.log(orderList);
   const [deliveryStatus, setDeliveryStatus] = useState(
     currentData.deliveryStatus
   );
   const [deliveryBy, setDeliveryBy] = useState(currentData.deliveredBy);
+  const [isDisable, setIsDisable] = useState(true);
+
+  const [errorInputField, setErrorInputField] = useState({});
 
   const deliveryStatusOption = ["Not Delivered", "Delivered", "Cancel"];
 
@@ -16,6 +27,10 @@ const EditOrderListPopUp = ({ onChild, currentData, orderList }) => {
   const phoneNumber = currentData.phoneNumber;
   const orderId = currentData.orderId;
   const userName = orderList[countryCode][phoneNumber]["FullName"];
+  const paymentType =
+    orderList[countryCode][phoneNumber][orderId]["PaymentType"];
+
+  const totalAmount = orderList[countryCode][phoneNumber][orderId]["amount"];
 
   const selectLogDeliveryStatus = (e) => {
     setDeliveryStatus(e.target.value);
@@ -25,10 +40,100 @@ const EditOrderListPopUp = ({ onChild, currentData, orderList }) => {
     onChild(false);
   };
 
-  const save = () => {
+  const isSaveChanges = () => {
+    // Do not save :
     // if Delivery Status === prev_deliveryStatus
-    // if Delivered By === prev_Delivered By
+    if (deliveryStatus === currentData.deliveryStatus) {
+      return false;
+    }
+    return true;
   };
+
+  const saveChanges = () => {
+    setErrorInputField({});
+    const status = isSaveChanges();
+    // console.log(status);
+    const inputFieldStatus = checkInputField();
+    // console.log(inputFieldStatus);
+
+    if (status === true && inputFieldStatus === false) {
+      // console.log("Backend Is Called Upon !");
+      const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+      // console.log(fullPhoneNumber);
+      instance
+        .patch(
+          "/order-management/edit-order",
+          {
+            orderId: orderId,
+            deliveryStatus: deliveryStatus,
+            deliveredBy: deliveryBy,
+            id: fullPhoneNumber,
+          },
+          { withCredentials: true }
+        )
+        .then((respond) => {
+          isChange(!prevIsChange);
+          close();
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+
+    // Delivered By cannot be empty > 0
+  };
+
+  const checkInputField = () => {
+    let isError = false;
+
+    if (
+      deliveryBy.length <= 2 &&
+      deliveryBy.length !== 0 &&
+      isDisable === false
+    ) {
+      setErrorInputField({
+        status: true,
+        Message: "Name Should Be More Than 2 Character Long !",
+      });
+      isError = true;
+    }
+
+    // "/^[a-zA-Z]+$/" regular expression. This regular expression will match any string that contains only letters from the alphabet, without any other characters or whitespace.
+
+    if (
+      !/^[a-zA-Z]+$/.test(deliveryBy) &&
+      deliveryBy !== 0 &&
+      isDisable !== true
+    ) {
+      setErrorInputField({
+        status: true,
+        Message: "Please Enter Valid Name !",
+      });
+      isError = true;
+    }
+
+    // console.log(/^[a-zA-Z]+$/.test(deliveryBy));
+    return isError;
+  };
+
+  useEffect(() => {
+    if (
+      deliveryStatus !== currentData.deliveryStatus &&
+      deliveryStatus === "Delivered"
+    ) {
+      setDeliveryBy("");
+      setIsDisable(false);
+    } else if (
+      deliveryStatus === "Not Delivered" ||
+      deliveryStatus === "Cancel"
+    ) {
+      setDeliveryBy("-");
+      setIsDisable(true);
+    } else {
+      setDeliveryBy(currentData.deliveredBy);
+      setIsDisable(true);
+    }
+  }, [deliveryStatus]);
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
@@ -44,19 +149,26 @@ const EditOrderListPopUp = ({ onChild, currentData, orderList }) => {
           </h3>
 
           <p className="text-lg font-bold mb-4 text-justify text-black tracking-wider">
-            {/* {currentData.orderId} */}
             Name : {userName}
           </p>
 
           <p className="text-lg font-bold mb-4 text-justify text-black tracking-wider">
-            {/* {currentData.orderId} */}
             PhoneNumber : +{countryCode}-{phoneNumber}
           </p>
 
           <p className="text-lg font-bold mb-4 text-justify text-black tracking-wider">
-            {/* {currentData.orderId} */}
             Order Id : {orderId}
           </p>
+          <p className="text-lg font-bold mb-4 text-justify text-black tracking-wider">
+            Payment Type : {paymentType}
+          </p>
+          <p className="text-lg font-bold mb-4 text-justify text-black tracking-wider">
+            Total Amount : Rs.
+            {totalAmount.toLocaleString("en-IN", {
+              maximumFractionDigits: 2,
+            })}
+          </p>
+
           <div className="w-full flex flex-start">
             <p className="text-lg font-bold my-auto text-center text-black tracking-wider pr-2">
               {/* dropdown for Not Delivered Part with color change : text-orange-700 */}
@@ -91,14 +203,24 @@ const EditOrderListPopUp = ({ onChild, currentData, orderList }) => {
               {/* Input field here */}
               Delivered By :
             </p>
-            <div className="flex-grow flex flex-row cursor-pointer ml-2">
+            <div className="flex-grow flex flex-row ml-2">
               <input
                 type="text"
                 value={deliveryBy}
                 onChange={(e) => setDeliveryBy(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-center font-bold text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
+                className={`block w-full px-4 py-2 mt-2 text-center font-bold text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 ${
+                  isDisable ? "cursor-not-allowed" : "cursor-auto"
+                }`}
+                disabled={isDisable}
               />
             </div>
+          </div>
+
+          {/* Error Message */}
+          <div className="flex justify-center mt-2">
+            {errorInputField.status && (
+              <ErrorMessageEditOrder message={errorInputField.Message} />
+            )}
           </div>
 
           <div className="w-full flex flex-col mt-2 justify-center text-center">
@@ -107,8 +229,11 @@ const EditOrderListPopUp = ({ onChild, currentData, orderList }) => {
                 className="w-1/2 px-5 py-2.5 tracking-wide
          bg-black  rounded-lg text-center mr-2 mb-2
    focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
+                onClick={saveChanges}
               >
-                <span className="text-white font-semibold text-lg ">Save</span>
+                <span className="text-white font-semibold text-lg ">
+                  Save Changes
+                </span>
               </button>
               <button
                 className="w-1/2 px-5 py-2.5 tracking-wide

@@ -24,6 +24,7 @@ const ViewOrders = () => {
   const [filterBy, setFilterBy] = useState("None");
   const [currentEditData, setCurrentEditData] = useState({});
   const [isEdit, setIsEdit] = useState(false);
+  const [isSaveChanges, setIsSaveChanges] = useState(false);
 
   const sortByOptions = ["Latest Date", "Oldest Date"];
   const filterByOptions = ["None", "Not Delivered", "Delivered", "Cancel"];
@@ -54,8 +55,12 @@ const ViewOrders = () => {
     setCurrentEditData(orderData);
   };
 
-  const handleChildCancelOrderPopup = (data) => {
+  const handleChildEditOrderPopup = (data) => {
     setIsEdit(data);
+  };
+
+  const handleChildSaveChanges = (data) => {
+    setIsSaveChanges(data);
   };
 
   useEffect(() => {
@@ -79,7 +84,7 @@ const ViewOrders = () => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [isSaveChanges]);
 
   // count total number orders
 
@@ -131,8 +136,10 @@ const ViewOrders = () => {
   useEffect(() => {
     const totalCount = getTotalOrderCount();
     setOrderCount(totalCount);
-    setPage(1);
-  }, [orderList, filterBy, sortBy]);
+    if (!isSaveChanges) {
+      setPage(1);
+    }
+  }, [orderList, filterBy, sortBy, isSaveChanges]);
 
   const convertOrderIdToUnixTimeStamp = (OrderId) => {
     const filterDate = OrderId.substring(0, 15); // takes first 15 char
@@ -374,9 +381,11 @@ const ViewOrders = () => {
       {isEdit ? (
         <PopupPortal>
           <EditOrderListPopUp
-            onChild={handleChildCancelOrderPopup}
+            onChild={handleChildEditOrderPopup}
+            isChange={handleChildSaveChanges}
             currentData={currentEditData}
             orderList={orderList}
+            prevIsChange={isSaveChanges}
           />
         </PopupPortal>
       ) : (

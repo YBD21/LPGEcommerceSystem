@@ -5,7 +5,7 @@ import {
 } from "../LoginSystem/login.js";
 import {
   cancelOrder,
-  getAllOrderData,
+  editOrder,
   replenishCancelStockToDatabase,
 } from "./orderOperation.js";
 
@@ -28,21 +28,39 @@ orderManagementSystemRouter.patch("/cancel-order", async (req, res) => {
   res.json(respond);
 });
 
-orderManagementSystemRouter.get("/get-all-order", async (req, res) => {
-  // access who is user from http cookies
-  const accessToken = req.cookies.userData;
-  const decodeToken = await verifyTokenAndDecodeToken(accessToken);
-
-  if (!decodeToken.error && decodeToken.role === "Admin") {
+orderManagementSystemRouter.patch("/edit-order", async (req, res) => {
+  try {
+    // access who is user from http cookies
+    const accessToken = req.cookies.userData;
+    const {
+      orderId: orderId,
+      deliveryStatus: deliveryStatus,
+      deliveredBy: deliveredBy,
+      id: userId,
+    } = req.body;
+    const { id: accessId, role: accessRole } = await decodeToken(accessToken);
     console.log(
-      `User ID : ${decodeToken.id} with Role of : ${decodeToken.role} is Accessing getAllOrder !`
+      `User ID : ${accessId} with Role of : ${accessRole} is Accessing edit-order !`
     );
+    if (accessRole === "Admin") {
+      if (deliveryStatus === "Cancel") {
+        // send userId and orderId to find OrderList in firestore
+        // get basketData from cancelOrder
+        const cancelBasketData = await cancelOrder(userId, orderId);
 
-    const respond = await getAllOrderData();
-    res.json(respond);
+        const respond = replenishCancelStockToDatabase(cancelBasketData);
+
+        res.json(respond);
+      } else {
+        const respond = editOrder(userId, orderId, deliveredBy, deliveryStatus);
+        res.json(respond);
+      }
+    } else {
+      res.status(400).send("Unauthorized Access");
+    }
+  } catch (err) {
+    res.status(400).send(err.message);
   }
-
-  res.json(decodeToken.error);
 });
 
 export default orderManagementSystemRouter;
