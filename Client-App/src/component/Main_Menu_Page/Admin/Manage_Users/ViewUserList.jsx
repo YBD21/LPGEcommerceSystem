@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import instance from "../../../../instance";
 import EditIcon from "@mui/icons-material/Edit";
 import Loading from "../../../Loading";
+import PopupPortal from "../../PopUp/PopupPortal";
+import EditUserListPopUp from "./EditUserListPopUp";
 const ViewUserList = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true); // to testing set false
   const [userList, setUserList] = useState({});
   const [userCount, setUserCount] = useState(1);
+  const [currentEditData, setCurrentEditData] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
+  const [isSaveChanges, setIsSaveChanges] = useState(false);
 
   const itemsPerPage = 15;
 
@@ -35,7 +40,16 @@ const ViewUserList = () => {
   }, [isLoading]);
 
   const handelEdit = (userData) => {
-    // should open popUp window
+    setIsEdit(true);
+    setCurrentEditData(userData);
+  };
+
+  const handleChildEditUserPopup = (data) => {
+    setIsEdit(data);
+  };
+
+  const handleChildSaveChanges = (data) => {
+    setIsSaveChanges(data);
   };
 
   // count total number users
@@ -203,6 +217,20 @@ const ViewUserList = () => {
       </table>
 
       <ul className="flex pl-1 list-none my-5">{renderPageNumbers}</ul>
+
+      {isEdit ? (
+        <PopupPortal>
+          <EditUserListPopUp
+            onChild={handleChildEditUserPopup}
+            isChange={handleChildSaveChanges}
+            currentData={currentEditData}
+            userList={userList}
+            prevIsChange={isSaveChanges}
+          />
+        </PopupPortal>
+      ) : (
+        false
+      )}
     </div>
   );
 };

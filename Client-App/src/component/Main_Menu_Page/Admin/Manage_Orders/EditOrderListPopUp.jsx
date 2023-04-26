@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import instance, { url } from "../../../../instance";
+import instance from "../../../../instance";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ErrorMessageEditOrder from "./ErrorMessageEditOrder";
@@ -245,8 +245,7 @@ const EditOrderListPopUp = ({
               </button>
             </div>
           </div>
-
-          {/*End Delete Account */}
+          
           <button className="absolute top-0 right-0 m-5" onClick={close}>
             <CancelIcon className="svg-icons text-neutral-700" />
           </button>

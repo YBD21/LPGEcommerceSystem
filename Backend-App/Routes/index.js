@@ -196,7 +196,7 @@ io.on("connection", (socket) => {
     console.error(`Error watching ${filePathDeliveryRate}: ${error.message}`);
     // if file not found to watch
     sendDeliveryRate();
-  }
+  } 
 
   // For productList
   try {
