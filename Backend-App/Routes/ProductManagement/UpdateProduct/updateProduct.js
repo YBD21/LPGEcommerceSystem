@@ -10,13 +10,13 @@ const sendProductList = async () => {
   const refToUpdateProduct = dataBase.ref(pathToUpdate);
 
   try {
-    await refToUpdateProduct.once("value", (snapshot) => {
+    await refToUpdateProduct.once("value", async (snapshot) => {
       let data = snapshot.val();
 
       sendData = {
         ProductList: data,
       };
-      updateProductListfile(sendData);
+     await updateProductListfile(sendData);
     });
   } catch (error) {
     sendData.Error = error.message;

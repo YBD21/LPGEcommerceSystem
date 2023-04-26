@@ -30,7 +30,7 @@ import {
   checkUpdateOrderData,
   getAllOrderData,
 } from "./OrderManagement/orderOperation.js";
-import userManagementSystemRouter from "../Routes/UserManagement/userManagementSystemRouter.js"
+import userManagementSystemRouter from "../Routes/UserManagement/userManagementSystemRouter.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();

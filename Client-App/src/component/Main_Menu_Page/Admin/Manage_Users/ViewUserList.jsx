@@ -6,9 +6,11 @@ const ViewUserList = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true); // to testing set false
   const [userList, setUserList] = useState({});
+  const [userCount, setUserCount] = useState(1);
+
   const itemsPerPage = 15;
 
-  const handleClick = (event) => {
+  const handelPageNumberClick = (event) => {
     setPage(Number(event.target.id));
   };
 
@@ -37,20 +39,20 @@ const ViewUserList = () => {
   };
 
   // count total number users
-  const getTotalOrderCount = () => {
-    let totalOrderCount = 0;
+  const getTotalUserCount = () => {
+    let totalUserCount = 0;
     Object.keys(userList).forEach((countryCode) => {
       Object.keys(userList[countryCode]).forEach((phoneNumber) => {
-        totalOrderCount++;
+        totalUserCount++;
       });
     });
 
-    return totalOrderCount;
+    return totalUserCount;
   };
 
   useEffect(() => {
-    const totalCount = getTotalOrderCount();
-    setOrderCount(totalCount);
+    const totalCount = getTotalUserCount();
+    setUserCount(totalCount);
     setPage(1);
   }, [userList]);
 
@@ -124,24 +126,32 @@ const ViewUserList = () => {
     );
   });
 
+  const indexOfLastItem = page * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentTableRows = tableRows.slice(indexOfFirstItem, indexOfLastItem);
+
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(45 / itemsPerPage); i++) {
-    pageNumbers.push(
-      <li key={i}>
+  for (let i = 1; i <= Math.ceil(userCount / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const renderPageNumbers = pageNumbers.map((number) => {
+    return (
+      <li key={number}>
         <button
-          id={i}
-          onClick={handleClick}
+          id={number}
+          onClick={handelPageNumberClick}
           className={`${
-            i === page ? "bg-gray-400 text-white" : "bg-white text-black"
+            number === page ? "bg-gray-400 text-white" : "bg-white text-black"
           } hover:bg-gray-500 hover:text-white py-2 px-4 border-2
-           border-black rounded ml-2`}
+             border-black rounded ml-2`}
         >
-          {i}
+          {number}
         </button>
       </li>
     );
-  }
+  });
 
   if (isLoading) {
     return <Loading />; // render loading component when isLoading is true
@@ -189,14 +199,10 @@ const ViewUserList = () => {
           </tr>
         </thead>
 
-        <tbody className="text-center"> {tableRows}</tbody>
+        <tbody className="text-center">{currentTableRows}</tbody>
       </table>
 
-      <ul className="flex pl-1 list-none my-5">
-        {pageNumbers.map((number) => (
-          <>{number}</>
-        ))}
-      </ul>
+      <ul className="flex pl-1 list-none my-5">{renderPageNumbers}</ul>
     </div>
   );
 };
