@@ -17,6 +17,7 @@ import ViewLPGasProduct from "../component/Main_Menu_Page/Admin/Manage_Products/
 import Setting from "../component/Main_Menu_Page/UserSetting/Setting";
 import ViewOrder from "../component/Main_Menu_Page/UserOrder/ViewOrder";
 import EditOrderListPopUp from "../component/Main_Menu_Page/Admin/Manage_Orders/EditOrderListPopUp";
+import ViewUserList from "../component/Main_Menu_Page/Admin/Manage_Users/ViewUserList";
 
 const AdminRoute = () => {
   const [{ basket }] = useStateValue();
@@ -103,6 +104,18 @@ const AdminRoute = () => {
       />
 
       {/* Manage User */}
+
+      <Route
+        path="/Admin/Manage-Users/View-User"
+        element={
+          <>
+            <NavBar />
+            <AdminMenu>
+              <ViewUserList />
+            </AdminMenu>
+          </>
+        }
+      />
 
       {/* Client Access */}
       <Route

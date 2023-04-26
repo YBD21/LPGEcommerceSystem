@@ -14,8 +14,9 @@ const ManageUserTab = () => {
   useEffect(() => {
     const manageUsersPath = "/Admin/Manage-Users/";
     setIsManageUsersOpen(location.pathname.startsWith(manageUsersPath));
-    setIsViewUsers(location.pathname === "/Admin/Manage-Users/ViewUsers");
+    setIsViewUsers(location.pathname === "/Admin/Manage-Users/View-User");
   }, [location]);
+
   return (
     <li className="relative">
       <button
@@ -43,7 +44,7 @@ const ManageUserTab = () => {
       {isManageUsersOpen && (
         <div className="flex flex-col w-full py-2 mt-2 bg-white rounded-lg">
           <Link
-            to={"#"}
+            to={"/Admin/Manage-Users/View-User"}
             className={`block px-4 py-3
            text-gray-800 hover:bg-gray-100
            ${isViewUsers ? "bg-gray-200" : ""}`}

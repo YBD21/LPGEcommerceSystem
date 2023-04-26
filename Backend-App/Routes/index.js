@@ -30,6 +30,7 @@ import {
   checkUpdateOrderData,
   getAllOrderData,
 } from "./OrderManagement/orderOperation.js";
+import userManagementSystemRouter from "../Routes/UserManagement/userManagementSystemRouter.js"
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -91,7 +92,7 @@ const updateBufferData = async () => {
 
 // Immediately invoke the updateBufferData function
 
-// updateBufferData(); //-- Testing mode remove comment here
+updateBufferData(); //-- Testing mode remove comment here
 
 // Mount userRouter middleware at "/login-System" path
 app.use("/login-system", apiLimiter, loginSystemRouter);
@@ -104,6 +105,9 @@ app.use("/product-management", productManagementSystemRouter);
 
 // Mount userRouter middleware at "/order-management" path
 app.use("/order-management", orderManagementSystemRouter);
+
+// Mount userRouter middleware at "/order-management" path
+app.use("/user-management", userManagementSystemRouter);
 
 const filePathGasRate = "BufferData/gasRate.json";
 const filePathDeliveryRate = "BufferData/deliveryRate.json";
