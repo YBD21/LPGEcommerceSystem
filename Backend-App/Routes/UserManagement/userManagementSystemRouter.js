@@ -3,7 +3,7 @@ import {
   verifyTokenAndDecodeToken,
   decodeToken,
 } from "../LoginSystem/login.js";
-import { getAllUserData } from "./userListingOperation.js";
+import { editUserAccountType, getAllUserData } from "./userListingOperation.js";
 
 const userManagementSystemRouter = express.Router();
 
@@ -37,8 +37,13 @@ userManagementSystemRouter.patch("/edit-user", async (req, res) => {
     console.log(
       `User ID : ${id} with Role of : ${role} is Accessing getAllOrder !`
     );
-    const { countryCode, phoneNumber } = req.body;
-    const respond = editUserAccountType();
+    const { countryCode, phoneNumber, isDisable, accountType } = req.body;
+    const respond = await editUserAccountType(
+      countryCode,
+      phoneNumber,
+      isDisable,
+      accountType
+    );
     res.json(respond);
   } catch (error) {
     console.error(error);

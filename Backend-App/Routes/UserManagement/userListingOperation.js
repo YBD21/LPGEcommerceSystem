@@ -28,4 +28,31 @@ const filterUserData = (data) => {
   return filteredData;
 };
 
-export { getAllUserData };
+const editUserAccountType = async (
+  countryCode,
+  phoneNumber,
+  isDisableStatus,
+  accountTypeValue
+) => {
+  let sendData;
+  const UserDataPath = `SignInWithPhoneNumber/${countryCode}/${phoneNumber}`;
+  const usersDataRef = dataBase.ref(UserDataPath);
+
+  await usersDataRef.update(
+    {
+      AccountType: accountTypeValue,
+      IsDisable: isDisableStatus,
+    },
+    (error) => {
+      // console.log(error);
+      if (error === null) {
+        return (sendData = true);
+      } else {
+        return (sendData = error.message);
+      }
+    }
+  );
+  return sendData;
+};
+
+export { getAllUserData, editUserAccountType };

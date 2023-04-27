@@ -18,9 +18,9 @@ const updateGasRate = async (RefillRate, NewGasRate) => {
       Refill_Rate: +RefillRate,
       Created: createDate,
     },
-    (error) => {
+    async (error) => {
       if (error === null) {
-        sendGasRate();
+        await sendGasRate();
         return (sendData = { ...sendData, Message: true });
       } else {
         return (sendData = { ...sendData, Error: error.message });
@@ -37,7 +37,7 @@ const sendGasRate = async () => {
   const refToUpdateRate = dataBase.ref(pathToUpdate);
 
   try {
-    await refToUpdateRate.limitToLast(2).once("value", (snapshot) => {
+    await refToUpdateRate.limitToLast(2).once("value", async (snapshot) => {
       // console.log(snapshot.val());
       let data = snapshot.val();
 
@@ -48,7 +48,7 @@ const sendGasRate = async () => {
         currentData: data[keys[1]],
         Error: null,
       };
-      updateGasRatefile(sendData);
+      await updateGasRatefile(sendData);
     });
   } catch (error) {
     sendData.Error = error.message;

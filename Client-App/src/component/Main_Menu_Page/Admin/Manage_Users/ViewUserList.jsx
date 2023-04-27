@@ -37,7 +37,7 @@ const ViewUserList = () => {
     setIsLoading(true);
     getData();
     setIsLoading(false);
-  }, [isLoading]);
+  }, [isLoading, isSaveChanges]);
 
   const handelEdit = (userData) => {
     setIsEdit(true);
@@ -52,19 +52,19 @@ const ViewUserList = () => {
     setIsSaveChanges(data);
   };
 
-  // count total number users
-  const getTotalUserCount = () => {
-    let totalUserCount = 0;
-    Object.keys(userList).forEach((countryCode) => {
-      Object.keys(userList[countryCode]).forEach((phoneNumber) => {
-        totalUserCount++;
-      });
-    });
-
-    return totalUserCount;
-  };
-
   useEffect(() => {
+    // count total number users
+    const getTotalUserCount = () => {
+      let totalUserCount = 0;
+      Object.keys(userList).forEach((countryCode) => {
+        Object.keys(userList[countryCode]).forEach((phoneNumber) => {
+          totalUserCount++;
+        });
+      });
+
+      return totalUserCount;
+    };
+
     const totalCount = getTotalUserCount();
     setUserCount(totalCount);
     setPage(1);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import instance from "../../../../instance";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -35,8 +35,16 @@ const EditUserListPopUp = ({
     return true;
   };
 
+  const sendDisableStatus = (status) => {
+    if (status === disableStatusOption[0]) {
+      return true;
+    }
+    return false;
+  };
+
   const saveChanges = () => {
     const changeStatus = isSaveChanges();
+    const disableValue = sendDisableStatus(disableStatus);
     // console.log(isChange);
     if (changeStatus === true) {
       instance
@@ -45,6 +53,8 @@ const EditUserListPopUp = ({
           {
             countryCode: currentData.countryCode,
             phoneNumber: currentData.phoneNumber,
+            isDisable: disableValue,
+            accountType: accountType,
           },
           { withCredentials: true }
         )
