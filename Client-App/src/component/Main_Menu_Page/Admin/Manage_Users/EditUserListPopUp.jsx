@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import instance from "../../../../instance";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -24,7 +25,39 @@ const EditUserListPopUp = ({
     setDisableStatus(e.target.value);
   };
 
-  const saveChanges = () => {};
+  const isSaveChanges = () => {
+    if (
+      accountType === currentData.accountType &&
+      disableStatus === currentData.status
+    ) {
+      return false;
+    }
+    return true;
+  };
+
+  const saveChanges = () => {
+    const changeStatus = isSaveChanges();
+    // console.log(isChange);
+    if (changeStatus === true) {
+      instance
+        .patch(
+          "user-management/edit-user",
+          {
+            countryCode: currentData.countryCode,
+            phoneNumber: currentData.phoneNumber,
+          },
+          { withCredentials: true }
+        )
+        .then((respond) => {
+          // console.log(respond);
+          isChange(!prevIsChange);
+          close();
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+  };
 
   const accountTypeOption = ["Admin", "Client"];
 
