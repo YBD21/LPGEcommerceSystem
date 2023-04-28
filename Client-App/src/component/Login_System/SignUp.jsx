@@ -150,14 +150,6 @@ const SignUp = () => {
       count += 1;
     }
 
-    // if (confirmpassword.length < 8) {
-    //   setErrorConfirmPassword({
-    //     ConfirmPassword: true,
-    //     Message: "Password Must Be 8 Character Long !",
-    //   });
-    //   count += 1;
-    // }
-
     if (createpassword.length < 8) {
       setErrorCreatePassword({
         CreatePassword: true,
@@ -222,7 +214,8 @@ const SignUp = () => {
     if (!/^[a-zA-Z]+$/.test(firstname) && firstname.length !== 0) {
       setErrorFirstName({
         FirstName: true,
-        Message: "Please Enter Valid First Name !",
+        Message:
+          "Invalid First Name format. Only alphabetic characters are allowed !",
       });
       count += 1;
     }
@@ -230,7 +223,8 @@ const SignUp = () => {
     if (!/^[a-zA-Z]+$/.test(lastname) && lastname.length !== 0) {
       setErrorLastName({
         LastName: true,
-        Message: "Please Enter Valid Last Name !",
+        Message:
+          "Invalid Last Name format. Only alphabetic characters are allowed.",
       });
       count += 1;
     }
@@ -448,7 +442,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   value={firstname}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value.trim())}
                   className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
                 />
               </div>
@@ -467,7 +461,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   value={lastname}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => setLastName(e.target.value.trim())}
                   className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
                 />
               </div>
