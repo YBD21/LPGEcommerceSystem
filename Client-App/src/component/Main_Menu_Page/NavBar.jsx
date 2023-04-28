@@ -4,7 +4,6 @@ import openSocket from "socket.io-client";
 import { Link, useLocation } from "react-router-dom";
 import Logo_img from "../../dist/image/Logo.png";
 import HomeIcon from "@mui/icons-material/Home";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useStateValue } from "../../ContextAPI/StateProvider";
@@ -177,10 +176,6 @@ const NavBar = () => {
           <div className="absolute top-5 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
             <span className="text-white font-semibold"> Home </span>
           </div>
-        </li>
-
-        <li className="svg-icons m-auto transition duration-300 transform active:scale-105 cursor-pointer">
-          <NotificationsIcon />
         </li>
 
         <li className="relative m-auto group">
