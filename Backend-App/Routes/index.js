@@ -92,7 +92,7 @@ const updateBufferData = async () => {
 
 // Immediately invoke the updateBufferData function
 
-updateBufferData(); //-- Testing mode remove comment here
+// updateBufferData(); //-- Testing mode remove comment here
 
 // Mount userRouter middleware at "/login-System" path
 app.use("/login-system", apiLimiter, loginSystemRouter);
@@ -196,7 +196,7 @@ io.on("connection", (socket) => {
     console.error(`Error watching ${filePathDeliveryRate}: ${error.message}`);
     // if file not found to watch
     sendDeliveryRate();
-  } 
+  }
 
   // For productList
   try {

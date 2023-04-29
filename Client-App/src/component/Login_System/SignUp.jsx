@@ -130,6 +130,7 @@ const SignUp = () => {
 
     return count;
   };
+  
   const Check_Password = () => {
     let count = 0;
     if (createpassword === confirmpassword) {

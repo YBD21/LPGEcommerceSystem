@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import ErrorMessageSignup from "../../Login_System/Error_Handeling_Message/ErrorMessageSignup";
 
 const ChangePassword = ({ onChild }) => {
   const [open, setOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [errorCurrentPassword, setErrorCurrentPassword] = useState({});
+  const [errorNewPassword, setErrorNewPassword] = useState({});
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState({});
+
   // handle toggle to show or hide password
   const toggle = () => {
     setOpen(!open);
@@ -15,16 +21,86 @@ const ChangePassword = ({ onChild }) => {
 
   const saveChanges = (e) => {
     e.preventDefault(); // prevent from page to refresh
+    const sumTotal = Check_Password();
+    if (sumTotal === 0) {
+      console.log("Call Backend !");
+    }
   };
 
   const close = () => {
     onChild(false);
   };
 
+  const Check_Password = () => {
+    let count = 0;
+    if (newPassword === confirmPassword) {
+      if (newPassword.length >= 8 && newPassword.length <= 16) {
+        if (newPassword === currentPassword) {
+          setErrorNewPassword({
+            newPassword: true,
+            Message:
+              "The new password cannot be the same as the current password",
+          });
+          count += 1;
+        } else {
+          setErrorNewPassword({});
+        }
+      }
+
+      if (confirmPassword.length >= 8 && confirmPassword.length <= 16) {
+        setErrorConfirmPassword({});
+      }
+    } else {
+      setErrorConfirmPassword({
+        ConfirmPassword: true,
+        Message: "Password Does Not Match !",
+      });
+      count += 1;
+    }
+
+    if (newPassword.length < 8 || newPassword.length > 16) {
+      setErrorNewPassword({
+        newPassword: true,
+        Message: "Password must be between 8 and 16 characters long!",
+      });
+      count += 1;
+    }
+
+    if (currentPassword.length < 8 || currentPassword.length > 16) {
+      setErrorCurrentPassword({
+        CurrentPassword: true,
+        Message: "Password must be between 8 and 16 characters long!",
+      });
+      count += 1;
+    }
+
+    if (confirmPassword.length > 16) {
+      setErrorConfirmPassword({
+        ConfirmPassword: true,
+        Message: "Password cannot be more than 16 characters long!",
+      });
+      count += 1;
+    }
+
+    return count;
+  };
+
+  useEffect(() => {
+    setErrorCurrentPassword({});
+  }, [currentPassword]);
+
+  useEffect(() => {
+    setErrorNewPassword({});
+  }, [newPassword]);
+
+  useEffect(() => {
+    setErrorConfirmPassword({});
+  }, [confirmPassword]);
+
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
-      <div className="relative z-10 inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg transform sm:max-w-2xl sm:h-[55vh] sm:p-8">
+      <div className="relative z-10 inline-block w-full p-6 mx-auto mt-10 bg-white rounded-lg transform sm:max-w-2xl sm:p-8">
         <form>
           {/* Start Change Password */}
           <div className="w-full flex flex-col px-12 py-3 rounded-lg items-center">
@@ -57,6 +133,10 @@ const ChangePassword = ({ onChild }) => {
                 </div>
               </div>
             </div>
+            {/* Error Message */}
+            {errorCurrentPassword.CurrentPassword && (
+              <ErrorMessageSignup props={errorCurrentPassword.Message} />
+            )}
 
             {/*New Password Input Box */}
             <div className="py-3 w-full">
@@ -83,6 +163,11 @@ const ChangePassword = ({ onChild }) => {
                 </div>
               </div>
             </div>
+            {/* Error Message */}
+            {errorNewPassword.newPassword && (
+              <ErrorMessageSignup props={errorNewPassword.Message} />
+            )}
+
             {/*Confirm New Password Input Box */}
             <div className="py-3 w-full">
               <label className="block text-sm font-semibold text-gray-800">
@@ -108,6 +193,12 @@ const ChangePassword = ({ onChild }) => {
                 </div>
               </div>
             </div>
+
+            {/* Error Message */}
+            {errorConfirmPassword.ConfirmPassword && (
+              <ErrorMessageSignup props={errorConfirmPassword.Message} />
+            )}
+
             <div className="w-full flex justify-between pt-5 mt-5">
               <button
                 className="w-1/3 px-5 py-2.5 tracking-wide
