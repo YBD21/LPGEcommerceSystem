@@ -36,7 +36,7 @@ const Processing = () => {
           />
         </svg>
 
-        <p className="text-xl font-semibold animate-pulse">
+        <p className="text-lg font-semibold animate-pulse">
           Processing <span>{".".repeat(ellipsisPosition)}</span>
         </p>
       </div>

@@ -232,6 +232,7 @@ const SignUp = () => {
     // console.log(/^[a-zA-Z]+$/.test(firstname));
     return count;
   };
+  
   const isValidCode = () => {
     if (otpcode.length === 0) {
       return setErrorOtp({
@@ -279,7 +280,7 @@ const SignUp = () => {
     }
   };
 
-  const createAccount = (e) => {
+  const createAccount = async(e) => {
     e.preventDefault(); // prevent page from refresh
     const reCheck = Recheck_Validation();
     const checkPass = Check_Password();
@@ -291,7 +292,7 @@ const SignUp = () => {
     const sumTotal = reCheck + checkPass + isEmpty + isName + isnumber;
     // console.log(sumTotal);
     if (sumTotal === 0) {
-      checkPhoneNumber();
+      await checkPhoneNumber();
     }
   };
 

@@ -49,8 +49,11 @@ const login = async (phoneNumber, encPassword) => {
         });
 
         // createJWToken
+        const firstName = snapshot.val().FirstName;
+        const lastName = snapshot.val().LastName;
+        const role = snapshot.val().AccountType;
 
-        const token = generateToken(snapshot, phoneNumber);
+        const token = generateToken(firstName, lastName, role, phoneNumber);
         // checkPassword and send to client
         return (sendData = {
           ...sendData,
@@ -68,13 +71,13 @@ const login = async (phoneNumber, encPassword) => {
   return sendData;
 };
 
-const generateToken = (data, number) => {
+const generateToken = (userFirstName, userLastName, userRole, number) => {
   //firstName,lastName,mobileNumber,accountType
 
   const filterData = {
-    firstName: data.val().FirstName,
-    lastName: data.val().LastName,
-    role: data.val().AccountType,
+    firstName: userFirstName,
+    lastName: userLastName,
+    role: userRole,
     id: number,
   };
 
@@ -114,4 +117,10 @@ const decodeToken = async (token) => {
   return decoded;
 };
 
-export { login, verifyToken, decodeToken, verifyTokenAndDecodeToken };
+export {
+  login,
+  verifyToken,
+  decodeToken,
+  verifyTokenAndDecodeToken,
+  generateToken,
+};

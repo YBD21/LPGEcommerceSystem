@@ -2,8 +2,10 @@ import express from "express";
 import {
   verifyTokenAndDecodeToken,
   decodeToken,
+  generateToken,
 } from "../LoginSystem/login.js";
 import { editUserAccountType, getAllUserData } from "./userListingOperation.js";
+import { updateUserName } from "./userClientOperation.js";
 
 const userManagementSystemRouter = express.Router();
 
@@ -49,6 +51,40 @@ userManagementSystemRouter.patch("/edit-user", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
+});
+
+userManagementSystemRouter.patch("/edit-userName", async (req, res) => {
+  const { userData: accessToken } = req.cookies;
+  const { FirstName: firstName, LastName: lastName } = req.body;
+
+  const { id: userId } = await decodeToken(accessToken);
+  // console.log(userId);
+
+  console.log(`attepmting Renaming UserName of ${userId} ...`);
+
+  const updatedUserData = await updateUserName(firstName, lastName, userId);
+
+  // generate accessToken here
+  const newToken = generateToken(
+    updatedUserData.firstName,
+    updatedUserData.lastName,
+    updatedUserData.role,
+    updatedUserData.userId
+  );
+
+  // replace previous cookie to new cookies with new userName
+  res.cookie("userData", newToken, {
+    secure: true, // set to true to enable sending the cookie only over HTTPS
+    httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
+    sameSite: "none",
+  });
+
+  console.log(`Renaming UserName of ${userId} Successful`);
+  console.log(
+    `New UserName : ${updatedUserData.firstName}  ${updatedUserData.lastName} `
+  );
+
+  res.json(newToken);
 });
 
 export default userManagementSystemRouter;
