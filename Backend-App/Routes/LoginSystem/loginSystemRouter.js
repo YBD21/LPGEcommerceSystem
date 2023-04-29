@@ -1,8 +1,9 @@
 import express from "express";
-import { login, verifyToken } from "./login.js";
+import { decodeToken, login, verifyToken } from "./login.js";
 import { passwordforget } from "./passwordforget.js";
 import { resetPassword } from "./resetpassword.js";
 import { createAccount } from "./signup.js";
+import { changePassword } from "./changePassword.js";
 
 const loginSystemRouter = express.Router();
 
@@ -71,6 +72,16 @@ loginSystemRouter.post("/signup", async (req, res) => {
     data.LastName,
     data.Created
   );
+  res.json(respond);
+});
+
+loginSystemRouter.post("/change-password", async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  // access HttpOnly Cookie
+  const { userData: accessToken } = req.cookies;
+  const { id: userId } = await decodeToken(accessToken);
+
+  const respond = await changePassword(userId, currentPassword, newPassword);
   res.json(respond);
 });
 
