@@ -28,11 +28,6 @@ const login = async (phoneNumber, encPassword) => {
 
   const plainTextPass = decryptPassword();
 
-  const checkPassword = (hashPassword, password) => {
-    const check = bcrypt.compareSync(password, hashPassword);
-    return check;
-  };
-
   const ref = dataBase.ref(startCountRef);
 
   await ref.once("value", (snapshot) => {
@@ -69,6 +64,11 @@ const login = async (phoneNumber, encPassword) => {
   });
 
   return sendData;
+};
+
+const checkPassword = (hashPassword, password) => {
+  const check = bcrypt.compareSync(password, hashPassword);
+  return check;
 };
 
 const generateToken = (userFirstName, userLastName, userRole, number) => {
@@ -123,4 +123,5 @@ export {
   decodeToken,
   verifyTokenAndDecodeToken,
   generateToken,
+  checkPassword,
 };

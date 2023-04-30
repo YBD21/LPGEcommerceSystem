@@ -75,13 +75,17 @@ loginSystemRouter.post("/signup", async (req, res) => {
   res.json(respond);
 });
 
-loginSystemRouter.post("/change-password", async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
+loginSystemRouter.patch("/change-password", async (req, res) => {
+  const { currentPassword, newHashedPassword } = req.body;
   // access HttpOnly Cookie
   const { userData: accessToken } = req.cookies;
   const { id: userId } = await decodeToken(accessToken);
 
-  const respond = await changePassword(userId, currentPassword, newPassword);
+  const respond = await changePassword(
+    userId,
+    currentPassword,
+    newHashedPassword
+  );
   res.json(respond);
 });
 

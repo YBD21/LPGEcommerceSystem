@@ -117,9 +117,6 @@ io.on("connection", (socket) => {
   socket.on("ViewOrderListAdmin", async () => {
     const userId = socket.handshake.query.userId;
     const userRole = socket.handshake.query.userRole;
-    const orderBy = socket.handshake.query.orderBy;
-    // const searchFromUnixTimeStamp = +socket.handshake.query.dateTime;
-    // const comparisonOperator = socket.handshake.query.operator;
 
     if (userRole === "Admin") {
       console.log(

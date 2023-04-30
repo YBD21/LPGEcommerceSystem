@@ -1,5 +1,6 @@
-import { dataBase } from "../firebaseConfig.js";
 import bcrypt from "bcryptjs";
+import { dataBase } from "../firebaseConfig.js";
+import { checkPassword } from "./login.js";
 
 const changePassword = async (userId, currentPassword, newPassword) => {
   const startCountRef = `SignInWithPhoneNumber/+${userId.slice(
@@ -22,14 +23,9 @@ const changePassword = async (userId, currentPassword, newPassword) => {
 
   if (isCorrect === true) {
     // updatePassword
-    // change password into hash
-    // store the hashed password into dataBase
+    await ref.update({ password: newPassword });
   }
-};
-
-const checkPassword = (hashPassword, password) => {
-  const check = bcrypt.compareSync(password, hashPassword);
-  return check;
+  return isCorrect;
 };
 
 export { changePassword };
