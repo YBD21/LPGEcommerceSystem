@@ -4,8 +4,10 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
 import openSocket from "socket.io-client";
 import { url } from "../../../instance";
+import Loading from "../../Loading";
 const Dashboard = () => {
   const [{ userData, productList }] = useStateValue();
+  const [isLoading, setIsLoading] = useState(true); // to testing set false
   const [productCount, setProductCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
@@ -29,6 +31,7 @@ const Dashboard = () => {
       const { orderTotalCount, userTotalCount } = data;
       setOrderCount(orderTotalCount);
       setUserCount(userTotalCount);
+      setIsLoading(false); // set loading to false when data is fetched
       // console.log(data);
     });
 
@@ -39,6 +42,10 @@ const Dashboard = () => {
       socket.disconnect();
     };
   }, []);
+
+  if (isLoading) {
+    return <Loading />; // render loading component when isLoading is true
+  }
 
   return (
     <div className="flex-1 p-6 bg-gray-100">
