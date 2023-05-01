@@ -9,6 +9,7 @@ import {
   deleteAccountfromDatabase,
   updateUserName,
 } from "./userClientOperation.js";
+import { subtractTotalUserCount } from "../LoginSystem/signup.js";
 
 const userManagementSystemRouter = express.Router();
 
@@ -106,7 +107,8 @@ userManagementSystemRouter.delete("/delete-account", async (req, res) => {
       sameSite: "none",
     });
 
-    //
+    await subtractTotalUserCount();
+
     res.json(respond);
     console.log("User LogOut X_X !");
   } catch (error) {

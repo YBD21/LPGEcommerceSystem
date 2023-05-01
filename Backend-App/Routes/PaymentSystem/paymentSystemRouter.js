@@ -4,6 +4,7 @@ import {
   saveOrderDetail,
   saveOrderDetailForCashOnDelivery,
   checkReservationTimeValidity,
+  updateTotalOrderCount,
 } from "./paymentOperation.js";
 import {
   subtractReservedQuantity,
@@ -27,6 +28,7 @@ paymentSystemRouter.post("/verify", async (req, res) => {
 
     // update realtime database then erase userRecord from stockReservationRecord
     await updateStockDatabaseThenRemoveStockReservation(phoneNumber);
+    await updateTotalOrderCount();
     res.json(orderData);
   } catch (error) {
     res.status(500).json({ message: "Error verifying transaction" });
@@ -41,6 +43,7 @@ paymentSystemRouter.post("/delivery-order", async (req, res) => {
     console.log(orderData);
     // update realtime database then erase userRecord from stockReservationRecord
     await updateStockDatabaseThenRemoveStockReservation(phoneNumber);
+    await updateTotalOrderCount();
     res.json(sendOrderData);
   } catch (error) {
     console.log(error.message);

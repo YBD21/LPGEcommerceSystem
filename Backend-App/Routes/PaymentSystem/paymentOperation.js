@@ -89,11 +89,30 @@ const saveOrderDetail = async (payloadData, confirmationData) => {
   try {
     await userRef.set(newOrder);
     console.log("Order successfully added to Firestore!");
+
     sendData = { orderId: orderId }; // add min max delivery Time here
   } catch (error) {
     console.error("Error adding order to Firestore: ", error);
   }
   return sendData;
+};
+
+const updateTotalOrderCount = async () => {
+  const orderRef = fireStoreDB
+    .collection("TotalOrder")
+    .doc("xRKlU7DnVf4XrrzxNpLm");
+
+  await fireStoreDB.runTransaction(async (transaction) => {
+    const orderDoc = await transaction.get(orderRef);
+
+    if (!orderDoc.exists) {
+      throw new Error("TotalOrder document does not exist");
+    }
+
+    const orderCount = orderDoc.data().orderCount;
+
+    transaction.update(orderRef, { orderCount: orderCount + 1 });
+  });
 };
 
 const saveOrderDetailForCashOnDelivery = async (payloadData) => {
@@ -139,7 +158,7 @@ const checkReservationTimeValidity = () => {
   const unixTimeStampNow = new Date().getTime();
 
   const requestHour = new Date(unixTimeStampNow).getUTCHours() + 5.75; // Add 5 hours and 45 minutes for Nepal time
-  console.log("Requested Hour : ",requestHour);
+  console.log("Requested Hour : ", requestHour);
   if (requestHour >= 18 || requestHour < 6) {
     // Request made between 6 PM and 6 AM Nepal time, block user
     return false;
@@ -154,4 +173,5 @@ export {
   saveOrderDetail,
   saveOrderDetailForCashOnDelivery,
   checkReservationTimeValidity,
+  updateTotalOrderCount,
 };

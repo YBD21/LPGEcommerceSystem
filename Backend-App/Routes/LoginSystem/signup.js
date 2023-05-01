@@ -54,9 +54,34 @@ const createAccount = async (
         }
       }
     );
+    await addTotalUserCount();
   }
 
   return sendData;
 };
 
-export { createAccount };
+const addTotalUserCount = async () => {
+  const startCountRef = "SignInWithPhoneNumber";
+  const ref = dataBase.ref(startCountRef);
+  await ref.child("TotalUser").transaction((count) => {
+    if (count === null || count === undefined) {
+      return 0;
+    } else {
+      return count + 1;
+    }
+  });
+};
+
+const subtractTotalUserCount = async () => {
+  const startCountRef = "SignInWithPhoneNumber";
+  const ref = dataBase.ref(startCountRef);
+  await ref.child("TotalUser").transaction((count) => {
+    if (count === null || count === undefined) {
+      return 0;
+    } else {
+      return count - 1;
+    }
+  });
+};
+
+export { createAccount, subtractTotalUserCount };

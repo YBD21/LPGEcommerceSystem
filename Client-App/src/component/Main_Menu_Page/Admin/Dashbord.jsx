@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import { useStateValue } from "../../../ContextAPI/StateProvider";
 const Dashboard = () => {
+  const [{ productList }] = useStateValue();
+  const [productCount, setProductCount] = useState(0);
+
+  useEffect(() => {
+    setProductCount(Object.keys(productList)?.length);
+  }, [productList]);
+
   return (
     <div className="flex-1 p-6 bg-gray-100">
       <h2 className="text-3xl font-bold mt-2 ml-2 mb-8">Dashboard</h2>
@@ -13,7 +21,7 @@ const Dashboard = () => {
             Total Product
           </h3>
           <p className="text-black text-2xl font-semibold text-center px-4 py-8">
-            50
+            {productCount}
           </p>
           <Link
             to="/Admin/Manage-Product/View-Gas-Product"
