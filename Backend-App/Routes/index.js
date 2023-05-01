@@ -32,6 +32,7 @@ import {
 } from "./OrderManagement/orderOperation.js";
 import userManagementSystemRouter from "../Routes/UserManagement/userManagementSystemRouter.js";
 import * as dotenv from "dotenv";
+import { getDashBoardData } from "./dashBoardOperation.js";
 
 dotenv.config();
 
@@ -114,6 +115,19 @@ const filePathDeliveryRate = "BufferData/deliveryRate.json";
 const filePathProductList = "BufferData/productList.json";
 
 io.on("connection", (socket) => {
+  socket.on("AdminDashBoard", async () => {
+    const userId = socket.handshake.query.userId;
+    const userRole = socket.handshake.query.userRole;
+
+    if (userRole === "Admin") {
+      console.log(
+        `User ID : ${userId} with Role of : ${userRole} is Accessing DashBoard !`
+      );
+      const dashBoardData = await getDashBoardData();
+      return socket.emit("updateAdminDashBoard", dashBoardData);
+    }
+  });
+
   socket.on("ViewOrderListAdmin", async () => {
     const userId = socket.handshake.query.userId;
     const userRole = socket.handshake.query.userRole;

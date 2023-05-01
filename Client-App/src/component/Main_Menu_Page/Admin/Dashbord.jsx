@@ -2,13 +2,43 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { useStateValue } from "../../../ContextAPI/StateProvider";
+import openSocket from "socket.io-client";
+import { url } from "../../../instance";
 const Dashboard = () => {
-  const [{ productList }] = useStateValue();
+  const [{ userData, productList }] = useStateValue();
   const [productCount, setProductCount] = useState(0);
+  const [orderCount, setOrderCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
 
   useEffect(() => {
-    setProductCount(Object.keys(productList)?.length);
+    if (productList) {
+      setProductCount(Object.keys(productList).length);
+    }
   }, [productList]);
+
+  useEffect(() => {
+    //call to backend for connection
+    const socket = openSocket(url, {
+      query: {
+        userId: userData?.id,
+        userRole: userData?.role,
+      },
+    });
+
+    socket.on("updateAdminDashBoard", (data) => {
+      const { orderTotalCount, userTotalCount } = data;
+      setOrderCount(orderTotalCount);
+      setUserCount(userTotalCount);
+      // console.log(data);
+    });
+
+    // emit the event to listen for updates
+    socket.emit("AdminDashBoard");
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <div className="flex-1 p-6 bg-gray-100">
@@ -37,7 +67,7 @@ const Dashboard = () => {
             Total Orders
           </h3>
           <p className="text-black text-2xl font-semibold text-center px-4 py-8">
-            50
+            {orderCount}
           </p>
           <Link
             to="/Admin/Manage-Orders/ViewOrders"
@@ -53,7 +83,7 @@ const Dashboard = () => {
             Total Users
           </h3>
           <p className="text-black text-2xl font-semibold text-center px-4 py-8">
-            50
+            {userCount}
           </p>
           <Link
             to="/Admin/Manage-Users/View-User"
