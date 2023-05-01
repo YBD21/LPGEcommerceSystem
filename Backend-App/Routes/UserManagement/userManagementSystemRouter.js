@@ -5,7 +5,10 @@ import {
   generateToken,
 } from "../LoginSystem/login.js";
 import { editUserAccountType, getAllUserData } from "./userListingOperation.js";
-import { updateUserName } from "./userClientOperation.js";
+import {
+  deleteAccountfromDatabase,
+  updateUserName,
+} from "./userClientOperation.js";
 
 const userManagementSystemRouter = express.Router();
 
@@ -85,6 +88,37 @@ userManagementSystemRouter.patch("/edit-userName", async (req, res) => {
   );
 
   res.json(newToken);
+});
+
+userManagementSystemRouter.delete("/delete-account", async (req, res) => {
+  try {
+    // access HttpOnly Cookie
+    const { userData: accessToken } = req.cookies;
+    const { id: userId } = await decodeToken(accessToken);
+
+    console.log(`Delete Account request hasbeen requested by ${userId}`);
+
+    const respond = await deleteAccountfromDatabase(userId);
+    // now delete HttpOnly Cookies
+    res.clearCookie("userData", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    //
+    res.json(respond);
+    console.log("User LogOut X_X !");
+  } catch (error) {
+    console.log(error.message);
+    //delete HttpOnly Cookies
+    res.clearCookie("userData", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.status(401).send("Unauthorized");
+  }
 });
 
 export default userManagementSystemRouter;

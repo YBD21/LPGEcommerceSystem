@@ -10,6 +10,7 @@ import { CreateProduct } from "./CreateProductSystem/createProduct.js";
 import { ImageUpload } from "./CreateProductSystem/imageUpload.js";
 import { updateProductStock } from "./UpdateProduct/updateProduct.js";
 import { deleteProductfromDatabase } from "./UpdateProduct/deleteProduct.js";
+import { decodeToken } from "../LoginSystem/login.js";
 
 // used for uploading files
 const multer = Multer({
@@ -69,8 +70,19 @@ productManagementSystemRouter.patch("/updateStock", async (req, res) => {
 
 productManagementSystemRouter.delete("/delete-product", async (req, res) => {
   const { keyName: KeyName } = req.query;
-  const respond = await deleteProductfromDatabase(KeyName);
-  res.json(respond);
+  // access HttpOnly Cookie
+  const { userData: accessToken } = req.cookies;
+  const { id: userId, role } = await decodeToken(accessToken);
+  console.log(
+    `Delete Product request hasbeen requested by ${userId} with Role : ${role}`
+  );
+  console.log(`attemping to delete ${KeyName} Product ....`);
+  if (role === "Admin") {
+    const respond = await deleteProductfromDatabase(KeyName);
+    res.json(respond);
+  } else {
+    res.status(401).send("Unauthorized");
+  }
 });
 
 export default productManagementSystemRouter;

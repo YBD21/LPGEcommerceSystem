@@ -33,7 +33,9 @@ const GasProduct = ({ keyName, name, image, stock }) => {
   const deleteProduct = () => {
     // delete product
     instance
-      .delete(`/product-management/delete-product?keyName=${keyName}`)
+      .delete(`/product-management/delete-product?keyName=${keyName}`, {
+        withCredentials: true,
+      })
       .then(function (response) {
         // console.log(response.data);
       })

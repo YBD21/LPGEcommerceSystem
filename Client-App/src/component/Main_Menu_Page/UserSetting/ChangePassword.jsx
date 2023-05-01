@@ -74,8 +74,7 @@ const ChangePassword = ({ onChild }) => {
         if (newPassword === currentPassword) {
           setErrorNewPassword({
             newPassword: true,
-            Message:
-              "The new password cannot be the same as the current password",
+            Message: "New password cannot be the same as the current password",
           });
           count += 1;
         } else {

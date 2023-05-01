@@ -27,4 +27,26 @@ const updateUserName = async (firstName, lastName, userId) => {
   return sendData;
 };
 
-export { updateUserName };
+const deleteAccountfromDatabase = async (userId) => {
+  const countryCode = userId.slice(0, 3);
+  const phoneNumber = userId.slice(3, userId.length);
+  let sendData = false;
+
+  const startCountRef = `SignInWithPhoneNumber/+${countryCode}/${phoneNumber}`;
+
+  const ref = dataBase.ref(startCountRef);
+
+  await ref
+    .remove()
+    .then(() => {
+      console.log(`Account of ID : ${userId} has been deleted successfully`);
+      sendData = true;
+    })
+    .catch((error) => {
+      console.error(`Error deleting Account ID : ${userId} , Error :`, error);
+    });
+
+  return sendData;
+};
+
+export { updateUserName, deleteAccountfromDatabase };

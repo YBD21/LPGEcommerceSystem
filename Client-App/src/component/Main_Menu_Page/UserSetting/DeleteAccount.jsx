@@ -1,8 +1,34 @@
 import React from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import instance from "../../../instance";
+import { useStateValue } from "../../../ContextAPI/StateProvider";
 
 const DeleteAccount = ({ onChild }) => {
+  const [{ userData }, dispatch] = useStateValue();
+  // Clear userData in ContexAPI
+  const clearUserData = () => {
+    dispatch({
+      type: "SET_USER",
+      userData: null,
+    });
+  };
+  const requestDeleteAccount = () => {
+    instance
+      .delete("/user-management/delete-account", {
+        withCredentials: true,
+      })
+      .then((respond) => {
+        // console.log(respond.data);
+        if (respond.data === true) {
+          clearUserData();
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   const close = () => {
     onChild(false);
   };
@@ -28,6 +54,7 @@ const DeleteAccount = ({ onChild }) => {
                 className="w-1/2 px-5 py-2.5 tracking-wide
                  bg-red-800  rounded-lg text-center mr-2 mb-2
            focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-opacity-50 active:ring-4 active:ring-red-800 active:ring-opacity-50 overflow-hidden"
+                onClick={requestDeleteAccount}
               >
                 <span className="text-white font-semibold text-lg ">
                   Confirm
