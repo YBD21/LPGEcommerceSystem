@@ -11,7 +11,7 @@ export const Menu = () => {
   }, [productList]);
 
   return (
-    <div className="flex flex-col w-full place-items-center pt-10">
+    <div className="flex flex-col w-full place-items-center">
       <main className="grid grid-cols-3 gap-4 my-5 max-lg:flex max-lg:flex-col">
         {!productData
           ? false

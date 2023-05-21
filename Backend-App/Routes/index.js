@@ -178,10 +178,10 @@ io.on("connection", (socket) => {
   // For gasRate
   try {
     // look for change in gasRateFile
-    fs.watchFile(filePathGasRate, async (current, prev) => {
-      // Check time when the file was modified
-      if (current.mtime !== prev.mtime) {
-        console.log("GasRate has been Changed !");
+    fs.watch(filePathGasRate, async (eventType, filename) => {
+         // Check time when the file was modified
+      if (eventType === "change") {
+        console.log(`${filename} has been Changed !`);
         const respond = await readGasRateFile();
         io.emit("gasRate", respond);
       }
@@ -195,10 +195,10 @@ io.on("connection", (socket) => {
   // For deliveryRate
   try {
     // look for change in deliveryRateFile
-    fs.watchFile(filePathDeliveryRate, async (current, prev) => {
+    fs.watch(filePathDeliveryRate, async (eventType, filename) => {
       // Check time when the file was modified
-      if (current.mtime !== prev.mtime) {
-        console.log("DeliveryRate has been Changed !");
+      if (eventType === "change") {
+        console.log(`${filename} has been Changed !`);
         const respond = await readDeliveryRatefile();
         io.emit("deliveryRate", respond);
       }
@@ -212,10 +212,10 @@ io.on("connection", (socket) => {
   // For productList
   try {
     // look for change in productList
-    fs.watchFile(filePathProductList, async (current, prev) => {
-      // check time when the file was modified
-      if (current.mtime !== prev.mtime) {
-        console.log("Product List has been Changed !");
+    fs.watch(filePathProductList, async (eventType, filename) => {
+      // Check time when the file was modified
+      if (eventType === "change") {
+        console.log(`${filename} has been Changed !`);
         const respond = await readProductListfile();
         io.emit("productList", respond);
       }
@@ -231,10 +231,6 @@ io.on("connection", (socket) => {
     console.log("User Disconnected X_X !");
 
     await releaseStockOnDisconnectWithAccessToken(socket);
-
-    fs.unwatchFile(filePathGasRate);
-    fs.unwatchFile(filePathDeliveryRate);
-    fs.unwatchFile(filePathProductList);
   });
 });
 

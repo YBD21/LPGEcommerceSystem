@@ -176,7 +176,7 @@ const Product = ({ id, productName, imageUrl, stock }) => {
 
       <p className="px-5 pt-5 pb-2 text-2xl font-semibold">{productName}</p>
       {/* add and subtract */}
-      <div className="flex flex-row my-6 justify-between place-items-center">
+      <div className="flex flex-row my-3 justify-between place-items-center">
         <button
           className="px-4 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg mx-auto

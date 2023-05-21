@@ -94,9 +94,9 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
     console.log(
       "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time"
     );
-
-    res.status(500).json({
-      error:
+    // Forbidden : Permission denied
+    res.status(403).json({
+      message:
         "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time",
     });
   }

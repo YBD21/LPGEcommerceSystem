@@ -55,10 +55,10 @@ const DeliveryInfo = () => {
 
       saveDeliveryInfo();
       // console.log(response);
-      return response?.data?.timer ? response?.data?.timer : 0;
+      return response?.data?.timer || 0;
     } catch (error) {
-      // console.log(error.message);
-      return 0;
+      // console.log(error.response.data.message);
+      return error.response.data.message;
     }
   };
 
@@ -66,7 +66,7 @@ const DeliveryInfo = () => {
     // onClick pay send request to backend
     const timer = await requestToReserveStock();
     // onsucess of reserved getPaymentPortal
-    openPotal(+timer);
+    openPotal(timer);
   };
 
   const openPotal = (timer) => {

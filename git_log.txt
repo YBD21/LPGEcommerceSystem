@@ -1,0 +1,1405 @@
+commit 6caa7f0ab7808b801ce54574436395e47e2a90ad
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon May 1 17:42:24 2023 +0545
+
+    added loading in Dashboard --client
+
+commit 12754bbc75abce5f15a4be645f8ddba70cf230ba
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon May 1 17:27:56 2023 +0545
+
+     completed Dashboard --client --backend
+
+commit d0a09ccf5e71bdff53abcef80bd3a2f755c212f7
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon May 1 16:36:22 2023 +0545
+
+     attemping Dashboard 001 --backend
+
+commit 7fda09c8eb3a5cf52270612e40587d50c0f33673
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon May 1 12:47:45 2023 +0545
+
+    attempting dynamic Dashboard --client
+
+commit e7498550b491bd6048c51570c9f5bfa2294a0eb1
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon May 1 11:34:27 2023 +0545
+
+    fixed Loading.jsx css --client
+
+commit 8370148d470982a58b187d36aa4625a242bd5883
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon May 1 11:24:11 2023 +0545
+
+    completed Delete Account --client --backend
+
+commit b184daf4c76273dc831dbef987df380e969d5fc0
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 30 14:03:32 2023 +0545
+
+     attemping User ChangePassword Page 003 --client
+
+commit 82d431803620415dca7d8b83c34f8f0318fe1b96
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 29 21:47:34 2023 +0545
+
+     attemping User ChangePassword Page 002 --backend
+
+commit 0732ebdceca9dceb15ae2a46632850d60b60390a
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 29 15:32:35 2023 +0545
+
+     attemping User ChangePassword Page 001 --client
+
+commit 3b15bf58ecf29ae6426313912ca0fffa50d744d3
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 29 08:02:09 2023 +0545
+
+    integrated backend for UserInfo --backend
+
+commit a5bc4e8ed7a94059a35ecf59da8c0e665200da1d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Apr 28 08:16:17 2023 +0545
+
+    createAccount remove space from inputfield --client
+
+commit 52ee6c22effc4b0df3431416739f33b5e08329b8
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Apr 28 07:57:34 2023 +0545
+
+    removing notification --client
+
+commit 5c9582d0f56b5d5137b692c54bf0e0caf48d777d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 27 13:35:55 2023 +0545
+
+    fixed overshaing in GasProduct Admin --Client
+
+commit 848b655c169cdc541b607148077bdb17d1787186
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 27 13:25:51 2023 +0545
+
+     completed ViewUserList --client --backend
+
+commit d8a94c1f0206f0fdbd0b9a99b925d7eccbd690a0
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 27 08:48:03 2023 +0545
+
+     attemping ViewUserList 004 --client --backend
+
+commit 8a0128b56902039b16cd48da7740ec5cc0592d1b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 26 20:48:27 2023 +0545
+
+    attemping ViewUserList 003 --client --backend
+
+commit bb600afe2ca5776f183de8f9fef49326289a7331
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 26 19:18:13 2023 +0545
+
+    fixed not dynamic updating GasRates --backend
+
+commit 2a4f63f6479374c5e62da2e9269087e5a56cbdfc
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 26 11:34:21 2023 +0545
+
+    attemping ViewUserList  002 --client --backend
+
+commit 883fbf36c3be6f0a853428db8cea63f34d78d029
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 26 09:57:09 2023 +0545
+
+    attemping ViewUserList  001 --client --backend
+
+commit 856c50153264ff322fb903e546236f4db658ade9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 25 09:59:41 2023 +0545
+
+    fix auto update AdminViewOrders --client --backend
+
+commit dfcb423be9ff1ffe719ec571cf2a0536cebff9d1
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 25 09:15:14 2023 +0545
+
+    completed AdminViewOrders --client --backend
+
+commit 2910a19e0bac60f7de22cb5716c2719618c3360d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Apr 24 12:46:55 2023 +0545
+
+    attemping AdminViewOrders 010 --client --backend
+
+commit cfbe83910db8ad9a694e223b6d6aa9e0f6f65df7
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 22 11:17:07 2023 +0545
+
+    attemping AdminViewOrders 009 --client
+
+commit 6ff5cf2ac91937d1b01cdb49c7b0c3c96ce8d1b9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 22 10:39:54 2023 +0545
+
+    attemping AdminViewOrders 008 --client
+
+commit bf248b9cf72fe9a915095cdca99bba2efbde9ce6
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Apr 21 17:33:51 2023 +0545
+
+    attemping AdminViewOrders 007 --client
+
+commit 9787ba6dbec7261d101f04e20fafb4927ab164d3
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Apr 21 13:47:18 2023 +0545
+
+    fixed payment processing bug
+
+commit bd02356351757d7cfd4ee38c09cf180ae1540b83
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Apr 21 13:31:00 2023 +0545
+
+    attemping AdminViewOrders 006 --client
+
+commit 0dcb221fc831002c28c396e71305d52f62c2cb98
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Apr 21 08:16:08 2023 +0545
+
+    attemping AdminViewOrders 005 --client
+
+commit f89251b1076e1f30bb6bec187bb30776638ec046
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 20 18:02:00 2023 +0545
+
+    attemping AdminViewOrders 004 --client
+
+commit 70a09e13bae17d7f2306f93d242990672c5fbe99
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 20 14:23:36 2023 +0545
+
+    attemping AdminViewOrders 003 --backend
+
+commit 1e2bb3df2ccc83009c87b14112ea4b829b315ef9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 19 18:26:01 2023 +0545
+
+    attemping AdminViewOrders 002 --client
+
+commit ce7f39df5fa401b0fd4428174d8fd34419bd5b3e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 19 17:41:03 2023 +0545
+
+    attemping AdminViewOrders 001 --client --backend
+
+commit 7453735d11b9b0c89b3adec178daaad32ba96be2
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Apr 17 20:01:28 2023 +0545
+
+    fixed Product not updating Admin --client
+
+commit 17eab4c73af96c9f01c67340024325178c4c473f
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Apr 17 19:50:07 2023 +0545
+
+    fixed image autosize Product --001 --client
+
+commit e2dab7b012f8448cfa3cc3908b939eec7e8c0aa5
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Apr 17 19:25:46 2023 +0545
+
+    fixed image autosize Product --client
+
+commit 000c6e1f85c16cf719b50536eacd8868954b131c
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Apr 17 18:59:49 2023 +0545
+
+    remove cache to Menu
+
+commit f1be3f5451b5614c4e66f9c0616564917e864830
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 16 16:42:09 2023 +0545
+
+    completed dynamic ViewOrder cancel function --client --backend
+
+commit 2b418bd2b759e3bc9e4bb8cc97a86eacc7cbd3dc
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 16 11:59:52 2023 +0545
+
+    added dynamic ViewOrder cancel --001 --client --backend
+
+commit 96eef929fe898b9a8f6bad30a7a39737ae3ee246
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 16 07:52:16 2023 +0545
+
+    modified attempt dynamic ViewOrder --001 --client
+
+commit 2efb7ae45caabd757fe43babf9cb4299bb54979d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 15 20:27:06 2023 +0545
+
+    completed dynamic ViewOrder Page using socket.io
+
+commit 315bcd97b1c9e59299d4252e0498624d407c3b4b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 15 11:09:20 2023 +0545
+
+    attempting dynamic ViewOrder Page using socket.io --005 --Client --Backend
+
+commit 2719acd09ad88365bf2cd79d4b61f0abd98c59ec
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Apr 14 16:48:48 2023 +0545
+
+    attempting dynamic ViewOrder Page using socket.io --004 --Client --Backend
+
+commit 577ab2549a194e42bff6ca6e60f0759bda91a12b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Apr 14 09:09:48 2023 +0545
+
+    attempting dynamic ViewOrder Page using socket.io --003 --Client --Backend
+
+commit 3cc38fe6ea4b5751ed37d77644c74bcb2240f475
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 13 16:16:28 2023 +0545
+
+    attempting dynamic ViewOrder Page --002 --Client --Backend
+
+commit 1a276af10671218d04570da4ea546beb6acad700
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 13 12:19:19 2023 +0545
+
+    attempting dynamic ViewOrder Page --Client --Backend
+
+commit f02d01c0b3aacdc06e2d7cc62a475e5ae1fc6b9c
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 12 14:39:16 2023 +0545
+
+    added static CancelOrderPopup --client
+
+commit c0a1ef73d58631d2c49e430640feaf0a53f1682e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 12 12:50:41 2023 +0545
+
+    added static ViewOrder Page --client
+
+commit 96bd21144d60cb671b7a76aebfe83f2f0cde91fb
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 11 17:36:23 2023 +0545
+
+    removed used css --client
+
+commit bf64e7da0c874d72aceea70a6c867082ed64fb15
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Apr 10 07:37:36 2023 +0545
+
+    fixed UserDropDown --client
+
+commit c57c03167744be6dc9a7f6d239d16d5350af24bb
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 9 18:22:32 2023 +0545
+
+    added Delete Account --client
+
+commit f9d1c3ff6cf3f3120848fdcef8470c95ebe7d5aa
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 9 16:50:17 2023 +0545
+
+    updated Change Password -001 --client
+
+commit 57fd61b041b6bd5916b7edaa841ab340bd2e38a1
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 9 16:28:52 2023 +0545
+
+    added Change Password UI --client
+
+commit d523e1afa546f63e2c75ea988ff5e19f5301efdc
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 9 15:31:38 2023 +0545
+
+    updated Setting -002 --client
+
+commit d74529f57ca4d3a464dcb071b56bfd1771a90f2e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 8 11:36:47 2023 +0545
+
+    fixed dropdwon icon not clicking --client
+
+commit ab59e9e59ebc36272cbe2ba4edba93598358bfae
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Apr 8 11:30:22 2023 +0545
+
+    fixed ThankYou Page --Amount shown
+
+commit 300dbb944e8f01a8395659100ec37b4ffad5625a
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 6 15:16:02 2023 +0545
+
+    updated Setting -001 --Client
+
+commit d5e01ce4ac9125f8781a8bc319748b6245b0cefc
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 6 11:52:34 2023 +0545
+
+    added Setting --Client
+
+commit f8c1a18fa2c5bed82cd84efa18b3fecd9a63c7d4
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 6 08:06:25 2023 +0545
+
+    updated gasProduct Ui on Hover --Client
+
+commit 33e63c39f5f9d56e5b807f572fef9f59a03c8879
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Apr 6 07:57:21 2023 +0545
+
+    added updateBufferData --backend
+
+commit 5ceb14ab907f9859aadfa056a004b1a9f24be592
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 5 15:35:44 2023 +0545
+
+    fixed deliveryInfo to Store
+
+commit d9985a47788ee239aa418bcb4e713bdc4676dd46
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 5 15:13:09 2023 +0545
+
+    changed dateTime Format to NepalTime
+
+commit 58ef77644edf43661350e9638c115c5178fee2ce
+Merge: 144dadd 1e19729
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 5 10:03:52 2023 +0545
+
+    Merge branch 'master' of https://github.com/YBD21/FYP_Project
+
+commit 144dadd42dec6c3d13e2c3aa1c2894ac7da95f56
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 5 09:59:36 2023 +0545
+
+    set sameSite None
+
+commit 1e19729e758e9086e2dce3165f059cb52e9d852a
+Author: Santosh Deuja <85655933+YBD21@users.noreply.github.com>
+Date:   Wed Apr 5 09:58:52 2023 +0545
+
+    Delete Client-App/.firebase directory
+
+commit 585d9e879e41de6c583156e2b35f4c1e00cbff8d
+Merge: 6a4488c b4959a6
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 5 09:58:05 2023 +0545
+
+    Resolved conflict in Client-App/.firebase/hosting.YnVpbGQ.cache
+
+commit 6a4488c33f0beab62f06f0f2b59cf9dd74c1f8d9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 5 09:51:11 2023 +0545
+
+    updated token
+
+commit b4959a68db4ea37954ea437753153ab8bcc3161c
+Author: Santosh Deuja <85655933+YBD21@users.noreply.github.com>
+Date:   Wed Apr 5 09:50:29 2023 +0545
+
+    Delete Client-App/.firebase directory
+
+commit 3b3b726dc6006c39737ac563dcb7acd263710053
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Apr 5 00:20:05 2023 +0545
+
+    removed json.Prase LoginSystem --Client --Backend
+
+commit 3f858b546a3f1533722101942a645c2d91883b81
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 4 23:29:49 2023 +0545
+
+    hosted firebase --client && render --backend
+
+commit 4b047664d011ddb44993266ac296b038b0e5c473
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 4 17:18:45 2023 +0545
+
+    Set base URL into package.json --client
+
+commit 35b48cc99ed2b86fd9658cb2838436b004844443
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 4 16:33:44 2023 +0545
+
+    fixed missing data DeliveryInfo --Backend
+
+commit b936c249c036693087d3df2ec6bf16fd1c1eaee0
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 4 16:18:33 2023 +0545
+
+    fixed missing data DeliveryInfo --client
+
+commit 8806f8111644414cbe0f02f3cc0dee3dfcb469ce
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 4 13:12:50 2023 +0545
+
+    completed validation DeliveryInfo --client
+
+commit 04a4741837c06be2dbe7c74ed2e301efb751c5e4
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Apr 4 11:56:05 2023 +0545
+
+    chnaged path UserProfile --client
+
+commit 9b3bef7bbd977ce7d37601a3c5695fbcb97673e5
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Apr 3 20:06:58 2023 +0545
+
+    initial checkField DeliveryInfo --client
+
+commit 3677ad4f2ec5d531781949c626a21ccb0e0fb91a
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 2 22:12:09 2023 +0545
+
+    ui improvement navbar and product --client
+
+commit 5f8c072105a53d26fe34706720dcbb6d04840aee
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 2 22:07:04 2023 +0545
+
+    ui improvement navbar  --client
+
+commit 75e84312f9447ab4edab70bb65cf8aec6e44701f
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 2 21:42:57 2023 +0545
+
+    ui improvement product  --client
+
+commit 6d3f3013aa76bce685c3ceb65650e57c48929580
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Apr 2 20:57:38 2023 +0545
+
+    completed CashOnDelivery --client --backend
+
+commit 9d34b92d285d379b1140e36de1fba79438c42660
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 31 20:03:30 2023 +0545
+
+    completed GasProduct --Client --Backend
+
+commit 9d1cad5a3860e6db8326979c45e58f3f77c25623
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 31 17:48:58 2023 +0545
+
+    updated GasProduct -001 --client
+
+commit a6c67917fe75deb129562af237bd5a55375cdc14
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 31 13:04:45 2023 +0545
+
+    ViewLPGasProduct completed
+
+commit b22d7bbd154544a442229bc53c7b01926e7c83ad
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 31 12:26:53 2023 +0545
+
+    fixed route productManagementsystem --client --Backend
+
+commit 94e9bee9577e3535120665ab2383ddecb5c37b01
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 29 17:03:56 2023 +0545
+
+    updated ViewLPGasProduct -001 --client
+
+commit 14d432645b627b40996fb9329ca27814690dfaad
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 29 15:40:55 2023 +0545
+
+    initilized ViewLPGasProduct --client
+
+commit e54bb384893e7e986aea68384536eb99b1028614
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 29 14:46:40 2023 +0545
+
+    added ManageUserTab --client
+
+commit f61ec02f93c092df8ba7308dbb64160e257b2db7
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 29 12:15:01 2023 +0545
+
+    added redirect to home -ThankYouPage --client
+
+commit 318f576980bbac5754f8f974328654efc24b6715
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 29 11:54:47 2023 +0545
+
+    success update instock after payment -003 --Backend
+
+commit 8c0ee18ac1213a33b8e14dff94ea806f7237893e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 29 11:11:07 2023 +0545
+
+    attempting update instock after payment -002 --Backend
+
+commit 7957597b90e7ce7adc4e3d940236d4c0e6197fc9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 29 08:43:41 2023 +0545
+
+    attempting update instock after payment -001 --Backend
+
+commit 53e8773bc280b98172f7369549b8d65775e79a82
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Mar 28 20:44:18 2023 +0545
+
+    fixed navbar ui
+
+commit 0ea0f7a79ecfdceedffb12e705d0b5446a00619d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Mar 27 10:46:37 2023 +0545
+
+    fixed popup ThankYou Page --Client
+
+commit 6a50919ec4da655a5a6a4fdcad706747eec90963
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Mar 26 22:04:52 2023 +0545
+
+    updated ReleaseStock --Backend
+
+commit f831396419f3b3c5f2d577fb04c187c9179f16bc
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Mar 26 20:55:54 2023 +0545
+
+    fixed --Backend crash with minor ui fix --Client
+
+commit f7f27236da714f83469fea0c39745badb36bc3df
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Mar 26 04:54:55 2023 +0545
+
+    payment timer --011 success
+
+commit cddc1e1cba43f13489e9ba7abbc51e895e3de7ca
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 25 21:41:47 2023 +0545
+
+    attempting payment timer -010 --Backend
+
+commit b7c353f0959a3d840370996b88f587b1cf0306fd
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 25 14:59:03 2023 +0545
+
+    attempting payment timer added beforeunload -009 --Client
+
+commit a180d72914cc7554e9b735952e05d5714d32552d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 25 10:26:25 2023 +0545
+
+    fixed logic error  attempting payment timer -008
+
+commit e0d3975d559409d1d16168230a4980c92ff566ad
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 25 10:09:12 2023 +0545
+
+    updated json file --backend
+
+commit 4a5babe1962c3bf48f4e4e4ac92ec67c05bf0c6e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 25 09:48:31 2023 +0545
+
+    fixed ui bug in payment popup --client
+
+commit 41a11bea04828ffc75baea0b51cfbcaca94214b4
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 25 08:17:30 2023 +0545
+
+    fixed dynamic update stock in product page --client
+
+commit 64b7fd282b43f3b53196f95c98c631c0c131a342
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 24 14:20:08 2023 +0545
+
+    attempting payment timer -008
+
+commit 503b220bd237d1645a97374ad8a1b43653d56228
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 24 12:15:11 2023 +0545
+
+    attempting payment timer -007
+
+commit af833b1906bf569c7afc4525570f97da05524b5d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 24 08:49:19 2023 +0545
+
+    attempting payment timer -006
+
+commit ceb654838c80ab43a3371168edeb73b006dea33a
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 24 07:54:33 2023 +0545
+
+    attempting payment timer -005
+
+commit 4a702621d1e48d7d02e7456b0a3f4dc55835063d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Mar 23 22:30:16 2023 +0545
+
+    attempting payment timer -004
+
+commit cb0e2aba34ea229910976c8840f289af3e5309aa
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Mar 23 22:29:28 2023 +0545
+
+    attempting payment timer -003
+
+commit 554767f9616ae0702ca1c33f62bc14b53f781fe5
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Mar 23 10:52:48 2023 +0545
+
+    attempting payment timer -002
+
+commit 5a3836bdebdab6e4b3656036159e04f2d6ee4c04
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 22 19:03:24 2023 +0545
+
+    attempting payment timer -001
+
+commit a1bcacf33945fca4881fa070955823cb06b40314
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Mar 21 14:48:08 2023 +0545
+
+    minor function fix payment timer --client
+
+commit 539604e13237a7535556f7f08dc14f7ccf89a49c
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Mar 20 19:55:28 2023 +0545
+
+    minor ui--mobile fix nabvar --client
+
+commit c1ce4b6c30f75c4a5e8908cdf0fe4223dbf372f1
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Mar 20 18:43:22 2023 +0545
+
+    added condition for Checkout Route --client
+
+commit 9fbd8c2578d1d38cfde12abe12395b5c5e97641f
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Mar 20 17:58:06 2023 +0545
+
+    added onHover show home,cart in navbar --client
+
+commit 6fddac41aa70f9d495b076976b96bdff28200b42
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Mar 20 07:56:37 2023 +0545
+
+    fixed qty checkOutproduct --client
+
+commit c324f7f5f1b9fc60349c76f213495f7398af9151
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Mar 19 19:09:24 2023 +0545
+
+    added fixed inStock checkOutproduct --client
+
+commit 95e54d8195c40c9243cbdafa2e2f96b3a233f0c7
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Mar 19 18:36:51 2023 +0545
+
+    added inStock checkOutproduct --client
+
+commit dbe9385d3c7afd6c8b4d5bb34dee4f350941f5af
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Mar 19 17:11:42 2023 +0545
+
+    fixed ui checkOutproduct --client
+
+commit 9c927be3aaa7919f1797ff6ed1114bb694f18a68
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 18 10:33:13 2023 +0545
+
+    added ConfettiAnimation into Thankyoupage --client
+
+commit 78ca5fe30e041e009ca1b5f52e5e79f3116ec2d9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 18 09:57:18 2023 +0545
+
+    minor style change in deliveryinfo --client
+
+commit c2dcb50fe8b410783c5049c20b08577231aa9303
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 17 19:47:59 2023 +0545
+
+    minor cssStyle change and function missing value --client
+
+commit c40d0a27c932a8ca9bc5555a513b389aac946767
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 17 11:47:57 2023 +0545
+
+     setup for Payment processing --client
+
+commit 42693700ebbfcb295dfb2621b20763ea7adaaa61
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Mar 16 22:23:28 2023 +0545
+
+    initial setup for Payment processing --backend
+
+commit acdeec8ee354ea8940c5bebe89eb39bc9575e087
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Mar 16 11:32:25 2023 +0545
+
+    initial setup for Payment processing --client
+
+commit 965d741726ee3e9c8d5654fdcf74193f625223d4
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Mar 14 20:01:09 2023 +0545
+
+    minor change
+
+commit 6b1394ae2834fa786fd7a7b2d6a25f317aac5224
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Mar 14 14:47:56 2023 +0545
+
+    added Footer --Client
+
+commit ea4ebf4778a0b88718e709f989aabdfff6adf0f8
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Mar 14 05:52:36 2023 +0545
+
+    fixed AddItemPopOver Ui --Client
+
+commit 55d4307aa800a7daca6a475e3192d9eea377235c
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Mar 12 17:09:43 2023 +0545
+
+    improved Routing LoginSystem --Backend  &&  change route --Client
+
+commit 4cafaef0d42232ecc749cf4d9a6328b05d5b8f4b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 11 19:49:19 2023 +0545
+
+    fixed Ui dropdownUser --Client
+
+commit c789d02ed1b97ea176173b92a15ceb6dc2f42527
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 11 16:37:07 2023 +0545
+
+    fixed live update for rates change --Client
+
+commit cd46c1eb24b540a8a70690041a65ee2cf153cc31
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 11 05:51:28 2023 +0545
+
+    attached createLPGasProduct in ManageGasProduct Tab --Client
+
+commit bb6076ae0f2bd7e308bcf56b08e019447faeb7f8
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Mar 11 05:36:37 2023 +0545
+
+    attached editGasPrice and Delivery Price in Manage Price Tab --Client
+
+commit 9fe4678ad8932511359b90237edf6ef509db4546
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 10 17:02:47 2023 +0545
+
+    added ViewOrder tab --Client
+
+commit 61e2dc6efd7fb0ed60b2f115d2014ed23d79d386
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 10 16:21:04 2023 +0545
+
+    added Dashboard tab --Client
+
+commit 42b7ea7f7e4a62f2d0f23d569c5d3cdae33c6cd8
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 10 15:57:44 2023 +0545
+
+    updated Manage with Tab Name --Client
+
+commit 331c33f6b46674c7a1c37158afb1542c4a526b06
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 10 14:38:23 2023 +0545
+
+    added Manage Orders,Price Tab --Client
+
+commit 36959f9e6d3927dc5732d265c04266abc37f98e2
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 10 09:32:12 2023 +0545
+
+    AdminDashboard --added Manage Product  --Client
+
+commit fb36c939fad6df189a28c5fa2682ac58e1394c7a
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Mar 9 15:04:14 2023 +0545
+
+    fixed Store Page Ui and initialized AdminDashboard --Client
+
+commit cb26ee7e123e72a5235d688025b131e0fb155cf9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 8 19:48:36 2023 +0545
+
+    fixed OrderSummary --Client
+
+commit 0ee7b353e70f2c3e80dd0413da9326b985378d05
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 8 19:28:02 2023 +0545
+
+    fixed addToBasket duplicate --Client
+
+commit 6dce453cd6afed0272a9ca552482267dba67f67b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 8 18:33:09 2023 +0545
+
+    fixed  Payment popup --Client
+
+commit 5aaaca71d100995a5b9acf71714119d218495686
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 8 17:09:20 2023 +0545
+
+    fixed khalti Payment --Client
+
+commit 881b724baa22a904a3dc582651742c20cd0ff121
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Mar 7 16:23:45 2023 +0545
+
+    fixed Ui of Payment --Client
+
+commit e2e13d322429decb012717ee40fefc86f641b25b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Mar 6 20:00:03 2023 +0545
+
+    added userProfile,Navbar Dropdown --Client
+
+commit 12ac9b047cc9ebd40a28593fe237f83e8759546c
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Mar 5 16:13:47 2023 +0545
+
+    routing issues --Client
+
+commit fd8b083a1dc4217e3c050733973b4a2b203bf6f4
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Mar 3 12:22:39 2023 +0545
+
+    fixed jwtverify token --Backend
+
+commit dd588dd19bb66327ebdc72172738211ee286221d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 1 22:08:05 2023 +0545
+
+    fixed price formating --Client
+
+commit f6a043f77076f94242213c16b96da4927949baba
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 1 16:56:54 2023 +0545
+
+    added itemAddedPopOver --Client
+
+commit 46753cc967fc988c7274b7017dd07ca1046184e5
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Mar 1 08:44:49 2023 +0545
+
+    fixed cookies set and get issue
+
+commit 7af5b064360194888a00e94c0255de52e371ed3d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Feb 28 16:59:05 2023 +0545
+
+    fixed ui bug --1280x800 cart --Client
+
+commit bdf742486114f8f3c59db88e8617bc8e1e55c6d8
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Feb 28 16:00:54 2023 +0545
+
+    fix bug on Routes & added PageNotFound --Client
+
+commit 2ed27ccf600cf7c57c497fa76b3c6bb4d2f9e134
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Feb 28 02:35:50 2023 +0545
+
+    added PrivateRoutes --Client
+
+commit 3fe88ce8d45bb8883e035e02a3f3e83b429dc758
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Feb 26 18:44:18 2023 +0545
+
+    fixed login spam bug --client & --backend
+
+commit b41e2fd2a983787362aaf57ebb63de87982bb1e0
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Feb 25 21:06:26 2023 +0545
+
+    added cookies in client app
+
+commit 40a7a673cff1a44df01b6bbbe973f188b7abc2bc
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Feb 24 21:26:35 2023 +0545
+
+    added helmet,express-rate-limit,express-slow-down --Backend
+
+commit 56c8830b9e67162026c311c82e70f4e210a7187e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Feb 24 18:55:57 2023 +0545
+
+    changed logic in Login --Client & --Backend
+
+commit 8bf27720887674f2d3aa54d6897eac1ca414f778
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Feb 24 16:14:05 2023 +0545
+
+    fixed webpack error X_X
+
+commit f1a7eb4648f74a810c76aa3d8fa1014ea7fe383f
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Feb 23 14:24:17 2023 +0545
+
+    added ripple effect on all button --client
+
+commit 84c3a230ab152aad8c5e3afeb7ef200f0b8536cd
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Feb 23 12:37:32 2023 +0545
+
+    added khalti payment api --client
+
+commit cdb540d7200a5e569a7e8cc080bc53130f67fe39
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Feb 20 17:54:49 2023 +0545
+
+    added Popup for Payment Portal
+
+commit f5d4999412a1f39403271c47d2d5d13dfefce67e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Feb 14 12:25:23 2023 +0545
+
+    added DeliveryInfo page
+
+commit 84c07f6d598dd5e6c0894fa240eb6dd9a157edef
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Feb 9 12:24:11 2023 +0545
+
+    fixing issue -- dynamic update Rates in client
+
+commit 303f341280f4e43910fa5c5340bf7938ad39f973
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Feb 7 12:10:28 2023 +0545
+
+    fixing issue -- dynamic update Rates in client
+
+commit 900270628b2eb017d3fb116babb0c24c4d47c964
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Feb 6 20:50:37 2023 +0545
+
+    replace with socket.io to get Productlist --Client && --Backend
+
+commit a32af62f0eeaa460116d370b62d2f78803f4ef72
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Feb 4 20:53:01 2023 +0545
+
+    fixed functionality bug on  OrderSummary --Client
+
+commit efba78fe54beb2f411370ba4fe7c569ae028e4b9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Feb 4 09:42:39 2023 +0545
+
+    fixed functionality bug on  CheckoutProduct --Client
+
+commit b8dc67ee853ba3d6532ffce06a2f3e743289ce3d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Feb 3 17:29:04 2023 +0545
+
+    initialized CheckoutProduct --Client
+
+commit 168e660627018cd30a49fc0252dcc2b01da8e18b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Feb 2 16:38:43 2023 +0545
+
+    intial addToBasket function on Product Page --Client
+
+commit 602002ecb0b7f5ae314e0f401412ebb21265094a
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Feb 1 22:10:50 2023 +0545
+
+    connected contexApi in NavBar and Product --Client
+
+commit 2c113c2ab5bcce5208453814be3a232d0843a33e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Feb 1 16:45:15 2023 +0545
+
+    fetched product list backend and displayed in client
+
+commit 29e32d8725b11098eaefb3031bda073c82f41b48
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Feb 1 11:38:05 2023 +0545
+
+    initialzed product list in Client
+
+commit d0934ed9ad19b14e98cf611e55b298c2d51e397b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Feb 1 09:21:05 2023 +0545
+
+    bug fix on EditDelivery and EditGasPrice
+
+commit 8595b122c3cf7488b2e9105cc7d2f7a5b25b5a85
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Feb 1 07:51:12 2023 +0545
+
+    fix createLPGasProduct error handeling bug
+
+commit 0e559f7f841d3542785937819ab288da8ade0d66
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Jan 31 19:19:27 2023 +0545
+
+    fixed watch file function --backend
+
+commit d3086faebb1de5186d04feb131181e3482ea2061
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Jan 31 18:50:10 2023 +0545
+
+    implement async read and write file function
+
+commit b05d72e7f15b43ed4ca3170da5aa9bf1e05a0d50
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Jan 31 17:54:29 2023 +0545
+
+    fixed error on CreateLPGasProduct Client
+
+commit 2a8fdd39af2e700f4b0af2ef2cced0cfdc36368b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Jan 31 17:41:12 2023 +0545
+
+    fixing route path backend and client
+
+commit c57e52e60023b7378c56290a5934ee70d85bdf59
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Jan 30 14:36:21 2023 +0545
+
+    Complete EditDelivery Page Client and Backend
+
+commit c8a5b3f33604d40194d80bd9ed6865fbd627abde
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Jan 30 13:13:25 2023 +0545
+
+    initial EditDelivery Page
+
+commit 3796017147be72eb2b735cbfe4e1c41784b890c7
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Jan 29 10:36:06 2023 +0545
+
+    added more context api
+
+commit 40f91d9d59160731019a549dec2191131b1b1a4f
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Jan 29 09:25:14 2023 +0545
+
+    filesync bug/issue fixed
+
+commit dcf81cf8e28c1a2fe62ceca8bb4c44038a4da99f
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Jan 28 17:14:48 2023 +0545
+
+    complete  Edit GasPrice Backend and Frontend
+
+commit b0ec537f66b73789c6ff47515e6032b58844c107
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Jan 27 23:28:56 2023 +0545
+
+    implement scoket.io on  Edit GasPrice and Edit Delivery Backend
+
+commit 1071c24685a9cb9d19dec2c94bcf8e64a7bbd56d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Jan 26 18:19:07 2023 +0545
+
+    initial Edit GasPrice and Edit Delivery Backend
+
+commit 51f0f841b7bf744c99f7486b5f3857b5cb8bb4df
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Jan 23 19:20:21 2023 +0545
+
+    initial Edit GasPrice and Edit Delivery Client
+
+commit 2d0ffb38157a01bb65f714ea4600ba18357d4554
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Jan 23 13:52:57 2023 +0545
+
+    CreateLPGProduct Complete : Backend and Client
+
+commit fb1f1cade0b7be971b0e0ab0dc9df655a2b1b793
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Jan 18 10:21:14 2023 +0545
+
+    Client : initlial Error Handeling on CreateLPGProduct
+
+commit 219770c1fb3eb075a53f46a8b8c205830cf45c39
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Jan 17 10:15:12 2023 +0545
+
+    updateed create product --backend
+
+commit bfbec343819a9985faa48c93fbbaf0f86e50f843
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Jan 16 16:48:23 2023 +0545
+
+    replacing .js to .jsx extension
+
+commit ed8ee5d96c99557250962a3769c40ee4654ca6b3
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Jan 16 16:43:24 2023 +0545
+
+    adding UI on Create Product Page
+
+commit 5df5b221821036624273f89f6f8a8d433976adbf
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Jan 16 11:23:07 2023 +0545
+
+    initial setup create product --backend
+
+commit c9d706bf3a8285aac392173a10258dd265a902cf
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Jan 14 17:44:05 2023 +0545
+
+    fixing git config
+
+commit e10f359bc3dfa34fa8e887369f9a71ab8738b4e3
+Author: ybd <ybd@Ark.ybd>
+Date:   Sat Jan 14 17:39:32 2023 +0545
+
+    demo setup from linux
+
+commit 9c0413a0b0442ca6ffa2eb5177e31234db9f6e2f
+Author: ybd <ybd@Ark.ybd>
+Date:   Fri Jan 13 16:43:04 2023 +0545
+
+    setup in linux envirmoent
+
+commit ca8efba0ad047fdb167f494e1957a28b8bd11c29
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Jan 12 15:29:25 2023 +0545
+
+    initialized upload image
+
+commit 04790d3517fa8f2e7a872f0eb2baeb0f2c5c5868
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Jan 11 10:40:31 2023 +0545
+
+    initalzed home page
+
+commit 66fdd90bac8bf7fe8e43af030996f42df00e1721
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Jan 10 14:50:20 2023 +0545
+
+    product page ui fix
+
+commit e215e1e699622af553e90e5ac38ba70f26515f1d
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Jan 10 14:20:10 2023 +0545
+
+    demo product page
+
+commit 6352f62746d4b4dc8f7fa6bf91d42d9e357b1190
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Jan 9 13:37:42 2023 +0545
+
+    setup dummy product on main
+
+commit a6eda948da06b3c7d652c83431ee8c2660fa0d25
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Dec 28 17:04:31 2022 +0545
+
+    Complete Login System FrontEnd and BackEnd
+
+commit ecfcd8966158b2ba71a7a7bafaf9fdf901bce044
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Dec 25 10:38:06 2022 +0545
+
+    major display function change in forgetpassword
+
+commit bc621aec98d7dffaaaac430c8d1d7e6db43c8e63
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Dec 24 13:14:04 2022 +0545
+
+    complete fullstack integration on  passwordforget
+
+commit a35d5fbf9592a0f2aad548a3cffc3dcf17139ba2
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Dec 24 13:13:53 2022 +0545
+
+    complete fullstack integration on  passwordforget
+
+commit e80f3f1e4792dd8664364d395d813e2f67fd7f75
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Fri Dec 23 09:27:22 2022 +0545
+
+    major bug fix on forgetpassword
+
+commit e619db11927e294fddd44719f9e88f54a8657ed3
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Dec 22 14:35:31 2022 +0545
+
+    initial fullstack for passwordforget integration
+
+commit adbb6508753d158dd3ef271321b9e9a258e2f354
+Author: Santosh Deuja <santosh.deuja2000@gmail.com>
+Date:   Wed Dec 21 22:43:20 2022 +0545
+
+    resolve webpack 5 error
+
+commit 0f0f41b8f74376155066f6d703a7a38df77eff42
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Dec 21 12:41:39 2022 +0545
+
+    minor fix path error
+
+commit 68d01ff7c3b7f7462e5f4616b71518462c0ea50b
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Dec 21 12:23:32 2022 +0545
+
+    added UserAuthContext
+
+commit 657b0c8ae50ca6da748f5f079647b2a2a26d6367
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Dec 21 12:14:11 2022 +0545
+
+    added Firebaseconfig
+
+commit 46284d071ddb7b4966f4aed7bbfff6c45ffc103f
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Dec 21 12:03:48 2022 +0545
+
+    passwordForget page initial functionality
+
+commit 00ef74d19014cd71dca9c1a4859081bc2f0da2f0
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Dec 20 13:27:26 2022 +0545
+
+    added verify ui into passwordforgot page
+
+commit e41df87cd7bf40d0351077b8fba46558d34e00f9
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Dec 20 12:16:41 2022 +0545
+
+    forgotpassword page minor ui fix
+
+commit 417206579f31d1afda5bbb574660f34435c082ef
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Dec 20 11:44:13 2022 +0545
+
+    Login page attached with node api to firebase database
+
+commit 8f7ef1a40a5a106a8cb39993c790ac596c87ae6a
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sun Dec 18 21:25:31 2022 +0545
+
+    setup firebase in Backend with .env file
+
+commit aea0b02495f6fc2d39684e40270a608234bca54c
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Dec 17 19:14:05 2022 +0545
+
+    cleared cached --  git rm -r --cached
+
+commit 03d45a1cc6661fd8a079ea1abaaed38eba31adfa
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Dec 17 19:10:47 2022 +0545
+
+    setup .env file
+
+commit 703791743e058ecbc8a9a61045ae6b8272b13497
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Dec 14 11:29:39 2022 +0545
+
+    SetUp Error Message : Signup,Login and ForgotPassword
+
+commit dd7522470619f43348146e2a89580f877b6f2696
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Dec 12 18:01:24 2022 +0545
+
+    initial Login System Error handeling/Display Message
+
+commit f8096592f67182b81d0d0cca887a2b9bc3ede2e3
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Dec 10 18:31:36 2022 +0545
+
+    initial password forget page
+
+commit dd79ad16a821710453da004fd97a8838dcf496ec
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Dec 10 16:19:20 2022 +0545
+
+    fix button --signup page
+
+commit 7e0c87555a3549984a4cca48e80b52c29891d5cb
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Thu Dec 8 14:47:35 2022 +0545
+
+    SignUp page --initial
+
+commit 54cf6c480b6d63724213ddcbfd18ef176797039e
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Dec 7 17:15:16 2022 +0545
+
+    clear cache_files
+
+commit faa93ee837a23bb40eca1d8e45acf1e429a294eb
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Mon Dec 5 20:53:26 2022 +0545
+
+    initial approch SignUp and Forgot Password page
+
+commit 0c8663230d7a7dc6ddefefc4f3ba68945e40cfa8
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Dec 3 17:06:06 2022 +0545
+
+    erase node_modules folder
+
+commit 22c28cbf559fd27497b38aad6ae02939760a2b96
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Sat Dec 3 17:01:49 2022 +0545
+
+    demo_test backend and frontend Login_page
+
+commit 7523337ebc6a41f984427b5af98da691b0614f3c
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Wed Nov 30 15:04:08 2022 +0545
+
+    remember_me function prototype
+
+commit 9255f6da84632ff2b84a55e0530e7a212746ae77
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Nov 29 18:18:04 2022 +0545
+
+    connected react and express
+
+commit 4fb3226c4e55ce7934c50af6f852bc0fcf60a2b6
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Nov 29 17:49:30 2022 +0545
+
+    initial backend setup commit
+
+commit 15f6e1f1b1d0ed902b94fb93c4d843848ce62cf0
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Nov 29 17:30:08 2022 +0545
+
+    fixed remember me ui
+
+commit d9eb49d435188433838e28f96c8145d6c9cc6694
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Nov 29 04:32:07 2022 +0545
+
+    login password-toggle-inputfield
+
+commit 58136f3dfe916c96a139861a3cff010c8dfe2768
+Author: YBD21 <santosh.deuja2000@gmail.com>
+Date:   Tue Nov 29 01:56:58 2022 +0545
+
+    formated login_page
+
+commit b2315818c16ff7c8197d99dc2d6ce6cc72e1699a
+Author: Ark <ybd@localhost.localdomain>
+Date:   Mon Nov 28 20:34:38 2022 +0545
+
+    added remember me checkbox
+
+commit d68472f186deaa4d08d31e45bd00f17f76506ac3
+Author: Ark <ybd@localhost.localdomain>
+Date:   Mon Nov 28 03:30:11 2022 +0545
+
+    login inputfield initial commit
+
+commit 73b7e3b66f7cdf67cb4cbc7c08ed8423249d3299
+Author: Ark <ybd@localhost.localdomain>
+Date:   Sun Nov 27 11:49:54 2022 +0545
+
+    initial login commit
+
+commit 1ec71c8669d11456f5f5d00e476fb8081782030e
+Author: Santosh Deuja <santosh.deuja2000@gmail.com>
+Date:   Fri Nov 25 15:55:56 2022 +0545
+
+    initial commit

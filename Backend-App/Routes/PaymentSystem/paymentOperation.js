@@ -159,11 +159,14 @@ const checkReservationTimeValidity = () => {
 
   const requestHour = new Date(unixTimeStampNow).getUTCHours() + 5.75; // Add 5 hours and 45 minutes for Nepal time
   console.log("Requested Hour : ", requestHour);
-  if (requestHour >= 18 || requestHour < 6) {
+  if (requestHour >= 9 || requestHour < 6) {
+    //(requestHour >= 18 || requestHour < 6)
     // Request made between 6 PM and 6 AM Nepal time, block user
+    console.log(" Request made between 6 PM and 6 AM Nepal time, block user");
     return false;
   } else {
     // Request made between 6 AM and 6 PM Nepal time, allow reservation
+    console.log(" Request made between 6 AM and 6 PM Nepal time, allow reservation");
     return true;
   }
 };

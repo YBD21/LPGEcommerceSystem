@@ -7,6 +7,7 @@ import PopupPortal from "./PopUp/PopupPortal";
 import Payment from "./Payment";
 import ThankYouPage from "../Main_Menu_Page/PopUp/ThankYouPage";
 import Processing from "./Processing";
+import ErrorPopup from "./PopUp/ErrorPopup";
 const OrderSummary = ({ status }) => {
   const [
     { basket, gasRateData, gasDeliveryRateData, showPopup, payStatus },
@@ -191,7 +192,11 @@ const OrderSummary = ({ status }) => {
       {/* activate payment portal */}
       {showPopup && showPopup?.show === "payment" ? (
         <PopupPortal>
-          <Payment timer={showPopup?.timer} />
+          {typeof showPopup?.timer === "string" ? (
+            (console.log(showPopup?.timer), (<ErrorPopup />))
+          ) : (
+            <Payment timer={showPopup?.timer} />
+          )}
         </PopupPortal>
       ) : (
         false
