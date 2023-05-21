@@ -193,7 +193,7 @@ const OrderSummary = ({ status }) => {
       {showPopup && showPopup?.show === "payment" ? (
         <PopupPortal>
           {typeof showPopup?.timer === "string" ? (
-            (console.log(showPopup?.timer), (<ErrorPopup />))
+           <ErrorPopup message = {showPopup?.timer}/>
           ) : (
             <Payment timer={showPopup?.timer} />
           )}

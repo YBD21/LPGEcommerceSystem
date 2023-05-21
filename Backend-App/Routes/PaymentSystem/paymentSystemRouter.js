@@ -83,12 +83,14 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
           await updateStockReservationRecord(stockReservationRecord);
           console.log("stockReservationRecord :", stockReservationRecord);
         }
+        res.json(respond);
+      } else {
+        // Forbidden : Permission denied
+        res.status(403).json(respond);
       }
-
-      res.json(respond);
     } catch (error) {
       console.log(error.message);
-      res.status(500).json({ error: "Error reserving stock" });
+      res.status(500).json({ message: "Error reserving stock" });
     }
   } else {
     console.log(
@@ -96,8 +98,7 @@ paymentSystemRouter.post("/reserve-stock", async (req, res) => {
     );
     // Forbidden : Permission denied
     res.status(403).json({
-      message:
-        "Reservation request cannot be completed at this time. Please try again between 6 AM and 6 PM Nepal time",
+      message: "Reservation error",
     });
   }
 });

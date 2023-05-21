@@ -4,7 +4,6 @@ const ErrorMessageLogin = (message) => {
   const [isClicked, setIsClicked] = useState(message.status);
   const [text, setText] = useState({});
   useEffect(() => {
-    //  Incorrect Phone Number Or Password !
     switch (message.Error_message) {
       case "Network Error":
         return setText({

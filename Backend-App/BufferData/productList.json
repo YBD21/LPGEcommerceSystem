@@ -7,7 +7,7 @@
         "ImageName": "Baba Gas.png",
         "Link": "https://storage.googleapis.com/final-year-project-b1ff7.appspot.com/Product_Images/Baba%20Gas.png?GoogleAccessId=firebase-adminsdk-8wzet%40final-year-project-b1ff7.iam.gserviceaccount.com&Expires=16730323200&Signature=cWtCTyfs5up4GOfD6zG%2FthFW0LdKF4SQCCZE2rbokKKrG%2FBqmW7SfLGy5xSpUAamUO1r736j9BF9ARF48NHn%2BgO4s%2Fzfq1Pl6mKb9UDcP2T56POWSD0n7QuitXi%2FqRGdb1%2B1mh7ie5ld3YnYdsLUvW16nWqKgj5Nusd7NXJfYiQL%2FdezN9brCLVn9LBJijfjsVvhbi0zmQKcSBmU5eWgLKdPAiO2xuM7SCS%2Bs66j7L%2BfZFlgpfpb7STAPMdCq4byo51CtzI8jdZtsHjgKOLhRcyiRjyrRBidsytwQotdy4tWmW3g30tJbW3gImU70teyjlaSRgmSmNWTQNgykMK4WQ%3D%3D"
       },
-      "InStock": 35,
+      "InStock": 15,
       "ProductName": "Baba Gas"
     },
     "EverestGas": {
@@ -17,7 +17,7 @@
         "ImageName": "Everest-Gas.png",
         "Link": "https://storage.googleapis.com/final-year-project-b1ff7.appspot.com/Product_Images/Everest-Gas.png?GoogleAccessId=firebase-adminsdk-8wzet%40final-year-project-b1ff7.iam.gserviceaccount.com&Expires=16730302500&Signature=kPuybHiH2kWdqb7Wx4y52nQfeEeCuGSuqobyajcKItYOMcyPovHLznnfA%2Fqs91zTT7VDxgC2OAEVP6kPXP9BYFE2a95k%2BGB8oFIrrGzGCOjtus%2BBzYDoPpGmJ%2FNMwZrAZNm2A%2BISX2YBstF0H4BV1kZK2VYLGFNezCbu%2FUZ9ZoNQWfyR5XPiCAtCnjjAk3BHe4RGoINvNYKzIFkMPKl%2FVD2FATvaGPz49gbhDjnP53NN9VsEXc%2F%2BSZSbQropUmv23QMFy2HWn%2F7n%2Fh%2Bch790EuUFs0o5Ld2G4FMd1ISuV0inhfO3fhjn7F3ToZ%2FvEzCdSYE6uMMif0iJ6HnQ3LtECg%3D%3D"
       },
-      "InStock": 25,
+      "InStock": 60,
       "ProductName": "Everest Gas"
     },
     "SagarGas": {
@@ -27,7 +27,7 @@
         "ImageName": "Sagar-Gas.png",
         "Link": "https://storage.googleapis.com/final-year-project-b1ff7.appspot.com/Product_Images/Sagar-Gas.png?GoogleAccessId=firebase-adminsdk-8wzet%40final-year-project-b1ff7.iam.gserviceaccount.com&Expires=16730302500&Signature=lghFqmWRRN4GeiYrkiVq%2BxsDZHudCeVpbWOeP6r4%2B%2BLlq8MuOK93GmeRt0k1xplsR61heevh%2BZ4iQmhUFxZsRnp0NPNs4vCYga%2BEypUK5q8Zsbcd3hRWupP4Hd5ub%2BJ2GSg%2BBNiLhIA4tLBD7g8eozBadSZd%2FinlGwt3wxjtagBw4%2F8sKUr9hbQwGsZ36X24JOZ7fksjfviKMoqcA%2BUXWx8F14z%2FOsNsI8bzhiCzrcvuKLhxY%2FQ4czYgpA3SLXczA8Mk%2BlwrUCSK1H3oreHR42oH9aeJ%2FM0LupwlIu5f61zvvQSMc0dCsXxfLrEgJUdbXH33rTdlKJglkRZJi%2Blyyg%3D%3D"
       },
-      "InStock": 45,
+      "InStock": 80,
       "ProductName": "Sagar Gas"
     },
     "ShreeGas": {
@@ -37,7 +37,7 @@
         "ImageName": "Shree-Gas.png",
         "Link": "https://storage.googleapis.com/final-year-project-b1ff7.appspot.com/Product_Images/Shree-Gas.png?GoogleAccessId=firebase-adminsdk-8wzet%40final-year-project-b1ff7.iam.gserviceaccount.com&Expires=16730302500&Signature=UIjRPVHRy%2FtYoryv4CvOp8FIk9YanlyZ1AHq7WSnWcbO7fDYsyUq8j1PnECGNl%2BSmstGYUINy1MbhMbf4A12xcOpVyPjeHldTsHpcaqQlmqkCng%2BfdI8kSk%2Bpv7dQt52EZloAbTdBQ0YvqfqEp99s4fJinN6Lr4hDvG%2Bx4ENSvts33tnxWTLxWQhmzjpODxvO4cua5cU9NATuKJa%2FKtUju%2BuDbPS0oMOk36dXaS14MVzb%2FuXIXPvk%2FE9xiZob2hX5qX8YCMUDART4RSlwgWUtKU5hVkBCt1w2OZe0Qq90YlYMNKxVrHe1XA%2BVwvEcPsmV3POYsn6kfszc%2F9%2FuoaGeg%3D%3D"
       },
-      "InStock": 30,
+      "InStock": 70,
       "ProductName": "Shree Gas"
     }
   }

@@ -54,7 +54,7 @@ const DeliveryInfo = () => {
       });
 
       saveDeliveryInfo();
-      // console.log(response);
+      console.log(response);
       return response?.data?.timer || 0;
     } catch (error) {
       // console.log(error.response.data.message);
