@@ -48,7 +48,10 @@ const DeleteAccount = ({ onChild }) => {
             <span className="text-black font-semibold text-lg">
               Are you sure you want to delete the Account ?
             </span>
-
+            <p className="text-gray-600 mt-2">
+              Note : Deleting your account will remove your login credentials, but your
+              order history will remain intact.
+            </p>
             <div className="w-full flex justify-between pt-8">
               <button
                 className="w-1/2 px-5 py-2.5 tracking-wide

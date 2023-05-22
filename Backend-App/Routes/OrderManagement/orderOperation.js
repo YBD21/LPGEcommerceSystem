@@ -259,9 +259,14 @@ const checkUpdateOrderData = async (
     .collection("Users")
     .doc(countryCode)
     .collection(phoneNumber)
-    .orderBy(fieldNameToFilterBy, sortBy)
     .where(fieldNameToFilterBy, comparisonOperator, startingTimeStamp)
+    .orderBy(fieldNameToFilterBy, sortBy)
     .limit(5);
+
+  console.log(`Order By : ${fieldNameToFilterBy} , ${sortBy}`);
+  console.log(
+    `Where : ${fieldNameToFilterBy} , ${comparisonOperator} , Date : ${startingTimeStamp}`
+  );
 
   console.log(
     `Retrieving documents from collection 'Users/${countryCode}/${phoneNumber}'...`

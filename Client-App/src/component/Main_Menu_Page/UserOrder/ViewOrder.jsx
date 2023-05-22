@@ -74,7 +74,7 @@ const ViewOrder = () => {
       // Check if the data received is null or empty
       if (!data || Object.keys(data).length === 0) {
         // console.log("Data is empty");
-        setHideNextButton(true); // hide nextbutton
+        // setHideNextButton(true); // hide nextbutton
         return;
       }
       setComparisonOperators("<");
@@ -135,22 +135,35 @@ const ViewOrder = () => {
     keys.sort((a, b) => orders[b].created - orders[a].created);
     const firstKey = keys[0];
     const firstDateTime = orders[firstKey].created;
+    setDateTime(0);
     setDateTime(firstDateTime);
-    // console.log(lastDateTime);
+    // console.log(firstDateTime);
   };
 
   const next = () => {
-    setComparisonOperators("<");
-    // set lastdate of the list
-    getlastItemDate();
+    if (sortBy === sortByOptions[0]) {
+      setComparisonOperators("<");
+      // set lastdate of the list
+      getlastItemDate();
+    } else {
+      setComparisonOperators(">");
+      // set lastdate of the list
+      getfirstItemDate();
+    }
   };
 
   const prev = () => {
-    setComparisonOperators(">");
-    // set firstdate of the list
-    getfirstItemDate();
-
-    setNextClickCount(nextClickCount - 2);
+    if (sortBy === sortByOptions[0]) {
+      setComparisonOperators(">");
+      // set firstdate of the list
+      getfirstItemDate();
+      // getlastItemDate();
+    } else {
+      setComparisonOperators("<");
+      // set firstdate of the list
+      getlastItemDate();
+    }
+    // setNextClickCount(nextClickCount - 2);
   };
 
   if (isLoading) {
